@@ -1,0 +1,139 @@
+/***  colors  ***/
+
+.white {
+	color: #fff;
+}
+
+.black {
+	color: #000;
+}
+
+.red {
+	color: #b7121a;
+}
+
+.orange {
+	color: #ff9900;
+}
+
+.gold {
+	color: #fecc2e;
+}
+
+.dkorange {
+	color: #ff6600;
+}
+
+.dkgreen {
+	color: #298658;
+}
+
+.blue {
+	color: #1788a3;
+}
+
+.ltgreen {
+	color: #a3c380;
+}
+
+/***  background colors  ***/
+
+.blackBk {
+	background-color: #000;
+}
+
+.redBk {
+	background-color: #b7121a;
+}
+
+.orangeBk {
+	background-color: #ff9900;
+}
+
+.goldBk {
+	background-color: #fecc2e;
+}
+
+.dkorangeBk {
+	background-color: #ff6600;
+}
+
+.dkgreenBk {
+	background-color: #298658;
+}
+
+.blueBk {
+	background-color: #1788a3;
+}
+
+.ltgreenBk {
+	background-color: #a3c380;
+}
+
+/***  background colors - event type bars  ***/
+
+.blackEvent {
+	background: #fff url(../images/blackstripe.jpg) bottom left  repeat-x;
+}
+
+.redEvent {
+	background: #fff url(../images/redstripe.jpg) bottom left  repeat-x;
+}
+
+.orangeEvent {
+	background: #fff url(../images/orangestripe.jpg) bottom left  repeat-x;
+}
+
+.goldEvent {
+	background: #fff url(../images/goldstripe.jpg) bottom left repeat-x;
+}
+
+.dkorangeEvent {
+	background: #fff url(../images/dkorangestripe.jpg) bottom left  repeat-x;
+}
+
+.dkgreenEvent {
+	background: #fff url(../images/dkgreenstripe.jpg) bottom left  repeat-x;
+}
+
+.blueEvent {
+	background: #fff url(../images/bluestripe.jpg) bottom left  repeat-x;
+}
+
+.ltgreenEvent {
+	background: #fff url(../images/ltgreenstripe.jpg) bottom left  repeat-x;
+}
+
+/***  colored tabs  ***/
+
+.blackborder {
+	border-left: 5px solid #000;
+}
+
+.redborder {
+	border-left: 5px solid #b7121a;
+}
+
+.orangeborder {
+	border-left: 5px solid #ff9900;
+}
+
+.goldborder {
+	border-left: 5px solid #fecc2e;
+}
+
+.dkorangeborder {
+	border-left: 5px solid #ff6600;
+}
+
+.dkgreenborder {
+	border-left: 5px solid #298658;
+}
+
+.blueborder {
+	border-left: 5px solid #1788a3;
+}
+
+.ltgreenborder {
+	border-left: 5px solid #a3c380;
+}

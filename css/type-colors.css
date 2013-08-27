@@ -1,0 +1,111 @@
+html, body {
+	text-rendering:optimizeLegibility;
+	
+	-moz-font-feature-settings:"kern=0";
+	-webkit-font-feature-settings:"kern" 0;
+	-o-font-feature-settings:"kern" 0;
+	-ms-font-feature-settings:"kern" 0;
+	font-feature-settings:"kern" 0;	
+}
+
+body {
+	background-color:#ededed;
+	font-family: "myriad-pro", sans-serif;
+	/*font-family: "myriad-pro-condensed", sans-serif;*/
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "myriad-pro", sans-serif;
+	font-weight:700;
+}
+
+img{
+	outline:0;
+	border:0;
+	margin:0;
+	padding:0;
+}
+
+#objectMode .object-nav a {
+	border:1px solid #222;
+	text-transform: uppercase;
+	font-size:0.85em;
+	color:#222;
+	font-weight:700;
+	text-align:center;
+	background-color: #ededed;
+}
+
+#objectMode .object-nav a.selected {
+	color:#ededed;
+	background-color: #222;
+}
+
+
+#objectMode .object-nav a:hover{
+	color:#ededed;
+	background-color:#222;
+}
+
+#objectMode .tombstone h3{
+	margin:0 0 0 0;
+	padding:0;
+}
+
+#objectMode .tombstone h5{
+	margin:0 0 5px 0;
+	padding:0;
+}
+
+#objectMode .tombstone h6{
+	font-weight:100;
+	margin:0 0 1em 0;
+	padding:0;
+}
+
+
+#objectMode .accordion h3{
+	font-style:italic;
+	font-weight:300;
+	font-size:0.9em;
+	background-color:#ccc;
+	margin-top:0.73em;
+	padding:5px 0 5px 10px;
+}
+
+#objectMode .accordion p{
+	line-height:1.4em;
+}
+
+#objectMode .accordion h3:first-child{
+	margin-top:0;
+}
+
+/*ui-accordion-header-icon ui-icon ui-icon-triangle-1-s*/
+
+#objectMode ui-accordion-header{
+	display:none;
+}
+
+#objectMode #annotations h3 span.a-number {
+	background-color:#000;
+	color:#fff;
+	font-weight:700;
+	display:inline-block;
+	height:22px;
+	width:22px;
+	text-align:center;
+	-webkit-border-radius: 11px;
+	border-radius: 11px;
+	margin-right:10px;
+	padding-bottom:1px;
+}
+
+#objectMode #rel-stories h3{
+	font-style:italic;
+	font-weight:300;
+	font-size:0.9em;
+	background-color:#ccc;
+	margin-top:0.73em;
+	padding:5px 0 5px 10px;
+}
