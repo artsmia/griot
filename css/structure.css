@@ -382,3 +382,10 @@ img {
 	float:right;
 	padding:1em;
 }
+
+#flat_image {
+  position: absolute;
+  width: 100%;
+  height: 673px;
+  margin-top: 9px;
+}

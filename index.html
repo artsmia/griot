@@ -10,6 +10,8 @@
 	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-height,initial-scale=1,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
 	<title>TDX Presenter</title>
 
@@ -136,7 +138,7 @@
 					</div>
 				</div>
 				<div class="large-10 columns">
-					<img src="object-images/Beer-Pot/PCD19991028_2609_IMG0026.jpg" alt="Beer Pot" />
+          <div id="flat_image"></div>
 				</div>
 			</div>
 			<div id="bottomNav" class="mainnav">
@@ -222,8 +224,27 @@
   <script src="js/foundation.min.js"></script>
   <!--<script src="js/jquery.mobile-1.3.2.min.js"></script>-->
   <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
+  <script src="js/vendor/flat_image_zoom/javascripts/leaflet-src.js"></script>
+  <script src="js/vendor/flat_image_zoom/javascripts/flat_image_zoom.js"></script>
+  <script src="js/vendor/flat_image_zoom/javascripts/jquery.actual.min.js"></script>
   <script src="js/presenter.js"></script>
     
+    
+  <script>
+    $(function() {
+      $.getJSON('http://tilesaw.dx.artsmia.org/12111.tif').done(function(tileJson) {
+        console.log("Zoomer.zoom_image({container: 'flat_image', tileURL: " + tileJson.tiles[0] + ", imageWidth: " + tileJson.width + ", imageHeight: " + tileJson.height + "})")
+        window.z = Zoomer.zoom_image({container: 'flat_image', tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
+      })
+    })
+  </script>
+
+
+
   <script>
     $(document).foundation();
   </script>
