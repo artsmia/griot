@@ -7,7 +7,7 @@
 // Zoomer.zoom_image({"container":"image-view-2", "tileURL": "https://stewart.walkerart.org/zoomtest/wac_786/{z}_{x}_{y}.jpg", "imageWidth": 4000, "imageHeight": 3187});
 
 var Zoomer = Zoomer || {};
-Zoomer._realTileSize = 512; // static, permanent
+Zoomer._realTileSize = 256; // static, permanent
 Zoomer.zoomers = [];
 Zoomer.ua = navigator.userAgent.toLowerCase();
 Zoomer.tilePad = 1; // how many pixels to pad the tiles to avoid gaps in some browsers

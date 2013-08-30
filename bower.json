@@ -1,0 +1,12 @@
+{
+  "name": "presenter",
+  "version": "0.0.0",
+  "dependencies": {
+    "flat_image_zoom": "git://github.com/artsmia/flat_image_zoom.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
