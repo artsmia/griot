@@ -195,7 +195,6 @@ img {
 }
 
 #objectMode {
-	display: none;
 }
 
 #storyMode {
@@ -245,7 +244,6 @@ img {
 }
 
 #objectMode #about-object{
-	display:none;
 }
 #objectMode #annotations{
 	display:none;

@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+  <script src="js/ng-presenter.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-height,initial-scale=1,user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	
+	<title>TDX Presenter</title>
+
+	<script type="text/javascript" src="//use.typekit.net/jkg2ird.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />    
+	
+	<link rel="apple-touch-icon-precomposed" href="img/icon.png"/>
+	<link rel="apple-touch-startup-image" href="img/splash.png" />    
+  
+	<link rel="stylesheet" href="css/foundation.css">
+	<link rel='stylesheet' href='fonts/typicons/font/typicons.css' />
+  <!--<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css">--><! it no want to work :/ all I need is an accordion -->
+  <!--<link href="css/jquery-ui-1.10.3.custom.min" rel="stylesheet">--><!-- went with this instead of JQM -->
+  <link rel="stylesheet" href="css/structure.css">
+  <link rel="stylesheet" href="css/miacolors.css">
+  <link rel="stylesheet" href="css/type-colors.css">
+  <link rel="stylesheet" href="css/animation.css">
+  <link rel="stylesheet" href="css/media-queries.css">
+
+  <script src="js/vendor/custom.modernizr.js"></script>
+</head>
+<body ng-app="presenter">
+  <!--[if lt IE 9]>
+    <script src="components/es5-shim/es5-shim.js"></script>
+    <script src="components/json3/lib/json3.min.js"></script>
+  <![endif]-->
+
+  <div class="container" ng-view></div>
+  <script src="js/jquery-2.0.3.min.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+  <![endif]-->
+  <script src="js/vendor/flat_image_zoom/javascripts/leaflet-src.js"></script>
+  <script src="js/vendor/flat_image_zoom/javascripts/flat_image_zoom.js"></script>
+  <script src="js/vendor/flat_image_zoom/javascripts/jquery.actual.min.js"></script>
+</body>
+</html>
