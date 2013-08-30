@@ -36,21 +36,26 @@
     }
   ])
 
-  app.controller('ObjectCtrl', ['$scope', '$route', '$routeParams', 'objects', 'tilesaw',
-    function($scope, $route, $routeParams, objects, tilesaw) {
+  app.controller('ObjectCtrl', ['$scope', '$route', '$routeParams', '$location', 'objects', 'tilesaw',
+    function($scope, $route, $routeParams, $location, objects, tilesaw) {
       $scope.id = $routeParams.id
       objects.get().then(function(data) {
         $scope.json = data[$scope.id]
-        tilesaw.get('1937').then(function(tileJson) {
+        tilesaw.get($scope.id).then(function(tileJson) {
+          console.log(tileJson)
+          console.log("Zoomer.zoom_image({container: 'flat_image', tileURL: '"+ tileJson.tiles[0] +"', imageWidth: "+tileJson.width+", imageHeight: "+tileJson.height+"})")
           $scope.zoom = Zoomer.zoom_image({container: 'flat_image', tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
+          console.log('zoomed')
         })
         $scope.objects = data
       })
       $scope.next = function(direction) {
-        console.log('next', direction)
+        var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
+        if(next) $location.url('/o/'+next)
       }
       $scope.prev = function(direction) {
-        console.log('prev', direction)
+        var prev = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))-1]
+        if(prev) $location.url('/o/'+prev)
       }
       window.$scope = $scope
       window.tilesaw = tilesaw
