@@ -381,7 +381,7 @@ img {
 	padding:1em;
 }
 
-#flat_image {
+#flat_image, .flatmap {
   position: absolute;
   width: 100%;
   height: 673px;

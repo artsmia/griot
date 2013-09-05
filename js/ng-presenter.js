@@ -11,6 +11,9 @@
       }).when('/o/:id', {
         templateUrl: 'views/object.html',
         controller: 'ObjectCtrl'
+      }).when('/a/:id', {
+        templateUrl: 'views/annotations.html',
+        controller: 'notesCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -37,19 +40,31 @@
     }
   ])
 
-  app.controller('ObjectCtrl', ['$scope', '$route', '$routeParams', '$location', 'objects', 'tilesaw',
-    function($scope, $route, $routeParams, $location, objects, tilesaw) {
-      $scope.id = $routeParams.id
-      objects.get().then(function(data) {
-        $scope.json = data[$scope.id]
-        tilesaw.get($scope.id).then(function(tileJson) {
+  app.directive('flatmap', function(tilesaw) {
+    return {
+      restrict: 'E',
+      template: '<div id="{{container}}" class="flatmap"></div>',
+      link: function(scope, element, attrs) {
+        scope.image = attrs.id
+        scope.container = 'zoom-' + scope.image
+
+        tilesaw.get(scope.image).then(function(tileJson) {
           console.log(tileJson)
-          console.log("Zoomer.zoom_image({container: 'flat_image', tileURL: '"+ tileJson.tiles[0] +"', imageWidth: "+tileJson.width+", imageHeight: "+tileJson.height+"})")
-          $scope.zoom = Zoomer.zoom_image({container: 'flat_image', tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
-          console.log('zoomed')
+          scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
         })
+      }
+    }
+  })
+
+  app.controller('ObjectCtrl', ['$scope', '$route', '$routeParams', '$location', 'objects', 'tilesaw', 'wp',
+    function($scope, $route, $routeParams, $location, objects, tilesaw, wp) {
+
+      $scope.id = $routeParams.id
+      objects().then(function(data) {
+        $scope.json = data[$scope.id]
         $scope.objects = data
       })
+
       $scope.next = function(direction) {
         var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
         if(next) $location.url('/o/'+next)
@@ -60,6 +75,12 @@
       }
       window.$scope = $scope
       window.tilesaw = tilesaw
+    }
+  ])
+
+  app.controller('notesCtrl', ['$scope', '$routeParams',
+    function($scope, $routeParams) {
+      $scope.id = $routeParams.id
     }
   ])
 })()
