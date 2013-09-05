@@ -5,8 +5,9 @@
   app.config(
     ['$routeProvider', function($routeProvider) {
       return $routeProvider.when('/', {
-        templateUrl: 'views/index.html',
-        controller: 'MainCtrl'
+        // templateUrl: 'views/index.html',
+        // controller: 'MainCtrl'
+        redirectTo: '/o/1937'
       }).when('/o/:id', {
         templateUrl: 'views/object.html',
         controller: 'ObjectCtrl'
