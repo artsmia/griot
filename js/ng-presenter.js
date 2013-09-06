@@ -73,9 +73,8 @@
     }
   })
 
-  app.controller('ObjectCtrl', ['$scope', '$route', '$routeParams', '$location', 'objects', 'tilesaw', 'wp',
-    function($scope, $route, $routeParams, $location, objects, tilesaw, wp) {
-
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects',
+    function($scope, $routeParams, $location, objects) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
@@ -91,7 +90,6 @@
         if(prev) $location.url('/o/'+prev)
       }
       window.$scope = $scope
-      window.tilesaw = tilesaw
       window.$routeParams = $routeParams
     }
   ])
