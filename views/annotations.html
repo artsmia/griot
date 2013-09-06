@@ -1,1 +1,7 @@
-<flatmap id="{{id}}" json="{{json}}"></flatmap>
+<ul>
+  <li ng-repeat="note in notes">
+  <flatmap image="{{id}}" json="{{note.firebase.geometry}}"></flatmap>
+    <p ng-bind-html-unsafe="note.description"></p>
+    <code>{{JSON.encode(note.firebase)}}</code>
+  </li>
+</ul>

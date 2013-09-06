@@ -26,14 +26,23 @@
   )
 
   app.factory('objects', ['$http', function($http) {
-    return { get: function() {
+    return function() {
       return $http.get('/objects.json').then(function(result) { return result.data; })
-    }}
+    }
   }])
   app.factory('tilesaw', ['$http', function($http) {
     return { get: function(image) {
       return $http.get('//tilesaw.dx.artsmia.org/'+image+'.tif').then(function(result) { return result.data; })
     }}
+  }])
+  app.factory('notes', ['$http', function($http) {
+    return function() {
+      // why doesn't
+      // $http.get('http://wp/crashpad/json/')
+      // work?
+      var g = $.getJSON('http://wp/crashpad/json/')
+      return g.then(function(result) { return result; })
+    }
   }])
   app.controller('MainCtrl', ['$scope', '$route', '$routeParams',
     function($scope, $route, $routeParams) {
@@ -43,14 +52,22 @@
   app.directive('flatmap', function(tilesaw) {
     return {
       restrict: 'E',
+      scope: {
+        json: '@',
+        image: '@'
+      },
       template: '<div id="{{container}}" class="flatmap"></div>',
       link: function(scope, element, attrs) {
-        scope.image = attrs.id
-        scope.container = 'zoom-' + scope.image
+        scope.container = 'zoom-' + scope.image + '-' + new Date().getUTCMilliseconds()
 
         tilesaw.get(scope.image).then(function(tileJson) {
-          console.log(tileJson)
           scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
+
+          if(scope.json) {
+            var _geometry = L.GeoJSON.geometryToLayer(JSON.parse(scope.json))
+            scope.zoom.map.fitBounds(_geometry.getBounds())
+            scope.zoom.map.addLayer(_geometry)
+          }
         })
       }
     }
@@ -75,12 +92,17 @@
       }
       window.$scope = $scope
       window.tilesaw = tilesaw
+      window.$routeParams = $routeParams
     }
   ])
 
-  app.controller('notesCtrl', ['$scope', '$routeParams',
-    function($scope, $routeParams) {
+  app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
+    function($scope, $routeParams, getNotes) {
       $scope.id = $routeParams.id
+      getNotes().then(function(_notes) {
+        $scope.notes = _notes[$scope.id]
+        $scope.$apply()
+      })
     }
   ])
 })()

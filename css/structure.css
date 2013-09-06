@@ -382,7 +382,7 @@ img {
 }
 
 #flat_image, .flatmap {
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 673px;
   margin-top: 9px;

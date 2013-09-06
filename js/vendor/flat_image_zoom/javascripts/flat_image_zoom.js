@@ -533,6 +533,7 @@ Zoomer.zoom_image = function (zoomoptions) {
     $("#" + zoomer.containerName + " .leaflet-layer").each(function (index, value) {
         this.style[L.DomUtil.TRANSFORM] = L.DomUtil.getScaleString(zoomer.tileLayerScale, zoomer.map.getPixelOrigin().multiplyBy(-1));
     });
+    return zoomer;
 };
 
 // handle window resize
