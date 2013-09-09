@@ -1,7 +1,10 @@
-<ul>
-  <li ng-repeat="note in notes">
-  <flatmap image="{{id}}" json="{{note.firebase.geometry}}"></flatmap>
-    <p ng-bind-html-unsafe="note.description"></p>
-    <code>{{JSON.encode(note.firebase)}}</code>
+<ol id="annotations" class="accordion">
+  <li ng-repeat="view in notes">
+    <ol>
+      <li ng-repeat="note in view.annotations">
+        <flatmap image="{{view.image}}" json="{{note.firebase.geometry}}"></flatmap>
+        <div ng-bind-html-unsafe="note.description"></div>
+      </li>
+    </ol>
   </li>
-</ul>
+</ol>

@@ -84,18 +84,30 @@
         var prev = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))-1]
         if(prev) $location.url('/o/'+prev)
       }
+
+      $scope.toggleView = function(about_or_annotations) {
+        if(about_or_annotations && about_or_annotations.match('annotations')) {
+          $scope.activeSection = 'annotations'
+        } else {
+          $scope.activeSection = 'about'
+        }
+      }
+      $scope.toggleView()
+
       window.$scope = $scope
       window.$routeParams = $routeParams
     }
   ])
 
   app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
-    function($scope, $routeParams, getNotes) {
+    function($scope, $routeParams, wp) {
       $scope.id = $routeParams.id
-      getNotes().then(function(_notes) {
-        $scope.notes = _notes[$scope.id]
+      wp().then(function(_wp) {
+        window._wp = _wp
+        $scope.notes = _wp.objects[$scope.id].views
         $scope.$apply()
       })
+      window.$scope = $scope
     }
   ])
 
