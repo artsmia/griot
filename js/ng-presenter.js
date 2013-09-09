@@ -5,9 +5,8 @@
   app.config(
     ['$routeProvider', function($routeProvider) {
       return $routeProvider.when('/', {
-        // templateUrl: 'views/index.html',
-        // controller: 'MainCtrl'
-        redirectTo: '/o/1937'
+        templateUrl: 'views/index.html',
+        controller: 'MainCtrl'
       }).when('/o/:id', {
         templateUrl: 'views/object.html',
         controller: 'ObjectCtrl'
@@ -44,10 +43,6 @@
       return g.then(function(result) { return result; })
     }
   }])
-  app.controller('MainCtrl', ['$scope', '$route', '$routeParams',
-    function($scope, $route, $routeParams) {
-    }
-  ])
 
   app.directive('flatmap', function(tilesaw) {
     return {
@@ -100,6 +95,15 @@
       getNotes().then(function(_notes) {
         $scope.notes = _notes[$scope.id]
         $scope.$apply()
+      })
+    }
+  ])
+
+  app.controller('MainCtrl', ['$scope', '$routeParams', 'objects',
+    function($scope, $routeParams, objects) {
+      objects().then(function(data) {
+        $scope.objects = data
+        window.$scope = $scope
       })
     }
   ])

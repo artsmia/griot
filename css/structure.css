@@ -387,3 +387,10 @@ img {
   height: 673px;
   margin-top: 9px;
 }
+
+#cover {
+  list-style: none;
+  -webkit-columns: 6;
+  padding: 1em;
+  margin: 0;
+}
