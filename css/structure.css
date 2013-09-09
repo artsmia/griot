@@ -246,7 +246,6 @@ img {
 #objectMode #about-object{
 }
 #objectMode #annotations{
-	display:none;
 	min-height:350px;
 }
 #objectMode #rel-stories{
@@ -393,4 +392,15 @@ img {
   -webkit-columns: 6;
   padding: 1em;
   margin: 0;
+}
+
+ol#annotations {
+  list-style: none;
+}
+
+ol#annotations ol li div {
+  display: none
+}
+ol#annotations ol li.active div {
+  display: block;
 }

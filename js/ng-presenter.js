@@ -1,3 +1,5 @@
+/*jshint asi: true*/
+
 (function() {
   'use strict'
   window.app = angular.module('presenter', []);
@@ -58,22 +60,34 @@
         tilesaw.get(scope.image).then(function(tileJson) {
           scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
 
-          if(scope.json) {
-            var _geometry = L.GeoJSON.geometryToLayer(JSON.parse(scope.json))
-            scope.zoom.map.fitBounds(_geometry.getBounds())
-            scope.zoom.map.addLayer(_geometry)
-          }
+          // This is weird. `notes.json` is set on the parent scope, then passed through into the directive scope as scope.json.
+          // It doesn't update though, so I have to `scope.watch` the parent scope…
+          // Oh and this only works beacuse I have window.$scope = $scope. Bad
+          $scope.$watch('notes.json', function() {
+            if(scope.json) {
+              if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+              var _geometry = scope.jsonLayer = L.GeoJSON.geometryToLayer(JSON.parse(scope.json))
+              scope.zoom.map.fitBounds(_geometry.getBounds())
+              scope.zoom.map.addLayer(_geometry)
+            }
+          }, true)
+
         })
       }
     }
   })
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects',
-    function($scope, $routeParams, $location, objects) {
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects', 'notes',
+    function($scope, $routeParams, $location, objects, wp) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
         $scope.objects = data
+      })
+      wp().then(function(_wp) {
+        wp = $scope.wp = _wp.objects[$scope.id]
+        $scope.notes = wp.views
+        $scope.$apply()
       })
 
       $scope.next = function(direction) {
@@ -93,6 +107,12 @@
         }
       }
       $scope.toggleView()
+
+      $scope.activateNote = function(note, view) {
+        angular.forEach(view.annotations, function(ann) { ann.active = false })
+        note.active = true
+        $scope.notes.json = note.firebase.geometry
+      }
 
       window.$scope = $scope
       window.$routeParams = $routeParams

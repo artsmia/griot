@@ -27,48 +27,26 @@
           <h6>{{json.country}}, {{json.continent}}. {{json.dated}}</h6>
         </div>
         <div class="object-nav clearfix">
-          <a id="about-object.b">About the Object</a>
-          <a id="annotations.b" class="selected">Annotations</a>
+          <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About the Object</a>
+          <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Annotations</a>
           <a id="rel-stories.b" class="wide">Related Stories</a>
           <!--<a id="rel-objects.b">Related Objects</a>-->
         </div>
         <div class="object-stories">
-          <div id="about-object">
+          <div id="about-object" ng-if="activeSection == 'about'">
             <p>{{json.description}}</p>
           </div><!--end about this object-->
 
-          <div id="annotations" class="accordion">
-            <h3><span class="a-number">1</span>Top View of Beer Pot</h3>
-            <div>
-              <p>You’ve probably noticed that the pot’s patterns are concentrated on the upper half of the vessel, and that it’s best viewed from above. That’s because this pot was meant to sit on the ground – and to forge a direct connection between the drinkers and the ancestors, who reside in the earth.</p>
-            </div>
-            <h3><span class="a-number">2</span>Arcs</h3>
-            <div>
-              <p>
-              Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-              purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-              velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-              suscipit faucibus urna.
-              </p>
-            </div>
-            <h3><span class="a-number">3</span>Hourglass Forms</h3>
-            <div class="clearfix">
-              <p>
-              Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-              Phasellus pellentesque purus in massa. <a href="#" data-reveal-id="ann_0" class="right"><img src="http://placehold.it/100x75" /></a>Aenean in pede. Phasellus ac libero
-              ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-              lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-              </p>
-            </div>
-            <h3><span class="a-number">4</span>Leaf Forms</h3>
-            <div>
-              <p>
-              Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-              Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-              ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-              lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-              </p>
-            </div>
+          <ol id="annotations" ng-if="activeSection == 'annotations'">
+            <li ng-repeat="view in notes">
+              <ol>
+                <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}">
+                  <h3><span class="a-number">{{$index+1}}</span>Annotation</h3>
+                  <div ng-bind-html-unsafe="note.description"></div>
+                </li>
+              </ol>
+            </li>
+          </ol>
           </div><!--end annotations-->
 
           <div id="rel-stories">
@@ -85,7 +63,7 @@
         </div>
       </div>
       <div class="large-10 columns">
-        <flatmap image="{{id}}"></flatmap>
+        <flatmap image="{{id}}" json="{{notes.json}}"></flatmap>
       </div>
     </div>
     <div id="bottomNav" class="mainnav" ng-click="next()">
