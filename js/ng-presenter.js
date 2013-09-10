@@ -58,6 +58,7 @@
         var scope = $scope
 
         var loadImage = function(image) {
+          scope.viewChanging = true
           scope.currentImage = image
           tilesaw.get(image).then(function(tileJson) {
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
@@ -70,12 +71,13 @@
         var annotateAndZoom = function(geometry) {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+          if(scope.viewChanging) return
           scope.zoom.map.addLayer(scope.jsonLayer)
           scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
         }
 
         scope.$on('changeGeometry', function(event, geometry) { annotateAndZoom(geometry) }, true)
-        scope.$on('viewChanged', function(event, message) { annotateAndZoom() }, true)
+        scope.$on('viewChanged', function(event, message) { scope.viewChanging = false; annotateAndZoom() }, true)
         scope.$on('changeView', function(event, message) {
           if(message.image != scope.currentImage) loadImage(message.image)
         })
