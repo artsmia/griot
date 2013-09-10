@@ -110,8 +110,11 @@
 
       $scope.activateNote = function(note, view) {
         angular.forEach(view.annotations, function(ann) { ann.active = false })
-        note.active = true
-        $scope.notes.json = note.firebase.geometry
+      }
+
+      $scope.toggleSixbar = function(element) {
+        $scope.sixBarClosed = !$scope.sixBarClosed
+        // TODO: somehow trigger zoomer centerImageAtExtents inside the flatmap directive?
       }
 
       window.$scope = $scope

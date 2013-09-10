@@ -11,7 +11,7 @@
         </ul>
       </div>
     </div>
-    <div id="object-content clearfix">
+    <div id="object-content" ng-hide="sixBarClosed">
       <div class="large-6 columns">
         <div class="typcn typcn-arrow-maximise icon full-description"><span><a href="#" data-reveal-id="fulldesc_0">Full Description</a></span></div>
         <!--<div id="fulldesc_0" class="reveal-modal">
@@ -20,7 +20,7 @@
                 <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
                 <a class="close-reveal-modal">&#215;</a>
             </div>-->
-        <div class="typcn typcn-chevron-left icon slide-object-nav"></div>
+        <div class="typcn typcn-chevron-left icon slide-object-nav" ng-click="toggleSixbar(this)"></div>
         <div class="tombstone">
           <h3>{{json.title}}</h3>
           <h5>{{json.artist}} {{json.culture}}</h5>
@@ -62,7 +62,8 @@
 
         </div>
       </div>
-      <div class="large-10 columns">
+      <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed}">
+        <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
         <flatmap image="{{id}}" json="{{notes.json}}"></flatmap>
       </div>
     </div>

@@ -404,3 +404,13 @@ ol#annotations ol li div {
 ol#annotations ol li.active div {
   display: block;
 }
+
+#zoomer.full_width {
+  width: 100%;
+}
+#zoomer .typcn-chevron-right {
+  position: relative;
+  top: 4em;
+  right: 95%;
+  z-index: 10000;
+}
