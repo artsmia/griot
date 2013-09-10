@@ -64,7 +64,7 @@
       </div>
       <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed}">
         <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
-        <flatmap image="{{id}}" json="{{notes.json}}"></flatmap>
+        <flatmap image="{{id}}" json="{{notes.geometry}}"></flatmap>
       </div>
     </div>
     <div id="bottomNav" class="mainnav" ng-click="next()">

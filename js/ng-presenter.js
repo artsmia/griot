@@ -54,25 +54,36 @@
         image: '@'
       },
       template: '<div id="{{container}}" class="flatmap"></div>',
+      controller: function($scope) {
+        var scope = $scope
+        window.scope = scope
+
+        var loadImage = function(image) {
+          scope.currentImage = image
+          tilesaw.get(image).then(function(tileJson) {
+            $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
+            scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
+            scope.$broadcast('viewChanged')
+          })
+        }
+        loadImage(scope.image)
+
+        var annotateAndZoom = function(geometry) {
+          if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+          if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+          console.log('annotateAndZOom', scope.jsonLayer)
+          scope.zoom.map.addLayer(scope.jsonLayer)
+          scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
+        }
+
+        scope.$on('changeGeometry', function(event, geometry) { annotateAndZoom(geometry) }, true)
+        scope.$on('viewChanged', function(event, message) { annotateAndZoom() }, true)
+        scope.$on('changeView', function(event, message) {
+          if(message.image != scope.currentImage) loadImage(message.image)
+        })
+      },
       link: function(scope, element, attrs) {
         scope.container = 'zoom-' + scope.image + '-' + new Date().getUTCMilliseconds()
-
-        tilesaw.get(scope.image).then(function(tileJson) {
-          scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
-
-          // This is weird. `notes.json` is set on the parent scope, then passed through into the directive scope as scope.json.
-          // It doesn't update though, so I have to `scope.watch` the parent scope…
-          // Oh and this only works beacuse I have window.$scope = $scope. Bad
-          $scope.$watch('notes.json', function() {
-            if(scope.json) {
-              if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
-              var _geometry = scope.jsonLayer = L.GeoJSON.geometryToLayer(JSON.parse(scope.json))
-              scope.zoom.map.fitBounds(_geometry.getBounds())
-              scope.zoom.map.addLayer(_geometry)
-            }
-          }, true)
-
-        })
       }
     }
   })
@@ -110,8 +121,16 @@
       }
       $scope.toggleView()
 
+      function activeAnnotationAndChangeImageIfNeccessary(note, view) {
+        note.active = true
+        $scope.$broadcast('changeView', view)
+        $scope.$broadcast('changeGeometry', note.firebase.geometry)
+      }
+
       $scope.activateNote = function(note, view) {
+        var shouldActivate = !note.active
         angular.forEach(view.annotations, function(ann) { ann.active = false })
+        if(shouldActivate) activeAnnotationAndChangeImageIfNeccessary(note, view)
       }
 
       $scope.toggleSixbar = function(element) {
