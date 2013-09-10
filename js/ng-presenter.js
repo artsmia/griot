@@ -56,7 +56,6 @@
       template: '<div id="{{container}}" class="flatmap"></div>',
       controller: function($scope) {
         var scope = $scope
-        window.scope = scope
 
         var loadImage = function(image) {
           scope.currentImage = image
@@ -71,7 +70,6 @@
         var annotateAndZoom = function(geometry) {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
-          console.log('annotateAndZOom', scope.jsonLayer)
           scope.zoom.map.addLayer(scope.jsonLayer)
           scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
         }
@@ -137,9 +135,6 @@
         $scope.sixBarClosed = !$scope.sixBarClosed
         // TODO: somehow trigger zoomer centerImageAtExtents inside the flatmap directive?
       }
-
-      window.$scope = $scope
-      window.$routeParams = $routeParams
     }
   ])
 
@@ -147,11 +142,9 @@
     function($scope, $routeParams, wp) {
       $scope.id = $routeParams.id
       wp().then(function(_wp) {
-        window._wp = _wp
         $scope.notes = _wp.objects[$scope.id].views
         $scope.$apply()
       })
-      window.$scope = $scope
     }
   ])
 
@@ -159,7 +152,6 @@
     function($scope, $routeParams, objects) {
       objects().then(function(data) {
         $scope.objects = data
-        window.$scope = $scope
       })
     }
   ])
