@@ -38,11 +38,11 @@
   }])
   app.factory('notes', ['$http', function($http) {
     return function() {
-      // why doesn't
-      // $http.get('http://wp/crashpad/json/')
-      // work?
-      var g = $.getJSON('http://wp/crashpad/json/')
-      return g.then(function(result) { return result; })
+      // TODO: how do we want to cache/bundle the JSON? WP is slow
+      // also cache it within ng so we aren't requesting/parsing it on each request
+      return $http.get('http://new.artsmia.org/crashpad/json/').then(function(result) {
+        return result.data;
+      })
     }
   }])
 
@@ -89,16 +89,16 @@
   })
 
   app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects', 'notes',
-    function($scope, $routeParams, $location, objects, wp) {
+    function($scope, $routeParams, $location, objects, notes) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
         $scope.objects = data
       })
-      wp().then(function(_wp) {
-        wp = $scope.wp = _wp.objects[$scope.id]
-        if(wp) {
-          $scope.notes = wp.views
+      notes().then(function(_wp) {
+        $scope.wp = _wp.objects[$scope.id]
+        if($scope.wp) {
+          $scope.notes = $scope.wp.views
           $scope.$apply()
         }
       })
