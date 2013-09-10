@@ -394,8 +394,9 @@ img {
   margin: 0;
 }
 
-ol#annotations {
+ol#annotations, ol#annotations ol {
   list-style: none;
+  margin-left: 0px;
 }
 
 ol#annotations ol li div {

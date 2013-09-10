@@ -34,7 +34,7 @@
         </div>
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
-            <p>{{json.description}}</p>
+            <p ng-bind-html-unsafe="wp.description || json.description"></p>
           </div><!--end about this object-->
 
           <ol id="annotations" ng-if="activeSection == 'annotations'">

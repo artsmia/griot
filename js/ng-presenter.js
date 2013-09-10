@@ -86,8 +86,10 @@
       })
       wp().then(function(_wp) {
         wp = $scope.wp = _wp.objects[$scope.id]
-        $scope.notes = wp.views
-        $scope.$apply()
+        if(wp) {
+          $scope.notes = wp.views
+          $scope.$apply()
+        }
       })
 
       $scope.next = function(direction) {
