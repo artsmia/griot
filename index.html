@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-
+<!doctype html>
+<html>
 <head>
-
-	<!--change before launching-->
-	<meta name="robots" content="noindex, nofollow, nosnippet, noarchive" />
-	<meta name="googlebot" content="noindex, nofollow, nosnippet, noarchive" />
-	
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js"></script>
+  <script src="js/ng-presenter.js"></script>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-height,initial-scale=1,user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,204 +21,24 @@
   
 	<link rel="stylesheet" href="css/foundation.css">
 	<link rel='stylesheet' href='fonts/typicons/font/typicons.css' />
-	<!--<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css">--><! it no want to work :/ all I need is an accordion -->
-	<!--<link href="css/jquery-ui-1.10.3.custom.min" rel="stylesheet">--><!-- went with this instead of JQM -->
-	<link rel="stylesheet" href="css/structure.css">
-	<link rel="stylesheet" href="css/miacolors.css">
-	<link rel="stylesheet" href="css/type-colors.css">
-	<link rel="stylesheet" href="css/animation.css">
-	<link rel="stylesheet" href="css/media-queries.css">
-	
-    <script src="js/vendor/custom.modernizr.js"></script>
+  <!--<link rel="stylesheet" href="css/jquery.mobile.structure-1.3.2.min.css">--><! it no want to work :/ all I need is an accordion -->
+  <!--<link href="css/jquery-ui-1.10.3.custom.min" rel="stylesheet">--><!-- went with this instead of JQM -->
+  <link rel="stylesheet" href="css/structure.css">
+  <link rel="stylesheet" href="css/miacolors.css">
+  <link rel="stylesheet" href="css/type-colors.css">
+  <link rel="stylesheet" href="css/animation.css">
+  <link rel="stylesheet" href="css/media-queries.css">
 
+  <script src="js/vendor/custom.modernizr.js"></script>
 </head>
-<body>
+<body ng-app="presenter">
+  <!--[if lt IE 9]>
+    <script src="components/es5-shim/es5-shim.js"></script>
+    <script src="components/json3/lib/json3.min.js"></script>
+  <![endif]-->
 
-	<div class="row" id="homeMode">
-		<div class="large-16 columns ipadlandscape">
-			<div id="home-container">
-				<h1><img src="img/tdx-the-digital-experience-77107032.jpg" alt="TDX Presenter"/></h1>
-				<div class="home-buttons clearfix">
-					<div class="home-allobjects">Objects</div>
-					<div class="home-allstories">Stories</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row" id="objectMode">
-		<div class="large-16 columns ipadlandscape">
-			<div id="topNav" class="mainnav">
-				<div class="icon-container">
-					<a class="typcn typcn-home home icon homeicon"></a>
-					<span class="typcn typcn-chevron-left up-arrow icon"></span>
-					<a href="#" data-dropdown="drop-nav" class="typcn typcn-th-menu menu icon"></a>
-						<ul id="drop-nav" class="f-dropdown" data-dropdown-content>
-						  <li><a href="#" class="allobjects">View All Objects</a></li>
-						  <li><a href="#" class="allstories">View All Stories</a></li>
-						</ul>
-				</div>
-			</div>
-			<div id="object-content clearfix">
-				<div class="large-6 columns">
-					<div class="typcn typcn-arrow-maximise icon full-description"><span><a href="#" data-reveal-id="fulldesc_0">Full Description</a></span></div>
-						<!--<div id="fulldesc_0" class="reveal-modal">
-							<h2>Awesome. I have it.</h2>
-						  	<p class="lead">Your couch.  It is mine.</p>
-						  	<p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-						  	<a class="close-reveal-modal">&#215;</a>
-						</div>-->
-					<div class="typcn typcn-chevron-left icon slide-object-nav"></div>
-					<div class="tombstone">
-						<h3>Beer Pot</h3>
-						<h5>Artist Unknown (Zulu)</h5>
-						<h6>(South Africa, Africa), 20th century</h6>
-					</div>
-					<div class="object-nav clearfix">
-						<a id="about-object.b">About the Object</a>
-						<a id="annotations.b" class="selected">Annotations</a>
-						<a id="rel-stories.b" class="wide">Related Stories</a>
-						<!--<a id="rel-objects.b">Related Objects</a>-->
-					</div>
-					<div class="object-stories">
-						<div id="about-object">
-							<p>How is making beer like making babies? For the Zulu, the same ancestral forces that ferment beer also create children in the womb. Zulu families drink beer together to ask their ancestors to help them grow.  Round, shiny black pots like this one are at the center of Zulu beer parties. They are designed not only to serve beer to the living but also to help them connect with family ancestors. </p>
-						</div><!--end about this object-->
-
-						<div id="annotations" class="accordion">
-							<h3><span class="a-number">1</span>Top View of Beer Pot</h3>
-							<div>
-								<p>You’ve probably noticed that the pot’s patterns are concentrated on the upper half of the vessel, and that it’s best viewed from above. That’s because this pot was meant to sit on the ground – and to forge a direct connection between the drinkers and the ancestors, who reside in the earth.</p>
-							</div>
-							<h3><span class="a-number">2</span>Arcs</h3>
-							<div>
-								<p>
-								Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
-								purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
-								velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
-								suscipit faucibus urna.
-								</p>
-							</div>
-							<h3><span class="a-number">3</span>Hourglass Forms</h3>
-							<div class="clearfix">
-								<p>
-								Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-								Phasellus pellentesque purus in massa. <a href="#" data-reveal-id="ann_0" class="right"><img src="http://placehold.it/100x75" /></a>Aenean in pede. Phasellus ac libero
-								ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-								lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-								</p>
-							</div>
-							<h3><span class="a-number">4</span>Leaf Forms</h3>
-							<div>
-								<p>
-								Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
-								Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
-								ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
-								lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
-								</p>
-							</div>
-						</div><!--end annotations-->
-						
-						<div id="rel-stories">
-							<h3>Process Story: Making pots</h3>
-							<h3>Process Story: Symbology</h3>
-							<h3>Another kind of Story</h3>
-							<h3>This is a story whose title could extend onto 2 or more lines and could be really really long</h3>
-						</div><!--end relate stories-->
-						
-						<div id="rel-objects">
-							Related Objects
-						</div><!--end related objects-->
-						
-					</div>
-				</div>
-				<div class="large-10 columns">
-          <div id="flat_image"></div>
-				</div>
-			</div>
-			<div id="bottomNav" class="mainnav">
-				<div class="icon-container">
-					<span class="typcn typcn-chevron-left down-arrow icon"></span>
-				</div>
-			</div>
-			
-			<!--modal windows for object Mode-->
-			<div id="fulldesc_0" class="reveal-modal">
-				<h2>Awesome. I have it.</h2>
-			  	<p class="lead">Your couch.  It is mine.</p>
-			  	<p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-			  	<a class="close-reveal-modal">&#215;</a>
-			</div>
-			<div id="ann_0" class="reveal-modal">
-				<iframe width="560" height="315" src="//www.youtube.com/embed/LSfn73WCQEs?list=UUPclle9S1deGdeCt-iBJadQ" frameborder="0" allowfullscreen></iframe>
-				<p>Capton here. This window needs to be styled a bit more</p>
-				<a class="close-reveal-modal">&#215;</a>
-			</div>
-		</div>
-	</div>
-	
-	<div class="row" id="storyMode">
-		<div class="large-16 columns ipadlandscape">
-			<div id="leftNav" class="mainnav">
-				<div class="icon-container">
-					<a class="typcn typcn-home home icon homeicon"></a>
-					<span class="typcn typcn-chevron-left left-arrow icon"></span>
-					<ul class="testnav">
-						<li><a class="s1">S1</a></li>
-						<li><a class="s2">S2</a></li>
-					</ul>
-				</div>
-			</div>
-			
-			<!--the story divs, should be turned into templates -->
-			<div class="story clearfix" id="s1">
-				<h3>Process Story: Making Pots</h3>
-				<img src="http://placehold.it/800x450" />
-				<div class="s-text">
-					<div class="large-12 columns"><p class="twocol">Potters go to great lengths to make their vessels out of clay composed of uniformly small particles. This allows for a more malleable material, smoother surfaces, and stronger pots. Clay harvested from secret locations is allowed to dry. Then it is ground up on a flat grinding stone and sifted with a sieve before water is added.</p></div>
-					<div class="large-4 columns credits"><a href="#" data-reveal-id="str_0">Image Credits</a></div>
-				</div>
-			</div>
-			<div class="story" id="s2">
-				<h3>Process Story: Making Pots 2</h3>
-				<div class="img-container" style="width:300px;"><img src="http://placehold.it/300x450" /></div>
-				<div class="s-text">
-					<div class="large-12 columns"><p class="twocol">Potters go to great lengths to make their vessels out of clay composed of uniformly small particles. This allows for a more malleable material, smoother surfaces, and stronger pots. Clay harvested from secret locations is allowed to dry. Then it is ground up on a flat grinding stone and sifted with a sieve before water is added.</p></div>
-					<div class="large-4 columns credits"><a href="#" data-reveal-id="str_0">Image Credits</a></div>
-				</div>
-			</div>
-
-			<div id="rightNav" class="mainnav">
-				<div class="icon-container">
-					<a href="#" data-dropdown="drop-nav-s" class="typcn typcn-th-menu menu icon"></a>
-						<ul id="drop-nav-s" class="f-dropdown" data-dropdown-content>
-						  <li><a href="#" class="allobjects">View All Objects</a></li>
-						  <li><a href="#" class="allstories">View All Stories</a></li>
-						</ul>
-					<span class="typcn typcn-chevron-right right-arrow icon"></span>
-				</div>
-			</div>
-			
-			<!--modal windows for story Mode-->
-			<div id="str_0" class="reveal-modal">
-				Your amazing credits here.
-				<a class="close-reveal-modal">&#215;</a>
-			</div>
-			
-			
-		</div>
-	</div>
-
-	
-  <!--<script>
-  //document.write('<script src=' + ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +  '.js><\/script>')
-  </script>-->
-  
+  <div class="container" ng-view></div>
   <script src="js/jquery-2.0.3.min.js"></script>
-  <script src="js/fjquery-migrate-1.2.1.min.js"></script>
-  <script src="js/foundation.min.js"></script>
-  <!--<script src="js/jquery.mobile-1.3.2.min.js"></script>-->
-  <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
   <!--[if lte IE 8]>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
@@ -231,22 +46,5 @@
   <script src="js/vendor/flat_image_zoom/javascripts/leaflet-src.js"></script>
   <script src="js/vendor/flat_image_zoom/javascripts/flat_image_zoom.js"></script>
   <script src="js/vendor/flat_image_zoom/javascripts/jquery.actual.min.js"></script>
-  <script src="js/presenter.js"></script>
-    
-    
-  <script>
-    $(function() {
-      $.getJSON('http://tilesaw.dx.artsmia.org/12111.tif').done(function(tileJson) {
-        console.log("Zoomer.zoom_image({container: 'flat_image', tileURL: " + tileJson.tiles[0] + ", imageWidth: " + tileJson.width + ", imageHeight: " + tileJson.height + "})")
-        window.z = Zoomer.zoom_image({container: 'flat_image', tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
-      })
-    })
-  </script>
-
-
-
-  <script>
-    $(document).foundation();
-  </script>
 </body>
 </html>
