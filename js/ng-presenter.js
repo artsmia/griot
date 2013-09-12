@@ -28,7 +28,7 @@
 
   app.factory('objects', ['$http', function($http) {
     return function() {
-      return $http.get('/objects.json').then(function(result) { return result.data; })
+      return $http.get('objects.json').then(function(result) { return result.data; })
     }
   }])
   app.factory('tilesaw', ['$http', function($http) {
