@@ -62,7 +62,8 @@
           scope.currentImage = image
           tilesaw.get(image).then(function(tileJson) {
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
-            scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileJson.tiles[0], imageWidth: tileJson.width, imageHeight: tileJson.height})
+            var tileUrl = tileJson.tiles[0].replace('http://0', 'http://{s}')
+            scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
             scope.$broadcast('viewChanged')
           })
         }

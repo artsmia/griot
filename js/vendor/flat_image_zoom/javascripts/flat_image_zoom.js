@@ -479,7 +479,7 @@ Zoomer.setupMap = function (zoomer) {
 Zoomer.createTiles = function (zoomer) {
     var tiles = new Zoomer.TileLayer(zoomer.tileURL, {
         noWrap: true,
-        subdomains: ['','0','1','2'],
+        subdomains: ['0','1','2'],
         continuousWorld: false,
         maxZoom: zoomer.map.options.maxZoom,
         minZoom: zoomer.map.options.minZoom,
