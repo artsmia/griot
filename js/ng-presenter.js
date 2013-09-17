@@ -122,7 +122,7 @@
       }
       $scope.toggleView()
 
-      function activeAnnotationAndChangeImageIfNeccessary(note, view) {
+      function activateAnnotationAndChangeImageIfNeccessary(note, view) {
         note.active = true
         $scope.$broadcast('changeView', view)
         $scope.$broadcast('changeGeometry', note.firebase.geometry)
@@ -131,7 +131,7 @@
       $scope.activateNote = function(note, view) {
         var shouldActivate = !note.active
         angular.forEach(view.annotations, function(ann) { ann.active = false })
-        if(shouldActivate) activeAnnotationAndChangeImageIfNeccessary(note, view)
+        if(shouldActivate) activateAnnotationAndChangeImageIfNeccessary(note, view)
       }
 
       $scope.toggleSixbar = function(element) {
