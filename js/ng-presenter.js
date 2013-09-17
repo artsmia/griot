@@ -100,7 +100,7 @@
         $scope.wp = _wp.objects[$scope.id]
         if($scope.wp) {
           $scope.notes = $scope.wp.views
-          $scope.$apply()
+          $scope.$$phase || $scope.$apply()
         }
       })
 
