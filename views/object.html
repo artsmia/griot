@@ -43,7 +43,10 @@
               <ol>
                 <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}">
                   <h3><span class="a-number">{{note.index}}</span>Annotation</h3>
-                  <div ng-bind-html-unsafe="note.description"></div>
+                  <div>
+                    <img ng-show="note.thumb" ng-src="{{note.thumb}}">
+                    <div ng-bind-html-unsafe="note.description"></div>
+                  </div>
                 </li>
               </ol>
             </li>

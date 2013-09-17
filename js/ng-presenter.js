@@ -51,13 +51,15 @@
       restrict: 'E',
       scope: {
         json: '@',
-        image: '@'
+        image: '@',
+        noteThumb: '=noteThumb'
       },
       replace: true,
       transclude: true,
       template: '<div id="{{container}}" class="flatmap"><div ng-transclude></div></div>',
       controller: function($scope) {
         var scope = $scope
+        window.scope = scope
 
         var loadImage = function(image) {
           scope.viewChanging = true
@@ -140,6 +142,20 @@
           flatmapCtrl.scope.lastActiveNote = scope.note
         }
 
+        var thumbnailCurrentMapView = function() {
+          window.thumbs = (window.thumbs || [])
+          leafletImage(scope.map, function(err, canvas) {
+            var img = document.createElement('img');
+            var dimensions = scope.map.getSize();
+            img.width = dimensions.x;
+            img.height = dimensions.y;
+            img.src = canvas.toDataURL();
+            scope.note.thumb = img.src
+          })
+        }
+
+        thumbnailCurrentMapView()
+        // scope.note.thumbnail = thumbnailCurrentMapView()
         scope.marker.addTo(scope.map).on('click', toggleNoteZoom)
       }
     }
@@ -147,6 +163,7 @@
 
   app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects', 'notes',
     function($scope, $routeParams, $location, objects, notes) {
+      window.$scope = $scope
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
