@@ -415,3 +415,19 @@ ol#annotations ol li.active div {
   right: 95%;
   z-index: 10000;
 }
+
+#annotations {
+  transition: all 0.5s;
+}
+#annotations.active {
+  position: absolute;
+  top: 41px;
+  left: 0;
+  height: 665px;
+  background-color: white;
+  width: 384px;
+  padding: 1em;
+  overflow-y: scroll;
+}
+
+.slide-object-nav { z-index: 2000; position: relative; }
