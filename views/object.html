@@ -66,7 +66,7 @@
         <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
         <flatmap image="{{id}}" json="{{notes.geometry}}">
           <div ng-repeat="view in notes">
-            <note ng-repeat="note in view.annotations" note="note" ng-class="{active: note.active}"></note>
+            <note ng-repeat="note in view.annotations" view="view" note="note" ng-class="{active: note.active}"></note>
           </div>
         </flatmap>
       </div>

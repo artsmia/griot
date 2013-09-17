@@ -72,11 +72,15 @@
         loadImage(scope.image)
 
         var annotateAndZoom = function(geometry) {
-          if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+          if(scope.jsonLayer) removeJsonLayer()
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
           if(scope.viewChanging) return
           scope.zoom.map.addLayer(scope.jsonLayer)
           scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
+        }
+
+        var removeJsonLayer = function() {
+          scope.zoom.map.removeLayer(scope.jsonLayer)
         }
 
         scope.$on('changeGeometry', function(event, geometry) { annotateAndZoom(geometry) }, true)
@@ -88,6 +92,7 @@
         return {
           loadImage: loadImage,
           annotateAndZoom: annotateAndZoom,
+          removeJsonLayer: removeJsonLayer,
           scope: scope
         }
       },
@@ -100,11 +105,32 @@
   app.directive('note', function() {
     return {
       restrict: 'E',
-      scope: {note: '='},
+      scope: {note: '=', view: '='},
       controller: function($scope) {},
       require: '^flatmap',
       link: function(scope, element, attrs, flatmapCtrl)  {
         window.noteScope = scope
+        scope.flatmapCtrl = flatmapCtrl
+        scope.map = scope.flatmapCtrl.scope.zoom.map
+        scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
+
+        var zoomNote = function() {
+          flatmapCtrl.scope.$broadcast('changeView', scope.view)
+          flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
+          scope.$apply(function() { scope.active = scope.note.active = true })
+        }
+        var toggleNoteZoom = function() {
+          if(scope.active) {
+            flatmapCtrl.removeJsonLayer()
+            // TODO: reset back to main view? Show view changing chrome?
+            scope.map.zoomOut(100)
+            scope.$apply(function() { scope.active = scope.note.active = false })
+          } else {
+            zoomNote()
+          }
+        }
+
+        L.marker(scope.jsonLayer.getBounds().getCenter()).addTo(scope.map).on('click', toggleNoteZoom)
       }
     }
   })
