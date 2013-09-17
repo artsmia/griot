@@ -415,3 +415,8 @@ ol#annotations ol li.active div {
   right: 95%;
   z-index: 10000;
 }
+
+#about-object {
+  overflow-x: scroll;
+  max-height: 349px;
+}
