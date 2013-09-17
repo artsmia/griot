@@ -53,7 +53,9 @@
         json: '@',
         image: '@'
       },
-      template: '<div id="{{container}}" class="flatmap"></div>',
+      replace: true,
+      transclude: true,
+      template: '<div id="{{container}}" class="flatmap"><div ng-transclude></div></div>',
       controller: function($scope) {
         var scope = $scope
 
@@ -82,9 +84,27 @@
         scope.$on('changeView', function(event, message) {
           if(message.image != scope.currentImage) loadImage(message.image)
         })
+
+        return {
+          loadImage: loadImage,
+          annotateAndZoom: annotateAndZoom,
+          scope: scope
+        }
       },
       link: function(scope, element, attrs) {
         scope.container = 'zoom-' + scope.image + '-' + new Date().getUTCMilliseconds()
+      }
+    }
+  })
+
+  app.directive('note', function() {
+    return {
+      restrict: 'E',
+      scope: {note: '='},
+      controller: function($scope) {},
+      require: '^flatmap',
+      link: function(scope, element, attrs, flatmapCtrl)  {
+        window.noteScope = scope
       }
     }
   })
