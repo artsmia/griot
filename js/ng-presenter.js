@@ -76,6 +76,7 @@
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
+            scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
             scope.jsonLayer.setStyle({stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'})
             scope.zoom.map.addLayer(scope.jsonLayer)
             scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
@@ -174,6 +175,9 @@
         }
       }
       $scope.toggleView()
+      $scope.$on('showAnnotationsPanel', function(view) {
+        $scope.activeSection = 'annotations'
+      })
 
       function activateAnnotationAndChangeImageIfNeccessary(note, view) {
         note.active = true
