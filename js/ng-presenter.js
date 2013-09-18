@@ -74,9 +74,12 @@
         var annotateAndZoom = function(geometry) {
           if(scope.jsonLayer) removeJsonLayer()
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
-          if(scope.viewChanging) return
-          scope.zoom.map.addLayer(scope.jsonLayer)
-          scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
+          if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
+          if(scope.jsonLayer) {
+            scope.jsonLayer.setStyle({stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'})
+            scope.zoom.map.addLayer(scope.jsonLayer)
+            scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
+          }
         }
 
         var removeJsonLayer = function() {
@@ -179,6 +182,7 @@
       }
 
       $scope.activateNote = function(note, view) {
+        // TODO: bubble this up into the directive so it works when clicking markers
         var shouldActivate = !note.active
         angular.forEach(view.annotations, function(ann) { ann.active = false })
         if(shouldActivate) activateAnnotationAndChangeImageIfNeccessary(note, view)
