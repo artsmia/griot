@@ -182,7 +182,7 @@
 
       $scope.toggleSixbar = function(element) {
         $scope.sixBarClosed = !$scope.sixBarClosed
-        // TODO: somehow trigger zoomer centerImageAtExtents inside the flatmap directive?
+        setTimeout(Zoomer.windowResized, 0)
       }
     }
   ])
