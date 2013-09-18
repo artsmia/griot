@@ -113,24 +113,28 @@
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
         scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
+        scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter())
 
         var zoomNote = function() {
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
           flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
-          scope.$apply(function() { scope.active = scope.note.active = true })
+          scope.$apply(function() { scope.note.active = true })
         }
         var toggleNoteZoom = function() {
-          if(scope.active) {
+          if(scope.note.active) {
             flatmapCtrl.removeJsonLayer()
             // TODO: reset back to main view? Show view changing chrome?
             scope.map.zoomOut(100)
-            scope.$apply(function() { scope.active = scope.note.active = false })
+            scope.$apply(function() { scope.note.active = false })
           } else {
             zoomNote()
+            var lastNote = flatmapCtrl.scope.lastActiveNote
+            if(lastNote) lastNote.active = false
           }
+          flatmapCtrl.scope.lastActiveNote = scope.note
         }
 
-        L.marker(scope.jsonLayer.getBounds().getCenter()).addTo(scope.map).on('click', toggleNoteZoom)
+        scope.marker.addTo(scope.map).on('click', toggleNoteZoom)
       }
     }
   })
