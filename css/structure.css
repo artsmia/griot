@@ -16,28 +16,28 @@ body{
      height: 0;
      clear: both;
   }
-  
+
   * html .clearfix             { zoom: 1; } /* IE6 */
   *:first-child+html .clearfix { zoom: 1; } /* IE7 */
 
 /* fluid images */
- 
+
 img {
        max-width: 100%;
   }
-  
+
   img,
   object {
        max-width: 100%;
   }
-  
+
   /* IE specific*/
   img {
        width: 100%;
   }
-  
+
  /* basic structure */
- 
+
  .panel{
 	margin:0 auto;
 	padding:0;
@@ -420,3 +420,19 @@ ol#annotations ol li.active div {
   overflow-x: scroll;
   max-height: 349px;
 }
+
+#annotations {
+  transition: all 0.5s;
+}
+#annotations.active {
+  position: absolute;
+  top: 41px;
+  left: 0;
+  height: 665px;
+  background-color: white;
+  width: 384px;
+  padding: 1em;
+  overflow-y: scroll;
+}
+
+.slide-object-nav { z-index: 2000; position: relative; }

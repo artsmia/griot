@@ -37,7 +37,8 @@
             <p ng-bind-html-unsafe="wp.description || json.description"></p>
           </div><!--end about this object-->
 
-          <ol id="annotations" ng-if="activeSection == 'annotations'">
+          <ol id="annotations" ng-if="activeSection == 'annotations'" ng-class="{active: activeSection == 'annotations'}">
+            <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">&larr; Back</a>
             <li ng-repeat="view in notes">
               <ol>
                 <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}">
