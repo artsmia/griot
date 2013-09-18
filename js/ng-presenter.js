@@ -107,9 +107,10 @@
   })
 
   app.directive('note', function() {
+    var divIcon = L.divIcon({className: 'noteMarker'})
     return {
       restrict: 'E',
-      scope: {note: '=', view: '='},
+      // scope: {note: '=', view: '='},
       controller: function($scope) {},
       require: '^flatmap',
       link: function(scope, element, attrs, flatmapCtrl)  {
@@ -117,7 +118,8 @@
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
         scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
-        scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter())
+        scope.note.index = divIcon.options.html = scope.$parent.$index + scope.$index + 1
+        scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
 
         var zoomNote = function() {
           flatmapCtrl.scope.$broadcast('changeView', scope.view)

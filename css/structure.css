@@ -436,3 +436,14 @@ ol#annotations ol li.active div {
 }
 
 .slide-object-nav { z-index: 2000; position: relative; }
+
+.noteMarker {
+  display: block !important;
+  width: 20px !important;
+  height: 17px !important;
+  background-color: rgba(1, 1, 1, 0.8);
+  border-radius: 10px;
+  transition: 0.25s opacity;
+  color: #fff;
+	font: 700 1em "myriad-pro", sans-serif;
+}
