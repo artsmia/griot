@@ -26,27 +26,36 @@
     }]
   )
 
-  app.factory('objects', ['$http', function($http) {
+  app.constant('envConfig', {
+    objects: 'objects.json',
+    tilesaw: '//localhost:8887/', // //tilesaw.dx.artsmia.org/
+    tileUrlSubdomain: function(tileUrl) {
+      return tileUrl.replace('http://0.', 'http://') //{s}')
+    },
+    crashpad: 'fallback/crashpad.json' // 'http://new.artsmia.org/crashpad/json/'
+  })
+
+  app.factory('objects', ['$http', 'envConfig', function($http, config) {
     return function() {
-      return $http.get('objects.json').then(function(result) { return result.data; })
+      return $http.get(config.objects).then(function(result) { return result.data; })
     }
   }])
-  app.factory('tilesaw', ['$http', function($http) {
+  app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
     return { get: function(image) {
-      return $http.get('//tilesaw.dx.artsmia.org/'+image+'.tif').then(function(result) { return result.data; })
+      return $http.get(config.tilesaw + image + '.tif').then(function(result) { return result.data; })
     }}
   }])
-  app.factory('notes', ['$http', function($http) {
+  app.factory('notes', ['$http', 'envConfig', function($http, config) {
     return function() {
       // TODO: how do we want to cache/bundle the JSON? WP is slow
       // also cache it within ng so we aren't requesting/parsing it on each request
-      return $http.get('http://new.artsmia.org/crashpad/json/').then(function(result) {
+      return $http.get(config.crashpad).then(function(result) {
         return result.data;
       })
     }
   }])
 
-  app.directive('flatmap', function(tilesaw) {
+  app.directive('flatmap', function(tilesaw, envConfig) {
     return {
       restrict: 'E',
       scope: {
@@ -64,7 +73,7 @@
           scope.currentImage = image
           tilesaw.get(image).then(function(tileJson) {
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
-            var tileUrl = tileJson.tiles[0].replace('http://0', 'http://{s}')
+            var tileUrl = envConfig.tileUrlSubdomain(tileJson.tiles[0])
             scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
             scope.$broadcast('viewChanged')
           })
