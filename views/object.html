@@ -20,9 +20,10 @@
           <h6>{{json.country}}, {{json.continent}}. {{json.dated}}</h6>
         </div>
         <div class="object-nav clearfix">
-          <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About the Object</a>
-          <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Annotations</a>
-          <a id="rel-stories.b" class="wide">Related Stories</a>
+          <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
+          <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Details</a>
+          <a id="more.b">More</a>
+          <a id="views.b" ng-class="{selected: activeSection == 'views'}" ng-click="toggleView('views')">Views</a>
           <!--<a id="rel-objects.b">Related Objects</a>-->
         </div>
         <div class="object-stories">
