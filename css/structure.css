@@ -416,12 +416,15 @@ ol#annotations ol li.active div {
 }
 
 #about-object {
-  overflow-x: scroll;
-  max-height: 349px;
+}
+#info {
+  overflow-y: scroll;
+  height: 704px;
 }
 
 #annotations {
   transition: all 0.5s;
+  background-color: white;
 }
 #annotations.active {
   position: absolute;
@@ -431,7 +434,7 @@ ol#annotations ol li.active div {
   background-color: white;
   width: 384px;
   padding: 1em;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .slide-object-nav { z-index: 2000; position: relative; }
