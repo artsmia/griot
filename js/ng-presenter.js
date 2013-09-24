@@ -169,12 +169,8 @@
         if(prev) $location.url('/o/'+prev)
       }
 
-      $scope.toggleView = function(about_or_annotations) {
-        if(about_or_annotations && about_or_annotations.match('annotations')) {
-          $scope.activeSection = 'annotations'
-        } else {
-          $scope.activeSection = 'about'
-        }
+      $scope.toggleView = function(nextView) {
+        $scope.activeSection = nextView || 'about'
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {
@@ -192,6 +188,10 @@
         var shouldActivate = !note.active
         angular.forEach(view.annotations, function(ann) { ann.active = false })
         if(shouldActivate) activateAnnotationAndChangeImageIfNeccessary(note, view)
+      }
+
+      $scope.activateView = function(view) {
+        $scope.$broadcast('changeView', view)
       }
 
       $scope.toggleSixbar = function(element) {

@@ -446,3 +446,11 @@ ol#annotations ol li.active div {
   color: #fff;
 	font: 700 1em "myriad-pro", sans-serif;
 }
+
+.object-stories #views {
+  list-style: none;
+}
+.object-stories #views img {
+  max-width: 33.3%;
+  float: left;
+}
