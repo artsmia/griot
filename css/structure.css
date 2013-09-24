@@ -177,7 +177,6 @@ img {
 
 .slide-object-nav{
 	float:right;
-	margin-top:-60px;
 	border:1px solid #666;
 	color:#333;
 	-webkit-box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
@@ -411,7 +410,7 @@ ol#annotations ol li.active div {
 }
 #zoomer .typcn-chevron-right {
   position: relative;
-  top: 4em;
+  top: 2em;
   right: 95%;
   z-index: 10000;
 }
