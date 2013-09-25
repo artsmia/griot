@@ -437,12 +437,45 @@ ol#annotations ol li.active div {
 .slide-object-nav { z-index: 2000; position: relative; }
 
 .noteMarker {
-  display: block !important;
-  width: 20px !important;
-  height: 17px !important;
-  background-color: rgba(1, 1, 1, 0.8);
-  border-radius: 10px;
   transition: 0.25s opacity;
   color: #fff;
 	font: 700 1em "myriad-pro", sans-serif;
+  opacity: 0;
+  transition: opacity 0.25s 2s;
+}
+
+.noteMarker span {
+  display: block !important;
+  width: 20px !important;
+  height: 17px !important;
+  background-color: rgba(1, 1, 1, 0.7);
+  border-radius: 10px;
+  margin: -9px 0 0 -9px;
+  transition: 0.25s background-color, 0.25s -webkit-transform;
+}
+
+.noteMarker:hover span, .noteMarker:active span {
+  background-color: rgba(1, 1, 1, 0.8);
+  -webkit-transform: scale(1.1);
+}
+
+/* @media screen and (min-device-width : 768px) and (max-device-width : 1024px) { */
+  .noteMarker {
+    padding: 2em;
+    margin: -2em !important;
+    text-align: center;
+  }
+/* } */
+
+.leaflet-map-pane .leaflet-overlay-pane {
+  transition: opacity 0.25s 2s;
+  opacity: 0;
+}
+.leaflet-map-pane:hover .leaflet-overlay-pane, .leaflet-map-pane:active .leaflet-overlay-pane, #zoomer.annotations .leaflet-overlay-pane {
+  opacity: 1;
+  transition: opacity 0.25s 0s;
+}
+.leaflet-map-pane:hover .noteMarker, .leaflet-map-pane:active .noteMarker, #zoomer.annotations .noteMarker {
+  opacity: 1;
+  transition: opacity 0.25s 0s;
 }

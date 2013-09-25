@@ -57,7 +57,7 @@
 
         </div>
       </div>
-      <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed}">
+      <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed, annotations: activeSection == 'annotations'}">
         <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
         <flatmap image="{{id}}" json="{{notes.geometry}}">
           <div ng-repeat="view in notes">

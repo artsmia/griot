@@ -118,7 +118,8 @@
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
         scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
-        scope.note.index = divIcon.options.html = scope.$parent.$index + scope.$index + 1
+        scope.note.index = scope.$parent.$index + scope.$index + 1
+        divIcon.options.html = "<span>" + scope.note.index + "</span>"
         scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
 
         var zoomNote = function() {
