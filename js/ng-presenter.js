@@ -143,7 +143,18 @@
           }
         })
 
-        scope.marker.addTo(scope.map).on('click', toggleNoteZoom)
+        flatmapCtrl.scope.$watch('image', function(newVal, oldVal) {
+          // scope.marker.setOpacity(newVal == scope.$parent.view.image ? 1 : 0)
+          if(newVal == scope.$parent.view.image) {
+            scope.marker.setOpacity(1)
+            scope.marker.on('click', toggleNoteZoom)
+          } else {
+            scope.marker.setOpacity(0)
+            scope.marker.off('click', toggleNoteZoom)
+          }
+        })
+
+        scope.marker.addTo(scope.map)
       }
     }
   })
