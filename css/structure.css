@@ -388,7 +388,7 @@ img {
 	padding:1em;
 }
 
-#flat_image, .flatmap {
+#zoomer #flat_image, #zoomer .flatmap {
   position: relative;
   width: 100%;
   height: 100%;
@@ -516,4 +516,18 @@ ol#annotations ol li.active div {
 #objectMode.showViews .flatmap [class^=leaflet-] {
   opacity: 0;
   display: none;
+}
+
+article.story .flatmap {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+}
+
+article.story nav img {
+  max-width: 10%;
+}
+
+article.story video {
+  max-width: 100%;
 }

@@ -15,6 +15,9 @@
       }).when('/a/:id', {
         templateUrl: 'views/annotations.html',
         controller: 'notesCtrl'
+      }).when('/stories/:id', {
+        templateUrl: 'views/story.html',
+        controller: 'storyCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -124,7 +127,8 @@
 
         scope.$on('viewChanged', function() {
           scope.zoom.map.on('zoomedBeyondMin', function(e) {
-            scope.$parent.changeZoomerForViews(this, scope)
+            if(scope.$parent && scope.$parent.changeZoomerForViews)
+              scope.$parent.changeZoomerForViews(this, scope)
           })
         })
 
@@ -242,6 +246,10 @@
             })
             $scope.$$phase || $scope.$apply()
           })
+
+          // $scope.notes = $scope.wp.views
+          $scope.relatedStories = _wp.stories // TODO: fix to_json to output stories as a hash keyed on ids?
+          $scope.$$phase || $scope.$apply()
         }
       })
 
@@ -307,6 +315,22 @@
       }
     }
   ])
+
+  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'notes', function($scope, $routeParams, $sce, wp) {
+    wp().then(function(wordpress) {
+      window.$scope = $scope
+      $scope.id = $routeParams.id
+      window.wordpress = wordpress
+      // TODO: fix to_json to output stories as a hash keyed on ids
+      // $scope.story = wordpress.stories[$scope.id]
+      $scope.story = wordpress.stories[1]
+      angular.forEach($scope.story.pages, function(page) {
+        page.trustedText = $sce.trustAsHtml(page.text)
+      })
+      $scope.relatedObjects = wordpress.objects // TODO: correlate the WP id for each object with the TMS id
+    })
+
+  }])
 
   app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     function($scope, $routeParams, wp) {

@@ -1,0 +1,19 @@
+<article class="story">
+  <h1 ng-bind="story.title"></h1>
+
+  <section ng-repeat="page in story.pages">
+    <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
+    <video ng-if="page.type == 'video'">
+      <source ng-src="{{page.video}}"></source>
+    </video>
+
+    <div ng-bind-html="page.trustedText"></div>
+  </section>
+
+  <nav title="Related Objects">
+    <a href="javascript: history.go(-1)">&larr; Back</a>
+    <!-- <a ng-repeat="object in relatedObjects" href="#/o/{{object.id}}"> -->
+    <!--   <img ng-src="//api.artsmia.org/images/{{object.id}}/300/small.jpg" alt=""> -->
+    <!-- </a> -->
+  </nav>
+</article>
