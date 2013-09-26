@@ -479,3 +479,11 @@ ol#annotations ol li.active div {
   opacity: 1;
   transition: opacity 0.25s 0s;
 }
+
+.object-stories #views {
+  list-style: none;
+}
+.object-stories #views img {
+  max-width: 33.3%;
+  float: left;
+}

@@ -22,14 +22,24 @@
         <div class="object-nav clearfix">
           <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
           <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Details</a>
-          <a id="more.b">More</a>
+          <a id="more.b" ng-class="{selected: activeSection == 'more'}" ng-click="toggleView('more')">More</a>
           <a id="views.b" ng-class="{selected: activeSection == 'views'}" ng-click="toggleView('views')">Views</a>
-          <!--<a id="rel-objects.b">Related Objects</a>-->
         </div>
+
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
             <p ng-bind-html-unsafe="wp.description || json.description"></p>
           </div><!--end about this object-->
+
+          <ol id="views" ng-if="activeSection == 'views'" ng-class="{active: activeSection == 'views'}">
+            <li ng-repeat="view in notes">
+              <a ng-click="activateView(view)">
+                <img ng-src="//api.artsmia.org/images/1/tdx/300/{{view.image}}.tif">
+              </a>
+            </li>
+          </ol>
+
+          <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">MORE</div>
 
           <ol id="annotations" ng-if="activeSection == 'annotations'" ng-class="{active: activeSection == 'annotations'}">
             <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">&larr; Back</a>
@@ -59,7 +69,7 @@
       </div>
       <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed, annotations: activeSection == 'annotations'}">
         <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
-        <flatmap image="{{id}}" json="{{notes.geometry}}">
+        <flatmap image="{{id}}">
           <div ng-repeat="view in notes">
             <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
           </div>

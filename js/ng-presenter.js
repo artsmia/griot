@@ -59,9 +59,14 @@
       controller: function($scope) {
         var scope = $scope
 
+        var removeJsonLayer = function() {
+          if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+        }
+
         var loadImage = function(image) {
           scope.viewChanging = true
-          scope.currentImage = image
+          scope.image = image
+          removeJsonLayer(); scope.jsonLayer = null
           tilesaw.get(image).then(function(tileJson) {
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
             var tileUrl = tileJson.tiles[0].replace('http://0', 'http://{s}')
@@ -72,7 +77,7 @@
         loadImage(scope.image)
 
         var annotateAndZoom = function(geometry) {
-          if(scope.jsonLayer) removeJsonLayer()
+          removeJsonLayer()
           if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
@@ -83,14 +88,10 @@
           }
         }
 
-        var removeJsonLayer = function() {
-          scope.zoom.map.removeLayer(scope.jsonLayer)
-        }
-
         scope.$on('changeGeometry', function(event, geometry) { annotateAndZoom(geometry) }, true)
         scope.$on('viewChanged', function(event, message) { scope.viewChanging = false; annotateAndZoom() }, true)
         scope.$on('changeView', function(event, message) {
-          if(message.image != scope.currentImage) loadImage(message.image)
+          if(message.image != scope.image) loadImage(message.image)
         })
 
         return {
@@ -114,34 +115,47 @@
       controller: function($scope) {},
       require: '^flatmap',
       link: function(scope, element, attrs, flatmapCtrl)  {
-        window.noteScope = scope
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
         scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
         scope.note.index = scope.$parent.$index + scope.$index + 1
         divIcon.options.html = "<span>" + scope.note.index + "</span>"
         scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
+        scope.note.active = false
 
         var zoomNote = function() {
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
           flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
-          scope.$apply(function() { scope.note.active = true })
+          scope.note.active = true
         }
         var toggleNoteZoom = function() {
-          if(scope.note.active) {
-            flatmapCtrl.removeJsonLayer()
-            // TODO: reset back to main view? Show view changing chrome?
-            scope.map.zoomOut(100)
-            scope.$apply(function() { scope.note.active = false })
-          } else {
-            zoomNote()
-            var lastNote = flatmapCtrl.scope.lastActiveNote
-            if(lastNote) lastNote.active = false
-          }
-          flatmapCtrl.scope.lastActiveNote = scope.note
+          scope.$apply(function() { scope.note.active = !scope.note.active })
         }
 
-        scope.marker.addTo(scope.map).on('click', toggleNoteZoom)
+        scope.$watch('note.active', function(newVal, oldVal) {
+          if(!newVal && oldVal && scope.note == flatmapCtrl.scope.lastActiveNote) {
+            flatmapCtrl.removeJsonLayer()
+            scope.map.zoomOut(100)
+          } else if(newVal && !oldVal) {
+            var lastNote = flatmapCtrl.scope.lastActiveNote
+            if(lastNote) lastNote.active = false
+            zoomNote()
+            flatmapCtrl.scope.lastActiveNote = scope.note
+          }
+        })
+
+        flatmapCtrl.scope.$watch('image', function(newVal, oldVal) {
+          // scope.marker.setOpacity(newVal == scope.$parent.view.image ? 1 : 0)
+          if(newVal == scope.$parent.view.image) {
+            scope.marker.setOpacity(1)
+            scope.marker.on('click', toggleNoteZoom)
+          } else {
+            scope.marker.setOpacity(0)
+            scope.marker.off('click', toggleNoteZoom)
+          }
+        })
+
+        scope.marker.addTo(scope.map)
       }
     }
   })
@@ -170,29 +184,34 @@
         if(prev) $location.url('/o/'+prev)
       }
 
-      $scope.toggleView = function(about_or_annotations) {
-        if(about_or_annotations && about_or_annotations.match('annotations')) {
-          $scope.activeSection = 'annotations'
-        } else {
-          $scope.activeSection = 'about'
-        }
+      $scope.toggleView = function(nextView) {
+        $scope.activeSection = nextView || 'about'
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {
         $scope.activeSection = 'annotations'
       })
 
-      function activateAnnotationAndChangeImageIfNeccessary(note, view) {
-        note.active = true
-        $scope.$broadcast('changeView', view)
-        $scope.$broadcast('changeGeometry', note.firebase.geometry)
+      $scope.activateNote = function(note, view) {
+        note.active = !note.active
       }
 
-      $scope.activateNote = function(note, view) {
-        // TODO: bubble this up into the directive so it works when clicking markers
-        var shouldActivate = !note.active
-        angular.forEach(view.annotations, function(ann) { ann.active = false })
-        if(shouldActivate) activateAnnotationAndChangeImageIfNeccessary(note, view)
+      $scope.deactivateAllNotes = function() {
+        angular.forEach($scope.notes, function(view) {
+          angular.forEach(view.annotations, function(ann) { ann.active = false; })
+        })
+        $scope.$$phase || $scope.$apply()
+      }
+
+      $scope.activateView = function(view) {
+        // TODO: encapsulate active view the same way I do notes, with view.active?
+        $scope.deactivateAllNotes()
+        $scope.$broadcast('changeView', view)
+      }
+      $scope.activateViewAndShowFirstAnnotation = function(view) {
+        $scope.activateView(view)
+        var note = view.annotations[0]
+        if(note) activateNote(note)
       }
 
       $scope.toggleSixbar = function(element) {
