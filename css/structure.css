@@ -262,7 +262,10 @@ img {
 #objectMode .large-10{
 	background-color:#ccc;
 	text-align:center;
-	padding:30px 0;
+	padding: 30px 0;
+}
+#objectMode .large-10.full_width {
+  padding: 10px 0;
 }
 
 #objectMode .object-nav{
@@ -440,11 +443,10 @@ ol#annotations ol li.active div {
 .slide-object-nav { z-index: 2000; position: relative; }
 
 .noteMarker {
-  transition: 0.25s opacity;
   color: #fff;
 	font: 700 1em "myriad-pro", sans-serif;
   opacity: 0;
-  transition: opacity 0.25s 2s;
+  /* transition: opacity 0.25s 2s; */
 }
 
 .noteMarker span {
