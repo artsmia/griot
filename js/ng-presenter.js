@@ -80,7 +80,7 @@
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
             var tileUrl = envConfig.tileUrlSubdomain(tileJson.tiles[0])
             scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
-            scope.$broadcast('viewChanged')
+            scope.$emit('viewChanged')
           })
         }
         loadImage(scope.image)
@@ -179,8 +179,10 @@
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
         if($scope.wp) {
-          $scope.notes = $scope.wp.views
-          $scope.$$phase || $scope.$apply()
+          $scope.$on('viewChanged', function() {
+            $scope.notes = $scope.wp.views
+            $scope.$$phase || $scope.$apply()
+          })
         }
       })
 
