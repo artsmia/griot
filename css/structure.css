@@ -116,7 +116,7 @@ img {
 	color:#222;
 }
 
-.icon:hover, .icon a:hover{
+.icon:hover, .icon a:hover, #bottomNav:hover .icon {
 	color:red;
 }
 
