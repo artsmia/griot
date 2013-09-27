@@ -28,7 +28,7 @@
 
   app.constant('envConfig', {
     objects: 'objects.json',
-    tilesaw: '//localhost:8887/', // //tilesaw.dx.artsmia.org/
+    tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
     tileUrlSubdomain: function(tileUrl) {
       return tileUrl.replace('http://0.', 'http://') //{s}')
     },
