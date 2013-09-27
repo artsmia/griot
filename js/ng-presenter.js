@@ -92,8 +92,10 @@
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
             scope.jsonLayer.setStyle({stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'})
-            scope.zoom.map.addLayer(scope.jsonLayer)
-            scope.zoom.map.fitBounds(scope.jsonLayer.getBounds())
+            var map = scope.zoom.map
+            map.addLayer(scope.jsonLayer)
+            map.zoomOut(100) // zoom all the way out and back in. Leaflet is misbehaving when zooming outside the current bounds, and this is a bit sketchy of a fix
+            setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 300)
           }
         }
 
