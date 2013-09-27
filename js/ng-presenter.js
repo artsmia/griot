@@ -37,19 +37,19 @@
 
   app.factory('objects', ['$http', 'envConfig', function($http, config) {
     return function() {
-      return $http.get(config.objects).then(function(result) { return result.data; })
+      return $http.get(config.objects, {cache: true}).then(function(result) { return result.data; })
     }
   }])
   app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
     return { get: function(image) {
-      return $http.get(config.tilesaw + image + '.tif').then(function(result) { return result.data; })
+      return $http.get(config.tilesaw + image + '.tif', {cache: true}).then(function(result) { return result.data; })
     }}
   }])
   app.factory('notes', ['$http', 'envConfig', function($http, config) {
     return function() {
       // TODO: how do we want to cache/bundle the JSON? WP is slow
       // also cache it within ng so we aren't requesting/parsing it on each request
-      return $http.get(config.crashpad).then(function(result) {
+      return $http.get(config.crashpad, {cache: true}).then(function(result) {
         return result.data;
       })
     }
