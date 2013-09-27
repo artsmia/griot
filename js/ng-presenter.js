@@ -95,7 +95,7 @@
             var map = scope.zoom.map
             map.addLayer(scope.jsonLayer)
             map.zoomOut(100) // zoom all the way out and back in. Leaflet is misbehaving when zooming outside the current bounds, and this is a bit sketchy of a fix
-            setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 300)
+            setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 500)
           }
         }
 
