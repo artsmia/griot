@@ -31,7 +31,9 @@
             </li>
           </ol>
 
-          <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">MORE</div>
+          <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
+            <tombstone></tombstone>
+          </div>
 
           <ol id="annotations" ng-if="activeSection == 'annotations'" ng-class="{active: activeSection == 'annotations'}">
             <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">&larr; Back</a>
