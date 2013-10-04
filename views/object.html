@@ -1,19 +1,11 @@
 <div class="row" id="objectMode">
   <div class="large-16 columns ipadlandscape">
-    <div id="topNav" class="mainnav">
-      <div class="icon-container">
-        <a class="typcn typcn-home home icon homeicon" href="."></a>
-        <span class="typcn typcn-chevron-left up-arrow icon" ng-click="prev()"></span>
-        <a href="#" data-dropdown="drop-nav" class="typcn typcn-th-menu menu icon"></a>
-        <ul id="drop-nav" class="f-dropdown" data-dropdown-content>
-          <li><a href="#" class="allobjects">View All Objects</a></li>
-          <li><a href="#" class="allstories">View All Stories</a></li>
-        </ul>
-      </div>
-    </div>
     <div id="object-content" ng-hide="sixBarClosed">
       <div id="info" class="large-6 columns">
-        <div class="typcn typcn-chevron-left icon slide-object-nav" ng-click="toggleSixbar(this)"></div>
+        <nav>
+          <a id="back" class="typcn typcn-chevron-left icon slide-object-nav" href="#" title="Back"></a>
+          <div id="full" class="typcn typcn-arrow-maximise icon slide-object-nav" ng-click="toggleSixbar(this)" title="Show image fullscreen"></div>
+        </nav>
         <div class="tombstone">
           <h3>{{json.title}}</h3>
           <h5>{{json.artist}} {{json.culture}}</h5>
@@ -68,17 +60,12 @@
         </div>
       </div>
       <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed, annotations: activeSection == 'annotations'}">
-        <div class="typcn typcn-chevron-right icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
+        <div class="typcn typcn-arrow-minimise icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
         <flatmap image="{{id}}">
           <div ng-repeat="view in notes">
             <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
           </div>
         </flatmap>
-      </div>
-      <div id="bottomNav" class="mainnav" ng-click="next()">
-        <div class="icon-container">
-          <span class="typcn typcn-chevron-left down-arrow icon"></span>
-        </div>
       </div>
     </div>
 
