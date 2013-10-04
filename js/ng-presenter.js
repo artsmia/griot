@@ -167,6 +167,7 @@
         })
 
         scope.marker.addTo(scope.map)
+
       }
     }
   })
@@ -231,6 +232,11 @@
 
       $scope.toggleView = function(nextView) {
         $scope.activeSection = nextView || 'about'
+        if(nextView == 'annotations') {
+          setTimeout(function() {
+            document.querySelector('ol#annotations').scrollIntoView()
+          }, 0)
+        }
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {

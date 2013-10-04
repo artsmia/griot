@@ -417,10 +417,8 @@ ol#annotations, ol#annotations ol {
 }
 
 ol#annotations ol li div {
-  display: none
 }
 ol#annotations ol li.active div {
-  display: block;
 }
 
 #zoomer.full_width {
@@ -442,16 +440,15 @@ ol#annotations ol li.active div {
 
 #annotations {
   transition: all 0.5s;
-  background-color: white;
 }
 #annotations.active {
-  position: absolute;
-  top: 41px;
-  left: 0;
-  height: 665px;
-  background-color: white;
-  width: 384px;
-  padding: 1em;
+  /* position: absolute; */
+  /* top: 41px; */
+  /* left: 0; */
+  /* height: 665px; */
+  /* background-color: white; */
+  /* width: 384px; */
+  /* padding: 1em; */
   /* overflow-y: scroll; */
 }
 
