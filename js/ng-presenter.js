@@ -2,7 +2,7 @@
 
 (function() {
   'use strict'
-  window.app = angular.module('presenter', []);
+  window.app = angular.module('presenter', ['ngRoute']);
 
   app.config(
     ['$routeProvider', function($routeProvider) {
@@ -171,18 +171,50 @@
     }
   })
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects', 'notes',
-    function($scope, $routeParams, $location, objects, notes) {
+  app.filter('titleCase', function () {
+    return function (input) {
+      var words = input.split(' ');
+      for (var i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(' ');
+    } // https://gist.github.com/maruf-nc/5625869
+  });
+
+  app.directive('tombstone', function() {
+    return {
+      restrict: 'E',
+      // scope: {info: '='},
+      controller: function($scope) {},
+      require: '',
+      replace: true,
+      template: '<dl><dt ng-repeat-start="field in fields">{{field | titleCase}}</dt><dd ng-repeat-end="">{{json[field]}}</dd></dl>',
+      link: function(scope, element, attrs)  {
+        scope.fields = ['medium', 'culture', 'dated', 'country', 'continent', 'style',
+          'dimension', 'description', 'text', 'creditline', 'marks', 'room']
+      }
+    }
+  })
+
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes',
+    function($scope, $routeParams, $location, $sce, objects, notes) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
+        $scope.json.trustedDescription = $sce.trustAsHtml($scope.json.description)
         $scope.objects = data
       })
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
         if($scope.wp) {
+          $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
           $scope.$on('viewChanged', function() {
             $scope.notes = $scope.wp.views
+            angular.forEach($scope.notes, function(view) {
+              angular.forEach(view.annotations, function(ann) {
+                ann.trustedDescription = $sce.trustAsHtml(ann.description)
+              })
+            })
             $scope.$$phase || $scope.$apply()
           })
         }

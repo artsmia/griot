@@ -28,7 +28,7 @@
 
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
-            <p ng-bind-html-unsafe="wp.description || json.description"></p>
+            <p ng-bind-html="wp.trustedDescription || json.trustedDescription"></p>
           </div><!--end about this object-->
 
           <ol id="views" ng-if="activeSection == 'views'" ng-class="{active: activeSection == 'views'}">
@@ -47,7 +47,7 @@
               <ol>
                 <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}">
                   <h3><span class="a-number">{{note.index}}</span>Annotation</h3>
-                  <div ng-bind-html-unsafe="note.description"></div>
+                  <div ng-bind-html="note.trustedDescription"></div>
                 </li>
               </ol>
             </li>
