@@ -233,9 +233,14 @@
       $scope.toggleView = function(nextView) {
         $scope.activeSection = nextView || 'about'
         if(nextView == 'annotations') {
-          setTimeout(function() {
-            document.querySelector('ol#annotations').scrollIntoView()
-          }, 0)
+          if(!$scope.notes) $scope.notes = $scope.wp.views
+          var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
+          if(firstNote) {
+            $scope.activateNote(firstNote, $scope.notes[0])
+            setTimeout(function() {
+              document.querySelector('ol#annotations').scrollIntoView()
+            }, 0)
+          }
         }
       }
       $scope.toggleView()
@@ -244,6 +249,7 @@
       })
 
       $scope.activateNote = function(note, view) {
+        $scope.activeView = view
         note.active = !note.active
       }
 
@@ -256,6 +262,7 @@
 
       $scope.activateView = function(view) {
         // TODO: encapsulate active view the same way I do notes, with view.active?
+        $scope.activeView = view
         $scope.deactivateAllNotes()
         $scope.$broadcast('changeView', view)
       }
