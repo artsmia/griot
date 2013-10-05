@@ -93,7 +93,7 @@ img {
 /* ipad landscape-specific */
 
 .ipadlandscape{
-	height:748px;
+	height:768px;
 }
 
 .icon-container{
@@ -421,6 +421,11 @@ ol#annotations ol li div {
 ol#annotations ol li.active div {
 }
 
+#zoomer {
+  min-height: 768px;
+  height: 768px;
+  height: 100vh !important;
+}
 #zoomer.full_width {
   width: 100%;
 }
@@ -430,12 +435,11 @@ ol#annotations ol li.active div {
   right: 95%;
   z-index: 10000;
 }
-
-#about-object {
-}
 #info {
   overflow-y: scroll;
-  height: 704px;
+  min-height: 768px;
+  height: 768px;
+  height: 100vh;
 }
 
 #annotations {
