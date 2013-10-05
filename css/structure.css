@@ -452,6 +452,20 @@ ol#annotations ol li.active div {
   /* padding: 1em; */
   /* overflow-y: scroll; */
 }
+#annotations li.active:before {
+  content: "";
+  /* height: 30%; */
+  width: 1em;
+  position: absolute;
+  right: 0;
+  display: block;
+  z-index: 1000000000;
+  border-top: 19px solid transparent;
+  border-right: 19px solid #ddd;
+  border-bottom: 19px solid transparent;
+
+}
+
 
 .slide-object-nav { z-index: 2000; position: relative; }
 
