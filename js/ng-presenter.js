@@ -163,6 +163,12 @@
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
           flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
           scope.note.active = true
+          scrollNoteTextIntoView()
+        }
+        var scrollNoteTextIntoView = function() { // this is hacky
+          var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
+          if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
+          console.log(noteEl)
         }
         var toggleNoteZoom = function() {
           scope.$apply(function() { scope.note.active = !scope.note.active })
