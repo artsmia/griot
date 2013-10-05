@@ -70,6 +70,24 @@
 
         var removeJsonLayer = function() {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+          if(scope.inverseLayer) scope.zoom.map.removeLayer(scope.inverseLayer)
+        }
+
+        var showJsonLayer = function(fadeAfter, inverse) {
+          if(!scope.jsonLayer) return
+          var layerStyle = {stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'},
+            addLayer = null
+
+          if(inverse) {
+            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs, scope.jsonLayer._latlngs])
+            scope.inverseLayer.setStyle({fill: true, fillColor: '#000', fillOpacity: '0.5', stroke: false})
+            addLayer = scope.inverseLayer
+          } else {
+            scope.jsonLayer.setStyle(layerStyle)
+            addLayer = scope.jsonLayer
+          }
+          scope.zoom.map.addLayer(addLayer)
+          // if(fadeAfter) setTimeout(removeJsonLayer, fadeAfter)
         }
 
         var loadImage = function(image) {
@@ -91,11 +109,10 @@
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
-            scope.jsonLayer.setStyle({stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'})
             var map = scope.zoom.map
-            map.addLayer(scope.jsonLayer)
             map.zoomOut(100) // zoom all the way out and back in. Leaflet is misbehaving when zooming outside the current bounds, and this is a bit sketchy of a fix
             setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 500)
+            showJsonLayer(3000, true)
           }
         }
 
@@ -109,6 +126,7 @@
           loadImage: loadImage,
           annotateAndZoom: annotateAndZoom,
           removeJsonLayer: removeJsonLayer,
+          showJsonLayer: showJsonLayer,
           scope: scope
         }
       },
@@ -167,7 +185,6 @@
         })
 
         scope.marker.addTo(scope.map)
-
       }
     }
   })
