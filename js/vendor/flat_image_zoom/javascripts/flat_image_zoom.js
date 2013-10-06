@@ -319,6 +319,74 @@ Zoomer.Map.TouchZoom = L.Map.TouchZoom.extend({
     }
 });
 
+// MIA_START
+// Don't let the image drag too far out of the map container.
+var oldMapDragAddHooks = L.Map.Drag.prototype.addHooks;
+L.Map.Drag.include({
+  addHooks: function() {
+    oldMapDragAddHooks.bind(this)();
+    this._draggable._map = this._map;
+  }
+});
+
+L.Draggable.include({
+  _clampImageInsideContainer: function() {
+    var map = this._map;
+    map._getEdgeDeltas();
+    var play = 100;
+    return ((map._edgeDeltas.dw > play && map._edgeDeltas.de > play) ||
+            (map._edgeDeltas.dw < -play && map._edgeDeltas.de < -play) ||
+            (map._edgeDeltas.ds > play && map._edgeDeltas.dn > play) ||
+            (map._edgeDeltas.ds < -play && map._edgeDeltas.dn < -play));
+  },
+  _distanceToOrigin: function(point) {
+    return point.distanceTo(L.point(0, 0));
+  },
+  _onMove: function (e) {
+    if (e.touches && e.touches.length > 1) { return; }
+
+    var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
+    newPoint = new L.Point(first.clientX, first.clientY),
+    diffVec = newPoint.subtract(this._startPoint);
+
+    if (!diffVec.x && !diffVec.y) { return; }
+
+    L.DomEvent.preventDefault(e);
+
+    if (!this._moved) {
+      this.fire('dragstart');
+      this._moved = true;
+
+      this._startPos = L.DomUtil.getPosition(this._element).subtract(diffVec);
+
+      if (!L.Browser.touch) {
+        L.DomUtil.disableTextSelection();
+        this._setMovingCursor();
+      }
+    }
+
+    this._newPos = this._startPos.add(diffVec);
+
+    if (this._clampImageInsideContainer()) {
+      var clampToO = null, newToO = null;
+      if(!this._clampPos) {
+        this._clampPos = this._newPos;
+      } else {
+        var dto = this._distanceToOrigin;
+        clampToO = dto(this._clampPos);
+        newToO = dto(this._newPos);
+      }
+      if(newToO > clampToO) return;
+    }
+
+    this._moving = true;
+
+    L.Util.cancelAnimFrame(this._animRequest);
+    this._animRequest = L.Util.requestAnimFrame(this._updatePosition, this, true, this._dragStartTarget);
+  },
+});
+// MIA_END
+
 // function to get img size across browsers (IE 8 doesn't have naturalHeight/Width)
 Zoomer._getNatural = function (DOMelement) {
     if (DOMelement.naturalWidth) {
