@@ -62,6 +62,9 @@ Zoomer.Map = L.Map.extend({
             crs = this.options.crs,
             nextHigherZoom = (zoom <= -1) ? 0 : Math.ceil(zoom);
         if (nextHigherZoom > max) { nextHigherZoom = max; }
+        if(zoom == min-1) { // this is a shift-doubleclick zoom
+          this.fire('zoomedBeyondMin');
+        }
         zoom = Math.max(min, Math.min(max, zoom));
         if (this._zoomer && this._zoomer.tiles) {
             nextHigherZoom = (this._zoomer.noTiles && min === max) ? 0 : nextHigherZoom;
@@ -222,6 +225,7 @@ Zoomer.Map.TouchZoom = L.Map.TouchZoom.extend({
             this._scale = map.getZoomScale(map.getMaxZoom());
         }
         if (zoom < map.getMinZoom()) {
+            if(zoom < map.getMinZoom() - 1) map.fire('zoomedBeyondMin');
             this._scale = map.getZoomScale(map.getMinZoom());
         }
         // WAC_END

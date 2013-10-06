@@ -317,16 +317,6 @@ img {
 	min-height:150px;
 }
 
-/* right now image is pre-sized to 768x632 */
-
-#objectMode .large-10 img{
-	margin:0 auto;
-	max-width:95%;
-	max-height:688px;
-	width:auto;
-}
-
-
 /* STORY MODE */
 /*
 #storyMode {
@@ -501,10 +491,18 @@ ol#annotations ol li.active div {
   transition: opacity 0.25s 0s;
 }
 
-.object-stories #views {
-  list-style: none;
-}
-.object-stories #views img {
-  max-width: 33.3%;
+.flatmap .view img {
+  max-width: 33.3% !important;
   float: left;
+}
+.flatmap .view {
+  display: none;
+}
+#objectMode.showViews .flatmap .view {
+  display: inline;
+  min-height: 3em;
+}
+#objectMode.showViews .flatmap [class^=leaflet-] {
+  opacity: 0;
+  display: none;
 }
