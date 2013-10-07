@@ -138,6 +138,7 @@
       },
       link: function(scope, element, attrs) {
         scope.container = 'zoom-' + scope.image + '-' + new Date().getUTCMilliseconds()
+        element.attr('id', scope.container)
       }
     }
   })
