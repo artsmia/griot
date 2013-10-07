@@ -93,7 +93,7 @@ img {
 /* ipad landscape-specific */
 
 .ipadlandscape{
-	height:748px;
+	height:768px;
 }
 
 .icon-container{
@@ -176,13 +176,31 @@ img {
 }
 
 .slide-object-nav{
-	float:right;
 	border:1px solid #666;
 	color:#333;
 	-webkit-box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
-    box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
-    width:30px;
-    height:30px;
+  box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
+  width:30px;
+  height:30px;
+}
+
+#info nav {
+  margin: -1em 0 4em 0;
+}
+#info nav #back {
+  float: left;
+}
+#info nav #full {
+  float: right;
+  padding: 1px 0 0 2px;
+}
+#info .tombstone {
+  clear: both;
+}
+#zoomer.full_width .typcn-arrow-minimise {
+  position: absolute;
+  right: 1em;
+  top: 1em;
 }
 
 /*navigation*/
@@ -256,16 +274,14 @@ img {
 
 #objectMode .large-6{
 	padding:2em;
-	padding-top:75px;
 }
 
 #objectMode .large-10{
 	background-color:#ccc;
 	text-align:center;
-	padding: 30px 0;
+  height: 100%;
 }
 #objectMode .large-10.full_width {
-  padding: 10px 0;
 }
 
 #objectMode .object-nav{
@@ -385,8 +401,7 @@ img {
 #flat_image, .flatmap {
   position: relative;
   width: 100%;
-  height: 673px;
-  margin-top: 9px;
+  height: 100%;
 }
 
 #cover {
@@ -402,12 +417,14 @@ ol#annotations, ol#annotations ol {
 }
 
 ol#annotations ol li div {
-  display: none
 }
 ol#annotations ol li.active div {
-  display: block;
 }
 
+#zoomer {
+  min-height: 768px;
+  height: 768px;
+}
 #zoomer.full_width {
   width: 100%;
 }
@@ -417,28 +434,38 @@ ol#annotations ol li.active div {
   right: 95%;
   z-index: 10000;
 }
-
-#about-object {
-}
 #info {
   overflow-y: scroll;
-  height: 704px;
+  height: 768px;
 }
 
 #annotations {
   transition: all 0.5s;
-  background-color: white;
 }
 #annotations.active {
-  position: absolute;
-  top: 41px;
-  left: 0;
-  height: 665px;
-  background-color: white;
-  width: 384px;
-  padding: 1em;
+  /* position: absolute; */
+  /* top: 41px; */
+  /* left: 0; */
+  /* height: 665px; */
+  /* background-color: white; */
+  /* width: 384px; */
+  /* padding: 1em; */
   /* overflow-y: scroll; */
 }
+#annotations li.active:before {
+  content: "";
+  /* height: 30%; */
+  width: 1em;
+  position: absolute;
+  right: 0;
+  display: block;
+  z-index: 1000000000;
+  border-top: 19px solid transparent;
+  border-right: 19px solid #ddd;
+  border-bottom: 19px solid transparent;
+
+}
+
 
 .slide-object-nav { z-index: 2000; position: relative; }
 

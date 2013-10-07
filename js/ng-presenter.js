@@ -2,7 +2,7 @@
 
 (function() {
   'use strict'
-  window.app = angular.module('presenter', []);
+  window.app = angular.module('presenter', ['ngRoute']);
 
   app.config(
     ['$routeProvider', function($routeProvider) {
@@ -70,6 +70,24 @@
 
         var removeJsonLayer = function() {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
+          if(scope.inverseLayer) scope.zoom.map.removeLayer(scope.inverseLayer)
+        }
+
+        var showJsonLayer = function(fadeAfter, inverse) {
+          if(!scope.jsonLayer) return
+          var layerStyle = {stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'},
+            addLayer = null
+
+          if(inverse) {
+            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs, scope.jsonLayer._latlngs])
+            scope.inverseLayer.setStyle({fill: true, fillColor: '#000', fillOpacity: '0.5', stroke: false})
+            addLayer = scope.inverseLayer
+          } else {
+            scope.jsonLayer.setStyle(layerStyle)
+            addLayer = scope.jsonLayer
+          }
+          scope.zoom.map.addLayer(addLayer)
+          // if(fadeAfter) setTimeout(removeJsonLayer, fadeAfter)
         }
 
         var loadImage = function(image) {
@@ -91,11 +109,10 @@
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
-            scope.jsonLayer.setStyle({stroke: true, fill: false, weight: 2, color: '#eee', opacity: '0.5'})
             var map = scope.zoom.map
-            map.addLayer(scope.jsonLayer)
             map.zoomOut(100) // zoom all the way out and back in. Leaflet is misbehaving when zooming outside the current bounds, and this is a bit sketchy of a fix
             setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 500)
+            showJsonLayer(3000, true)
           }
         }
 
@@ -109,6 +126,7 @@
           loadImage: loadImage,
           annotateAndZoom: annotateAndZoom,
           removeJsonLayer: removeJsonLayer,
+          showJsonLayer: showJsonLayer,
           scope: scope
         }
       },
@@ -129,7 +147,7 @@
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
         scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
-        scope.note.index = scope.$parent.$index + scope.$index + 1
+        scope.note.index = scope.$parent.$parent.noteCount = (scope.$parent.$parent.noteCount || 0) + 1
         divIcon.options.html = "<span>" + scope.note.index + "</span>"
         scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
         scope.note.active = false
@@ -171,18 +189,50 @@
     }
   })
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', 'objects', 'notes',
-    function($scope, $routeParams, $location, objects, notes) {
+  app.filter('titleCase', function () {
+    return function (input) {
+      var words = input.replace('_', ' ').split(' ');
+      for (var i = 0; i < words.length; i++) {
+        words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+      }
+      return words.join(' ');
+    } // https://gist.github.com/maruf-nc/5625869
+  });
+
+  app.directive('tombstone', function() {
+    return {
+      restrict: 'E',
+      // scope: {info: '='},
+      controller: function($scope) {},
+      require: '',
+      replace: true,
+      template: '<dl><dt ng-repeat-start="field in fields">{{field | titleCase}}</dt><dd ng-repeat-end="">{{json[field]}}</dd></dl>',
+      link: function(scope, element, attrs)  {
+        scope.fields = ['medium', 'culture', 'dated', 'country', 'continent', 'style',
+          'dimension', 'description', 'text', 'creditline', 'marks', 'room', 'accession_number']
+      }
+    }
+  })
+
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes',
+    function($scope, $routeParams, $location, $sce, objects, notes) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
+        $scope.json.trustedDescription = $sce.trustAsHtml($scope.json.description)
         $scope.objects = data
       })
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
         if($scope.wp) {
+          $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
           $scope.$on('viewChanged', function() {
             $scope.notes = $scope.wp.views
+            angular.forEach($scope.notes, function(view) {
+              angular.forEach(view.annotations, function(ann) {
+                ann.trustedDescription = $sce.trustAsHtml(ann.description)
+              })
+            })
             $scope.$$phase || $scope.$apply()
           })
         }
@@ -199,6 +249,16 @@
 
       $scope.toggleView = function(nextView) {
         $scope.activeSection = nextView || 'about'
+        if(nextView == 'annotations') {
+          if(!$scope.notes) $scope.notes = $scope.wp.views
+          var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
+          if(firstNote) {
+            $scope.activateNote(firstNote, $scope.notes[0])
+            setTimeout(function() {
+              document.querySelector('ol#annotations').scrollIntoView()
+            }, 0)
+          }
+        }
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {
@@ -206,6 +266,7 @@
       })
 
       $scope.activateNote = function(note, view) {
+        $scope.activeView = view
         note.active = !note.active
       }
 
@@ -218,6 +279,7 @@
 
       $scope.activateView = function(view) {
         // TODO: encapsulate active view the same way I do notes, with view.active?
+        $scope.activeView = view
         $scope.deactivateAllNotes()
         $scope.$broadcast('changeView', view)
       }

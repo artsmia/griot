@@ -1187,7 +1187,17 @@ L.LatLngBounds.prototype = {
 
 	isValid: function () {
 		return !!(this._southWest && this._northEast);
-	}
+	},
+
+  toPolygon: function() {
+    return L.polygon([
+      this.getNorthEast(),
+      this.getNorthWest(),
+      this.getSouthWest(),
+      this.getSouthEast(),
+      this.getNorthEast()
+    ]);
+  }
 };
 
 //TODO International date line?
