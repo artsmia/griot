@@ -32,7 +32,7 @@
     tileUrlSubdomain: function(tileUrl) {
       return tileUrl.replace('http://0.', 'http://') //{s}')
     },
-    crashpad: 'fallback/crashpad.json' // 'http://new.artsmia.org/crashpad/json/'
+    crashpad: 'http://cdn.dx.artsmia.org/crashpad.json'
   })
 
   app.factory('objects', ['$http', 'envConfig', function($http, config) {
