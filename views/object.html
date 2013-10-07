@@ -1,4 +1,4 @@
-<div class="row" id="objectMode">
+<div class="row" id="objectMode" ng-class="{showViews: showViews}">
   <div class="large-16 columns ipadlandscape">
     <div id="object-content" ng-hide="sixBarClosed">
       <div id="info" class="large-6 columns">
@@ -15,21 +15,13 @@
           <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
           <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Details</a>
           <a id="more.b" ng-class="{selected: activeSection == 'more'}" ng-click="toggleView('more')">More</a>
-          <a id="views.b" ng-class="{selected: activeSection == 'views'}" ng-click="toggleView('views')">Views</a>
+          <a id="views.b" ng-class="{selected: showViews}" ng-click="showViews = true">Views</a>
         </div>
 
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
             <p ng-bind-html="wp.trustedDescription || json.trustedDescription"></p>
           </div><!--end about this object-->
-
-          <ol id="views" ng-if="activeSection == 'views'" ng-class="{active: activeSection == 'views'}">
-            <li ng-repeat="view in notes">
-              <a ng-click="activateView(view)">
-                <img ng-src="//api.artsmia.org/images/1/tdx/300/{{view.image}}.tif">
-              </a>
-            </li>
-          </ol>
 
           <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
             <tombstone></tombstone>
@@ -63,8 +55,11 @@
       <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed, annotations: activeSection == 'annotations'}">
         <div class="typcn typcn-arrow-minimise icon slide-object-nav" ng-click="toggleSixbar(this)" ng-show="sixBarClosed"></div>
         <flatmap image="{{id}}">
-          <div ng-repeat="view in notes">
+          <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
             <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
+            <a class="view" ng-click="activateView(view)">
+              <img ng-src="//api.artsmia.org/images/1/tdx/300/{{view.image}}.tif">
+            </a>
           </div>
         </flatmap>
       </div>

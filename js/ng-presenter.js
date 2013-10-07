@@ -122,6 +122,12 @@
           if(message.image != scope.image) loadImage(message.image)
         })
 
+        scope.$on('viewChanged', function() {
+          scope.zoom.map.on('zoomedBeyondMin', function(e) {
+            scope.$parent.changeZoomerForViews(this, scope)
+          })
+        })
+
         return {
           loadImage: loadImage,
           annotateAndZoom: annotateAndZoom,
@@ -264,6 +270,10 @@
       $scope.$on('showAnnotationsPanel', function(view) {
         $scope.activeSection = 'annotations'
       })
+      $scope.changeZoomerForViews = function(map, flatmapScope) {
+        $scope.$apply(function() { $scope.showViews = true })
+      }
+
 
       $scope.activateNote = function(note, view) {
         $scope.activeView = view
@@ -279,6 +289,7 @@
 
       $scope.activateView = function(view) {
         // TODO: encapsulate active view the same way I do notes, with view.active?
+        $scope.showViews = false
         $scope.activeView = view
         $scope.deactivateAllNotes()
         $scope.$broadcast('changeView', view)
