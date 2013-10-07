@@ -31,7 +31,7 @@
             <li ng-repeat="view in notes">
               <ol>
                 <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}">
-                  <h3><span class="a-number">{{note.index}}</span>Annotation</h3>
+                  <h3><span class="a-number">{{note.index}}</span> {{note.title || 'Annotation'}}</h3>
                   <div ng-bind-html="note.trustedDescription"></div>
                 </li>
               </ol>
