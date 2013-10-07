@@ -424,7 +424,6 @@ ol#annotations ol li.active div {
 #zoomer {
   min-height: 768px;
   height: 768px;
-  height: 100vh !important;
 }
 #zoomer.full_width {
   width: 100%;
@@ -437,9 +436,7 @@ ol#annotations ol li.active div {
 }
 #info {
   overflow-y: scroll;
-  min-height: 768px;
   height: 768px;
-  height: 100vh;
 }
 
 #annotations {
