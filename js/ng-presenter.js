@@ -323,7 +323,7 @@
       window.wordpress = wordpress
       // TODO: fix to_json to output stories as a hash keyed on ids
       // $scope.story = wordpress.stories[$scope.id]
-      $scope.story = wordpress.stories[2]
+      $scope.story = wordpress.stories[$scope.id]
       angular.forEach($scope.story.pages, function(page) {
         page.trustedText = $sce.trustAsHtml(page.text)
       })
