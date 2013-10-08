@@ -523,6 +523,10 @@ article.story .flatmap {
   width: 100%;
   min-height: 500px;
 }
+article.story .side-by-side .flatmap {
+  width: 50%;
+  float: left;
+}
 
 article.story nav img {
   max-width: 10%;

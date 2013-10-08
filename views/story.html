@@ -2,6 +2,10 @@
   <h1 ng-bind="story.title"></h1>
 
   <section ng-repeat="page in story.pages">
+    <div class="side-by-side" ng-if="page.type == 'comparison'">
+      <flatmap image={{page.image}}></flatmap>
+      <flatmap image={{page.imageB}}></flatmap>
+    </div>
     <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
     <video ng-if="page.type == 'video'">
       <source ng-src="{{page.video}}"></source>
