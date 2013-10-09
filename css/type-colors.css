@@ -92,13 +92,16 @@ img{
 	color:#fff;
 	font-weight:700;
 	display:inline-block;
-	height:36px;
-	width:31px;
+	height:1.5em;
+	width:1.5em;
 	text-align:center;
-	-webkit-border-radius: 11px;
-	border-radius: 11px;
+	-webkit-border-radius: 1em;
+	border-radius: 1em;
 	margin-right:10px;
 	padding-bottom:1px;
+}
+#annotations .note h3 {
+  font-size: 1.3em;
 }
 
 #objectMode #rel-stories h3{
