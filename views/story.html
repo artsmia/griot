@@ -1,23 +1,48 @@
 <article class="story">
-  <h1 ng-bind="story.title"></h1>
+  <!-- <h1 ng-bind="story.title"></h1> -->
 
-  <section ng-repeat="page in story.pages">
-    <div class="side-by-side" ng-if="page.type == 'comparison'">
-      <flatmap image={{page.image}}></flatmap>
-      <flatmap image={{page.imageB}}></flatmap>
+  <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
+
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}">
+      
+      <div class="side-by-side" ng-if="page.type == 'comparison'">
+        <flatmap image={{page.image}}></flatmap>
+        <flatmap image={{page.imageB}}></flatmap>
+      </div>
+
+      <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
+      
+      <div class='video-wrap-outer' ng-if="page.type == 'video'">
+        <div class='video-wrap-inner'>
+          <video>
+            <source ng-src="{{page.video}}"></source>
+          </video>
+        </div>
+      </div>
+
+      <div class='caption-wrap' ng-show="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">
+        <span class='typcn typcn-times icon caption-close' href='#' title='close'></span>
+        <div ng-bind-html="page.trustedText" class='caption'></div>
+      </div>
+
+      <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Caption</span>
+
+    </section>
+
+  </div>
+  
+  <div id='story-header'>
+    <h1 ng-bind="story.title"></h1>
+    <div id='story-pages'>
+      Pages: 
+      <span ng-repeat="page in story.pages" ng-class="{selected: activePage == $index}" ng-click="page.updateActivePage($index)">{{$index + 1}}</span>
     </div>
-    <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
-    <video ng-if="page.type == 'video'">
-      <source ng-src="{{page.video}}"></source>
-    </video>
+  </div>
 
-    <div ng-bind-html="page.trustedText"></div>
-  </section>
-
-  <nav title="Related Objects">
-    <a href="javascript: history.go(-1)">&larr; Back</a>
+  <!-- <nav title="Related Objects"> -->
+    <!-- <a href="javascript: history.go(-1)">&larr; Back</a> -->
     <!-- <a ng-repeat="object in relatedObjects" href="#/o/{{object.id}}"> -->
     <!--   <img ng-src="//api.artsmia.org/images/{{object.id}}/300/small.jpg" alt=""> -->
     <!-- </a> -->
-  </nav>
+  <!-- </nav> -->
 </article>

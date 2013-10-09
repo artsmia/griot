@@ -235,6 +235,13 @@
       })
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
+        $scope.relatedStories = []
+        angular.forEach($scope.wp.relatedStories, function(story_id){
+          $scope.relatedStories.push({
+            'id':story_id,
+            'title':_wp.stories[story_id].title
+          })
+        })
         if($scope.wp) {
           $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
           $scope.$on('viewChanged', function() {
@@ -248,7 +255,6 @@
           })
 
           // $scope.notes = $scope.wp.views
-          $scope.relatedStories = _wp.stories // TODO: fix to_json to output stories as a hash keyed on ids?
           $scope.$$phase || $scope.$apply()
         }
       })
@@ -325,9 +331,17 @@
       // $scope.story = wordpress.stories[$scope.id]
       $scope.story = wordpress.stories[$scope.id]
       angular.forEach($scope.story.pages, function(page) {
-        page.trustedText = $sce.trustAsHtml(page.text)
+        page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        page.storyCaptionOpen = true;
+        page.toggleStoryCaption = function(){
+          this.storyCaptionOpen = !this.storyCaptionOpen;
+        }
+        page.updateActivePage = function($index){
+          $scope.activePage = $index;
+        }
       })
       $scope.relatedObjects = wordpress.objects // TODO: correlate the WP id for each object with the TMS id
+      $scope.activePage = 0
     })
 
   }])
