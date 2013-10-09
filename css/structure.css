@@ -659,6 +659,7 @@ ol#annotations ol li.active div {
   margin:0px auto;
   display:block;
   max-width: 100%;
+  min-height: 600px;
 }
 
 /*
@@ -689,6 +690,7 @@ ol#annotations ol li.active div {
 }
 */
 
+<<<<<<< Updated upstream
 .twocol{
   -moz-column-count: 2;
     -moz-column-gap: 16px;

@@ -332,6 +332,8 @@
       $scope.story = wordpress.stories[$scope.id]
       angular.forEach($scope.story.pages, function(page) {
         page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        page.trustedVideo = $sce.trustAsResourceUrl(page.video)
+        page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
         page.storyCaptionOpen = true;
         page.toggleStoryCaption = function(){
           this.storyCaptionOpen = !this.storyCaptionOpen;

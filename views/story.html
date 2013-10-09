@@ -14,9 +14,7 @@
       
       <div class='video-wrap-outer' ng-if="page.type == 'video'">
         <div class='video-wrap-inner'>
-          <video>
-            <source ng-src="{{page.video}}"></source>
-          </video>
+          <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}"></video>
         </div>
       </div>
 
