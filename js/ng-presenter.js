@@ -351,6 +351,9 @@
           $scope.activePage = newPage
         }
       }
+      $scope.backToObject=function(){
+        history.go(-1);
+      }
     })
 
   }])

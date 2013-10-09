@@ -557,6 +557,17 @@ ol#annotations ol li.active div {
   left:0;
   background-color:#000;
 }
+.story #story-header #story-back{
+  height:28px;
+  width:28px;
+  float:left;
+  display:block;
+  text-align:center;
+  margin-top:11px;
+  color:#fff;
+  border:0px;
+  cursor:pointer;
+}
 .story #story-header h1{
   text-align:center;
   font-size:1.5em;

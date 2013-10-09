@@ -1,6 +1,7 @@
 <article class="story">
   <!-- <h1 ng-bind="story.title"></h1> -->
 
+
   <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
 
     <section ng-repeat="page in story.pages" class="page page-{{page.type}}">
@@ -30,6 +31,7 @@
   </div>
   
   <div id='story-header'>
+    <span id='story-back' class="typcn typcn-chevron-left icon slide-object-nav" ng-click="backToObject()"></span>
     <h1 ng-bind="story.title"></h1>
     <!--<div id='story-pages'>
       Pages: 
