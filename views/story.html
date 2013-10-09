@@ -33,10 +33,19 @@
   
   <div id='story-header'>
     <h1 ng-bind="story.title"></h1>
-    <div id='story-pages'>
+    <!--<div id='story-pages'>
       Pages: 
       <span ng-repeat="page in story.pages" ng-class="{selected: activePage == $index}" ng-click="page.updateActivePage($index)">{{$index + 1}}</span>
-    </div>
+    </div>-->
+  </div>
+
+  <div id='page-prev' class='page-arrow' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0">
+    <span class='page-arrow-text'>Prev Page</span>
+    <span class='page-arrow-icon typcn typcn-arrow-left icon'></span>
+  </div>
+  <div id='page-next' class='page-arrow' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)">
+    <span class='page-arrow-text'>Next Page</span>
+    <span class='page-arrow-icon typcn typcn-arrow-right icon'></span>
   </div>
 
   <!-- <nav title="Related Objects"> -->

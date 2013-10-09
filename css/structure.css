@@ -479,12 +479,12 @@ ol#annotations ol li.active div {
 .story{
   position:relative;
   width:1024px;
-  height:768px;
+  height:748px;
   top:0;
   left:0;
   overflow:hidden;
   padding:0px;
-  background-color:#333;
+  background-color:#ddd;
   white-space:nowrap;
 }
 .story #pages-wrap{
@@ -522,8 +522,8 @@ ol#annotations ol li.active div {
   right:10px;
   top:10px;
   border:2px solid #000;
-  width:27px;
-  height:27px;
+  width:28px;
+  height:28px;
   border-radius:1000px;
   color:#000;
   line-height:0.9em;
@@ -556,10 +556,9 @@ ol#annotations ol li.active div {
   top:0;
   left:0;
   background-color:#000;
-  padding-left:25px;
 }
 .story #story-header h1{
-  float:left;
+  text-align:center;
   font-size:1.5em;
   color:#fff;
   font-weight:500;
@@ -567,6 +566,44 @@ ol#annotations ol li.active div {
   line-height:50px;
   margin:0px;
 }
+.story .page-arrow{
+  position:absolute;
+  width:40px;
+  height:60px;
+  background-color:#000;
+  color:#fff;
+  top:354px;
+  padding:5px 0px;
+  cursor:pointer;
+}
+.story #page-prev{
+  left:0;
+}
+.story #page-next{
+  right:0;
+}
+.story .page-arrow .page-arrow-text{
+  font-size:0.7em;
+  text-transform:uppercase;
+  color:#fff;
+  display:block;
+  width:40px;
+  padding:5px 7px;
+  white-space:normal; 
+  text-align:center;
+}
+.story .page-arrow .page-arrow-icon{
+  font-size:30px;
+  line-height:8px;
+  text-align:center;
+  display:block;
+  width:100%;
+  color:#fff;
+}
+.story .page-arrow .page-arrow-icon:hover{
+  color:#fff;
+}
+/*
 .story #story-pages{
   float:right;
   font-size:1.1em;
@@ -575,7 +612,7 @@ ol#annotations ol li.active div {
   height:40px;
   line-height:50px;
   margin:0px;
-  padding-right:25px;
+  padding-right:5px;
 }
 .story #story-pages span{
   width:26px;
@@ -593,14 +630,14 @@ ol#annotations ol li.active div {
   background-color:#fff;
   color:#000;
 }
+*/
 
 /* Image Story */
 
 .story .flatmap {
   position: absolute;
   width: 100%;
-  height:729px;
-  top:39px;
+  height:100%;
   left:0;
 }
 

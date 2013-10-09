@@ -336,12 +336,19 @@
         page.toggleStoryCaption = function(){
           this.storyCaptionOpen = !this.storyCaptionOpen;
         }
+        /* Deprecated
         page.updateActivePage = function($index){
           $scope.activePage = $index;
         }
+        */
       })
       $scope.relatedObjects = wordpress.objects // TODO: correlate the WP id for each object with the TMS id
       $scope.activePage = 0
+      $scope.updateActivePage = function(newPage){
+        if((newPage > -1) && (newPage < $scope.story.pages.length)){
+          $scope.activePage = newPage
+        }
+      }
     })
 
   }])
