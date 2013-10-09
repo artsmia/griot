@@ -13,14 +13,11 @@
 
       <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
       
-      <div class='video-wrap-outer' ng-if="page.type == 'video'">
-        <div class='video-wrap-inner'>
-          <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}"></video>
+      <div class='caption-wrap' ng-show="page.storyCaptionOpen">
+        <div class='caption-close-wrap' ng-hide="page.type == 'video'">
+          <span class='typcn typcn-times icon caption-close' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
-      </div>
-
-      <div class='caption-wrap' ng-show="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">
-        <span class='typcn typcn-times icon caption-close' href='#' title='close'></span>
+        <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800"></video>
         <div ng-bind-html="page.trustedText" class='caption'></div>
       </div>
 

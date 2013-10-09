@@ -515,12 +515,17 @@ ol#annotations ol li.active div {
   z-index:2;
 }
 .story .caption{
-  padding:40px 25px 25px 25px;
+  padding:10px 25px;
+}
+.story .caption-close-wrap{
+  width:100%;
+  height:30px;
+  margin-top:10px;
+  margin-bottom:10px;
 }
 .story .caption-close{
   position:absolute;
   right:10px;
-  top:10px;
   border:2px solid #000;
   width:28px;
   height:28px;
@@ -586,6 +591,7 @@ ol#annotations ol li.active div {
   top:354px;
   padding:5px 0px;
   cursor:pointer;
+  z-index:10;
 }
 .story #page-prev{
   left:0;
@@ -648,29 +654,18 @@ ol#annotations ol li.active div {
 .story .flatmap {
   position: absolute;
   width: 100%;
-  height:100%;
+  height:698px;
   left:0;
+  top:50px;
 }
 
 /* Video Story - absolute center video */
 
-.story .video-wrap-outer{
-  position:absolute;
-  display:table;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-}
-.story .video-wrap-inner{
-  display:table-cell;
-  vertical-align:middle;
-}
 .story video {
-  margin:0px auto;
   display:block;
-  max-width: 100%;
-  min-height: 600px;
+  width:600px;
+  height:400px;
+  margin:0px auto 15px auto;
 }
 
 /*
@@ -701,7 +696,6 @@ ol#annotations ol li.active div {
 }
 */
 
-<<<<<<< Updated upstream
 .twocol{
   -moz-column-count: 2;
     -moz-column-gap: 16px;
