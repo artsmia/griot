@@ -24,7 +24,7 @@
           </div><!--end about this object-->
 
           <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
-            <h5>Interactive Features</h5>
+            <h5 ng-show="relatedStories">Interactive Features</h5>
             <ol id="relatedStories">
               <li ng-repeat="story in relatedStories">
                 <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>

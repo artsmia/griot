@@ -463,7 +463,6 @@ ol#annotations ol li.active div {
   padding:10px 15px;
   display:block;
   margin:5px 0px;
-  font-weight:bold;
   text-align:left;
   font-size:1em;
   transition:all 250ms linear;
