@@ -390,4 +390,13 @@
       })
     }
   ])
+
+  app.directive("scroll", function ($window) {
+    return function(scope, element, attrs) {
+      element.bind("touchstart touchend touchcancel touchleave touchmove scroll", function() {
+        scope.scrolled = this.scrollTop >= 100
+        scope.$apply()
+      })
+    }
+  })
 })()

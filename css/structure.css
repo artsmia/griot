@@ -189,6 +189,22 @@ img {
 }
 #info nav #back {
   float: left;
+  background: #eee;
+  -webkit-transition all 0.2s linear;
+}
+#info.scrolled nav #back {
+  /* font-size: 108%; */
+  /* width: 22px; */
+  /* height: 22px; */
+  position: fixed;
+  /* top: 0.75em; */
+  /* left: 0.25em; */
+  top: 1em;
+  left: 0;
+  border-width: 0;
+  box-shadow: none;
+  padding: 1em 0 3em 0;
+  margin: -1em 0 -3em 0;
 }
 #info nav #full {
   float: right;
