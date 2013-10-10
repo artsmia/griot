@@ -20,17 +20,18 @@
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
             <p ng-bind-html="wp.trustedDescription || json.trustedDescription"></p>
+
+            <aside class="tombstone" ng-if="showExtendedTombstone">
+              <h6>{{json.medium}}</h6>
+              <h6>{{json.dimension}}</h6>
+              <h6>{{json.creditline}}</h6>
+              <h6>{{json.accession_number}}</h6>
+            </aside>
+            <a ng-click="toggleExtendedTombstone()">Full Details</a>
+
           </div><!--end about this object-->
 
-          <aside class="tombstone" ng-if="activeSection == 'extendedTombstone'">
-            <h6>{{json.medium}}</h6>
-            <h6>{{json.dimension}}</h6>
-            <h6>{{json.creditline}}</h6>
-            <h6>{{json.accession_number}}</h6>
-          </aside>
-
           <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
-            <tombstone></tombstone>
           </div>
 
           <ol id="annotations" ng-if="activeSection == 'annotations'" ng-class="{active: activeSection == 'annotations'}">

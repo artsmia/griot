@@ -212,21 +212,6 @@
     } // https://gist.github.com/maruf-nc/5625869
   });
 
-  app.directive('tombstone', function() {
-    return {
-      restrict: 'E',
-      // scope: {info: '='},
-      controller: function($scope) {},
-      require: '',
-      replace: true,
-      template: '<dl><dt ng-repeat-start="field in fields">{{field | titleCase}}</dt><dd ng-repeat-end="">{{json[field]}}</dd></dl>',
-      link: function(scope, element, attrs)  {
-        scope.fields = ['medium', 'culture', 'dated', 'country', 'continent', 'style',
-          'dimension', 'description', 'text', 'creditline', 'marks', 'room', 'accession_number']
-      }
-    }
-  })
-
   app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes',
     function($scope, $routeParams, $location, $sce, objects, notes) {
       $scope.id = $routeParams.id
@@ -313,8 +298,7 @@
       }
 
       $scope.toggleExtendedTombstone = function() {
-        // $scope.showExtendedTombstone = !$scope.showExtendedTombstone
-        $scope.activeSection = 'extendedTombstone'
+        $scope.showExtendedTombstone = !$scope.showExtendedTombstone
       }
     }
   ])
