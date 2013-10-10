@@ -327,9 +327,16 @@
       window.$scope = $scope
       $scope.id = $routeParams.id
       window.wordpress = wordpress
-      // TODO: fix to_json to output stories as a hash keyed on ids
-      // $scope.story = wordpress.stories[$scope.id]
       $scope.story = wordpress.stories[$scope.id]
+      $scope.relatedObjects = [];
+      angular.forEach($scope.story.relatedObjects, function(id){
+        $scope.relatedObjects.push({
+          'id':id,
+          'title':wordpress.objects[id].title,
+          'image':wordpress.objects[id].views[0].image
+        })
+      })
+
       angular.forEach($scope.story.pages, function(page) {
         page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
@@ -344,7 +351,12 @@
         }
         */
       })
-      $scope.relatedObjects = wordpress.objects // TODO: correlate the WP id for each object with the TMS id
+
+      $scope.storyMenuOpen = false
+      $scope.toggleStoryMenu = function(){
+        $scope.storyMenuOpen = !$scope.storyMenuOpen
+      }
+
       $scope.activePage = 0
       $scope.updateActivePage = function(newPage){
         if((newPage > -1) && (newPage < $scope.story.pages.length)){

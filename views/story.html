@@ -29,10 +29,23 @@
 
   </div>
   
+  <div id='story-menu' ng-class="{selected: storyMenuOpen}">
+    <span class='story-menu-label'>Related Objects:</span>
+    <div class='items'>
+      <div ng-repeat='object in relatedObjects' class='item'>
+        <a href="#/o/{{object.id}}">
+          <flatmap image={{object.image}} class='flatmap-wee'></flatmap>
+          <span class='title'>{{object.title}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <div id='story-header'>
     <span id='story-back' class="typcn typcn-chevron-left icon slide-object-nav" ng-click="backToObject()"></span>
     <h1 ng-bind="story.title"></h1>
-    <!--<div id='story-pages'>
+    <span id='story-menu-button' class="typcn typcn-th-menu icon" ng-click="toggleStoryMenu()"></span>
+   <!--<div id='story-pages'>
       Pages: 
       <span ng-repeat="page in story.pages" ng-class="{selected: activePage == $index}" ng-click="page.updateActivePage($index)">{{$index + 1}}</span>
     </div>-->
