@@ -342,6 +342,17 @@ ol#annotations ol li.active div {
   display: block;
 }
 
+#annotations .wp-caption img {
+  max-width: 150px;
+  float: left
+}
+#annotations .wp-caption .wp-caption-text {
+  display: none;
+}
+#annotations li {
+  clear: both;
+}
+
 #zoomer {
   min-height: 768px;
   height: 768px;
