@@ -46,6 +46,11 @@ img{
 	color:#ededed;
 	background-color:#222;
 }
+.object-nav a.disabled, .object-nav a.disabled:hover, .object-nav a.disabled:active {
+  color: #999 !important;
+  background-color:#ededed !important;
+  cursor: not-allowed;
+}
 
 #objectMode .tombstone h3{
 	margin:0 0 0 0;

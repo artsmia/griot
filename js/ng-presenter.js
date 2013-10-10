@@ -268,8 +268,15 @@
         if(prev) $location.url('/o/'+prev)
       }
 
+      $scope.viewEnabled = function(nextView, debug) {
+        return (nextView == 'more' && $scope.relatedStories && $scope.relatedStories.length > 0 ||
+          nextView == 'annotations' && $scope.notes && $scope.notes.length > 0 ||
+          nextView == 'about')
+      }
+
       $scope.toggleView = function(nextView) {
-        $scope.activeSection = nextView || 'about'
+        nextView = nextView || 'about'
+        if(!$scope.viewEnabled(nextView)) return
         if(nextView == 'annotations') {
           if(!$scope.notes) $scope.notes = $scope.wp.views
           var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
@@ -280,6 +287,7 @@
             }, 0)
           }
         }
+        $scope.activeSection = nextView
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {
