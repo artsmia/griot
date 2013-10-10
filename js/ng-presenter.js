@@ -2,7 +2,7 @@
 
 (function() {
   'use strict'
-  window.app = angular.module('presenter', ['ngRoute']);
+  window.app = angular.module('presenter', ['ngRoute', 'ngTouch']);
 
   app.config(
     ['$routeProvider', function($routeProvider) {
