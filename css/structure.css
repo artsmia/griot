@@ -484,7 +484,14 @@ ol#annotations ol li.active div {
   left:0;
   overflow:hidden;
   padding:0px;
-  background-color:#ddd;
+background: #ffffff;
+background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%);
+background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5));
+background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%);
+background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%);
+background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#e5e5e5 100%);
+background: radial-gradient(ellipse at center,  #ffffff 0%,#e5e5e5 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 );
   white-space:nowrap;
 }
 .story #pages-wrap{
@@ -513,9 +520,11 @@ ol#annotations ol li.active div {
   left:212px;
   bottom:0px;
   z-index:2;
+  max-height:698px;
+  overflow:scroll;
 }
 .story .caption{
-  padding:10px 25px;
+  padding:25px 25px;
 }
 .story .caption-close-wrap{
   width:100%;
@@ -581,6 +590,8 @@ ol#annotations ol li.active div {
   height:50px;
   line-height:50px;
   margin:0px;
+  position:absolute;
+  width:100%;
 }
 .story .page-arrow{
   position:absolute;
@@ -664,7 +675,7 @@ ol#annotations ol li.active div {
 .story video {
   display:block;
   width:600px;
-  height:400px;
+  height:340px;
   margin:0px auto 15px auto;
 }
 

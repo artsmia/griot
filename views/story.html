@@ -14,7 +14,7 @@
       <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
       
       <div class='caption-wrap' ng-show="page.storyCaptionOpen">
-        <div class='caption-close-wrap' ng-hide="page.type == 'video'">
+        <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
           <span class='typcn typcn-times icon caption-close' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
         <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800"></video>
