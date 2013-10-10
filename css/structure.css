@@ -386,6 +386,7 @@ ol#annotations ol li.active div {
 }
 
 
+
 .slide-object-nav { z-index: 2000; position: relative; }
 
 .noteMarker {
@@ -445,6 +446,31 @@ ol#annotations ol li.active div {
 #objectMode.showViews .flatmap [class^=leaflet-] {
   opacity: 0;
   display: none;
+}
+
+/* More */
+
+#relatedStories h5{
+  text-transform:uppercase;
+}
+#relatedStories li{
+  list-style:none;
+}
+#relatedStories li a{
+  color:#222;
+  width:100%;
+  border:1px solid #222;
+  padding:10px 15px;
+  display:block;
+  margin:5px 0px;
+  font-weight:bold;
+  text-align:left;
+  font-size:1em;
+  transition:all 250ms linear;
+}
+#relatedStories li a:hover{
+  color:#ededed;
+  background-color:#222;
 }
 
 
