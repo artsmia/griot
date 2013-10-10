@@ -662,12 +662,29 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 /* Image Story */
 
-.story .flatmap {
+.story .story-image .flatmap {
   position: absolute;
   width: 100%;
   height:698px;
   left:0;
   top:50px;
+}
+
+/* Side by Side Story */
+
+.story .story-comparison .flatmap{
+  position:absolute;
+  width:50%;
+  height:698px;
+  top:50px;
+}
+.story .story-comparison .flatmap-a{
+  left:0;
+  border-right:2px solid #fff;
+}
+.story .story-comparison .flatmap-b{
+  right:0;
+  margin-left:3px;
 }
 
 /* Video Story - absolute center video */

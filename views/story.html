@@ -6,12 +6,14 @@
 
     <section ng-repeat="page in story.pages" class="page page-{{page.type}}">
       
-      <div class="side-by-side" ng-if="page.type == 'comparison'">
-        <flatmap image={{page.image}}></flatmap>
-        <flatmap image={{page.imageB}}></flatmap>
+      <div class="story-comparison" ng-if="page.type == 'comparison'">
+        <flatmap image={{page.image}} class='flatmap-a'></flatmap>
+        <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
       </div>
 
-      <flatmap image={{page.image}} ng-if="page.type == 'image'"></flatmap>
+      <div class='story-image' ng-if="page.type == 'image'">
+        <flatmap image={{page.image}}></flatmap>
+      </div>
       
       <div class='caption-wrap' ng-show="page.storyCaptionOpen">
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
