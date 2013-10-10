@@ -459,7 +459,7 @@ ol#annotations ol li.active div {
 #relatedStories li{
   list-style:none;
 }
-#relatedStories li a{
+#relatedStories li a, #about-object a {
   color:#222;
   width:100%;
   border:1px solid #222;
@@ -840,4 +840,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   width:100px;
   float:right;
   padding:1em;
+}
+
+.tombstone aside {
+  display: none;
+}
+.tombstone.extended aside {
+  display: block;
 }
