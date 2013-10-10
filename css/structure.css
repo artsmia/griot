@@ -290,7 +290,7 @@ img {
 
 #objectMode .object-nav a {
 	display:block;
-	width:155px;
+	width:33.3%;
 	float:left;
 	padding:1em 0;
 	margin-bottom:10px;
@@ -303,7 +303,7 @@ img {
 
 
 #objectMode .object-nav a:nth-child(even) {
-	margin-left:10px;
+  border-width: 1px 0; /* Don't double the side borders on middle nav button */
 }
 
 #objectMode .object-stories{
@@ -336,8 +336,10 @@ ol#annotations, ol#annotations ol {
 }
 
 ol#annotations ol li div {
+  display: none;
 }
 ol#annotations ol li.active div {
+  display: block;
 }
 
 #zoomer {
@@ -360,16 +362,6 @@ ol#annotations ol li.active div {
 
 #annotations {
   transition: all 0.5s;
-}
-#annotations.active {
-  /* position: absolute; */
-  /* top: 41px; */
-  /* left: 0; */
-  /* height: 665px; */
-  /* background-color: white; */
-  /* width: 384px; */
-  /* padding: 1em; */
-  /* overflow-y: scroll; */
 }
 #annotations li.active:before {
   content: "";
