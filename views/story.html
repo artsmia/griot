@@ -1,0 +1,69 @@
+<article class="story">
+  <!-- <h1 ng-bind="story.title"></h1> -->
+
+
+  <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
+
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}">
+      
+      <div class="story-comparison" ng-if="page.type == 'comparison'">
+        <flatmap image={{page.image}} class='flatmap-a'></flatmap>
+        <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
+      </div>
+
+      <div class='story-image' ng-if="page.type == 'image'">
+        <flatmap image={{page.image}}></flatmap>
+      </div>
+      
+      <div class='caption-wrap' ng-show="page.storyCaptionOpen">
+        <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
+          <span class='typcn typcn-times icon caption-close' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
+        </div>
+        <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800"></video>
+        <div ng-bind-html="page.trustedText" class='caption'></div>
+      </div>
+
+      <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Caption</span>
+
+    </section>
+
+  </div>
+  
+  <div id='story-menu' ng-class="{selected: storyMenuOpen}">
+    <span class='story-menu-label'>Related Objects:</span>
+    <div class='items'>
+      <div ng-repeat='object in relatedObjects' class='item'>
+        <a href="#/o/{{object.id}}">
+          <flatmap image={{object.image}} class='flatmap-wee'></flatmap>
+          <span class='title'>{{object.title}}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id='story-header'>
+    <span id='story-back' class="typcn typcn-chevron-left icon slide-object-nav" ng-click="backToObject()"></span>
+    <h1 ng-bind="story.title"></h1>
+    <span id='story-menu-button' class="typcn typcn-th-menu icon" ng-click="toggleStoryMenu()"></span>
+   <!--<div id='story-pages'>
+      Pages: 
+      <span ng-repeat="page in story.pages" ng-class="{selected: activePage == $index}" ng-click="page.updateActivePage($index)">{{$index + 1}}</span>
+    </div>-->
+  </div>
+
+  <div id='page-prev' class='page-arrow' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0">
+    <span class='page-arrow-text'>Prev Page</span>
+    <span class='page-arrow-icon typcn typcn-arrow-left icon'></span>
+  </div>
+  <div id='page-next' class='page-arrow' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)">
+    <span class='page-arrow-text'>Next Page</span>
+    <span class='page-arrow-icon typcn typcn-arrow-right icon'></span>
+  </div>
+
+  <!-- <nav title="Related Objects"> -->
+    <!-- <a href="javascript: history.go(-1)">&larr; Back</a> -->
+    <!-- <a ng-repeat="object in relatedObjects" href="#/o/{{object.id}}"> -->
+    <!--   <img ng-src="//api.artsmia.org/images/{{object.id}}/300/small.jpg" alt=""> -->
+    <!-- </a> -->
+  <!-- </nav> -->
+</article>

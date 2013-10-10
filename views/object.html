@@ -13,8 +13,8 @@
         </div>
         <div class="object-nav clearfix">
           <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
-          <a id="annotations.b" ng-class="{selected: activeSection == 'annotations'}" ng-click="toggleView('annotations')">Details</a>
-          <a id="more.b" ng-class="{selected: activeSection == 'more'}" ng-click="toggleView('more')">More</a>
+          <a id="annotations.b" ng-class="{selected: activeSection == 'annotations', disabled: !viewEnabled('annotations', true)}" ng-click="toggleView('annotations')">Details</a>
+          <a id="more.b" ng-class="{selected: activeSection == 'more', disabled: !viewEnabled('more', true)}" ng-click="toggleView('more')">More</a>
           <a id="views.b" ng-class="{selected: showViews}" ng-click="showViews = true">Views</a>
         </div>
 
@@ -24,6 +24,13 @@
           </div><!--end about this object-->
 
           <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
+            <h5 ng-show="relatedStories">Interactive Features</h5>
+            <ol id="relatedStories">
+              <li ng-repeat="story in relatedStories">
+                <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>
+              </li>
+            </ol>
+
             <tombstone></tombstone>
           </div>
 

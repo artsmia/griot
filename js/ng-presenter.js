@@ -15,6 +15,9 @@
       }).when('/a/:id', {
         templateUrl: 'views/annotations.html',
         controller: 'notesCtrl'
+      }).when('/stories/:id', {
+        templateUrl: 'views/story.html',
+        controller: 'storyCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -124,7 +127,8 @@
 
         scope.$on('viewChanged', function() {
           scope.zoom.map.on('zoomedBeyondMin', function(e) {
-            scope.$parent.changeZoomerForViews(this, scope)
+            if(scope.$parent && scope.$parent.changeZoomerForViews)
+              scope.$parent.changeZoomerForViews(this, scope)
           })
         })
 
@@ -231,6 +235,13 @@
       })
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
+        $scope.relatedStories = []
+        angular.forEach($scope.wp.relatedStories, function(story_id){
+          $scope.relatedStories.push({
+            'id':story_id,
+            'title':_wp.stories[story_id].title
+          })
+        })
         if($scope.wp) {
           $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
           $scope.$on('viewChanged', function() {
@@ -242,6 +253,9 @@
             })
             $scope.$$phase || $scope.$apply()
           })
+
+          // $scope.notes = $scope.wp.views
+          $scope.$$phase || $scope.$apply()
         }
       })
 
@@ -254,8 +268,15 @@
         if(prev) $location.url('/o/'+prev)
       }
 
+      $scope.viewEnabled = function(nextView, debug) {
+        return (nextView == 'more' && $scope.relatedStories && $scope.relatedStories.length > 0 ||
+          nextView == 'annotations' && $scope.notes && $scope.notes.length > 0 ||
+          nextView == 'about')
+      }
+
       $scope.toggleView = function(nextView) {
-        $scope.activeSection = nextView || 'about'
+        nextView = nextView || 'about'
+        if(!$scope.viewEnabled(nextView)) return
         if(nextView == 'annotations') {
           if(!$scope.notes) $scope.notes = $scope.wp.views
           var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
@@ -266,6 +287,7 @@
             }, 0)
           }
         }
+        $scope.activeSection = nextView
       }
       $scope.toggleView()
       $scope.$on('showAnnotationsPanel', function(view) {
@@ -307,6 +329,54 @@
       }
     }
   ])
+
+  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'notes', function($scope, $routeParams, $sce, wp) {
+    wp().then(function(wordpress) {
+      window.$scope = $scope
+      $scope.id = $routeParams.id
+      window.wordpress = wordpress
+      $scope.story = wordpress.stories[$scope.id]
+      $scope.relatedObjects = [];
+      angular.forEach($scope.story.relatedObjects, function(id){
+        $scope.relatedObjects.push({
+          'id':id,
+          'title':wordpress.objects[id].title,
+          'image':wordpress.objects[id].views[0].image
+        })
+      })
+
+      angular.forEach($scope.story.pages, function(page) {
+        page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        page.trustedVideo = $sce.trustAsResourceUrl(page.video)
+        page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
+        page.storyCaptionOpen = true;
+        page.toggleStoryCaption = function(){
+          this.storyCaptionOpen = !this.storyCaptionOpen;
+        }
+        /* Deprecated
+        page.updateActivePage = function($index){
+          $scope.activePage = $index;
+        }
+        */
+      })
+
+      $scope.storyMenuOpen = false
+      $scope.toggleStoryMenu = function(){
+        $scope.storyMenuOpen = !$scope.storyMenuOpen
+      }
+
+      $scope.activePage = 0
+      $scope.updateActivePage = function(newPage){
+        if((newPage > -1) && (newPage < $scope.story.pages.length)){
+          $scope.activePage = newPage
+        }
+      }
+      $scope.backToObject=function(){
+        history.go(-1);
+      }
+    })
+
+  }])
 
   app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     function($scope, $routeParams, wp) {
