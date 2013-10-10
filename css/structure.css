@@ -509,3 +509,9 @@ ol#annotations ol li.active div {
   opacity: 0;
   display: none;
 }
+.tombstone aside {
+  display: none;
+}
+.tombstone.extended aside {
+  display: block;
+}

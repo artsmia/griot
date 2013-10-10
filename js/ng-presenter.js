@@ -311,6 +311,11 @@
         $scope.sixBarClosed = !$scope.sixBarClosed
         setTimeout(Zoomer.windowResized, 0)
       }
+
+      $scope.toggleExtendedTombstone = function() {
+        // $scope.showExtendedTombstone = !$scope.showExtendedTombstone
+        $scope.activeSection = 'extendedTombstone'
+      }
     }
   ])
 
