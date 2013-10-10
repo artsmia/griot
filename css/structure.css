@@ -290,7 +290,7 @@ img {
 
 #objectMode .object-nav a {
 	display:block;
-	width:155px;
+	width:33.3%;
 	float:left;
 	padding:1em 0;
 	margin-bottom:10px;
@@ -303,7 +303,7 @@ img {
 
 
 #objectMode .object-nav a:nth-child(even) {
-	margin-left:10px;
+  border-width: 1px 0; /* Don't double the side borders on middle nav button */
 }
 
 #objectMode .object-stories{
