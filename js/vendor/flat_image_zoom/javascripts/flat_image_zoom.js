@@ -225,7 +225,8 @@ Zoomer.Map.TouchZoom = L.Map.TouchZoom.extend({
             this._scale = map.getZoomScale(map.getMaxZoom());
         }
         if (zoom < map.getMinZoom()) {
-            if(zoom < map.getMinZoom() - 1) map.fire('zoomedBeyondMin');
+            var threshold = (L.Browser.touch ? 1.6 : 1)
+            if(zoom < map.getMinZoom() - threshold) map.fire('zoomedBeyondMin');
             this._scale = map.getZoomScale(map.getMinZoom());
         }
         // WAC_END

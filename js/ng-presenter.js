@@ -126,13 +126,12 @@
           if(message.image != scope.image) loadImage(message.image)
         })
 
-        // TODO: get this working better
-        // scope.$on('viewChanged', function() {
-        //   scope.zoom.map.on('zoomedBeyondMin', function(e) {
-        //     if(scope.$parent && scope.$parent.changeZoomerForViews)
-        //       scope.$parent.changeZoomerForViews(this, scope)
-        //   })
-        // })
+        scope.$on('viewChanged', function() {
+          scope.zoom.map.on('zoomedBeyondMin', function(e) {
+            if(scope.$parent && scope.$parent.changeZoomerForViews)
+              scope.$parent.changeZoomerForViews(this, scope)
+          })
+        })
 
         return {
           loadImage: loadImage,
