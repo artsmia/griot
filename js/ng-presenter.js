@@ -18,6 +18,9 @@
       }).when('/stories/:id', {
         templateUrl: 'views/story.html',
         controller: 'storyCtrl'
+      }).when('/360/:id', {
+        templateUrl: 'views/360.html',
+        controller: 'threeSixtyCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -384,6 +387,66 @@
     }
   ])
 
+  app.controller('threeSixtyCtrl', ['$scope', '$routeParams', 'tilesaw',
+    function($scope, $routeParams, wp) {
+      $scope.id = $routeParams.id
+      $scope.sande_images = "2009434 2009435 2009438 2009440 2009443 2009446".split(" ")
+      $scope.abg = []
+      window.addEventListener('deviceorientation', _.throttle(function(event) {
+        $scope.$apply(function() { $scope.beta = event.alpha })
+      }, 100, {trailing: false}), true);
+
+      var lastReq = null
+      $scope.$watch('beta', function(newB, oldB) {
+        var turn = function(timestamp) {
+          var dB = newB - oldB
+            , maps = document.querySelector('#maps')
+            , firstMap = maps.firstChild
+            , lastMap = maps.lastChild
+
+          if(Math.abs(dB) > 2) {
+            dB < 0 ? maps.appendChild(firstMap) : maps.insertBefore(lastMap, firstMap)
+          }
+        }
+        window.webkitCancelAnimationFrame(lastReq)
+        lastReq = window.webkitRequestAnimationFrame(turn)
+      })
+
+      $scope.tusk_images = ["6000072", "6000074",
+        "6000075", "6000076", "6000077",
+        "6000079", "6000082", "6000084",
+        "6000085", "6000086", "6000087",
+        "6000088", "6000089", "6000090",
+        "6000091", "6000092", "6000093",
+        "6000094", "6000095", "6000096",
+        "6000097", "6000098", "6000099",
+        "6000100", "6000101", "6000102",
+        "6000103", "6000104", "6000105",
+        "6000106", "6000107", "6000108",
+        "6000109", "6000110", "6000111",
+        "6000112", "6000113", "6000114",
+        "6000115", "6000116", "6000117",
+        "6000118", "6000120", "6000121",
+        "6000122", "6000123", "6000124",
+        "6000125", "6000126", "6000127",
+        "6000128", "6000129", "6000131",
+        "6000132", "6000133", "6000135",
+        "6000136", "6000137", "6000138",
+        "6000139", "6000140", "6000141",
+        "6000142", "6000143", "6000144",
+        "6000145", "6000146", "6000148",
+        "6000152", "6000153", "6000154",
+        "6000155", "6000156", "6000157",
+        "6000158", "6000159", "6000160",
+        "6000162", "6000163", "6000165",
+        "6000166", "6000168", "6000169",
+        "6000170", "6000171", "6000172",
+        "6000173", "6000174", "6000175",
+        "6000176", "6000177", "6000178",
+        "6000180"
+      ].slice(0, 15)
+    }
+  ])
   app.controller('MainCtrl', ['$scope', '$routeParams', 'objects',
     function($scope, $routeParams, objects) {
       objects().then(function(data) {

@@ -1,0 +1,13 @@
+<style>
+  .flatmap {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  code { margin-top: 200px; width: 100%; }
+  figure { margin: 0; padding: 0; }
+</style>
+<figure id="maps">
+  <flatmap ng-repeat="image in tusk_images" image="mia_{{image}}"></flatmap>
+</figure>
