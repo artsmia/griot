@@ -189,6 +189,9 @@
             zoomNote()
             flatmapCtrl.scope.lastActiveNote = scope.note
           }
+
+          var layer = scope.jsonLayer
+          scope.marker.setLatLng(newVal ? layer._latlngs[0] : layer.getBounds().getCenter())
         })
 
         flatmapCtrl.scope.$watch('image', function(newVal, oldVal) {
