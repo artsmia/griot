@@ -9,7 +9,8 @@
         <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
           <h3>{{json.title}}</h3>
           <h5>{{json.artist}} {{json.culture}}, {{json.country}}</h5>
-          <h6>{{json.dated}}</h6>
+          <h6>{{json.dated}} <span ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn" ng-class="showExtendedTombstone ? 'typcn-info-outline' : 'typcn-info'" ng-click="toggleExtendedTombstone()"></span>
+          </h6>
         </div>
         <div class="object-nav clearfix">
           <a id="about-object.b" ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
@@ -17,17 +18,15 @@
           <a id="more.b" ng-class="{selected: activeSection == 'more', disabled: !viewEnabled('more', true)}" ng-click="toggleView('more')">More</a>
         </div>
 
+        <aside class="tombstone" ng-class="{extended: showExtendedTombstone}">
+          <h6>{{json.medium}}</h6>
+          <h6>{{json.dimension}}</h6>
+          <h6>{{json.creditline}}</h6>
+          <h6>{{json.accession_number}}</h6>
+        </aside>
         <div class="object-stories">
           <div id="about-object" ng-if="activeSection == 'about'">
             <p ng-bind-html="wp.trustedDescription || json.trustedDescription"></p>
-
-            <aside class="tombstone" ng-if="showExtendedTombstone">
-              <h6>{{json.medium}}</h6>
-              <h6>{{json.dimension}}</h6>
-              <h6>{{json.creditline}}</h6>
-              <h6>{{json.accession_number}}</h6>
-            </aside>
-            <a ng-click="toggleExtendedTombstone()">Full Details</a>
 
           </div><!--end about this object-->
 

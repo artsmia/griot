@@ -333,8 +333,9 @@
         setTimeout(Zoomer.windowResized, 0)
       }
 
-      $scope.toggleExtendedTombstone = function() {
+      $scope.toggleExtendedTombstone = function(event) {
         $scope.showExtendedTombstone = !$scope.showExtendedTombstone
+        event.stopPropagation()
       }
     }
   ])
