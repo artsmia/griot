@@ -3,8 +3,8 @@
     <div id="object-content" ng-hide="sixBarClosed">
       <div id="info" class="large-6 columns" scroll ng-class="{scrolled: scrolled}">
         <nav>
-          <a id="back" class="typcn typcn-chevron-left icon slide-object-nav" href="#" title="Back"></a>
-          <div id="full" class="typcn typcn-arrow-maximise icon slide-object-nav" ng-click="toggleSixbar(this)" title="Show image fullscreen"></div>
+          <a id="back" class="fitts-law" href="#" title="Back"><span class="typcn typcn-chevron-left icon slide-object-nav"></span></a>
+          <div id="full" class="fitts-law" ng-click="toggleSixbar(this)" title="Show image fullscreen"><span class="typcn typcn-arrow-maximise icon slide-object-nav"></span></div>
         </nav>
         <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
           <h3>{{json.title}}</h3>
