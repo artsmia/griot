@@ -438,15 +438,15 @@ ol#annotations ol li.active div {
   text-align: center;
 }
 
-.leaflet-map-pane .leaflet-overlay-pane {
-  transition: opacity 0.25s 2s;
+.leaflet-map-pane .leaflet-overlay-pane, .noteMarker span {
+  transition: opacity 0.25s 0s;
   opacity: 0;
 }
-.leaflet-map-pane:hover .leaflet-overlay-pane, .leaflet-map-pane:active .leaflet-overlay-pane, #zoomer.annotations .leaflet-overlay-pane {
+#zoomer.annotations .leaflet-overlay-pane {
   opacity: 1;
   transition: opacity 0.25s 0s;
 }
-.leaflet-map-pane:hover .noteMarker, .leaflet-map-pane:active .noteMarker, #zoomer.annotations .noteMarker {
+#zoomer.annotations .noteMarker span {
   opacity: 1;
   transition: opacity 0.25s 0s;
 }
