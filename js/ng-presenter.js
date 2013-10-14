@@ -70,6 +70,7 @@
       template: '<div id="{{container}}" class="flatmap"><div ng-transclude></div></div>',
       controller: function($scope) {
         var scope = $scope
+        scope.$parent.flatmapScope = scope
 
         var removeJsonLayer = function() {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
@@ -173,7 +174,6 @@
         var scrollNoteTextIntoView = function() { // this is hacky
           var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
           if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
-          console.log(noteEl)
         }
         var toggleNoteZoom = function() {
           scope.$apply(function() { scope.note.active = !scope.note.active })
@@ -183,6 +183,7 @@
           if(!newVal && oldVal && scope.note == flatmapCtrl.scope.lastActiveNote) {
             flatmapCtrl.removeJsonLayer()
             scope.map.zoomOut(100)
+            flatmapCtrl.scope.lastActiveNote = null
           } else if(newVal && !oldVal) {
             var lastNote = flatmapCtrl.scope.lastActiveNote
             if(lastNote) lastNote.active = false
@@ -275,11 +276,16 @@
         if(nextView == 'annotations') {
           if(!$scope.notes) $scope.notes = $scope.wp.views
           var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
-          if(firstNote) {
+          if(firstNote && !$scope.flatmapScope.lastActiveNote) {
             $scope.activateNote(firstNote, $scope.notes[0])
             setTimeout(function() {
               document.querySelector('ol#annotations').scrollIntoView()
             }, 0)
+          } else if($scope.flatmapScope.lastActiveNote) {
+            // If there's an active annotation, center the map over it.
+            if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
+              $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.firebase.geometry)
+            }
           }
         }
         $scope.activeSection = nextView

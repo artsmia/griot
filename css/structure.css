@@ -385,6 +385,7 @@ ol#annotations ol li.active div {
   z-index: 10000;
 }
 #info {
+  overflow-x: hidden;
   overflow-y: scroll;
   height: 768px;
 }
