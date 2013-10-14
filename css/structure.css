@@ -116,7 +116,7 @@ img {
 	color:#222;
 }
 
-.icon:hover, .icon a:hover, #bottomNav:hover .icon {
+.icon:hover, a:hover .icon, .icon a:hover, #bottomNav:hover .icon {
 	color:red;
 }
 
@@ -192,7 +192,7 @@ img {
   background: #eee;
   -webkit-transition all 0.2s linear;
 }
-#info.scrolled nav #back {
+#info.scrolled nav #back span {
   /* font-size: 108%; */
   /* width: 22px; */
   /* height: 22px; */
@@ -208,6 +208,8 @@ img {
 }
 #info nav #full {
   float: right;
+}
+#info nav #full span {
   padding: 1px 0 0 2px;
 }
 #info .tombstone {
@@ -430,13 +432,11 @@ ol#annotations ol li.active div {
   -webkit-transform: scale(1.1);
 }
 
-/* @media screen and (min-device-width : 768px) and (max-device-width : 1024px) { */
-  .noteMarker {
-    padding: 2em;
-    margin: -2em !important;
-    text-align: center;
-  }
-/* } */
+.noteMarker {
+  padding: 3em;
+  margin: -3em !important;
+  text-align: center;
+}
 
 .leaflet-map-pane .leaflet-overlay-pane {
   transition: opacity 0.25s 2s;
@@ -863,4 +863,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 .tombstone.extended aside {
   display: block;
+}
+
+.fitts-law {
+  padding: 3em;
+  margin: -3em;
 }
