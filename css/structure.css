@@ -342,14 +342,6 @@ img {
   height: 100%;
 }
 
-#cover {
-  list-style: none;
-  -webkit-columns: 6;
-  -webkit-column-gap: 0;
-  padding: 1em;
-  margin: 0;
-}
-
 ol#annotations, ol#annotations ol {
   list-style: none;
   margin-left: 0px;
@@ -874,4 +866,52 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .fitts-law {
   padding: 3em;
   margin: -3em;
+}
+
+#cover {
+  list-style: none;
+  width: 100%;
+  -webkit-perspective: 500px;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  overflow: hidden, scroll;
+  height: 748px;
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+#cover li {
+  display: inline-block;
+  width: 25%;
+  margin: 0 1em;
+  position: relative;
+}
+#cover li.active {
+  -webkit-transition: -webkit-transform 0.9s ease-in-ease-out;
+  -webkit-transform: scale(1.1);
+  border-bottom: 0.25em #999;
+}
+#cover li h5, #cover li h6{
+  display: none;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  color: black;
+  z-index: 2;
+}
+#cover li h5 {
+  padding-bottom: 1em;
+  top: -2em;
+  right: 0;
+}
+#cover li h6 {
+  padding-top: 1em;
+  bottom: -2em;
+  right: 0;
+  color: #222;
+}
+#cover li.active h5, #cover li.active h6 {
+  display: inline;
+}
+#cover li img {
+  max-height: 100%;
 }

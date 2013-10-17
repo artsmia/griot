@@ -8,7 +8,7 @@
     ['$routeProvider', function($routeProvider) {
       return $routeProvider.when('/', {
         templateUrl: 'views/index.html',
-        controller: 'MainCtrl'
+        controller: 'mainCtrl'
       }).when('/o/:id', {
         templateUrl: 'views/object.html',
         controller: 'ObjectCtrl'
@@ -397,19 +397,57 @@
     }
   ])
 
-  app.controller('MainCtrl', ['$scope', '$routeParams', 'objects',
+  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects',
     function($scope, $routeParams, objects) {
       objects().then(function(data) {
         $scope.objects = data
       })
+
+      $scope.findCentermostElement = function(element) {
+        var viewportObjects = []
+        angular.forEach(element.find('li'), function(li) {
+          var left = li.offsetLeft,
+              width = li.offsetWidth
+
+          if(left >= window.pageXOffset && (left + width) <= (window.pageXOffset + window.innerWidth)) {
+            viewportObjects.push(li)
+          }
+
+          var centermost = viewportObjects[Math.floor(viewportObjects.length/2)]
+
+          if(window.pageXOffset == 0) {
+            centermost = viewportObjects[0]
+          } else if(left+width == window.pageXOffset) {
+            // centermost = viewportObjects[viewportObjects.length-1]
+            // TODO: How to handle the first and last two objects?
+          }
+
+          $scope.active = angular.element(centermost).scope()
+          $scope.$$phase || $scope.$apply()
+        })
+      }
     }
   ])
 
   app.directive("scroll", function ($window) {
     return function(scope, element, attrs) {
-      element.bind("touchstart touchend touchcancel touchleave touchmove scroll", function() {
-        scope.scrolled = this.scrollTop >= 100
-        scope.$apply()
+      window.scope = scope
+      scope._scrollCallback = scope.$eval(attrs['scroll'])
+      var scrollCallback = function(event) {
+            scope.scrolled = this.scrollTop >= 100
+            scope.pageXOffset = window.pageXOffset
+            console.log('.')
+            if(scope._scrollCallback) scope._scrollCallback(element)
+            scope.$$phase || scope.$apply()
+          },
+          hooks = 'scroll touchstart touchmove touchcancel touchend touchleave'
+
+      element.bind(hooks, scrollCallback)
+      if(!scope._scrollCallback) return
+      // Bug? binding to element doesn't catch horizontal scrolls…
+      // use window.addEventListener to cover that.
+      Array.prototype.map.call(hooks.split(' '), function(hook) {
+        window.addEventListener(hook, scrollCallback)
       })
     }
   })

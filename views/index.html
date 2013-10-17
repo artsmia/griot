@@ -1,7 +1,9 @@
-<ul id="cover">
-  <li ng-repeat="id in objects.ids">
+<ul id="cover" scroll="findCentermostElement">
+  <li ng-repeat="id in objects.ids" ng-class="{active: active.id == id}">
     <a href="#/o/{{id}}">
       <img ng-src="http://api.artsmia.org/images/{{id}}/300/small.jpg">
+      <h5 ng-bind="objects[id].title"></h5>
+      <h6 ng-bind="objects[id].culture"></h6>
     </a>
   </li>
 </ul>
