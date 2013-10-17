@@ -226,9 +226,10 @@
     } // https://gist.github.com/maruf-nc/5625869
   });
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio',
-    function($scope, $routeParams, $location, $sce, objects, notes, segmentio) {
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio', '$rootScope',
+    function($scope, $routeParams, $location, $sce, objects, notes, segmentio, $rootScope) {
       $scope.id = $routeParams.id
+      $rootScope.lastObjectId = $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
         $scope.json.trustedDescription = $sce.trustAsHtml($scope.json.description)
@@ -404,10 +405,17 @@
     }
   ])
 
-  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope',
-    function($scope, $routeParams, objects, segmentio, $rootScope) {
+  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope', '$timeout',
+    function($scope, $routeParams, objects, segmentio, $rootScope, $timeout) {
       objects().then(function(data) {
         $scope.objects = data
+        var lastIndex = $scope.objects.ids.lastIndexOf(parseInt($rootScope.lastObjectId))
+        if(lastIndex > -1) {
+          $timeout(function() {
+            document.querySelector('#cover li:nth-child('+lastIndex+')').scrollIntoView()
+            window.scrollTo(window.pageXOffset + window.innerWidth/2, 0)
+          }, 100)
+        }
       })
 
       $scope.findCentermostElement = function(element) {
