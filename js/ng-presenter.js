@@ -410,45 +410,42 @@
     }
   ])
 
-  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope', '$timeout',
-    function($scope, $routeParams, objects, segmentio, $rootScope, $timeout) {
+  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
+    function($scope, $routeParams, objects, segmentio, $rootScope, $timeout, orderByFilter) {
+      window.$rootS = $rootScope
+      $scope.orderByFilter = orderByFilter
       objects().then(function(data) {
-        $scope.objects = data
-        var lastIndex = $scope.objects.ids.lastIndexOf(parseInt($rootScope.lastObjectId))
-        if(lastIndex > -1) {
-          $timeout(function() {
-            document.querySelector('#cover li:nth-child('+lastIndex+')').scrollIntoView()
-            window.scrollTo(window.pageXOffset + window.innerWidth/2, 0)
-          }, 100)
+        if($rootScope.randomizedAll == undefined) {
+          $scope.objects = data
+          $scope.stories = [ { title: 'Dance', id: 281, poster: 'http://tdx.s3.amazonaws.com/sande-dance-rough.mp4.jpg'}, { title: 'Getatchew Haile on Ethopian Manuscripts', id: 256, poster: 'http://tdx.s3.amazonaws.com/GetatchewFINAL.mp4.jpg'}, { title: 'Making Pots', id: 154 }, { title: 'Real or Fake?', id: 207, poster: 'http://tdx.s3.amazonaws.com/ife-ct-2013.mp4.jpg'}, { title: 'The Tale of the Tusk', id: 233, poster: 'http://cdn.dx.artsmia.org/thumbs/tn_111103_mia348_GH7_3718.jpg'}, { title: 'The Ivory Trade', id: 240, poster: 'http://cdn.dx.artsmia.org/thumbs/tn_2013_TDXAfrica_046_01.jpg'}, { title: 'Ikat Weaving', id: 246, poster: 'http://tdx.s3.amazonaws.com/Ikat-vfa7srYWo4s.mp4.jpg'}, { title: 'Mystery of the Mummy', id: 236 }, { title: 'Making a Mummy', id: 249, poster: 'http://tdx.s3.amazonaws.com/HowtoMakeaMummy-1gFY7ST-Tws.mp4.jpg'}, { title: 'Osiris, God of the Underworld', id: 251 } ]
+          var all = []
+          angular.forEach($scope.objects.ids, function(id) { all.push(id) })
+          angular.forEach($scope.stories, function(story) { all.push(story) })
+          $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
+        } else {
+          $scope.all = $rootScope.randomizedAll
         }
+
+        $scope.loaded = false
+        window.$scope = $scope
+        $timeout(function() {
+          imagesLoaded(document.querySelector('#cover'), function() {
+            $scope.p = new Packery(document.querySelector('#cover'), {
+              layoutMode: 'horizontal'
+            })
+            if($rootScope.pageXOffset) {
+              window.scrollTo($rootScope.pageXOffset, 0)
+            }
+          })
+        }, 0)
       })
 
-      $scope.findCentermostElement = function(element) {
-        var viewportObjects = []
-        angular.forEach(element.find('li'), function(li) {
-          var left = li.offsetLeft,
-              width = li.offsetWidth
-
-          if(left >= window.pageXOffset && (left + width) <= (window.pageXOffset + window.innerWidth)) {
-            viewportObjects.push(li)
-          }
-
-          var centermost = viewportObjects[Math.floor(viewportObjects.length/2)]
-
-          if(window.pageXOffset == 0) {
-            centermost = viewportObjects[0]
-          } else if(left+width == window.pageXOffset) {
-            // centermost = viewportObjects[viewportObjects.length-1]
-            // TODO: How to handle the first and last two objects?
-          }
-
-          $scope.active = angular.element(centermost).scope()
-          $scope.$$phase || $scope.$apply()
-        })
+      $scope.random = function() {
+        return 0.5 - Math.random()
       }
-      objects().then(function(data) {
-        $scope.objects = data
-      })
+      $scope.tallImage = function(id) {
+        return [113136, 114833, 4866].indexOf(id) > -1
+      }
 
       if(!$rootScope.identifier) {
         var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry",
@@ -465,6 +462,10 @@
       }
 
       segmentio.track('Landed on the homepage')
+
+      $scope.$on("$destroy", function(){
+        $rootScope.pageXOffset = window.pageXOffset
+      })
     }
   ])
 
