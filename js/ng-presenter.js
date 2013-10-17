@@ -103,6 +103,7 @@
             var tileUrl = envConfig.tileUrlSubdomain(tileJson.tiles[0])
             scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
             scope.$emit('viewChanged')
+            scope.$parent.mapLoaded = true
           })
         }
         loadImage(scope.image)
@@ -240,20 +241,23 @@
         })
         if($scope.wp) {
           $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
-          $scope.$on('viewChanged', function() {
-            $scope.notes = $scope.wp.views
-            angular.forEach($scope.notes, function(view) {
-              angular.forEach(view.annotations, function(ann) {
-                ann.trustedDescription = $sce.trustAsHtml(ann.description)
-              })
-            })
-            $scope.$$phase || $scope.$apply()
-          })
+          $scope.$on('viewChanged', loadDetails)
+          if($scope.mapLoaded) loadDetails()
 
           // $scope.notes = $scope.wp.views
           $scope.$$phase || $scope.$apply()
         }
       })
+
+      var loadDetails = function() {
+        $scope.notes = $scope.wp.views
+        angular.forEach($scope.notes, function(view) {
+          angular.forEach(view.annotations, function(ann) {
+            ann.trustedDescription = $sce.trustAsHtml(ann.description)
+          })
+        })
+        $scope.$$phase || $scope.$apply()
+      }
 
       $scope.next = function(direction) {
         var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
