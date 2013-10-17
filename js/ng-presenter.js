@@ -2,7 +2,7 @@
 
 (function() {
   'use strict'
-  window.app = angular.module('presenter', ['ngRoute', 'ngTouch']);
+  window.app = angular.module('presenter', ['ngRoute', 'ngTouch', 'segmentio']);
 
   app.config(
     ['$routeProvider', function($routeProvider) {
@@ -150,7 +150,7 @@
     }
   })
 
-  app.directive('note', function() {
+  app.directive('note', function(segmentio) {
     var divIcon = L.divIcon({className: 'noteMarker'})
     return {
       restrict: 'E',
@@ -181,16 +181,20 @@
         }
 
         scope.$watch('note.active', function(newVal, oldVal) {
+          var openedOrClosed = undefined
           if(!newVal && oldVal && scope.note == flatmapCtrl.scope.lastActiveNote) {
             flatmapCtrl.removeJsonLayer()
             scope.map.zoomOut(100)
             flatmapCtrl.scope.lastActiveNote = null
+            openedOrClosed = 'Closed'
           } else if(newVal && !oldVal) {
-            var lastNote = flatmapCtrl.scope.lastActiveNote
+            var lastNote = flatmapCtrl.scope.lastActiveNote, note = scope.note
             if(lastNote) lastNote.active = false
             zoomNote()
             flatmapCtrl.scope.lastActiveNote = scope.note
+            openedOrClosed = 'Opened'
           }
+          if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
           var layer = scope.jsonLayer
           scope.marker.setLatLng(newVal ? layer._latlngs[0] : layer.getBounds().getCenter())
@@ -222,13 +226,14 @@
     } // https://gist.github.com/maruf-nc/5625869
   });
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes',
-    function($scope, $routeParams, $location, $sce, objects, notes) {
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio',
+    function($scope, $routeParams, $location, $sce, objects, notes, segmentio) {
       $scope.id = $routeParams.id
       objects().then(function(data) {
         $scope.json = data[$scope.id]
         $scope.json.trustedDescription = $sce.trustAsHtml($scope.json.description)
         $scope.objects = data
+        segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.json.title})
       })
       notes().then(function(_wp) {
         $scope.wp = _wp.objects[$scope.id]
@@ -274,7 +279,8 @@
           nextView == 'about')
       }
 
-      $scope.toggleView = function(nextView) {
+      $scope.toggleView = function(nextView, dontTrack) {
+        if(!dontTrack) segmentio.track('Changed Sections within an Object', {view: nextView})
         nextView = nextView || 'about'
         if(!$scope.viewEnabled(nextView)) return
         if(nextView == 'annotations') {
@@ -294,7 +300,7 @@
         }
         $scope.activeSection = nextView
       }
-      $scope.toggleView()
+      $scope.toggleView(undefined, true)
       $scope.$on('showAnnotationsPanel', function(view) {
         $scope.activeSection = 'annotations'
       })
@@ -340,11 +346,9 @@
     }
   ])
 
-  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'notes', function($scope, $routeParams, $sce, wp) {
+  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', function($scope, $routeParams, $sce, segmentio, wp) {
     wp().then(function(wordpress) {
-      window.$scope = $scope
       $scope.id = $routeParams.id
-      window.wordpress = wordpress
       $scope.story = wordpress.stories[$scope.id]
       $scope.relatedObjects = [];
       angular.forEach($scope.story.relatedObjects, function(id){
@@ -368,6 +372,7 @@
           $scope.activePage = $index;
         }
         */
+        segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
       })
 
       $scope.storyMenuOpen = false
@@ -379,6 +384,7 @@
       $scope.updateActivePage = function(newPage){
         if((newPage > -1) && (newPage < $scope.story.pages.length)){
           $scope.activePage = newPage
+          segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
         }
       }
       $scope.backToObject=function(){
@@ -398,8 +404,8 @@
     }
   ])
 
-  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects',
-    function($scope, $routeParams, objects) {
+  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope',
+    function($scope, $routeParams, objects, segmentio, $rootScope) {
       objects().then(function(data) {
         $scope.objects = data
       })
@@ -427,6 +433,20 @@
           $scope.$$phase || $scope.$apply()
         })
       }
+      objects().then(function(data) {
+        $scope.objects = data
+      })
+
+      if(!$rootScope.identifier) {
+        var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"]
+        , nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"]
+        , number = Math.floor(Math.random()*100)
+        , name = adjs[Math.floor(Math.random()*(adjs.length-1))]+"-"+nouns[Math.floor(Math.random()*(nouns.length-1))]+"-"+number
+        $rootScope.identifier = name
+        segmentio.identify(name)
+      }
+
+      segmentio.track('Landed on the homepage')
     }
   ])
 
