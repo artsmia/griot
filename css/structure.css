@@ -345,6 +345,7 @@ img {
 #cover {
   list-style: none;
   -webkit-columns: 6;
+  -webkit-column-gap: 0;
   padding: 1em;
   margin: 0;
 }
