@@ -101,6 +101,8 @@
           tilesaw.get(image).then(function(tileJson) {
             $('#'+scope.container).find('.leaflet-tile-pane').css('visibility', 'visible') // why is this necessary? when I re-init a zoomer it's visibility is hidden.
             var tileUrl = envConfig.tileUrlSubdomain(tileJson.tiles[0])
+            scope.$parent.$parent.tileJson = tileJson
+            scope.$parent.$parent.imageAspectRatio = tileJson.width / tileJson.height
             scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
             scope.$emit('viewChanged')
             scope.$parent.mapLoaded = true
@@ -367,6 +369,7 @@
         page.storyCaptionOpen = true;
         page.toggleStoryCaption = function(){
           this.storyCaptionOpen = !this.storyCaptionOpen;
+          setTimeout(Zoomer.windowResized, 0)
         }
         /* Deprecated
         page.updateActivePage = function($index){
@@ -375,7 +378,9 @@
         */
         segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
       })
+      // setTimeout(Zoomer.windowResized, 0)
 
+      setTimeout(Zoomer.windowResized, 100)
       $scope.storyMenuOpen = false
       $scope.toggleStoryMenu = function(){
         $scope.storyMenuOpen = !$scope.storyMenuOpen
@@ -446,8 +451,13 @@
       })
 
       if(!$rootScope.identifier) {
-        var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry", "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring", "winter", "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue", "billowing", "broken", "cold", "damp", "falling", "frosty", "green", "long", "late", "lingering", "bold", "little", "morning", "muddy", "old", "red", "rough", "still", "small", "sparkling", "throbbing", "shy", "wandering", "withered", "wild", "black", "young", "holy", "solitary", "fragrant", "aged", "snowy", "proud", "floral", "restless", "divine", "polished", "ancient", "purple", "lively", "nameless"]
-        , nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea", "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn", "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird", "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower", "firefly", "feather", "grass", "haze", "mountain", "night", "pond", "darkness", "snowflake", "silence", "sound", "sky", "shape", "surf", "thunder", "violet", "water", "wildflower", "wave", "water", "resonance", "sun", "wood", "dream", "cherry", "tree", "fog", "frost", "voice", "paper", "frog", "smoke", "star"]
+        var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry",
+          "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring",
+          "patient", "twilight", "dawn", "crimson", "wispy", "weathered", "blue"]
+        , nouns = ["waterfall", "river", "breeze", "moon", "rain", "wind", "sea",
+          "morning", "snow", "lake", "sunset", "pine", "shadow", "leaf", "dawn",
+          "glitter", "forest", "hill", "cloud", "meadow", "sun", "glade", "bird",
+          "brook", "butterfly", "bush", "dew", "dust", "field", "fire", "flower"]
         , number = Math.floor(Math.random()*100)
         , name = adjs[Math.floor(Math.random()*(adjs.length-1))]+"-"+nouns[Math.floor(Math.random()*(nouns.length-1))]+"-"+number
         $rootScope.identifier = name
@@ -462,12 +472,16 @@
     return function(scope, element, attrs) {
       scope._scrollCallback = scope.$eval(attrs['scroll'])
       var scrollCallback = function(event) {
-            scope.scrolled = this.scrollTop >= 100
-            scope.pageXOffset = window.pageXOffset
-            if(scope._scrollCallback) scope._scrollCallback(element)
-            scope.$$phase || scope.$apply()
-          },
-          hooks = 'scroll touchstart touchmove touchcancel touchend touchleave'
+          if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
+        scope.scrollAnimation = window.webkitRequestAnimationFrame(function() {
+            console.log('.')
+          scope.scrolled = this.scrollTop >= 100
+          scope.pageXOffset = window.pageXOffset
+          if(scope._scrollCallback) scope._scrollCallback(element)
+          scope.$$phase || scope.$apply()
+        })
+        },
+        hooks = 'touchend touchstart touchmove touchleave touchcancel scroll'
 
       element.bind(hooks, scrollCallback)
       if(!scope._scrollCallback) return
