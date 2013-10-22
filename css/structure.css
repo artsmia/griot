@@ -116,9 +116,9 @@ img {
 	color:#222;
 }
 
-.icon:hover, a:hover .icon, .icon a:hover, #bottomNav:hover .icon {
-	color:red;
-}
+/* .icon:hover, a:hover .icon, .icon a:hover, #bottomNav:hover .icon { */
+/* 	color:red; */
+/* } */
 
 .home{
 	position:absolute;
@@ -184,27 +184,9 @@ img {
   height:30px;
 }
 
-#info nav {
-  margin: -1em 0 4em 0;
-}
 #info nav #back {
   float: left;
-  background: #eee;
   -webkit-transition all 0.2s linear;
-}
-#info.scrolled nav #back span {
-  /* font-size: 108%; */
-  /* width: 22px; */
-  /* height: 22px; */
-  position: fixed;
-  /* top: 0.75em; */
-  /* left: 0.25em; */
-  top: 1em;
-  left: 0;
-  border-width: 0;
-  box-shadow: none;
-  padding: 1em 0 3em 0;
-  margin: -1em 0 -3em 0;
 }
 #info nav #full {
   float: right;
@@ -404,8 +386,6 @@ ol#annotations ol li.active div {
 
 }
 
-
-
 .slide-object-nav { z-index: 2000; position: relative; }
 
 /* Style detail markers on the map and in the Details text the same
@@ -431,7 +411,7 @@ ol#annotations ol li.active div {
 .noteMarker span {
   display: block !important;
   background-color: rgba(1, 1, 1, 0.7);
-  margin: -18px 0 0 -18px;
+  margin: -0.75em 0 0 -0.75em;
 }
 #annotations h3 em {
   background-color:#000;
@@ -960,4 +940,33 @@ aside.tombstone.extended {
 }
 #cover li img {
   max-height: 100%;
+}
+
+/* Fix the first nav with Back and Full Screen at the top
+ */
+#info nav {
+  position: fixed;
+  width: 320px;
+  top: 0;
+  padding: 1em 0;
+  background-color: #eee;
+  z-index: 10;
+}
+#info div.tombstone {
+  margin-top: 2em;
+}
+/* When we've scrolled far enough, fix the `About, Details, More` nav too
+ * Sadly, `position: sticky;` doesn't work when only the #info div is scrolling
+ */
+#info.scrolled .object-nav {
+  position: fixed;
+  top: 1em;
+  left: 85px;
+  z-index: 11;
+}
+#objectMode #info.scrolled .object-nav a {
+  padding: 7px 0.75em;
+}
+#info.scrolled .object-stories {
+  padding-top: 3em;
 }

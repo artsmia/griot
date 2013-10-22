@@ -472,16 +472,15 @@
     return function(scope, element, attrs) {
       scope._scrollCallback = scope.$eval(attrs['scroll'])
       var scrollCallback = function(event) {
-          if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
-        scope.scrollAnimation = window.webkitRequestAnimationFrame(function() {
-            console.log('.')
-          scope.scrolled = this.scrollTop >= 100
+        if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
+        scope.scrollAnimation = window.webkitRequestAnimationFrame(function() { // TODO: not just -webkit
+          scope.scrolled = event.target.scrollTop >= 100
           scope.pageXOffset = window.pageXOffset
           if(scope._scrollCallback) scope._scrollCallback(element)
           scope.$$phase || scope.$apply()
         })
-        },
-        hooks = 'touchend touchstart touchmove touchleave touchcancel scroll'
+      },
+      hooks = 'touchend touchstart touchmove touchleave touchcancel scroll'
 
       element.bind(hooks, scrollCallback)
       if(!scope._scrollCallback) return
