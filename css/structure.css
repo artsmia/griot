@@ -408,34 +408,44 @@ ol#annotations ol li.active div {
 
 .slide-object-nav { z-index: 2000; position: relative; }
 
-.noteMarker {
-  color: #fff;
-	font: 700 1em "myriad-pro", sans-serif;
-  opacity: 0;
-  /* transition: opacity 0.25s 2s; */
-}
-
-.noteMarker span {
-  display: block !important;
-  width: 20px !important;
-  height: 17px !important;
-  background-color: rgba(1, 1, 1, 0.7);
-  border-radius: 10px;
-  margin: -9px 0 0 -9px;
-  transition: 0.25s background-color, 0.25s -webkit-transform;
-}
-
-.noteMarker:hover span, .noteMarker:active span {
-  background-color: rgba(1, 1, 1, 0.8);
-  -webkit-transform: scale(1.1);
-}
-
+/* Style detail markers on the map and in the Details text the same
+ */
 .noteMarker {
   padding: 3em;
   margin: -3em !important;
   text-align: center;
 }
+.noteMarker, #annotations h3 em {
+	font: 700 1em "myriad-pro", sans-serif;
+  color: #fff;
+}
+.noteMarker span, #annotations h3 em {
+  height: 1.75rem !important;
+  width: 1.75rem !important;
+  border-radius: 1em;
+  font-weight: 700;
+  text-align: center;
+  font-size: 1.125rem;
+  padding: 0.1em 0 0 0;
+}
+.noteMarker span {
+  display: block !important;
+  background-color: rgba(1, 1, 1, 0.7);
+  margin: -18px 0 0 -18px;
+}
+#annotations h3 em {
+  background-color:#000;
+  display: inline-block;
+  margin-right: 10px;
+  font-style: normal;
+}
+.noteMarker:hover span, .noteMarker:active span {
+  background-color: rgba(1, 1, 1, 0.8);
+  -webkit-transform: scale(1.1);
+}
 
+/* Hide the overlay when Details isn't active
+ */
 .leaflet-map-pane .leaflet-overlay-pane, .noteMarker span {
   transition: opacity 0.25s 0s;
   opacity: 0;

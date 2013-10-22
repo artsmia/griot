@@ -95,19 +95,6 @@ img{
 	display:none;
 }
 
-#objectMode #annotations h3 span.a-number {
-	background-color:#000;
-	color:#fff;
-	font-weight:700;
-	display:inline-block;
-	height:1.5em;
-	width:1.5em;
-	text-align:center;
-	-webkit-border-radius: 1em;
-	border-radius: 1em;
-	margin-right:10px;
-	padding-bottom:1px;
-}
 #annotations .note h3 {
   font-size: 1.3em;
 }
