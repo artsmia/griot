@@ -191,17 +191,21 @@ img {
 #info nav #full {
   float: right;
 }
+#info nav #back span {
+  padding: 0 0 0 1px;
+}
 #info nav #full span {
   padding: 1px 0 0 2px;
 }
 #info .tombstone {
   clear: both;
 }
-#zoomer.full_width .typcn-arrow-minimise {
+#zoomer .slide-object-nav {
   position: absolute;
   right: 1em;
   top: 1em;
-  color: #ddd;
+  color: #111;
+  background-color: rgba(250, 250, 250, .6);
 }
 
 /*navigation*/
@@ -977,8 +981,9 @@ aside.tombstone.extended {
 #info.scrolled .object-nav {
   position: fixed;
   top: 1em;
-  left: 85px;
+  left: 133px;
   z-index: 11;
+  font-size: 111%;
 }
 #objectMode #info.scrolled .object-nav a {
   padding: 7px 0.75em;

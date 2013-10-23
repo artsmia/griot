@@ -470,12 +470,13 @@
   ])
 
   app.directive("scroll", function ($window) {
+    var e = document.querySelector('#info')
     return function(scope, element, attrs) {
       scope._scrollCallback = scope.$eval(attrs['scroll'])
       var scrollCallback = function(event) {
         if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
         scope.scrollAnimation = window.webkitRequestAnimationFrame(function() { // TODO: not just -webkit
-          scope.scrolled = event.target.scrollTop >= 100
+          scope.scrolled = e.scrollTop >= 100
           scope.pageXOffset = window.pageXOffset
           if(scope._scrollCallback) scope._scrollCallback(element)
           scope.$$phase || scope.$apply()
