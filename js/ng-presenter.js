@@ -437,7 +437,7 @@
               window.scrollTo($rootScope.pageXOffset, 0)
             }
           })
-        }, 0)
+        }, 100)
       })
 
       $scope.random = function() {
