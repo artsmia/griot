@@ -8,7 +8,7 @@
         <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
           <h3>{{json.title}}</h3>
           <h5>{{json.artist}} {{json.culture}}, {{json.country}}</h5>
-          <h6>{{json.dated}} <span ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn" ng-class="showExtendedTombstone ? 'typcn-info-outline' : 'typcn-info'" ng-click="toggleExtendedTombstone()"></span>
+          <h6>{{json.dated}} <a ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn" ng-class="{open: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">i</a>
           </h6>
         </div>
         <div class="object-nav clearfix">

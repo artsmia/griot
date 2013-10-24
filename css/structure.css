@@ -876,6 +876,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 #toggleTombstone {
   margin-left: 1em;
+  background: #222;
+  display: inline-block;
+  color: white;
+  border-radius: 1em;
+  font-weight: 500;
+  font-size: 14px;
+  padding-left: 4px;
+  border: 1px solid #222;
+  box-sizing: border-box;
+  line-height: 0.9em;
+}
+#toggleTombstone.open {
+  color: #222;
+  background: #eee;
+  font-weight: 700;
 }
 aside.tombstone {
   opacity: 0;

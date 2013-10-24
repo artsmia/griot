@@ -344,7 +344,7 @@
 
       $scope.toggleExtendedTombstone = function(event) {
         $scope.showExtendedTombstone = !$scope.showExtendedTombstone
-        event.stopPropagation()
+        if(event) event.stopPropagation()
       }
     }
   ])
