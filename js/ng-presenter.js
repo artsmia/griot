@@ -470,8 +470,8 @@
   ])
 
   app.directive("scroll", function ($window) {
-    var e = document.querySelector('#info')
     return function(scope, element, attrs) {
+      var e = document.querySelector('#info')
       scope._scrollCallback = scope.$eval(attrs['scroll'])
       var scrollCallback = function(event) {
         if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
