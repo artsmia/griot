@@ -1007,3 +1007,20 @@ aside.tombstone.extended {
 #info.scrolled .object-stories {
   padding-top: 3em;
 }
+
+.flatmap .hint {
+  position: absolute;
+  bottom: 2em;
+  right: 1em;
+  z-index: 1000;
+  margin: 0 auto;
+  color: #222;
+  background: rgba(251, 251, 251, 0.5);
+  padding: 0.5em;
+  font-size: 1.25em;
+  transition: all 0.2s linear;
+}
+.flatmap.zoomed .hint {
+  max-height: 0;
+  opacity: 0;
+}

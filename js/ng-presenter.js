@@ -67,7 +67,7 @@
       },
       replace: true,
       transclude: true,
-      template: '<div id="{{container}}" class="flatmap"><div ng-transclude></div></div>',
+      template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
       controller: function($scope) {
         var scope = $scope
         scope.$parent.flatmapScope = scope
@@ -106,6 +106,10 @@
             scope.zoom = Zoomer.zoom_image({container: scope.container, tileURL: tileUrl, imageWidth: tileJson.width, imageHeight: tileJson.height})
             scope.$emit('viewChanged')
             scope.$parent.mapLoaded = true
+            var watchForZoom = scope.zoom.map.on('zoomstart', function() {
+              scope.$apply(function() { scope.zoomed = true })
+              scope.zoom.map.off(watchForZoom)
+            })
           })
         }
         loadImage(scope.image)
