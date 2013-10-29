@@ -916,7 +916,7 @@ aside.tombstone.extended {
 #cover {
   list-style: none;
   margin: 0;
-  height: 614px; // (760/10)*8
+  height: 640px;
   position: relative;
   margin-top: 50px;
 }
@@ -924,58 +924,69 @@ aside.tombstone.extended {
   display: inline;
   /* width: 16.66666%; // 100/6 */
   /* width: 14.2%; // 100/7 */
-  height: 50%;
-}
-#cover li.h2 {
-  height: 100%;
+  height: 300px;
+  margin:0px 5px;
+  border:1px solid #999;
 }
 #cover li img {
   /* max-width: 300px; */
   height: 100%;
 }
-
 #cover li.story {
   /* position: relative; */
-  max-width: 300px;
+  height:300px;
+  width:300px;
   text-align: center;
+  background-image:none;
+  background-color:#fff;
 }
 #cover li.story a {
-  background-size: contain;
+  background-size: cover;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   width: 100%;
   height: 100%;
   display: block;
 }
-#cover li.story.noPoster {
-  max-width: 200px;
-  height: 25%;
-  background: transparent;
+#cover li.story div.poster{
+  position:absolute;
+  top:15px;
+  left:15px;
+  width:270px;
+  height:200px;
+  background-size:cover;
+  background-position:50% 50%;
+  border:1px solid #999;
 }
-#cover li.story.noPoster a {
-  padding-top: 2em;
+#cover li.story.noPoster div.poster{
+  display:none;
 }
-#cover li.story.noPoster strong {
-  margin: 0 1em;
+#cover li.story span.title{
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  display:table;
+  width:100%;
+  height:85px;
+  text-align:center;
+  white-space:normal;
 }
-#cover li.story a {
-  padding-top: 1em;
+#cover li.story.noPoster span.title{
+  height:100%;
 }
-#cover li.story strong {
-  color: #222;
-  background: rgba(250, 250, 250, 0.9);
-  white-space: normal;
-  text-align: center;
-  padding: 1em;
-  margin-top: 10em;
-  display: block;
-  font-size: 120%;
+#cover li.story span.title strong{
+  display:table-cell;
+  vertical-align:middle;
+  font-size:120%;
+  line-height:120%;
+  color:#222;
+  padding:20px;
 }
 #instructions {
   position: fixed;
   text-align: center;
   width: 100%;
-  margin-top: 1em;
+  margin-top: 0.8em;
 }
 
 /* Fix the first nav with Back and Full Screen at the top

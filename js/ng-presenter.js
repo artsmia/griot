@@ -435,7 +435,8 @@
         $timeout(function() {
           imagesLoaded(document.querySelector('#cover'), function() {
             $scope.p = new Packery(document.querySelector('#cover'), {
-              layoutMode: 'horizontal'
+              layoutMode: 'horizontal',
+              rowHeight:310
             })
             if($rootScope.pageXOffset) {
               window.scrollTo($rootScope.pageXOffset, 0)
@@ -446,9 +447,6 @@
 
       $scope.random = function() {
         return 0.5 - Math.random()
-      }
-      $scope.tallImage = function(id) {
-        return [113136, 114833, 4866].indexOf(id) > -1
       }
 
       if(!$rootScope.identifier) {

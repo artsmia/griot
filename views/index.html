@@ -1,10 +1,11 @@
 <ul id="cover">
-  <li ng-class="{story: thing.id != undefined, h2: tallImage(thing), noPoster: !thing.poster}" ng-repeat="thing in all" ng-switch="thing.id == undefined">
+  <li ng-class="{story: thing.id != undefined, noPoster: !thing.poster}" ng-repeat="thing in all" ng-switch="thing.id == undefined">
     <a href="#/o/{{thing}}" ng-switch-when="true">
       <img ng-src="fallback/img/{{thing}}.jpg">
     </a>
-    <a ng-href="#/stories/{{thing.id}}" style="background-image: url({{thing.poster}})">
-      <strong ng-bind="thing.title"></strong>
+    <a ng-href="#/stories/{{thing.id}}">
+      <div class='poster' style="background-image: url({{thing.poster}})"></div>
+      <span class='title'><strong ng-bind="thing.title"></strong></span>
     </a>
   </li>
 </ul>
