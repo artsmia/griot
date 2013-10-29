@@ -106,10 +106,9 @@ img {
 }
 
 .icon{
-	height:20px;
-	width:20px;
 	display:block;
-	font-size:1.5em;
+	font-size:1.4rem;
+  padding: 3px 0 0 0;
 }
 
 .icon a {
@@ -180,8 +179,8 @@ img {
 	color:#333;
 	-webkit-box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
   box-shadow:  1px 1px 2px 1px rgba(0, 0, 0, .2);
-  width:30px;
-  height:30px;
+  width: 2rem;
+  height: 2rem;
 }
 
 #info nav #back {
@@ -192,10 +191,10 @@ img {
   float: right;
 }
 #info nav #back span {
-  padding: 0 0 0 1px;
+  /* padding: 0 0 0 1px; */
 }
 #info nav #full span {
-  padding: 1px 0 0 2px;
+  /* padding: 1px 0 0 2px; */
 }
 #info .tombstone {
   clear: both;
@@ -570,17 +569,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .story .caption-close{
   position:absolute;
   right:10px;
-  border:2px solid #000;
-  width:28px;
-  height:28px;
-  border-radius:1000px;
-  color:#000;
+  color:#222;
   line-height:0.9em;
   cursor:pointer;
-}
-.story .caption-close:hover{
-  color:#fff;
-  background-color:#000;
+  font-size: 1.7em;
 }
 .story .caption-open{
   position:absolute;
@@ -720,8 +712,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   text-align:center;
 }
 .story .page-arrow .page-arrow-icon{
-  font-size:40px;
-  line-height:8px;
   text-align:center;
   display:block;
   width:100%;
@@ -875,21 +865,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 
 #toggleTombstone {
-  margin-left: 1em;
-  background: #222;
-  display: inline-block;
-  color: white;
+  color: #222;
   border-radius: 1em;
-  font-weight: 500;
-  font-size: 14px;
-  padding-left: 4px;
-  border: 1px solid #222;
-  box-sizing: border-box;
-  line-height: 0.9em;
+  font-size: 1.5em;
+  float: right;
+  margin: -.1em 0.1em 0 0;
 }
 #toggleTombstone.open {
-  color: #222;
-  background: #eee;
+  color: #eee;
+  background: #222;
   font-weight: 700;
 }
 aside.tombstone {

@@ -14,7 +14,7 @@
 
       <div class='caption-wrap' ng-show="page.storyCaptionOpen">
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
-          <span class='typcn typcn-times icon caption-close' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
+          <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
         <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800"></video>
         <div ng-bind-html="page.trustedText" class='caption'></div>
@@ -27,24 +27,24 @@
   </div>
 
   <div id='story-header'>
-    <a id='story-back' class="typcn typcn-home icon slide-object-nav" href="#"></a>
+    <a id='story-back' class="typcn icon-home icon slide-object-nav" href="#"></a>
     <h1 ng-bind="story.title"></h1>
   </div>
 
   <div id='page-prev' class='page-arrow' ng-click="backToObject()" ng-show="activePage == 0">
     <span class='page-arrow-text'>Back</span>
-    <span class='page-arrow-icon typcn typcn-chevron-left icon'></span>
+    <span class='page-arrow-icon typcn icon-left-open icon'></span>
   </div>
   <div id='page-prev' class='page-arrow' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0">
     <span class='page-arrow-text'>Prev Page</span>
-    <span class='page-arrow-icon typcn typcn-arrow-left icon'></span>
+    <span class='page-arrow-icon typcn icon-left-small icon'></span>
   </div>
   <div id='page-next' class='page-arrow' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1">
     <span class='page-arrow-text'>Back</span>
-    <span class='page-arrow-icon typcn typcn-chevron-right icon'></span>
+    <span class='page-arrow-icon typcn icon-right-open icon'></span>
   </div>
   <div id='page-next' class='page-arrow' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)">
     <span class='page-arrow-text'>Next Page</span>
-    <span class='page-arrow-icon typcn typcn-arrow-right icon'></span>
+    <span class='page-arrow-icon typcn icon-right-small icon'></span>
   </div>
 </article>

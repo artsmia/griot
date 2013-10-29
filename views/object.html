@@ -3,12 +3,13 @@
     <div id="object-content" ng-hide="sixBarClosed">
       <div id="info" class="large-6 columns" scroll ng-class="{scrolled: scrolled}">
         <nav>
-          <a id="back" class="fitts-law" href="#" title="Back"><span class="typcn typcn-home icon slide-object-nav"></span></a>
+          <a id="back" class="fitts-law" href="#" title="Back"><span class="typcn icon-home icon slide-object-nav"></span></a>
         </nav>
         <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
           <h3>{{json.title}}</h3>
           <h5>{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}</h5>
-          <h6>{{json.dated}} <a ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn" ng-class="{open: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">i</a>
+          <h6>{{json.dated}}
+            <a ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn icon-info-circled" ng-class="{open: showExtendedTombstone}" ng-click="toggleExtendedTombstone()"></a>
           </h6>
         </div>
         <div class="object-nav clearfix">
@@ -64,7 +65,7 @@
         </div>
       </div>
       <div id="zoomer" class="large-10 columns" ng-class="{full_width: sixBarClosed, annotations: activeSection == 'annotations'}">
-        <div class="typcn icon slide-object-nav typcn-arrow-{{sixBarClosed ? 'minimise' : 'maximise'}}" ng-class="" ng-click="toggleSixbar(this)"></div>
+        <div class="typcn icon slide-object-nav icon-resize-{{sixBarClosed ? 'full' : 'normal'}}" ng-class="" ng-click="toggleSixbar(this)"></div>
         <flatmap image="{{id}}">
           <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
             <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
