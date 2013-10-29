@@ -375,13 +375,10 @@
           this.storyCaptionOpen = !this.storyCaptionOpen;
           setTimeout(Zoomer.windowResized, 0)
         }
-        /* Deprecated
-        page.updateActivePage = function($index){
-          $scope.activePage = $index;
-        }
-        */
-        segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
+
       })
+      segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
+
       // setTimeout(Zoomer.windowResized, 0)
 
       setTimeout(Zoomer.windowResized, 100)
@@ -492,6 +489,21 @@
       // use window.addEventListener to cover that.
       Array.prototype.map.call(hooks.split(' '), function(hook) {
         window.addEventListener(hook, scrollCallback)
+      })
+    }
+  })
+
+  app.directive("onPlay", function ($window) {
+    return function(scope, element, attrs) {
+      element.on('play pause', function() {
+        $(this).toggleClass('playing')
+      })
+      element.on('play', function() {
+        var $this = $(this)
+        if($this.data('fullscreened') == undefined) {
+          this.webkitEnterFullscreen()
+          $this.data('fullscreened', true)
+        }
       })
     }
   })

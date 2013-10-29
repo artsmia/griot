@@ -809,6 +809,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   height:340px;
   margin:0px auto 15px auto;
 }
+.story video.playing {
+}
 
 /*
 .story img {
