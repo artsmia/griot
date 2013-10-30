@@ -18,6 +18,9 @@
       }).when('/stories/:id', {
         templateUrl: 'views/story.html',
         controller: 'storyCtrl'
+      }).when('/goldweights', {
+        templateUrl: 'views/goldweights.html',
+        controller: 'goldweightsCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -535,4 +538,10 @@
       })
     }
   })
+
+  app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', function($scope, $sce, segmentio, wp) {
+    wp().then(function(wordpress) {
+      Zoomer.windowResized()
+    })
+  }])
 })()
