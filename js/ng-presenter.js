@@ -117,7 +117,7 @@
             scope.$emit('viewChanged')
             scope.$parent.mapLoaded = true
             var watchForZoom = scope.zoom.map.on('zoomstart', function() {
-              scope.$apply(function() { scope.zoomed = true })
+              scope.$$phase || scope.$apply(function() { scope.zoomed = true })
               scope.zoom.map.off(watchForZoom)
             })
           })
@@ -541,7 +541,20 @@
 
   app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', function($scope, $sce, segmentio, wp) {
     wp().then(function(wordpress) {
+      window.$scope = $scope
       Zoomer.windowResized()
+
+      var loadNotes = function() {
+        $scope.notes = wordpress.objects['196'].views
+        angular.forEach($scope.notes, function(view) {
+          angular.forEach(view.annotations, function(ann) {
+            ann.trustedDescription = $sce.trustAsHtml(ann.description)
+          })
+        })
+        $scope.$$phase || $scope.$apply()
+      }
+      $scope.$on('viewChanged', loadNotes)
+      if($scope.mapLoaded) loadNotes()
     })
   }])
 })()
