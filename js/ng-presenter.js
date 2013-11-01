@@ -218,6 +218,7 @@
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
           flatmapCtrl.scope.$broadcast('changeGeometry', scope.jsonLayer)
           scope.note.active = true
+          $scope.$$phase || $scope.$apply()
           scrollNoteTextIntoView()
         }
         var scrollNoteTextIntoView = function() { // this is hacky

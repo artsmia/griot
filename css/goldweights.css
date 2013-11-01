@@ -1,5 +1,21 @@
+/* Goldweights
+ */
 #goldweights #zoomer {
   height: 551px;
   min-height: 551px;
   /* -webkit-transform: rotate(180deg); */
+}
+
+#goldweights ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#goldweights li {
+  display: none;
+}
+#goldweights li.active {
+  display: block;
+  margin: 0 1em;
 }

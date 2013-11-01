@@ -7,5 +7,11 @@
       </div>
     </flatmap>
   </div>
+
+  <ol id="notes">
+    <li ng-repeat="note in notes[0].annotations" ng-class="{active: note.active}">
+      <h3 ng-bind="note.title"></h3>
+      <p ng-bind-html="note.trustedDescription"></p>
+    </li>
+  </ol>
 </section>
-<link rel="stylesheet" href="css/goldweights.css">
