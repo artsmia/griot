@@ -271,6 +271,8 @@
         $scope.$$phase || $scope.$apply()
       }
 
+      $scope.currentAttachment = null
+
       $scope.next = function(direction) {
         var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
         if(next) $location.url('/o/'+next)
@@ -307,10 +309,20 @@
         }
         $scope.activeSection = nextView
       }
+
+      $scope.toggleAttachment = function(attachment){
+        if($scope.currentAttachment==attachment){
+          $scope.currentAttachment = null;
+        } else {
+          $scope.currentAttachment = attachment;
+        }
+      }
+
       $scope.toggleView(undefined, true)
       $scope.$on('showAnnotationsPanel', function(view) {
         $scope.activeSection = 'annotations'
       })
+
       $scope.changeZoomerForViews = function(map, flatmapScope) {
         $scope.$apply(function() { $scope.showViews = true })
       }

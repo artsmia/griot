@@ -42,9 +42,18 @@
           <ol id="annotations" ng-if="activeSection == 'annotations'" ng-class="{active: activeSection == 'annotations'}">
             <li ng-repeat="view in notes">
               <ol>
-                <li ng-repeat="note in view.annotations" ng-click="activateNote(note, view)" ng-class="{active: note.active}" class="note">
-                  <h3><em>{{note.index}}</em> {{note.title || 'Annotation'}}</h3>
-                  <div ng-bind-html="note.trustedDescription"></div>
+                <li ng-repeat="note in view.annotations" ng-class="{active: note.active}" class="note">
+                  <h3 ng-click="activateNote(note, view)"><em>{{note.index}}</em> {{note.title || 'Annotation'}}</h3>
+                    <div class='note-content' ng-bind-html="note.trustedDescription"></div>
+                    <div class='attachments' ng-if="note.attachments.length">
+                      <h4>Tap to expand:</h4>
+                      <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("http://cdn.dx.artsmia.org/thumbs/tn_{{attachment}}.jpg")'>
+                        <div class='attachment-big'>
+                          <img src='http://cdn.dx.artsmia.org/thumbs/tn_{{attachment}}.jpg' />
+                        </div>
+                      </div>
+                      
+                    </div>
                 </li>
               </ol>
             </li>

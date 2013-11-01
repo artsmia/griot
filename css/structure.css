@@ -332,12 +332,62 @@ ol#annotations, ol#annotations ol {
   margin-left: 0px;
 }
 
-ol#annotations ol li div {
+ol#annotations ol li div{
   display: none;
 }
-ol#annotations ol li.active div {
-  display: block;
+ol#annotations ol li.active div{
+  display:block;
 }
+.attachments{
+  position:relative;
+  font-size:0px;
+  margin-bottom:25px;
+  border-left:1px solid #333;
+  padding-left:25px;
+}
+.attachments h4{
+  font-size:medium;
+}
+ol#annotations ol li.active div.attachment-thumb{
+  width:90px;
+  height:90px;
+  border:1px solid #333;
+  margin-right:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+  display:inline-block;
+  background-color:rgba(0,0,0,0.9);
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+ol#annotations ol li.active div.attachment-thumb div.attachment-big{
+  display:none;
+}
+ol#annotations ol li.active div.attachment-thumb.active div.attachment-big{
+  display:block;
+  position:fixed;
+  width:100%;
+  height:100%;
+  left:0;
+  top:0;
+  background-color:rgba(0,0,0,0.9);
+  z-index:1000000001;
+  text-align:center;
+  line-height:748px;
+}
+ol#annotations ol li.active div.attachment-thumb.active div.attachment-big img{
+  display:inline;
+  max-width:100%;
+  max-height:100%;
+  vertical-align:middle;
+}
+.attachment:nth-of-type(4){
+  margin-right:0px;
+}
+
+
+
 
 #annotations .wp-caption img {
   max-width: 150px;
