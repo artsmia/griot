@@ -174,12 +174,35 @@
       controller: function($scope) {},
       require: '^flatmap',
       link: function(scope, element, attrs, flatmapCtrl)  {
+        var jsonToLayer = function(note) {
+          var geometry, json;
+          if(note.type == 'FeatureCollection') {
+            json = {type: 'MultiPolygon', coordinates: [].map.call(note.features, function (f) { return [f.geometry.coordinates[0]] })}
+          } else {
+            json = note.geometry
+          }
+
+          return L.GeoJSON.geometryToLayer(json)
+        }
+
+        var eachMarker = function(callback) {
+          angular.forEach(scope.markers, callback)
+        },
+        eachLayer = function(layer, callback) {
+          layer.eachLayer ? layer.eachLayer(callback) : callback(layer)
+        }
+
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
-        scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
+        scope.jsonLayer = jsonToLayer(scope.note.firebase)
         scope.note.index = scope.$parent.$parent.noteCount = (scope.$parent.$parent.noteCount || 0) + 1
         divIcon.options.html = "<span>" + scope.note.index + "</span>"
-        scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
+        scope.markers = []
+
+        eachLayer(scope.jsonLayer, function(layer) {
+          scope.markers.push(L.marker(layer.getBounds().getCenter(), {icon: divIcon}))
+        })
+
         scope.note.active = false
 
         var zoomNote = function() {
@@ -212,22 +235,26 @@
           }
           if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
-          var layer = scope.jsonLayer
-          scope.marker.setLatLng(newVal ? layer._latlngs[0] : layer.getBounds().getCenter())
+          var layer = scope.jsonLayer, index = 0
+          eachLayer(layer, function(_layer) {
+            scope.markers[index].setLatLng(newVal ? _layer._latlngs[0] : _layer.getBounds().getCenter())
+            index++
+          })
         })
 
         flatmapCtrl.scope.$watch('image', function(newVal, oldVal) {
-          // scope.marker.setOpacity(newVal == scope.$parent.view.image ? 1 : 0)
-          if(newVal == scope.$parent.view.image) {
-            scope.marker.setOpacity(1)
-            scope.marker.on('click', toggleNoteZoom)
-          } else {
-            scope.marker.setOpacity(0)
-            scope.marker.off('click', toggleNoteZoom)
-          }
+          eachMarker(function(marker) {
+            if(newVal == scope.$parent.view.image) {
+              marker.setOpacity(1)
+              marker.on('click', toggleNoteZoom)
+            } else {
+              marker.setOpacity(0)
+              marker.off('click', toggleNoteZoom)
+            }
+          })
         })
 
-        scope.marker.addTo(scope.map)
+        eachMarker(function(marker) { marker.addTo(scope.map) })
       }
     }
   })
