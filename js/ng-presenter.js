@@ -93,7 +93,10 @@
             addLayer = null
 
           if(inverse) {
-            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs, scope.jsonLayer._latlngs])
+            var holes = []
+            scope.jsonLayer._latlngs ? holes.push(scope.jsonLayer._latlngs)
+              : scope.jsonLayer.eachLayer(function(l) { holes.push(l._latlngs) })
+            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs].concat(holes))
             scope.inverseLayer.setStyle({fill: true, fillColor: '#000', fillOpacity: '0.5', stroke: false})
             addLayer = scope.inverseLayer
           } else {
@@ -126,7 +129,13 @@
 
         var annotateAndZoom = function(geometry) {
           removeJsonLayer()
-          if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+          if(geometry) {
+            if(geometry._initHooksCalled) { // it's a leaflet object, probably layer
+              scope.jsonLayer = geometry
+            } else {
+              scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+            }
+          }
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
@@ -207,7 +216,7 @@
 
         var zoomNote = function() {
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
-          flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
+          flatmapCtrl.scope.$broadcast('changeGeometry', scope.jsonLayer)
           scope.note.active = true
           scrollNoteTextIntoView()
         }
