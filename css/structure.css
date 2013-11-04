@@ -367,21 +367,6 @@ div.attachment-big .flatmap {
   height: 100%;
   width: 100%
 }
-div.attachment-big a.back {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(250, 250, 250, 0.5);
-  color: black;
-  padding: 1em 1.5em;
-  font-size: 1em;
-  font-weight: bold;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-div.attachment-big a.back:before {
-  font-size: 1.4em;
-}
 div.attachment-big .icon {
   display: inline;
 }
@@ -399,9 +384,33 @@ ol#annotations ol li.active div.attachment-thumb.active div.attachment-big{
 .attachment:nth-of-type(4){
   margin-right:0px;
 }
-
-
-
+div.attachment-big > a, div.attachment-big aside {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(250, 250, 250, 0.5);
+  color: black;
+  padding: 1em 1.5em;
+}
+div.attachment-big > a {
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+div.attachment-big > a:before {
+  font-size: 1.4em;
+}
+.attachment-big a.back {
+  left: 0;
+}
+.attachment-big a.credits {
+  right: 0;
+}
+div.attachment-big aside {
+  right: 0;
+  max-width: 35em;
+  background-color: rgba(250, 250, 250, 0.9);
+}
 
 #annotations .wp-caption img {
   max-width: 150px;
@@ -1104,4 +1113,5 @@ aside.tombstone.extended {
 .flatmap.zoomed .hint {
   max-height: 0;
   opacity: 0;
+  z-index: -1;
 }

@@ -57,6 +57,13 @@
       })
     }
   }])
+  app.factory('credits', ['$http', 'envConfig', function($http, config) {
+    return function() {
+      return $http.get('http://cdn.dx.artsmia.org/credits.json', {cache: true}).then(function(result) {
+        return result.data;
+      })
+    }
+  }])
 
   app.directive('flatmap', function(tilesaw, envConfig) {
     return {
@@ -232,8 +239,8 @@
     } // https://gist.github.com/maruf-nc/5625869
   });
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio', '$rootScope',
-    function($scope, $routeParams, $location, $sce, objects, notes, segmentio, $rootScope) {
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio', '$rootScope', 'credits',
+    function($scope, $routeParams, $location, $sce, objects, notes, segmentio, $rootScope, credits) {
       $scope.id = $routeParams.id
       $rootScope.lastObjectId = $scope.id = $routeParams.id
       objects().then(function(data) {
@@ -260,6 +267,8 @@
           $scope.$$phase || $scope.$apply()
         }
       })
+
+      credits().then(function(_credits) { $scope.credits = _credits })
 
       var loadDetails = function() {
         $scope.notes = $scope.wp.views
@@ -313,12 +322,16 @@
       $scope.toggleAttachment = function(attachment, closeAttachmentIfOpen, $event){
         if($scope.currentAttachment==attachment){
           if(!closeAttachmentIfOpen) return;
-          $scope.currentAttachment = null;
+          $scope.currentAttachment = $scope.showAttachmentCredits = null;
         } else {
           $scope.currentAttachment = attachment;
+          $scope.showAttachmentCredits = false
           setTimeout(Zoomer.windowResized, 0);
         }
         if($event) $event.stopPropagation();
+      }
+      $scope.toggleAttachmentCredits = function(attachment) {
+        $scope.showAttachmentCredits = !$scope.showAttachmentCredits
       }
 
       $scope.toggleView(undefined, true)
