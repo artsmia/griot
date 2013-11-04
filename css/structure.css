@@ -851,6 +851,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   /* right: 0; isn't working */
   left: 0;
   margin-left: 60%;
+  overflow-x: hidden;
 }
 
 /* Side by Side Story */
