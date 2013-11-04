@@ -340,7 +340,6 @@ ol#annotations ol li.active div{
 }
 .attachments{
   position:relative;
-  font-size:0px;
   margin-bottom:25px;
   border-left:1px solid #333;
   padding-left:25px;
@@ -364,6 +363,28 @@ ol#annotations ol li.active div.attachment-thumb{
 ol#annotations ol li.active div.attachment-thumb div.attachment-big{
   display:none;
 }
+div.attachment-big .flatmap {
+  height: 100%;
+  width: 100%
+}
+div.attachment-big a.back {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(250, 250, 250, 0.5);
+  color: black;
+  padding: 1em 1.5em;
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+div.attachment-big a.back:before {
+  font-size: 1.4em;
+}
+div.attachment-big .icon {
+  display: inline;
+}
 ol#annotations ol li.active div.attachment-thumb.active div.attachment-big{
   display:block;
   position:fixed;
@@ -374,13 +395,6 @@ ol#annotations ol li.active div.attachment-thumb.active div.attachment-big{
   background-color:rgba(0,0,0,0.9);
   z-index:1000000001;
   text-align:center;
-  line-height:748px;
-}
-ol#annotations ol li.active div.attachment-thumb.active div.attachment-big img{
-  display:inline;
-  max-width:100%;
-  max-height:100%;
-  vertical-align:middle;
 }
 .attachment:nth-of-type(4){
   margin-right:0px;

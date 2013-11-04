@@ -310,12 +310,15 @@
         $scope.activeSection = nextView
       }
 
-      $scope.toggleAttachment = function(attachment){
+      $scope.toggleAttachment = function(attachment, closeAttachmentIfOpen, $event){
         if($scope.currentAttachment==attachment){
+          if(!closeAttachmentIfOpen) return;
           $scope.currentAttachment = null;
         } else {
           $scope.currentAttachment = attachment;
+          setTimeout(Zoomer.windowResized, 0);
         }
+        if($event) $event.stopPropagation();
       }
 
       $scope.toggleView(undefined, true)
