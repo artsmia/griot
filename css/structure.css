@@ -747,9 +747,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 }
 .story #page-prev{
   left:0;
+  margin-left:-1px;
 }
 .story #page-next{
   right:0;
+  margin-right:-1px;
 }
 .story .page-arrow .page-arrow-text{
   font-size:0.7em;
@@ -757,18 +759,35 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   color:#fff;
   display:block;
   width:60px;
-  padding:10px 15px;
+  padding:10px 15px 0px 15px;
   white-space:normal;
   text-align:center;
+  height:40px;
 }
 .story .page-arrow .page-arrow-icon{
   text-align:center;
   display:block;
   width:100%;
   color:#fff;
+
 }
 .story .page-arrow .page-arrow-icon:hover{
   color:#fff;
+}
+.story .page-arrow.return{
+  background-color:#fff;
+  color:#222;
+  border:1px solid #ddd;
+}
+.story .page-arrow.return .page-arrow-icon{
+  color:#222;
+}
+.story .page-arrow.return .page-arrow-icon:hover{
+  color:#222;
+}
+.story .page-arrow.return .page-arrow-text{
+  color:#222;
+  padding-top:15px;
 }
 /*
 .story #story-pages{

@@ -1,13 +1,14 @@
 
-.icon-cancel-outline:before { content: '\e810'; } /* '' */
+.icon-back:before { content: '\e811'; } /* '' */
 .icon-info-circled-alt:before { content: '\e80c'; } /* '' */
+.icon-cancel:before { content: '\e80f'; } /* '' */
 .icon-cancel-circled-outline:before { content: '\e80e'; } /* '' */
 .icon-cancel-circled:before { content: '\e80d'; } /* '' */
 .icon-home:before { content: '\e802'; } /* '' */
 .icon-menu:before { content: '\e803'; } /* '' */
 .icon-resize-full:before { content: '\e800'; } /* '' */
 .icon-resize-normal:before { content: '\e801'; } /* '' */
-.icon-cancel:before { content: '\e80f'; } /* '' */
+.icon-cancel-outline:before { content: '\e810'; } /* '' */
 .icon-right-open:before { content: '\e805'; } /* '' */
 .icon-left:before { content: '\e806'; } /* '' */
 .icon-right:before { content: '\e807'; } /* '' */
