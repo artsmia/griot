@@ -381,7 +381,7 @@
     }
   ])
 
-  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', function($scope, $routeParams, $sce, segmentio, wp) {
+  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'credits', function($scope, $routeParams, $sce, segmentio, wp, credits) {
     wp().then(function(wordpress) {
       $scope.id = $routeParams.id
       $scope.story = wordpress.stories[$scope.id]
@@ -393,6 +393,8 @@
           'image':wordpress.objects[id].views[0].image
         })
       })
+
+      credits().then(function(_credits) { $scope.credits = _credits })
 
       angular.forEach($scope.story.pages, function(page) {
         page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))

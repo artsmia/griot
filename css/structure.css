@@ -630,8 +630,15 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   z-index:2;
   overflow:scroll;
 }
-.story .caption{
+.story .caption, .story aside {
   padding:25px 25px;
+}
+.story aside {
+  color: #999;
+  font-size: 90%;
+}
+.story aside p {
+  margin: 0;
 }
 .story .caption-close-wrap{
   width:100%;
@@ -859,10 +866,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .story .story-image.tall .flatmap {
   width: 60%;
 }
-.story .story-image.tall + .caption-wrap .caption {
-  padding-right: 20%;
-  max-height: 687px;
-}
 .story .story-image.full .flatmap {
   width: 100%;
 }
@@ -875,6 +878,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   left: 0;
   margin-left: 60%;
   overflow-x: hidden;
+}
+.story .story-image.tall + .caption-wrap {
+  padding-right: 9%;
+  max-height: 687px;
 }
 
 /* Side by Side Story */

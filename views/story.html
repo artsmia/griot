@@ -18,6 +18,10 @@
         </div>
         <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}"></video>
         <div ng-bind-html="page.trustedText" class='caption'></div>
+        <aside>
+          <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>
+          <p ng-bind="credits[page.image].credit" ng-if="credits[page.image].credit"></p>
+        </aside>
       </div>
 
       <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Caption</span>
