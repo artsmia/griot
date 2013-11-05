@@ -11,6 +11,9 @@
   <ol id="notes">
     <li ng-repeat="note in notes[0].annotations" ng-class="{active: note.active}">
       <h3 ng-bind="note.title"></h3>
+      <p class="play icon-{{playing ? 'pause' : 'play'}}" ng-click="play(this, $event)" ng-if="note.proverb">
+        <audio ng-src="{{note.trustedAudio}}"></audio>
+      </p>
       <p ng-bind-html="note.trustedDescription"></p>
     </li>
   </ol>

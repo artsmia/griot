@@ -12,10 +12,20 @@
   margin: 0;
 }
 
-#goldweights li {
+#goldweights ol > li {
   display: none;
 }
-#goldweights li.active {
+#goldweights ol > li.active {
   display: block;
   margin: 0 1em;
+}
+
+#goldweights h3 {
+  display: inline-block;
+}
+#goldweights .play {
+  width: 1em;
+  height: 1em;
+}
+#goldweights .playing {
 }

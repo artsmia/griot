@@ -585,7 +585,10 @@
         $scope.notes = wordpress.objects['196'].views
         angular.forEach($scope.notes, function(view) {
           angular.forEach(view.annotations, function(ann) {
-            ann.trustedDescription = $sce.trustAsHtml(ann.description)
+            var proverbLinkPattern = /\n?<p>\[(PR\d+)\]<\/p>/, match = ann.description.match(proverbLinkPattern), proverbId = match && match[1]
+            ann.proverb = proverbId
+            ann.trustedAudio = $sce.trustAsResourceUrl('//cdn.dx.artsmia.org/goldweights/'+proverbId+'.mp3')
+            ann.trustedDescription = $sce.trustAsHtml(ann.description.replace(proverbLinkPattern, ''))
           })
         })
         $scope.$$phase || $scope.$apply()
@@ -593,5 +596,11 @@
       $scope.$on('viewChanged', loadNotes)
       if($scope.mapLoaded) loadNotes()
     })
+
+    $scope.play = function(scope, $event) {
+      var audio = $event.target.querySelector('audio')
+      audio.paused ? audio.play() : audio.pause()
+      scope.playing = !audio.paused
+    }
   }])
 })()
