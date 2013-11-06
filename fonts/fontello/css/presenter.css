@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'presenter';
-  src: url('../font/presenter.eot?28322422');
-  src: url('../font/presenter.eot?28322422#iefix') format('embedded-opentype'),
-       url('../font/presenter.woff?28322422') format('woff'),
-       url('../font/presenter.ttf?28322422') format('truetype'),
-       url('../font/presenter.svg?28322422#presenter') format('svg');
+  src: url('../font/presenter.eot?19214709');
+  src: url('../font/presenter.eot?19214709#iefix') format('embedded-opentype'),
+       url('../font/presenter.woff?19214709') format('woff'),
+       url('../font/presenter.ttf?19214709') format('truetype'),
+       url('../font/presenter.svg?19214709#presenter') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'presenter';
-    src: url('../font/presenter.svg?28322422#presenter') format('svg');
+    src: url('../font/presenter.svg?19214709#presenter') format('svg');
   }
 }
 */
@@ -50,7 +50,7 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-back:before { content: '\e811'; } /* '' */
+.icon-back:before { content: '\e812'; } /* '' */
 .icon-info-circled-alt:before { content: '\e80c'; } /* '' */
 .icon-cancel:before { content: '\e80f'; } /* '' */
 .icon-cancel-circled-outline:before { content: '\e80e'; } /* '' */
@@ -66,5 +66,6 @@
 .icon-left-small:before { content: '\e808'; } /* '' */
 .icon-right-small:before { content: '\e809'; } /* '' */
 .icon-play:before { content: '\e80a'; } /* '' */
+.icon-pause:before { content: '\e811'; } /* '' */
 .icon-info-circled:before { content: '\e80b'; } /* '' */
 .icon-left-open:before { content: '\e804'; } /* '' */

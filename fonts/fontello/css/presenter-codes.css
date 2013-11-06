@@ -1,5 +1,5 @@
 
-.icon-back:before { content: '\e811'; } /* '' */
+.icon-back:before { content: '\e812'; } /* '' */
 .icon-info-circled-alt:before { content: '\e80c'; } /* '' */
 .icon-cancel:before { content: '\e80f'; } /* '' */
 .icon-cancel-circled-outline:before { content: '\e80e'; } /* '' */
@@ -15,5 +15,6 @@
 .icon-left-small:before { content: '\e808'; } /* '' */
 .icon-right-small:before { content: '\e809'; } /* '' */
 .icon-play:before { content: '\e80a'; } /* '' */
+.icon-pause:before { content: '\e811'; } /* '' */
 .icon-info-circled:before { content: '\e80b'; } /* '' */
 .icon-left-open:before { content: '\e804'; } /* '' */

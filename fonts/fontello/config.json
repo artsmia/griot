@@ -9,7 +9,7 @@
     {
       "uid": "3ba4275937db277075fc47d6b5a69a2e",
       "css": "back",
-      "code": 59409,
+      "code": 59410,
       "src": "entypo"
     },
     {
@@ -100,6 +100,12 @@
       "uid": "3e290a111c0f3ee3acbf7b5f17ccc04a",
       "css": "play",
       "code": 59402,
+      "src": "typicons"
+    },
+    {
+      "uid": "e44ef09cb81413287d702eefa65dd790",
+      "css": "pause",
+      "code": 59409,
       "src": "typicons"
     },
     {
