@@ -15,6 +15,11 @@
         <audio ng-src="{{note.trustedAudio}}"></audio>
       </p>
       <p ng-bind-html="note.trustedDescription"></p>
+      <ul>
+        <li ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
+          <a ng-click="#"><img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg"></a>
+        </li>
+      </ul>
     </li>
   </ol>
 </section>
