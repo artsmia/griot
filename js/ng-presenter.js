@@ -576,7 +576,7 @@
     }
   })
 
-  app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', function($scope, $sce, segmentio, wp) {
+  app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'contents', function($scope, $sce, segmentio, wp, contents) {
     wp().then(function(wordpress) {
       window.$scope = $scope
       Zoomer.windowResized()
@@ -597,10 +597,23 @@
       if($scope.mapLoaded) loadNotes()
     })
 
+    contents().then(function(_contents) {
+      $scope.objects = _contents.objects
+      $scope.$$phase || $scope.$apply()
+    })
+
     $scope.play = function(scope, $event) {
       var audio = $event.target.querySelector('audio')
       audio.paused ? audio.play() : audio.pause()
       scope.playing = !audio.paused
+    }
+
+    $scope.toggle = function(scope) {
+      $scope.popupWeight = scope
+    }
+
+    $scope.toggleInfo = function(scope) {
+      $scope.showInfo = !$scope.showInfo
     }
   }])
 })()

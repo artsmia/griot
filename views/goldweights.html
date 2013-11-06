@@ -17,7 +17,25 @@
       <p ng-bind-html="note.trustedDescription"></p>
       <ul>
         <li ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
-          <a ng-click="#"><img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg"></a>
+          <a ng-click="toggle(this)"><img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg"></a>
+          <figure class="popup" ng-if="popupWeight == this">
+            <flatmap image="{{mash[0]}}"></flatmap>
+            <figcaption>
+              <a class="back icon-back icon" ng-click="toggle(this)"> Back </a>
+              <a class="credits icon-info-circled icon" ng-click="toggleInfo(this)" ng-hide="showInfo">
+                Info
+              </a>
+              <aside ng-init="json = objects[mash[1]]" class="tombstone" ng-show="showInfo" ng-click="toggleInfo(this)">
+                <h3>{{json.title}}</h3>
+                <h5 ng-bind-template"{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}"></h5>
+                <h6>{{json.dated}}</h6>
+                <h6>{{json.medium}}</h6>
+                <h6>{{json.dimension}}</h6>
+                <h6>{{json.creditline}}</h6>
+                <h6>{{json.accession_number}}</h6>
+              </aside>
+            </figcaption>
+          </figure>
         </li>
       </ul>
     </li>
