@@ -22,6 +22,10 @@
           <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>
           <p ng-bind="credits[page.image].credit" ng-if="credits[page.image].credit"></p>
         </aside>
+        <aside ng-if="page.type == 'comparison'">
+          <p ng-bind="credits[page.imageB].description" ng-if="credits[page.imageB].description"></p>
+          <p ng-bind="credits[page.imageB].credit" ng-if="credits[page.imageB].credit"></p>
+        </aside>
       </div>
 
       <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Caption</span>
