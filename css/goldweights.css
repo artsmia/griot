@@ -8,7 +8,6 @@
 #goldweights #zoomer {
   height: 551px;
   min-height: 551px;
-  /* -webkit-transform: rotate(180deg); */
 }
 
 #goldweights ol {
@@ -134,4 +133,17 @@
 	float:left;
   margin: 0 0 1% 2em;
 	border:1px solid #ccc;
+}
+
+body.west {
+  transition: -webkit-transform .3s linear;
+  -webkit-transform-origin: center bottom;
+  -webkit-transform: rotate(180deg);
+  position: relative;
+}
+.west #goldweights #zoomer {
+  -webkit-transform: rotate(180deg);
+}
+.west #goldweights #zoomer .noteMarker span {
+  -webkit-transform: rotate(180deg);
 }

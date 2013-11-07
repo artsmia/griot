@@ -615,5 +615,12 @@
     $scope.toggleInfo = function(scope) {
       $scope.showInfo = !$scope.showInfo
     }
+
+    if(window.location.href.match(/west/)) {
+      $('body').addClass('west')
+      setTimeout(function() {
+        window.scrollTo(0, document.body.scrollHeight)
+      }, 1000)
+    }
   }])
 })()
