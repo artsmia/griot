@@ -397,7 +397,7 @@
       credits().then(function(_credits) { $scope.credits = _credits })
 
       angular.forEach($scope.story.pages, function(page) {
-        page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        if(page.text) page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
         page.storyCaptionOpen = true;
@@ -405,7 +405,6 @@
           this.storyCaptionOpen = !this.storyCaptionOpen;
           setTimeout(Zoomer.windowResized, 0)
         }
-
       })
       segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
 
