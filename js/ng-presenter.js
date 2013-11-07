@@ -443,7 +443,6 @@
 
   app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
     function($scope, $routeParams, objects, segmentio, $rootScope, $timeout, orderByFilter) {
-      window.$rootS = $rootScope
       $scope.orderByFilter = orderByFilter
       objects().then(function(data) {
         if($rootScope.randomizedAll == undefined) {
@@ -458,7 +457,6 @@
         }
 
         $scope.loaded = false
-        window.$scope = $scope
         $timeout(function() {
           imagesLoaded(document.querySelector('#cover'), function() {
             $scope.p = new Packery(document.querySelector('#cover'), {
