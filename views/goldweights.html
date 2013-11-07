@@ -10,13 +10,12 @@
 
   <ol id="notes">
     <li ng-repeat="note in notes[0].annotations" ng-class="{active: note.active}">
-      <p class="play icon-{{playing ? 'pause' : 'play'}}" ng-click="play(this, $event)" ng-if="note.proverb">
-        <audio ng-src="{{note.trustedAudio}}"></audio>
-      </p>
+    <h3 ng-bind="note.title"></h3>
+    <div class="description" ng-bind-html="note.trustedDescription"></div>
+    <p class="play icon-{{playing ? 'pause' : 'play'}}" ng-click="play(this, $event)" ng-if="note.proverb">
+      <audio ng-src="{{note.trustedAudio}}"></audio>
+    </p>
 
-      <h3 ng-bind="note.title"></h3>
-
-      <div ng-bind-html="note.trustedDescription"></div>
       <ul>
         <li ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
           <a ng-click="toggle(this)"><img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg"></a>

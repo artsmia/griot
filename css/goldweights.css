@@ -22,7 +22,7 @@
 }
 #goldweights ol > li.active {
   display: block;
-  margin: 0 1em;
+  margin: 0 1em 0 5em;
 }
 
 #goldweights h3 {
@@ -36,8 +36,7 @@
 	height: 2.35em;*/
 	width:44px;
 	height:44px;
-	padding:0;
-	padding-left:2px;
+  padding: 1px 0 0 3px;
 	border: 3px solid #000;
 	border-radius: 50%;
 	font-size:1.45em;
@@ -47,8 +46,8 @@
 	top:-55px;
 	left:2px;
 }
-
-#goldweights .playing {
+#goldweights .play.icon-pause {
+  padding: 1px 0 0 0px;
 }
 
 #goldweights figure.popup {
@@ -58,6 +57,7 @@
   top: 0;
   left: 0;
   margin: 0;
+  z-index: 1000;
 }
 @media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {
   #goldweights figure.popup { height: 748px; }
@@ -111,31 +111,27 @@
   font-size: 1rem;
 }
 
-#goldweights div.ng-binding p:first-child{
+#goldweights div.description p:first-child{
 	margin-top:65px;
 }
 
-#goldweights div.ng-binding{
+#goldweights div.description {
 	margin-left:55px;
-	width:650px;
+  max-width: 33em;
 }
 
-#goldweights li.ng-scope{
+#goldweights li {
 	position:relative;
+	margin-left:55px;
 }
 
-#goldweights li.ng-scope ul{
-	width:25%;
-	position:absolute;
-	right:0;
-	top:-50px;
+#goldweights li ul{
 	list-style-type: none;
 }
 
-#goldweights li.ng-scope ul li{
+#goldweights li ul li{
 	width:25%;
 	float:left;
-	margin-right:2%;
-	margin-top:2%;
+  margin: 0 0 1% 2em;
 	border:1px solid #ccc;
 }
