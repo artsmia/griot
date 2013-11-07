@@ -8,7 +8,7 @@
         <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
       </div>
 
-      <div class='story-image' ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}" ng-if="page.type == 'image'">
+      <div ng-if="activePage == $index && page.type != 'comparison'" class='story-image' ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}" ng-if="page.type == 'image'">
         <flatmap image={{page.image}}></flatmap>
       </div>
 

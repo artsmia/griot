@@ -403,12 +403,10 @@
         page.storyCaptionOpen = true;
         page.toggleStoryCaption = function(){
           this.storyCaptionOpen = !this.storyCaptionOpen;
-          setTimeout(Zoomer.windowResized, 0)
+          setTimeout(Zoomer.windowResized, 100)
         }
       })
       segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
-
-      // setTimeout(Zoomer.windowResized, 0)
 
       setTimeout(Zoomer.windowResized, 100)
       $scope.storyMenuOpen = false
@@ -422,6 +420,7 @@
           $scope.activePage = newPage
           segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
         }
+        setTimeout(Zoomer.windowResized, 200)
       }
       $scope.backToObject=function(){
         history.go(-1);
