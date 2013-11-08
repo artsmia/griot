@@ -31,8 +31,8 @@
     {"id":"256", "title":"Voices of the Community - Dr. Getatchew Haile, Ethiopia", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Getatchew_iPad.mp4.jpg"},
     {"id":"375", "title":"Voices of the Community - Tarkor Zehn, Liberia", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Tarkor_iPad.mp4.jpg"},
     {"id":"377", "title":"Voices of the Community - Sowah Mensah, Ghana", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Sowah_iPad.mp4.jpg"},
-    {"id":"352", "title":"Lost Wax Bronze Casting"},
-    {"id":"249", "title":"Making a Mummy"},
-    {"id":"246", "title":"Ikat Weaving"}
+    {"id":"352", "title":"Lost Wax Bronze Casting", "poster":"http://cdn.dx.artsmia.org/videos/lostWaxBronzeCasting.mp4.jpg"},
+    {"id":"249", "title":"Making a Mummy", "poster":"http://cdn.dx.artsmia.org/videos/HowtoMakeaMummy-1gFY7ST-Tws.mp4.jpg"},
+    {"id":"246", "title":"Ikat Weaving", "poster":"http://cdn.dx.artsmia.org/videos/IkatTimeLapse.mp4.jpg"}
   ]
 }
