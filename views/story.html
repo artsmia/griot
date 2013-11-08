@@ -12,7 +12,7 @@
         <flatmap image={{page.image}}></flatmap>
       </div>
 
-      <div class='caption-wrap' ng-show="page.storyCaptionOpen">
+      <div class='caption-wrap' ng-show="page.storyCaptionOpen && page.image != 'lockup'">
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
           <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>

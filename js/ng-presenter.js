@@ -488,6 +488,7 @@
         if($rootScope.randomizedAll == undefined) {
           $scope.objects = data.objects
           $scope.stories = data.stories
+          $scope.lockup = data.lockup
           var all = []
           angular.forEach($scope.objects.ids, function(id) { all.push(id) })
           angular.forEach($scope.stories, function(story) { all.push(story) })
@@ -495,6 +496,7 @@
         } else {
           $scope.all = $rootScope.randomizedAll
         }
+        $scope.all.push($scope.lockup);
 
         $scope.loaded = false
         $timeout(function() {

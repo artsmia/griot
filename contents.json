@@ -87,5 +87,6 @@
     {"id":"352", "title":"Lost Wax Bronze Casting", "poster":"http://cdn.dx.artsmia.org/videos/lostWaxBronzeCasting.mp4.jpg"},
     {"id":"249", "title":"Making a Mummy", "poster":"http://cdn.dx.artsmia.org/videos/HowtoMakeaMummy-1gFY7ST-Tws.mp4.jpg"},
     {"id":"246", "title":"Ikat Weaving", "poster":"http://cdn.dx.artsmia.org/videos/IkatTimeLapse.mp4.jpg"}
-  ]
+  ],
+  "lockup":{"id":"398", "title":"Thanks to Our Sponsors", "poster":"fallback/img/sponsor-thumb.jpg"}
 }
