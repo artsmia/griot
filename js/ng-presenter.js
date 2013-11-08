@@ -263,7 +263,8 @@
           $scope.$on('viewChanged', loadDetails)
           if($scope.mapLoaded) loadDetails()
 
-          // $scope.notes = $scope.wp.views
+          // Open the More tab when returning from a story via the 'Back' button
+          $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
           $scope.$$phase || $scope.$apply()
         }
       })
@@ -381,7 +382,7 @@
     }
   ])
 
-  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'credits', function($scope, $routeParams, $sce, segmentio, wp, credits) {
+  app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'credits', '$rootScope', function($scope, $routeParams, $sce, segmentio, wp, credits, $rootScope) {
     wp().then(function(wordpress) {
       $scope.id = $routeParams.id
       $scope.story = wordpress.stories[$scope.id]
@@ -394,8 +395,6 @@
         })
       })
 
-      credits().then(function(_credits) { $scope.credits = _credits })
-
       angular.forEach($scope.story.pages, function(page) {
         if(page.text) page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
@@ -406,27 +405,30 @@
           setTimeout(Zoomer.windowResized, 100)
         }
       })
+
       segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
-
-      setTimeout(Zoomer.windowResized, 100)
-      $scope.storyMenuOpen = false
-      $scope.toggleStoryMenu = function(){
-        $scope.storyMenuOpen = !$scope.storyMenuOpen
-      }
-
-      $scope.activePage = 0
-      $scope.updateActivePage = function(newPage){
-        if((newPage > -1) && (newPage < $scope.story.pages.length)){
-          $scope.activePage = newPage
-          segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
-        }
-        setTimeout(Zoomer.windowResized, 200)
-      }
-      $scope.backToObject=function(){
-        history.go(-1);
-      }
     })
 
+    credits().then(function(_credits) { $scope.credits = _credits })
+
+    setTimeout(Zoomer.windowResized, 100)
+    $scope.storyMenuOpen = false
+    $scope.toggleStoryMenu = function(){
+      $scope.storyMenuOpen = !$scope.storyMenuOpen
+    }
+
+    $scope.activePage = 0
+    $scope.updateActivePage = function(newPage){
+      if((newPage > -1) && (newPage < $scope.story.pages.length)){
+        $scope.activePage = newPage
+        segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
+      }
+      setTimeout(Zoomer.windowResized, 200)
+    }
+    $scope.backToObject=function(){
+      $rootScope.nextView = 'more'
+      history.go(-1);
+    }
   }])
 
   app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
