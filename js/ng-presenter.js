@@ -18,6 +18,9 @@
       }).when('/stories/:id', {
         templateUrl: 'views/story.html',
         controller: 'storyCtrl'
+      }).when('/goldweights', {
+        templateUrl: 'views/goldweights.html',
+        controller: 'goldweightsCtrl'
       }).otherwise({
         redirectTo: '/'
       })
@@ -90,7 +93,10 @@
             addLayer = null
 
           if(inverse) {
-            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs, scope.jsonLayer._latlngs])
+            var holes = []
+            scope.jsonLayer._latlngs ? holes.push(scope.jsonLayer._latlngs)
+              : scope.jsonLayer.eachLayer(function(l) { holes.push(l._latlngs) })
+            scope.inverseLayer = L.polygon([scope.zoom.imageBounds.toPolygon()._latlngs].concat(holes))
             scope.inverseLayer.setStyle({fill: true, fillColor: '#000', fillOpacity: '0.5', stroke: false})
             addLayer = scope.inverseLayer
           } else {
@@ -114,7 +120,7 @@
             scope.$emit('viewChanged')
             scope.$parent.mapLoaded = true
             var watchForZoom = scope.zoom.map.on('zoomstart', function() {
-              scope.$apply(function() { scope.zoomed = true })
+              scope.$$phase || scope.$apply(function() { scope.zoomed = true })
               scope.zoom.map.off(watchForZoom)
             })
           })
@@ -123,7 +129,13 @@
 
         var annotateAndZoom = function(geometry) {
           removeJsonLayer()
-          if(geometry) scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+          if(geometry) {
+            if(geometry._initHooksCalled) { // it's a leaflet object, probably layer
+              scope.jsonLayer = geometry
+            } else {
+              scope.jsonLayer = L.GeoJSON.geometryToLayer(geometry)
+            }
+          }
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
@@ -171,18 +183,42 @@
       controller: function($scope) {},
       require: '^flatmap',
       link: function(scope, element, attrs, flatmapCtrl)  {
+        var jsonToLayer = function(note) {
+          var geometry, json;
+          if(note.type == 'FeatureCollection') {
+            json = {type: 'MultiPolygon', coordinates: [].map.call(note.features, function (f) { return [f.geometry.coordinates[0]] })}
+          } else {
+            json = note.geometry
+          }
+
+          return L.GeoJSON.geometryToLayer(json)
+        }
+
+        var eachMarker = function(callback) {
+          angular.forEach(scope.markers, callback)
+        },
+        eachLayer = function(layer, callback) {
+          layer.eachLayer ? layer.eachLayer(callback) : callback(layer)
+        }
+
         scope.flatmapCtrl = flatmapCtrl
         scope.map = scope.flatmapCtrl.scope.zoom.map
-        scope.jsonLayer = L.GeoJSON.geometryToLayer(scope.note.firebase.geometry)
+        scope.jsonLayer = jsonToLayer(scope.note.firebase)
         scope.note.index = scope.$parent.$parent.noteCount = (scope.$parent.$parent.noteCount || 0) + 1
         divIcon.options.html = "<span>" + scope.note.index + "</span>"
-        scope.marker = L.marker(scope.jsonLayer.getBounds().getCenter(), {icon: divIcon})
+        scope.markers = []
+
+        eachLayer(scope.jsonLayer, function(layer) {
+          scope.markers.push(L.marker(layer.getBounds().getCenter(), {icon: divIcon}))
+        })
+
         scope.note.active = false
 
         var zoomNote = function() {
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
-          flatmapCtrl.scope.$broadcast('changeGeometry', scope.note.firebase.geometry)
+          flatmapCtrl.scope.$broadcast('changeGeometry', scope.jsonLayer)
           scope.note.active = true
+          $scope.$$phase || $scope.$apply()
           scrollNoteTextIntoView()
         }
         var scrollNoteTextIntoView = function() { // this is hacky
@@ -209,22 +245,26 @@
           }
           if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
-          var layer = scope.jsonLayer
-          scope.marker.setLatLng(newVal ? layer._latlngs[0] : layer.getBounds().getCenter())
+          var layer = scope.jsonLayer, index = 0
+          eachLayer(layer, function(_layer) {
+            scope.markers[index].setLatLng(newVal ? _layer._latlngs[0] : _layer.getBounds().getCenter())
+            index++
+          })
         })
 
         flatmapCtrl.scope.$watch('image', function(newVal, oldVal) {
-          // scope.marker.setOpacity(newVal == scope.$parent.view.image ? 1 : 0)
-          if(newVal == scope.$parent.view.image) {
-            scope.marker.setOpacity(1)
-            scope.marker.on('click', toggleNoteZoom)
-          } else {
-            scope.marker.setOpacity(0)
-            scope.marker.off('click', toggleNoteZoom)
-          }
+          eachMarker(function(marker) {
+            if(newVal == scope.$parent.view.image) {
+              marker.setOpacity(1)
+              marker.on('click', toggleNoteZoom)
+            } else {
+              marker.setOpacity(0)
+              marker.off('click', toggleNoteZoom)
+            }
+          })
         })
 
-        scope.marker.addTo(scope.map)
+        eachMarker(function(marker) { marker.addTo(scope.map) })
       }
     }
   })
@@ -535,4 +575,53 @@
       })
     }
   })
+
+  app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'contents', function($scope, $sce, segmentio, wp, contents) {
+    wp().then(function(wordpress) {
+      window.$scope = $scope
+      Zoomer.windowResized()
+
+      var loadNotes = function() {
+        $scope.notes = wordpress.objects['196'].views
+        angular.forEach($scope.notes, function(view) {
+          angular.forEach(view.annotations, function(ann) {
+            var proverbLinkPattern = /\n?<p>\[(PR\d+)\]<\/p>/, match = ann.description.match(proverbLinkPattern), proverbId = match && match[1]
+            ann.proverb = proverbId
+            ann.trustedAudio = $sce.trustAsResourceUrl('//cdn.dx.artsmia.org/goldweights/'+proverbId+'.mp3')
+            ann.trustedDescription = $sce.trustAsHtml(ann.description.replace(proverbLinkPattern, ''))
+          })
+        })
+        $scope.$$phase || $scope.$apply()
+      }
+      $scope.$on('viewChanged', loadNotes)
+      if($scope.mapLoaded) loadNotes()
+    })
+
+    contents().then(function(_contents) {
+      $scope.objects = _contents.objects
+      $scope.$$phase || $scope.$apply()
+    })
+
+    $scope.play = function(scope, $event) {
+      var audio = $event.target.querySelector('audio')
+      audio.paused ? audio.play() : audio.pause()
+      scope.playing = !audio.paused
+    }
+
+    $scope.toggle = function(scope) {
+      return false;
+      $scope.popupWeight = scope
+    }
+
+    $scope.toggleInfo = function(scope) {
+      $scope.showInfo = !$scope.showInfo
+    }
+
+    if(window.location.href.match(/west/)) {
+      $('body').addClass('west')
+      setTimeout(function() {
+        window.scrollTo(0, document.body.scrollHeight)
+      }, 1000)
+    }
+  }])
 })()

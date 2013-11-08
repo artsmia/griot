@@ -656,7 +656,7 @@ section.tall .caption-wrap .caption-close {
 .story .flatmap .hint {
   z-index: -1;
 }
-.story aside p {
+.story aside p, .attachment-big aside p {
   margin: 0;
 }
 .story .caption-close-wrap{

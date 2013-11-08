@@ -1,0 +1,44 @@
+<section id="goldweights">
+  <div id="zoomer" class="annotations">
+    <flatmap image="131029_mia348_9660">
+      <div ng-repeat="view in notes">
+        <note ng-repeat="note in view.annotations">
+        </note>
+      </div>
+    </flatmap>
+  </div>
+
+  <ol id="notes">
+    <li ng-repeat="note in notes[0].annotations" ng-class="{active: note.active}">
+    <h3 ng-bind="note.title"></h3>
+    <div class="description" ng-bind-html="note.trustedDescription"></div>
+    <p class="play icon-{{playing ? 'pause' : 'play'}}" ng-click="play(this, $event)" ng-if="note.proverb">
+      <audio ng-src="{{note.trustedAudio}}"></audio>
+    </p>
+
+      <ul>
+        <li ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
+          <a ng-click="toggle(this)"><img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg"></a>
+          <figure class="popup" ng-if="popupWeight == this">
+            <flatmap image="{{mash[0]}}"></flatmap>
+            <figcaption>
+              <a class="back icon-back icon" ng-click="toggle(this)"> Back </a>
+              <a class="credits icon-info-circled icon" ng-click="toggleInfo(this)" ng-hide="showInfo">
+                Info
+              </a>
+              <aside ng-init="json = objects[mash[1]]" class="tombstone" ng-show="showInfo" ng-click="toggleInfo(this)">
+                <h3>{{json.title}}</h3>
+                <h5 ng-bind-template"{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}"></h5>
+                <h6>{{json.dated}}</h6>
+                <h6>{{json.medium}}</h6>
+                <h6>{{json.dimension}}</h6>
+                <h6>{{json.creditline}}</h6>
+                <h6>{{json.accession_number}}</h6>
+              </aside>
+            </figcaption>
+          </figure>
+        </li>
+      </ul>
+    </li>
+  </ol>
+</section>
