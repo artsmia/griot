@@ -609,6 +609,7 @@
     }
 
     $scope.toggle = function(scope) {
+      return false;
       $scope.popupWeight = scope
     }
 
