@@ -498,8 +498,9 @@
 
         $scope.loaded = false
         $timeout(function() {
-          imagesLoaded(document.querySelector('#cover'), function() {
-            $scope.p = new Packery(document.querySelector('#cover'), {
+          var $cover = document.querySelector('#cover')
+          imagesLoaded($cover, function() {
+            $scope.p = new Packery($cover, {
               layoutMode: 'horizontal',
               rowHeight:310
             })
@@ -507,7 +508,7 @@
               window.scrollTo($rootScope.pageXOffset, 0)
             }
           })
-        }, 100)
+        }, 0)
       })
 
       $scope.random = function() {
