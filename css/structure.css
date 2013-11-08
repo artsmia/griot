@@ -631,6 +631,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   overflow-x:hidden;
   overflow-y:scroll;
 }
+.page.page-video .caption-wrap {
+  max-height: 650px;
+}
 .story .caption, .story aside {
   padding:25px 25px;
 }
@@ -638,6 +641,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   color: #999;
   font-size: 90%;
   max-width: 65%;
+  padding-top: 0;
+  margin-top: -15px;
 }
 .story aside + aside {
   float: right;

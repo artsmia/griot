@@ -1,7 +1,7 @@
 <article class="story">
   <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
 
-    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
 
       <div class="story-comparison" ng-if="page.type == 'comparison'">
         <flatmap image={{page.image}} class='flatmap-a'></flatmap>
@@ -21,6 +21,7 @@
         <aside>
           <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>
           <p ng-bind="credits[page.image].credit" ng-if="credits[page.image].credit"></p>
+          <p ng-bind="page.credit" ng-if="page.type == 'video'">
         </aside>
         <aside ng-if="page.type == 'comparison'">
           <p ng-bind="credits[page.imageB].description" ng-if="credits[page.imageB].description"></p>
