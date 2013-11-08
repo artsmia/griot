@@ -57,7 +57,8 @@
                             Info
                           </a>
                           <aside ng-show="showAttachmentCredits" ng-click="toggleAttachmentCredits(attachment)">
-                            <p ng-bind="credits[attachment].description || credits[attachment].credit"></p>
+                            <p ng-bind="credits[attachment].description"></p>
+                            <p ng-bind="credits[attachment].credit"></p>
                           </aside>
                         </div>
                       </div>
