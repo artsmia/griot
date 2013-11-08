@@ -1,7 +1,7 @@
 <article class="story">
   <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
 
-    <section ng-repeat="page in story.pages" class="page page-{{page.type}}">
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
 
       <div class="story-comparison" ng-if="page.type == 'comparison'">
         <flatmap image={{page.image}} class='flatmap-a'></flatmap>
