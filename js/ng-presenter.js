@@ -218,7 +218,7 @@
           flatmapCtrl.scope.$broadcast('changeView', scope.view)
           flatmapCtrl.scope.$broadcast('changeGeometry', scope.jsonLayer)
           scope.note.active = true
-          $scope.$$phase || $scope.$apply()
+          scope.$$phase || scope.$apply()
           scrollNoteTextIntoView()
         }
         var scrollNoteTextIntoView = function() { // this is hacky
@@ -483,6 +483,7 @@
 
   app.controller('mainCtrl', ['$scope', '$routeParams', 'contents', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
     function($scope, $routeParams, contents, segmentio, $rootScope, $timeout, orderByFilter) {
+      $rootScope.nextView = undefined
       $scope.orderByFilter = orderByFilter
       contents().then(function(data) {
         if($rootScope.randomizedAll == undefined) {

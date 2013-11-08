@@ -139,7 +139,7 @@ body.west {
   transition: -webkit-transform .3s linear;
   -webkit-transform-origin: center bottom;
   -webkit-transform: rotate(180deg);
-  position: relative;
+  margin-bottom: 100px;
 }
 .west #goldweights #zoomer {
   -webkit-transform: rotate(180deg);
