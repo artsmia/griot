@@ -347,9 +347,6 @@
           var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
           if(firstNote && !$scope.flatmapScope.lastActiveNote) {
             $scope.activateNote(firstNote, $scope.notes[0])
-            setTimeout(function() {
-              document.querySelector('ol#annotations').scrollIntoView()
-            }, 0)
           } else if($scope.flatmapScope.lastActiveNote) {
             // If there's an active annotation, center the map over it.
             if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
