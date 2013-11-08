@@ -645,6 +645,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   margin-top: -25px;
   max-width: 65%;
 }
+.tall + .caption-wrap aside {
+  max-width: 100% !important;
+}
+.tall + .caption-wrap .caption-close {
+  bottom: 1em;
+}
 .story .flatmap .hint {
   z-index: -1;
 }
