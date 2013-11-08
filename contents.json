@@ -25,12 +25,12 @@
     "114833":{"id":"http:\/\/api.artsmia.org\/objects\/114833","title":"Hair comb","medium":"Ivory, gold","dimension":"4 15\/16 x 2 1\/8 x 1\/4 in. (12.5 x 5.4 x 0.64 cm)","continent":"Africa","country":"Tanzania","culture":"Swahili, Zanzibar","dated":"about 1800","room":"Not on View","style":"18th-19th century","marks":" ","text":"Whoever gave this comb to his wife more than 200 years ago must have loved her dearly. Carefully carved and made of precious materials (elephant ivory and gold folio), it's something the owner would have shown off, perhaps even wearing it in her hair. It would signal that she was among the wealthy elite of Zanzibar, and had married well.","description":"top decorated with symmetrical design with scrolling edges; some cutouts in various shapes (teardrops, circles, quatrefoil, bar) inlaid with gold stamped with repeating circular patterns on front and back of comb; tapering teeth","creditline":"The Mary Ruth Weisel Endowment for Africa, Oceania, and the Americas","accession_number":"2012.67","artist":"Artist Unknown","role":"Artist","nationality":null,"life_date":null,"image_copyright":"","image":"valid","restricted":0}
   },
   "stories":[
-    {"id":"369", "title":"Art in Motion", "poster":"http://cdn.dx.artsmia.org/videos/AfricanGalleries_Intro_ArtInMotion_iPad.mp4.jpg"},
+    {"id":"369", "title":"Introduction: Art in Motion", "poster":"http://cdn.dx.artsmia.org/videos/AfricanGalleries_Intro_ArtInMotion_iPad.mp4.jpg"},
     {"id":"371", "title":"Performing Dance & Music", "poster":"http://cdn.dx.artsmia.org/videos/AfricanGalleries_PerformingDanceAndMusic_iPad.mp4.jpg"},
     {"id":"373", "title":"Connecting with World Religions", "poster":"http://cdn.dx.artsmia.org/videos/AfricanGalleries_ConnectingWithWorldReligions_iPad.mp4.jpg"},
-    {"id":"256", "title":"Voices of the Community - Dr. Getatchew Haile, Ethiopia", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Getatchew_iPad.mp4.jpg"},
-    {"id":"375", "title":"Voices of the Community - Tarkor Zehn, Liberia", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Tarkor_iPad.mp4.jpg"},
-    {"id":"377", "title":"Voices of the Community - Sowah Mensah, Ghana", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Sowah_iPad.mp4.jpg"},
+    {"id":"256", "title":"Dr. Getatchew Haile on Ethiopian Manuscripts", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Getatchew_iPad.mp4.jpg"},
+    {"id":"375", "title":"Tarkor Zehn, Liberia", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Tarkor_iPad.mp4.jpg"},
+    {"id":"377", "title":"Sowah Mensah, Ghana", "poster":"http://cdn.dx.artsmia.org/videos/Voices_Sowah_iPad.mp4.jpg"},
     {"id":"352", "title":"Lost Wax Bronze Casting", "poster":"http://cdn.dx.artsmia.org/videos/lostWaxBronzeCasting.mp4.jpg"},
     {"id":"249", "title":"Making a Mummy", "poster":"http://cdn.dx.artsmia.org/videos/HowtoMakeaMummy-1gFY7ST-Tws.mp4.jpg"},
     {"id":"246", "title":"Ikat Weaving", "poster":"http://cdn.dx.artsmia.org/videos/IkatTimeLapse.mp4.jpg"}
