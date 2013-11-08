@@ -30,7 +30,7 @@
   )
 
   app.constant('envConfig', {
-    objects: 'objects.json',
+    contents: 'contents.json',
     tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
     tileUrlSubdomain: function(tileUrl) {
       return tileUrl.replace('http://0.', 'http://{s}.')
@@ -38,9 +38,9 @@
     crashpad: 'http://cdn.dx.artsmia.org/crashpad.json'
   })
 
-  app.factory('objects', ['$http', 'envConfig', function($http, config) {
+  app.factory('contents', ['$http', 'envConfig', function($http, config) {
     return function() {
-      return $http.get(config.objects, {cache: true}).then(function(result) { return result.data; })
+      return $http.get(config.contents, {cache: true}).then(function(result) { return result.data; })
     }
   }])
   app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
@@ -239,14 +239,14 @@
     } // https://gist.github.com/maruf-nc/5625869
   });
 
-  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'objects', 'notes', 'segmentio', '$rootScope', 'credits',
-    function($scope, $routeParams, $location, $sce, objects, notes, segmentio, $rootScope, credits) {
+  app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'contents', 'notes', 'segmentio', '$rootScope', 'credits',
+    function($scope, $routeParams, $location, $sce, contents, notes, segmentio, $rootScope, credits) {
       $scope.id = $routeParams.id
       $rootScope.lastObjectId = $scope.id = $routeParams.id
-      objects().then(function(data) {
-        $scope.json = data[$scope.id]
+      contents().then(function(data) {
+        $scope.json = data.objects[$scope.id]
         $scope.json.trustedDescription = $sce.trustAsHtml($scope.json.description)
-        $scope.objects = data
+        $scope.objects = data.objects
         segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.json.title})
       })
       notes().then(function(_wp) {
@@ -441,14 +441,14 @@
     }
   ])
 
-  app.controller('mainCtrl', ['$scope', '$routeParams', 'objects', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
-    function($scope, $routeParams, objects, segmentio, $rootScope, $timeout, orderByFilter) {
+  app.controller('mainCtrl', ['$scope', '$routeParams', 'contents', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
+    function($scope, $routeParams, contents, segmentio, $rootScope, $timeout, orderByFilter) {
       window.$rootS = $rootScope
       $scope.orderByFilter = orderByFilter
-      objects().then(function(data) {
+      contents().then(function(data) {
         if($rootScope.randomizedAll == undefined) {
-          $scope.objects = data
-          $scope.stories = [ { title: 'Dance', id: 281, poster: 'http://tdx.s3.amazonaws.com/sande-dance-rough.mp4.jpg'}, { title: 'Getatchew Haile on Ethopian Manuscripts', id: 256, poster: 'http://tdx.s3.amazonaws.com/GetatchewFINAL.mp4.jpg'}, { title: 'Making Pots', id: 154 }, { title: 'Real or Fake?', id: 207, poster: 'http://tdx.s3.amazonaws.com/ife-ct-2013.mp4.jpg'}, { title: 'The Tale of the Tusk', id: 233, poster: 'http://cdn.dx.artsmia.org/thumbs/tn_111103_mia348_GH7_3718.jpg'}, { title: 'The Ivory Trade', id: 240, poster: 'http://cdn.dx.artsmia.org/thumbs/tn_2013_TDXAfrica_046_01.jpg'}, { title: 'Ikat Weaving', id: 246, poster: 'http://tdx.s3.amazonaws.com/Ikat-vfa7srYWo4s.mp4.jpg'}, { title: 'Mystery of the Mummy', id: 236 }, { title: 'Making a Mummy', id: 249, poster: 'http://tdx.s3.amazonaws.com/HowtoMakeaMummy-1gFY7ST-Tws.mp4.jpg'}, { title: 'Osiris, God of the Underworld', id: 251 } ]
+          $scope.objects = data.objects
+          $scope.stories = data.stories
           var all = []
           angular.forEach($scope.objects.ids, function(id) { all.push(id) })
           angular.forEach($scope.stories, function(story) { all.push(story) })
