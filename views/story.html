@@ -8,7 +8,7 @@
         <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
       </div>
 
-      <div class='story-image' ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}" ng-if="page.type == 'image'">
+      <div ng-if="activePage == $index && page.type != 'comparison'" class='story-image' ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}" ng-if="page.type == 'image'">
         <flatmap image={{page.image}}></flatmap>
       </div>
 
@@ -16,15 +16,19 @@
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
           <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
-        <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}"></video>
+        <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
         <div ng-bind-html="page.trustedText" class='caption'></div>
         <aside>
           <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>
           <p ng-bind="credits[page.image].credit" ng-if="credits[page.image].credit"></p>
         </aside>
+        <aside ng-if="page.type == 'comparison'">
+          <p ng-bind="credits[page.imageB].description" ng-if="credits[page.imageB].description"></p>
+          <p ng-bind="credits[page.imageB].credit" ng-if="credits[page.imageB].credit"></p>
+        </aside>
       </div>
 
-      <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Caption</span>
+      <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Text</span>
 
     </section>
 

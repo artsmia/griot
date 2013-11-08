@@ -6,7 +6,7 @@
           <a id="back" class="fitts-law" href="#" title="Back"><span class="typcn icon-home icon slide-object-nav"></span></a>
         </nav>
         <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
-          <h3>{{json.title}}</h3>
+          <h3>{{wp.title || json.title}}</h3>
           <h5>{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}</h5>
           <h6>{{json.dated}}
             <a ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn icon-info-circled" ng-class="{open: showExtendedTombstone}" ng-click="toggleExtendedTombstone()"></a>
@@ -93,19 +93,6 @@
           </div>
         </flatmap>
       </div>
-    </div>
-
-    <!--modal windows for object Mode-->
-    <div id="fulldesc_0" class="reveal-modal">
-      <h2>Awesome. I have it.</h2>
-      <p class="lead">Your couch.  It is mine.</p>
-      <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-      <a class="close-reveal-modal">&#215;</a>
-    </div>
-    <div id="ann_0" class="reveal-modal">
-      <!-- <iframe width="560" height="315" src="//www.youtube.com/embed/LSfn73WCQEs?list=UUPclle9S1deGdeCt-iBJadQ" frameborder="0" allowfullscreen></iframe> -->
-      <p>Capton here. This window needs to be styled a bit more</p>
-      <a class="close-reveal-modal">&#215;</a>
     </div>
   </div>
 </div>
