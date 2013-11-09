@@ -503,6 +503,7 @@
               layoutMode: 'horizontal',
               rowHeight:310
             })
+            $scope.p.unbindResize()
             if($rootScope.pageXOffset) {
               window.scrollTo($rootScope.pageXOffset, 0)
             }

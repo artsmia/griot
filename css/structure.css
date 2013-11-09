@@ -1147,3 +1147,40 @@ aside.tombstone.extended {
   opacity: 0;
   z-index: -1;
 }
+
+div.container {
+  -webkit-transform-origin: bottom right;
+}
+body:after {
+  -webkit-transition: opacity 0.7s linear;
+}
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
+  div.container {
+    -webkit-transform: rotate(-90deg);
+  }
+  #objectMode, article.story {
+    -webkit-transform: translate(531px, 0px);
+    width: 1024px !important;
+  }
+  #cover {
+    -webkit-transform: translateY(-50px);
+  }
+  body:after {
+    width: 768px;
+    height: 1024px;
+    background-color: rgba(234, 234, 234, 0.8);
+    color: #222;
+    font-size: 2em;
+    content: "Rotate to Landscape";
+    padding: 55% 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+  /* .full_width { */
+  /*   opacity: 1 !important; */
+  /*   z-index: 1; */
+  /* } */
+}
