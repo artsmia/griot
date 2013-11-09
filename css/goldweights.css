@@ -99,15 +99,21 @@
 .popup figcaption a.credits {
   right: 0;
 }
-.popup figcaption aside {
+#goldweights figcaption aside {
   right: 0;
   max-width: 45em;
   background-color: rgba(250, 250, 250, 0.9);
   text-align: right;
 }
-.popup aside > * {
+#goldweights aside > * {
   font-weight: 200;
-  font-size: 1rem;
+  font-size: 0.8rem;
+}
+
+#goldweights aside {
+  position: relative;
+  top: 0;
+  opacity: 1 !important;
 }
 
 #goldweights div.description p:first-child{
@@ -126,24 +132,55 @@
 
 #goldweights li ul{
 	list-style-type: none;
+  margin-left: 55px;
 }
 
 #goldweights li ul li{
 	width:25%;
 	float:left;
-  margin: 0 0 1% 2em;
-	border:1px solid #ccc;
+  margin: 10px 0 !important;
+}
+#goldweights li ul li.tombstoned {
+  width: 50%;
+  position: relative;
+}
+#goldweights li.tombstoned img {
+  width: 50%;
+}
+#goldweights li.tombstoned aside {
+  position: absolute;
+  top: 0;
+  left: 55%;
 }
 
+
 body.west {
-  transition: -webkit-transform .3s linear;
+  transition: -webkit-transform 300ms linear;
   -webkit-transform-origin: center bottom;
   -webkit-transform: rotate(180deg);
-  margin-bottom: 100px;
+  margin-bottom: 200px;
+  max-height: 700px;
 }
 .west #goldweights #zoomer {
   -webkit-transform: rotate(180deg);
 }
 .west #goldweights #zoomer .noteMarker span {
   -webkit-transform: rotate(180deg);
+}
+#goldweights hr {
+  clear: both;
+  display: none;
+}
+
+#goldweights #home {
+  position: absolute;
+  top: 567px;
+  right: 2em;
+  text-align: right;
+}
+#goldweights .icon-home {
+  color: #222;
+}
+#goldweights #home p {
+  margin: 0;
 }

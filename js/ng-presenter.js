@@ -603,14 +603,18 @@
     })
 
     $scope.play = function(scope, $event) {
+      $('audio').each(function() { this.pause() })
       var audio = $event.target.querySelector('audio')
       audio.paused ? audio.play() : audio.pause()
       scope.playing = !audio.paused
+      audio.addEventListener('ended', function() {
+        scope.playing = false
+        scope.$apply()
+      })
     }
 
     $scope.toggle = function(scope) {
-      return false;
-      $scope.popupWeight = scope
+      $scope.popupWeight = ($scope.popupWeight == scope ?  undefined : scope)
     }
 
     $scope.toggleInfo = function(scope) {
@@ -622,6 +626,11 @@
       setTimeout(function() {
         window.scrollTo(0, document.body.scrollHeight)
       }, 1000)
+    }
+
+    $scope.home = function() {
+      angular.forEach($scope.notes[0].annotations, function(note) { note.active = false })
+      $scope.$apply()
     }
   }])
 })()
