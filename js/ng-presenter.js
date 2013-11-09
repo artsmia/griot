@@ -140,10 +140,18 @@
           if(scope.viewChanging) return // hold off until the view changes, resulting in `viewChanged` triggering this again
           if(scope.jsonLayer) {
             scope.$parent.$broadcast('showAnnotationsPanel', 'annotations')
-            var map = scope.zoom.map
-            map.zoomOut(100) // zoom all the way out and back in. Leaflet is misbehaving when zooming outside the current bounds, and this is a bit sketchy of a fix
-            setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, 500)
-            showJsonLayer(3000, true)
+            var map = scope.zoom.map,
+                mapBounds = map.getBounds(),
+                jsonLayerBounds = scope.jsonLayer.getBounds(),
+                delay = 0
+            if(mapBounds.intersects(jsonLayerBounds) || mapBounds.contains(jsonLayerBounds)) {
+            } else {
+              // Zoomer is misbehaving when zooming outside the current bounds, plus the zoom all the way out and back in thing is cool
+              setTimeout(function() { map.zoomOut(100) }, 300)
+              delay = 1000
+            }
+            setTimeout(function() { showJsonLayer(3000, true) }, delay)
+            setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, delay+250)
           }
         }
 
