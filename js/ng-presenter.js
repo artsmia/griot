@@ -496,18 +496,14 @@
           $scope.all = $rootScope.randomizedAll
         }
 
-        $scope.loaded = false
+        var $cover = document.querySelector('#cover')
+        var initPackery = function() {
+          $scope.p = new Packery($cover, {layoutMode: 'horizontal', rowHeight:310})
+          document.body.scrollWidth < 4000 ? $timeout(initPackery, 300) : ($scope.loaded = true)
+        }
         $timeout(function() {
-          var $cover = document.querySelector('#cover')
-          imagesLoaded($cover, function() {
-            $scope.p = new Packery($cover, {
-              layoutMode: 'horizontal',
-              rowHeight:310
-            })
-            if($rootScope.pageXOffset) {
-              window.scrollTo($rootScope.pageXOffset, 0)
-            }
-          })
+          initPackery()
+          if($rootScope.pageXOffset) { window.scrollTo($rootScope.pageXOffset, 0) }
         }, 0)
       })
 
