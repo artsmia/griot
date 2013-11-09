@@ -442,7 +442,15 @@
       })
 
       angular.forEach($scope.story.pages, function(page) {
-        if(page.text) page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        if(page.text) {
+          var iframe_pattern = /<p>\[(http:\/\/.*)\]<\/p>/,
+            match = page.text.match(iframe_pattern)
+          if(match && match[1]) {
+            page.iframe = $sce.trustAsResourceUrl(match[1])
+            page.text = page.text.replace(/<p>\[(http:\/\/.*)\]<\/p>/, '').trim()
+          }
+          page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        }
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
         page.storyCaptionOpen = true;

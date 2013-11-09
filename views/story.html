@@ -17,6 +17,7 @@
           <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
         <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
+        <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
         <div ng-bind-html="page.trustedText" class='caption'></div>
         <aside>
           <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>

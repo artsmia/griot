@@ -937,6 +937,19 @@ section.tall .caption-wrap .caption-close {
 .story video.playing {
 }
 
+.story iframe {
+  width: 100%;
+  height: 565px;
+  border: none;
+}
+.story iframe #resetbutton {
+  float: right;
+  margin-right: 4em;
+}
+.story .caption-wrap {
+  max-height: 700px !important;
+}
+
 /*
 .story img {
   max-height:500px;
