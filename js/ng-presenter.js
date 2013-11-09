@@ -499,6 +499,7 @@
         var $cover = document.querySelector('#cover')
         var initPackery = function() {
           $scope.p = new Packery($cover, {layoutMode: 'horizontal', rowHeight:310})
+          $scope.p.unbindResize()
           document.body.scrollWidth < 4000 ? $timeout(initPackery, 300) : ($scope.loaded = true)
         }
         $timeout(function() {
