@@ -68,7 +68,7 @@
     }
   }])
 
-  app.directive('flatmap', function(tilesaw, envConfig) {
+  app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     return {
       restrict: 'E',
       scope: {
@@ -81,6 +81,7 @@
       controller: function($scope) {
         var scope = $scope
         scope.$parent.flatmapScope = scope
+        scope.zoomed = $rootScope.zoomed
 
         var removeJsonLayer = function() {
           if(scope.jsonLayer) scope.zoom.map.removeLayer(scope.jsonLayer)
@@ -120,7 +121,7 @@
             scope.$emit('viewChanged')
             scope.$parent.mapLoaded = true
             var watchForZoom = scope.zoom.map.on('zoomstart', function() {
-              scope.$$phase || scope.$apply(function() { scope.zoomed = true })
+              (scope.$$phase || $rootScope.$$phase) || scope.$apply(function() { $rootScope.zoomed = scope.zoomed = true })
               scope.zoom.map.off(watchForZoom)
             })
           })
