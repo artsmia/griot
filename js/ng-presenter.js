@@ -491,10 +491,10 @@
           angular.forEach($scope.objects.ids, function(id) { all.push(id) })
           angular.forEach($scope.stories, function(story) { all.push(story) })
           $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
+          $scope.all.push($scope.lockup);
         } else {
           $scope.all = $rootScope.randomizedAll
         }
-        $scope.all.push($scope.lockup);
 
         $scope.loaded = false
         $timeout(function() {
