@@ -632,7 +632,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   overflow-y:scroll;
 }
 .page.page-video .caption-wrap {
-  max-height: 650px;
+  max-height: 650px !important;
 }
 .story .caption, .story aside {
   padding:25px 25px;
