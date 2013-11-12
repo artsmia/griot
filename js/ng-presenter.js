@@ -38,7 +38,7 @@
     tileUrlSubdomain: function(tileUrl) {
       return tileUrl.replace('http://0.', 'http://{s}.')
     },
-    crashpad: 'http://cdn.dx.artsmia.org/crashpad.json'
+    crashpad: 'fallback/beckmann.json' // 'http://cdn.dx.artsmia.org/crashpad.json'
   })
 
   app.factory('contents', ['$http', 'envConfig', function($http, config) {
@@ -232,6 +232,7 @@
         }
         var scrollNoteTextIntoView = function() { // this is hacky
           var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
+          window.noteEl = noteEl
           if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
         }
         var toggleNoteZoom = function() {
