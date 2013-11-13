@@ -23,6 +23,9 @@
   display: block;
   margin: 0 1em 0 5em;
 }
+#goldweights li.active ~ li.active {
+  display: none;
+}
 
 #goldweights h3 {
 	position: absolute;

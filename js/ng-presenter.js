@@ -599,9 +599,11 @@
     wp().then(function(wordpress) {
       window.$scope = $scope
       Zoomer.windowResized()
+      $scope.goldweights = wordpress.objects['196']
+      $scope.showDescription = true
 
       var loadNotes = function() {
-        $scope.notes = wordpress.objects['196'].views
+        $scope.notes = $scope.goldweights.views
         angular.forEach($scope.notes, function(view) {
           angular.forEach(view.annotations, function(ann) {
             var proverbLinkPattern = /\n?<p>\[(PR\d+)\]<\/p>/, match = ann.description.match(proverbLinkPattern), proverbId = match && match[1]
