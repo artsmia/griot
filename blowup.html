@@ -1,0 +1,46 @@
+<html>
+  <title>Blowup of a painting</title>
+  <style type="text/css">
+    body {
+      position: absolute;
+      -webkit-perspective: 4000px;
+      -webkit-transform-style: preserve-3d;
+      -webkit-transition: all 1s linear;
+      width: 200px;
+    }
+    img {
+      max-width: 100%;
+      position: absolute;
+      top: 0;
+      -webkit-transition: all 1s linear;
+    }
+    .exploded img, img.exploded { box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.3); }
+    img:nth-child(1) { z-index: 5; }
+    img:nth-child(2) { z-index: 4; }
+    img:nth-child(3) { z-index: 3; }
+    img:nth-child(4) { z-index: 2; }
+    img:nth-child(5) { z-index: 1; }
+
+    .exploded { -webkit-transform: translateX(50px); }
+    .exploded img:nth-child(1) { -webkit-transform: rotateY(61deg) translateZ(400px); }
+    .exploded img:nth-child(2) { -webkit-transform: rotateY(61deg) translateZ(300px); }
+    .exploded img:nth-child(3) { -webkit-transform: rotateY(61deg) translateZ(200px); }
+    .exploded img:nth-child(4) { -webkit-transform: rotateY(61deg) translateZ(100px); }
+    .exploded img:nth-child(5) { -webkit-transform: rotateY(61deg) translateZ(0px); }
+    .exploded img:nth-child(6) { -webkit-transform: rotateY(61deg) translateZ(-100px); }
+  </style>
+<body class="">
+  <img src="blowup/tn_layer1.png">
+  <img src="blowup/tn_layer2.png">
+  <img src="blowup/tn_layer3.png">
+  <img src="blowup/tn_layer4.png">
+  <img src="blowup/tn_layer5.png">
+  <img src="blowup/tn_layer6.png">
+
+  <script type="text/javascript">
+    var toggleExpand = function(e) { this.classList.toggle('exploded') },
+        $body = document.querySelector('body')
+    $body.addEventListener('click', toggleExpand)
+    setTimeout(toggleExpand.bind($body), 100)
+  </script>
+
