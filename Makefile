@@ -1,6 +1,7 @@
 json:
-	curl -L http://new.artsmia.org/crashpad/json > fallback/crashpad.json
 	curl -L http://new.artsmia.org/miabeckmann/json > fallback/beckmann.json
+	sed -i .bak "s/&#8217;/'/g" fallback/beckmann.json
+	sed -i .bak 's/&quot;/\\"/g' fallback/beckmann.json
 
 merge_beckmann:
 	echo 'todo'
