@@ -443,7 +443,7 @@
             page.iframe = $sce.trustAsResourceUrl(match[1])
             page.text = page.text.replace(/<p>\[(http:\/\/.*)\]<\/p>/, '').trim()
           }
-          page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+          page.trustedText = $sce.trustAsHtml(page.text)
         }
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
