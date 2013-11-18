@@ -86,89 +86,230 @@
       },
       {
         "startDate": "1949",
-
         "headline": "<p>Beckmann moves to New York in September to teach at the Brooklyn Museum Art School.</p> "
       },
       {
         "startDate": "1950",
-
-        "headline": "<p>Beckmann's contract at the Brooklyn Museum of Art is extended to six years.</p> <p>On December 27, while walking to see the exhibition American Painting Today, in which his last self-portrait was hanging, Beckmann suffers a heart attack and dies at the corner of 69th Street and Central Park.</p> <p>HISTORICAL EVENTS</p> "
-      },
-      
-      {
-        "startDate": "1933",
-
-        "headline": "<p>January 30: Adolf Hitler is appointed Chancellor.</p> <p>March 28: Dissolution of the Reichstag.</p> <p>April 7: Law for the Restoration of the Professional Civil Service, a “cleansing law” to remove “disagreeable” persons from the civil services. Consequently, the artists Willi Baumeister, Otto Dix, Karl Hofer, Max Pechstein, Oskar Schlemmer, and others lose their professorships. Nearly all German museum directors are dismissed and replaced.</p> <p>April 11: On the orders of Hermann Göring, the Bauhaus in Berlin is closed.</p> <p>May 10: Public book burnings in Berlin and numerous other cities.</p> <p>September 22: Establishment of the Reich Chamber of Culture under the leadership of the Minister of Propaganda Joseph Goebbels. As a sub-chamber, the Reich Chamber of the Visual Arts controls all production of art henceforth. Only those registered as members are given permission to work. Explicit bans from exhibitions and professions are also issued.</p> <p>October 15: The first Day of German Art; laying of the foundation stone for the Haus der Deutschen Kunst (House of German Art), today, the Haus der Kunst, in Munich.</p> <p>Artists begin to emigrate, including Wassily Kandinsky and Paul Klee.</p> "
+        "headline": "<p>Beckmann's contract at the Brooklyn Museum of Art is extended to six years.</p>"
       },
       {
-        "startDate": "1934",
-
-        "headline": "<p>April: Due to the political situation in Germany and Austria, Oskar Kokoschka leaves Vienna and immigrates to Prague.</p> <p>June: The first meeting of the Reich Chamber of the Visual Arts reveals the factional disputes in the assessment of modern art. Joseph Goebbels protests against “reactionary tendencies” like those represented by Alfred Rosenberg, chief ideologue of the Nazi Party. Goebbels urges that Expressionism and abstraction not be categorically ruled out: “We National Socialists see ourselves as the carrier of the most progressive modernity, in matters of art as well.”</p> <p>At the end of the year, 15 concentration camps are already in place.</p> "
+        "startDate": "1950,12,27",
+        "headline":"<p>while walking to see the exhibition American Painting Today, in which his last self-portrait was hanging, Beckmann suffers a heart attack and dies at the corner of 69th Street and Central Park.</p>"
       },
       {
-        "startDate": "1935",
-
-        "headline": "<p>September 11: At the Nuremburg Rally, Hitler condemns modern art saying it is “not the function of art to wallow in dirt for dirt’s sake, never its task to paint men only in a state of decomposition.” Cubists, Futurists, and Expressionists are described by Hitler as “corrupters of our art.”</p> <p>September 15: The Nuremburg Laws passed by the government of Nazi Germany institute the depriving of Jewish citizens of their rights.</p> "
+        "startDate": "1933,01,30",
+        "headline": "<p>Adolf Hitler is appointed Chancellor.</p>"
       },
       {
-        "startDate": "1936",
-
-        "headline": "<p>August 1-16: Summer Olympic Games in Berlin.</p> <p>October 30: The modern art department of the Berlin Nationalgalerie in the Kronprinzenpalais is closed.</p> <p>November 26: Goebbels bans art criticism.</p> <p>In December, National Socialist painter Adolf Ziegler becomes President of the Reich Chamber of the Visual Arts.</p> "
+        "startDate": "1933,3,28",
+        "headline": "<p>Dissolution of the Reichstag.</p>"
+      },
+      {
+        "startDate": "1933,4,7",
+        "headline": "<p>Law for the Restoration of the Professional Civil Service, a “cleansing law” to remove “disagreeable” persons from the civil services. Consequently, the artists Willi Baumeister, Otto Dix, Karl Hofer, Max Pechstein, Oskar Schlemmer, and others lose their professorships. Nearly all German museum directors are dismissed and replaced.</p>"
+      },
+      {
+        "startDate": "1933,4,11",
+        "headline": "<p>On the orders of Hermann Göring, the Bauhaus in Berlin is closed.</p>"
+      },
+      {
+        "startDate": "1933,5,10",
+        "headline": "<p>Public book burnings in Berlin and numerous other cities.</p>"
+      },
+      {
+        "startDate": "1933,9,22",
+        "headline": "<p>Establishment of the Reich Chamber of Culture under the leadership of the Minister of Propaganda Joseph Goebbels. As a sub-chamber, the Reich Chamber of the Visual Arts controls all production of art henceforth. Only those registered as members are given permission to work. Explicit bans from exhibitions and professions are also issued.</p>"
+      },
+      {
+        "startDate": "1933,10,15",
+        "headline": "<p>The first Day of German Art; laying of the foundation stone for the Haus der Deutschen Kunst (House of German Art), today, the Haus der Kunst, in Munich.</p> <p>Artists begin to emigrate, including Wassily Kandinsky and Paul Klee.</p>"
+      },
+      {
+        "startDate": "1934,4",
+        "headline": "<p>Due to the political situation in Germany and Austria, Oskar Kokoschka leaves Vienna and immigrates to Prague.</p>   "
+      },
+      {
+        "startDate": "1934,6",
+        "headline": "<p>The first meeting of the Reich Chamber of the Visual Arts reveals the factional disputes in the assessment of modern art. Joseph Goebbels protests against “reactionary tendencies” like those represented by Alfred Rosenberg, chief ideologue of the Nazi Party. Goebbels urges that Expressionism and abstraction not be categorically ruled out: “We National Socialists see ourselves as the carrier of the most progressive modernity, in matters of art as well.”</p>"
+      },
+      {
+        "startDate": "1934,11",
+        "headline": "<p>At the end of the year, 15 concentration camps are already in place.</p>"
+      },
+      {
+        "startDate": "1935,11,11",
+        "headline": "<p>At the Nuremburg Rally, Hitler condemns modern art saying it is “not the function of art to wallow in dirt for dirt’s sake, never its task to paint men only in a state of decomposition.” Cubists, Futurists, and Expressionists are described by Hitler as “corrupters of our art.”</p>"
+      },
+      {
+        "startDate": "1935,11,15",
+        "headline": "<p>The Nuremburg Laws passed by the government of Nazi Germany institute the depriving of Jewish citizens of their rights.</p>"
+      },
+      {
+        "startDate": "1936,9,1",
+        "endDate": "1936,9,16",
+        "headline": "<p>Summer Olympic Games in Berlin.</p>"
+      },
+      {
+        "startDate": "1936,10,30",
+        "headline": "<p>The modern art department of the Berlin Nationalgalerie in the Kronprinzenpalais is closed.</p>"
+      },
+      {
+        "startDate": "1936,11,26",
+        "headline": "<p>Goebbels bans art criticism.</p>"
+      },
+      {
+        "startDate": "1936,12",
+        "headline": "<p>National Socialist painter Adolf Ziegler becomes President of the Reich Chamber of the Visual Arts.</p>"
       },
       {
         "startDate": "1937",
-
-        "headline": "<p>May-November: The German Pavilion at the World’s Fair in Paris is erected following a design by Albert Speer. Picasso’s Guernica is shown in the Spanish Pavilion.</p> <p>June 30: On Hitler’s orders, the Reich Chamber of the Visual Arts confiscates examples of “degenerate” art. Ziegler becomes the central organizer of the action, during which a total of nearly 5,000 paintings and sculptures as well as 12,000 graphic works are seized.</p> <p>July 18: Opening of the Haus der Deutschen Kunst in Munich with the Große Deutsche Kunstausstellung, (Great German Art Exhibition) where the “healthy art of the German people” is celebrated. In his inaugural address, Hitler proclaims a “cleansing war” against modern, “degenerate” art.</p> <p>July 19: On the following day, the travelling exhibition Degenerate Art opens in the Munich Hofgartenarkaden. Roughly 600 works by 110 eminent artists are presented; the works are deliberately chaotically hung and derided via defamatory slogans.</p> "
+        "headline": "<p>May-November: The German Pavilion at the World’s Fair in Paris is erected following a design by Albert Speer. Picasso’s Guernica is shown in the Spanish Pavilion.</p>"
       },
       {
-        "startDate": "1938",
-
-        "headline": "<p>At the beginning of the year, Goebbels appoints a commission for the “utilization of the products of degenerate art”; while avoiding a public sensation, it sells confiscated works of art.</p> <p>March 12-13: Germany invades Austria.</p> <p>May 31: Enactment of a law allowing for the confiscation of all artworks classified as “degenerate” without compensation.</p> <p>June 15: Ernst Ludwig Kirchner commits suicide in Switzerland.</p> <p>June 26: Hitler appoints Hans Posse, Director of the Gemäldegalerie, Dresden, to the “Sonderauftrag Linz” (Special Commission Linz). The art assembled during the war for the museum planned in Hitler’s hometown consists largely of art looted by the Nazis.</p> <p>Subsequent to the Kristallnacht on November 9, the confiscation of artworks in Jewish possession begins, euphemistically declared “Sicherstellung” (safeguarding).</p> "
+        "startDate": "1937,6,30",
+        "headline": "<p>On Hitler’s orders, the Reich Chamber of the Visual Arts confiscates examples of “degenerate” art. Ziegler becomes the central organizer of the action, during which a total of nearly 5,000 paintings and sculptures as well as 12,000 graphic works are seized.</p>"
       },
       {
-        "startDate": "1939",
-
-        "headline": "<p>June 30: Galerie Fischer in Lucerne sells 125 paintings and sculptures confiscated from German museums in its auction “Paintings and Sculptures by Modern Masters from German Museums,” including three paintings by Beckmann.</p> <p>September 1: The Wehrmacht invades Poland, marking the beginning of World War II.</p> "
+        "startDate": "1937,7,18",
+        "headline": "<p>Opening of the Haus der Deutschen Kunst in Munich with the Große Deutsche Kunstausstellung, (Great German Art Exhibition) where the “healthy art of the German people” is celebrated. In his inaugural address, Hitler proclaims a “cleansing war” against modern, “degenerate” art.</p>"
       },
       {
-        "startDate": "1940",
-
-        "headline": "<p>April 9: Germany invades Denmark and Norway.</p> <p>May 10: As part of the German offensive in the west, German troops attack Belgium, Luxembourg, and the Netherlands, where more than 20,000 German refugees are stranded.</p> <p>On the same day, Jewish painter Felix Nussbaum is arrested in Brussels; he had taught alongside Beckmann at the Städelschule in Frankfurt. Nussbaum is deported and later murdered at Auschwitz.</p> <p>June 22: After German troops have marched into Paris, France signs an armistice agreement according to which the country is divided into a northern, occupied region, and a southern region under the Vichy regime.</p> <p>In November, Jews are dismissed from the civil service in the Netherlands. In Leiden and Delft, students protest the dismissal of Jewish university personnel.</p> "
+        "startDate": "1937,7,19",
+        "headline": "<p>On the following day, the travelling exhibition Degenerate Art opens in the Munich Hofgartenarkaden. Roughly 600 works by 110 eminent artists are presented; the works are deliberately chaotically hung and derided via defamatory slogans.</p>"
       },
       {
-        "startDate": "1941",
-
-        "headline": "<p>February 25: General strike in Amsterdam against the German occupying forces after massive raids and deportations. The strike is brutally quelled.</p> <p>June 22: Germany attacks the Soviet Union.</p> <p>December 7: The Japanese bomb Pearl Harbor. The United States enters the war.</p> "
+        "startDate": "1938,01",
+        "headline": "<p>At the beginning of the year, Goebbels appoints a commission for the “utilization of the products of degenerate art”; while avoiding a public sensation, it sells confiscated works of art.</p>"
       },
       {
-        "startDate": "1942",
-
-        "headline": "<p>January 20: The systematic, Europe-wide extermination of the Jews is decided at the Wannsee Conference.</p> <p>July 6: Anne Frank goes into hiding with her family in a rear building in the center of Amsterdam.</p> "
+        "startDate": "1938,3,12",
+        "endDate": "1938,3,13",
+        "headline": "<p>Germany invades Austria.</p>"
       },
       {
-        "startDate": "1943",
-
-        "headline": "<p>February 2: The German Sixth Army capitulates at Stalingrad.</p> <p>February 18: Goebbels speaks in the Berlin Sportpalast: “Do you want total war?”</p> <p>On the same day, Hans and Sophie Scholl, and subsequently other members of the White Rose resistance group, are arrested. Soon after, they are condemned to death and executed.</p> <p>May 16: Suppression of the Warsaw Ghetto Uprising.</p> "
+        "startDate": "1938,5,31",
+        "headline": "<p>Enactment of a law allowing for the confiscation of all artworks classified as “degenerate” without compensation.</p>"
       },
       {
-        "startDate": "1944",
-
-        "headline": "<p>June 6: Allied troops land in Normandy.</p> <p>September 5: With the advance of the Allies into France and Belgium, the liberation of the Netherlands also appears imminent. On “Dolle Dinsdag” (Mad Tuesday), the population of Amsterdam awaits the Allies with flowers before the city. But the west front stabilizes and the Germans block supply channels. In the hunger winter of 1944/45, 20,000 people in the Netherlands perish.</p> "
+        "startDate": "1938,6,15",
+        "headline": "<p>Ernst Ludwig Kirchner commits suicide in Switzerland.</p>"
       },
       {
-        "startDate": "1945",
-
-        "headline": "<p>January 27: Soviet troops liberate the Auschwitz concentration camp.</p> <p>May 4: The war ends in the Netherlands after the Allies enter Amsterdam.</p> <p>May 7: Unconditional capitulation of the German Wehrmacht.</p> <p>June 26: Signing of the Charter of the United Nations in San Francisco as a successor organization to the League of Nations.</p> <p>July 17-August 2: At the Potsdam Conference, the heads of the Allied governments lay down political and economic principles for the treatment of defeated Germany.</p> <p>August 6: The United States drops atomic bomb on Hiroshima.</p> <p>November 20: Nuremburg Trials against chief Nazi war criminals begin.</p> "
+        "startDate": "1938,6,26",
+        "headline": "<p>Hitler appoints Hans Posse, Director of the Gemäldegalerie, Dresden, to the “Sonderauftrag Linz” (Special Commission Linz). The art assembled during the war for the museum planned in Hitler’s hometown consists largely of art looted by the Nazis.</p>"
       },
       {
-        "startDate": "1946",
-
-        "headline": "<p>April 21: Founding of the Socialist Unity Party of Germany (SED) in Berlin from a merger of the Social Democratic Party of Germany (SPD) and the Communist Party of Germany (KPD).</p> <p>November 4: Commencement of constitution of the newly founded UNESCO.</p> "
+        "startDate": "1938,11,9",
+        "headline": "<p>Subsequent to the Kristallnacht on November 9, the confiscation of artworks in Jewish possession begins, euphemistically declared “Sicherstellung” (safeguarding).</p>"
       },
       {
-        "startDate": "1947",
-
-        "headline": " <p>January 1: Economic merger of the British and American occupation zones into the Bizone. Increase in tension between the Soviet and western occupation zones.</p> <p>June 5: American Secretary of State George C. Marshall proposes an economic reconstruction program for European countries. The Soviet Union as well as the countries under its influence decline to participate. This also affects the Soviet occupation zones.</p> "
+        "startDate": "1939,6,30",
+        "headline": "<p>Galerie Fischer in Lucerne sells 125 paintings and sculptures confiscated from German museums in its auction “Paintings and Sculptures by Modern Masters from German Museums,” including three paintings by Beckmann.</p>"
+      },
+      {
+        "startDate": "1939,9,1",
+        "headline": "<p>The Wehrmacht invades Poland, marking the beginning of World War II.</p>"
+      },
+      {
+        "startDate": "1940,4,9",
+        "headline": "<p>Germany invades Denmark and Norway.</p>"
+      },
+      {
+        "startDate": "1940,5,10",
+        "headline": "<p>As part of the German offensive in the west, German troops attack Belgium, Luxembourg, and the Netherlands, where more than 20,000 German refugees are stranded.</p> <p>On the same day, Jewish painter Felix Nussbaum is arrested in Brussels; he had taught alongside Beckmann at the Städelschule in Frankfurt. Nussbaum is deported and later murdered at Auschwitz.</p>"
+      },
+      {
+        "startDate": "1940,6,22",
+        "headline": "<p>After German troops have marched into Paris, France signs an armistice agreement according to which the country is divided into a northern, occupied region, and a southern region under the Vichy regime.</p>"
+      },
+      {
+        "startDate": "1940,11",
+        "headline": "<p>Jews are dismissed from the civil service in the Netherlands. In Leiden and Delft, students protest the dismissal of Jewish university personnel.</p>"
+      },
+      {
+        "startDate": "1941,2,25",
+        "headline": "<p>General strike in Amsterdam against the German occupying forces after massive raids and deportations. The strike is brutally quelled.</p>"
+      },
+      {
+        "startDate": "1941,6,22",
+        "headline": "<p>Germany attacks the Soviet Union.</p>"
+      },
+      {
+        "startDate": "1941,12,7",
+        "headline": "<p>The Japanese bomb Pearl Harbor. The United States enters the war.</p>"
+      },
+      {
+        "startDate": "1942,1,20",
+        "headline": "<p>The systematic, Europe-wide extermination of the Jews is decided at the Wannsee Conference.</p>"
+      },
+      {
+        "startDate": "1942,7,6",
+        "headline": "<p>Anne Frank goes into hiding with her family in a rear building in the center of Amsterdam.</p>"
+      },
+      {
+        "startDate": "1943,2,2",
+        "headline": "<p>The German Sixth Army capitulates at Stalingrad.</p>"
+      },
+      {
+        "startDate": "1943,2,18",
+        "headline": "<p>Goebbels speaks in the Berlin Sportpalast: “Do you want total war?”</p><p>On the same day, Hans and Sophie Scholl, and subsequently other members of the White Rose resistance group, are arrested. Soon after, they are condemned to death and executed.</p>"
+      },
+      {
+        "startDate": "1943,5,16",
+        "headline": "<p>Suppression of the Warsaw Ghetto Uprising.</p>"
+      },
+      {
+        "startDate": "1944,6,6",
+        "headline": "<p>Allied troops land in Normandy.</p>"
+      },
+      {
+        "startDate": "1944,9,5",
+        "headline": "<p>With the advance of the Allies into France and Belgium, the liberation of the Netherlands also appears imminent. On “Dolle Dinsdag” (Mad Tuesday), the population of Amsterdam awaits the Allies with flowers before the city. But the west front stabilizes and the Germans block supply channels. In the hunger winter of 1944/45, 20,000 people in the Netherlands perish.</p>"
+      },
+      {
+        "startDate": "1945,1,27",
+        "headline": "<p>Soviet troops liberate the Auschwitz concentration camp.</p>"
+      },
+      {
+        "startDate": "1945,5,4",
+        "headline": "<p>The war ends in the Netherlands after the Allies enter Amsterdam.</p>"
+      },
+      {
+        "startDate": "1945,5,7",
+        "headline": "<p>Unconditional capitulation of the German Wehrmacht.</p>"
+      },
+      {
+        "startDate": "1945,6,26",
+        "headline": "<p>Signing of the Charter of the United Nations in San Francisco as a successor organization to the League of Nations.</p>"
+      },
+      {
+        "startDate": "1945,7,17",
+        "endDate": "1945,8,2",
+        "headline": "<p>At the Potsdam Conference, the heads of the Allied governments lay down political and economic principles for the treatment of defeated Germany.</p>"
+      },
+      {
+        "startDate": "1945,8,6",
+        "headline": "<p>The United States drops atomic bomb on Hiroshima.</p>"
+      },
+      {
+        "startDate": "1945,11,20",
+        "headline": "<p>Nuremburg Trials against chief Nazi war criminals begin.</p>"
+      },
+      {
+        "startDate": "1946,4,21",
+        "headline": "<p>Founding of the Socialist Unity Party of Germany (SED) in Berlin from a merger of the Social Democratic Party of Germany (SPD) and the Communist Party of Germany (KPD).</p>"
+      },
+      {
+        "startDate": "1946,11,4",
+        "headline": "<p>Commencement of constitution of the newly founded UNESCO.</p>"
+      },
+      {
+        "startDate": "1947,1,1",
+        "headline": " <p>Economic merger of the British and American occupation zones into the Bizone. Increase in tension between the Soviet and western occupation zones.</p>"
+      },
+      {
+        "startDate": "1947,6,5",
+        "headline": "<p>American Secretary of State George C. Marshall proposes an economic reconstruction program for European countries. The Soviet Union as well as the countries under its influence decline to participate. This also affects the Soviet occupation zones.</p>"
       }
     ]
   }
