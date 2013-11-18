@@ -2,6 +2,9 @@
   <title>Beckmann Chrono</title>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="tln/js/storyjs-embed.js"></script>
+  <style type="text/css">
+    .nav-next, .nav-previous { display: none !important; }
+  </style>
 <body>
 
 <div id="my-timeline"></div>
@@ -12,9 +15,8 @@ $(document).ready(function() {
     type:       'timeline',
     width:      '100%',
     height:     '600',
-    source:     '/chronology.json',
+    source:     'chronology.json',
     embed_id:   'my-timeline'
   });
 });
 </script>
-
