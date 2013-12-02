@@ -226,7 +226,7 @@
         var scrollNoteTextIntoView = function() { // this is hacky
           var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
           window.noteEl = noteEl
-          if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
+          if(noteEl) noteEl.scrollIntoViewIfNeeded()
         }
         var toggleNoteZoom = function() {
           scope.$apply(function() { scope.note.active = !scope.note.active })
@@ -443,7 +443,7 @@
             page.iframe = $sce.trustAsResourceUrl(match[1])
             page.text = page.text.replace(/<p>\[(http:\/\/.*)\]<\/p>/, '').trim()
           }
-          page.trustedText = $sce.trustAsHtml(page.text)
+          page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
         }
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
@@ -523,6 +523,8 @@
         return 0.5 - Math.random()
       }
 
+      // TODO: Beckmann doesn't get identifiers because it's locked into /o/1270
+      // track this better?
       if(!$rootScope.identifier) {
         var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry",
           "dark", "summer", "icy", "delicate", "quiet", "white", "cool", "spring",
