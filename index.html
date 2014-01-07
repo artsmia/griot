@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app="presenter">
 <head>
   <script src="js/vendor/angular.min.js"></script>
   <script src="js/vendor/angular-route.min.js"></script>
@@ -13,7 +13,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
-	<title>TDX Presenter</title>
+  <title ng-bind="$root.title && $root.title +' | Minneapolis Institute of Arts' ||
+    'TDX Presenter'">TDX Presenter</title>
 
 	<script type="text/javascript" src="//use.typekit.net/jkg2ird.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -42,7 +43,7 @@
       analytics.load("k0688xgm1a");
   </script>
 </head>
-<body ng-app="presenter">
+<body>
   <!--[if lt IE 9]>
     <script src="components/es5-shim/es5-shim.js"></script>
     <script src="components/json3/lib/json3.min.js"></script>

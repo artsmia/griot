@@ -314,6 +314,7 @@
 
           // Open the More tab when returning from a story via the 'Back' button
           $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
+          $rootScope.title = $scope.wp.title
           $scope.$$phase || $scope.$apply()
         }
       })
@@ -460,6 +461,7 @@
         }
       })
 
+      $rootScope.title = $scope.story.title
       segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
     })
 
