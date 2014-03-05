@@ -19,7 +19,7 @@
       <ul>
         <li class="weight" ng-class="{tombstoned: popupWeight == this}" ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments" ng-click="toggle(this)"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
           <a>
-            <img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{mash[0]}}.jpg">
+            <img ng-src="{{cdn}}thumbs/tn_{{mash[0]}}.jpg">
           </a>
           <aside ng-init="json = objects[mash[1]]" class="tombstone" ng-show="popupWeight == this">
             <h4>{{json.title}}</h4>

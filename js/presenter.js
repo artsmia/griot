@@ -38,8 +38,11 @@
     tileUrlSubdomain: function(tileUrl) {
       return tileUrl.replace('http://0.', 'http://{s}.')
     },
-    crashpad: 'http://cdn.dx.artsmia.org/crashpad.json'
+    crashpad: 'http://cdn.dx.artsmia.org/crashpad.json',
+    cdn: 'http://cdn.dx.artsmia.org/'
   })
+
+  app.run(['$rootScope', 'envConfig', function(root, config) { root.cdn = config.cdn }])
 
   app.factory('contents', ['$http', 'envConfig', function($http, config) {
     return function() {
@@ -62,7 +65,7 @@
   }])
   app.factory('credits', ['$http', 'envConfig', function($http, config) {
     return function() {
-      return $http.get('http://cdn.dx.artsmia.org/credits.json', {cache: true}).then(function(result) {
+      return $http.get(config.cdn + 'credits.json', {cache: true}).then(function(result) {
         return result.data;
       })
     }
@@ -608,7 +611,7 @@
           angular.forEach(view.annotations, function(ann) {
             var proverbLinkPattern = /\n?<p>\[(PR\d+)\]<\/p>/, match = ann.description.match(proverbLinkPattern), proverbId = match && match[1]
             ann.proverb = proverbId
-            ann.trustedAudio = $sce.trustAsResourceUrl('//cdn.dx.artsmia.org/goldweights/'+proverbId+'.mp3')
+            ann.trustedAudio = $sce.trustAsResourceUrl($scope.cdn+'goldweights/'+proverbId+'.mp3')
             ann.trustedDescription = $sce.trustAsHtml(ann.description.replace(proverbLinkPattern, ''))
           })
         })

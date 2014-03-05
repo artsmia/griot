@@ -47,7 +47,7 @@
                     <div class='note-content' ng-bind-html="note.trustedDescription"></div>
                     <div class='attachments' ng-if="note.attachments.length">
                       <h4>Tap to expand:</h4>
-                      <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("http://cdn.dx.artsmia.org/thumbs/tn_{{attachment}}.jpg")'>
+                      <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("{{cdn}}thumbs/tn_{{attachment}}.jpg")'>
                         <div class='attachment-big'>
                           <flatmap image="{{attachment}}"></flatmap>
                           <a class="back icon-back icon" ng-click="toggleAttachment(attachment, true, $event)">
