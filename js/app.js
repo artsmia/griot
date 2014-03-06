@@ -1,7 +1,7 @@
 /*jshint asi: true*/
 'use strict';
 
-window.app = angular.module('presenter', ['ngRoute', 'ngTouch', 'segmentio']);
+window.app = angular.module('griot', ['ngRoute', 'ngTouch', 'segmentio']);
 
 require('./routes')
 

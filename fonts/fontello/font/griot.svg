@@ -1,10 +1,10 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg">
-<metadata>Copyright (C) 2013 by original authors @ fontello.com</metadata>
+<metadata>Copyright (C) 2014 by original authors @ fontello.com</metadata>
 <defs>
-<font id="presenter" horiz-adv-x="1000" >
-<font-face font-family="presenter" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<font id="griot" horiz-adv-x="1000" >
+<font-face font-family="griot" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
 <missing-glyph horiz-adv-x="1000" />
 <glyph glyph-name="back" unicode="&#xe812;" d="m750 540q40 0 70-29t30-71l0-290q0-40-30-70t-70-30l-690 0l0 140l650 0l0 210l-500 0l0-110l-210 180l210 180l0-110l540 0z" horiz-adv-x="850" />
 <glyph glyph-name="info-circled-alt" unicode="&#xe80c;" d="m0 350q0 95 37 182t100 149t149 100t183 37q95 0 182-37t149-100t100-149t37-182q0-95-37-182t-100-150t-149-100t-182-37q-96 0-183 37t-149 100t-100 150t-37 182z m117 0q0-71 28-137t75-112t112-75t137-28t136 28t112 75t75 112t28 137t-28 136t-75 112t-112 75t-136 28t-137-28t-112-75t-75-112t-28-136z m281 170q0 28 20 45t51 17q32 0 51-17t19-45t-19-46t-51-17q-32 0-51 17t-20 46z m5-402v299h132v-299h-132z" horiz-adv-x="937.5" />
