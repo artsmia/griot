@@ -1,6 +1,6 @@
 # Griot
 
-Griot is an open-source iPad application that facilitates engagement with a collection of **objects** (artifacts, artwork, graphs, or anything else that can be represented visually) through **annotations** (points of interest on the object itself) and **stories** (related text-based and multimedia content, presented as a series of pages).
+Griot is an open-source website software application that is currently optimized for the iPad. The software facilitates engagement with a collection of **objects** (artifacts, artwork, graphs, or anything else that can be represented visually) through **annotations** (points of interest on the object itself) and **stories** (related text-based and multimedia content, presented as a series of pages). As the software application platform is further developed, it will also be optimized to work through web browsers on a wide variety of digital tablets, smartphones, and personal computers.
 
 The Griot framework requires three components:
 
