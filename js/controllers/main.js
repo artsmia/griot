@@ -23,7 +23,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'contents', 'segmentio', '
         document.body.scrollWidth < 4000 ? $timeout(initPackery, 300) : ($scope.loaded = true)
       }
       $timeout(function() {
-        initPackery()
+        if(window.innerWidth > 320) initPackery()
         if($rootScope.pageXOffset) { window.scrollTo($rootScope.pageXOffset, 0) }
       }, 0)
     })
