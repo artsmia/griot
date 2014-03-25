@@ -10,12 +10,11 @@ html, body {
 
 body {
 	background-color:#ededed;
-	font-family: "myriad-pro", sans-serif;
-	/*font-family: "myriad-pro-condensed", sans-serif;*/
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: "myriad-pro", sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
 	font-weight:700;
 }
 

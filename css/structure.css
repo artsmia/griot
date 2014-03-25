@@ -470,7 +470,7 @@ div.attachment-big aside {
   text-align: center;
 }
 .noteMarker, #annotations h3 em {
-	font: 700 1em "myriad-pro", sans-serif;
+	font: 700 1em 'Source Sans Pro', sans-serif;
   color: #fff;
 }
 .noteMarker span, #annotations h3 em {
