@@ -4,7 +4,7 @@ app.constant('envConfig', {
   tileUrlSubdomain: function(tileUrl) {
     return tileUrl.replace('http://0.', 'http://{s}.')
   },
-  crashpad: 'http://cdn.dx.artsmia.org/crashpad.json',
+  crashpad: 'http://new.artsmia.org/crashpad/griot/',
   cdn: 'http://cdn.dx.artsmia.org/'
 })
 
