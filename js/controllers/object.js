@@ -69,7 +69,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'co
         } else if($scope.flatmapScope.lastActiveNote) {
           // If there's an active annotation, center the map over it.
           if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
-            $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.firebase.geometry)
+            $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.geoJSON.geometry)
           }
         }
       }

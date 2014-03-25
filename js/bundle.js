@@ -245,7 +245,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'co
         } else if($scope.flatmapScope.lastActiveNote) {
           // If there's an active annotation, center the map over it.
           if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
-            $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.firebase.geometry)
+            $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.geoJSON.geometry)
           }
         }
       }
@@ -520,7 +520,7 @@ app.directive('note', function(segmentio) {
 
       scope.flatmapCtrl = flatmapCtrl
       scope.map = scope.flatmapCtrl.scope.zoom.map
-      scope.jsonLayer = jsonToLayer(scope.note.firebase)
+      scope.jsonLayer = jsonToLayer(scope.note.geoJSON)
       scope.note.index = scope.$parent.$parent.noteCount = (scope.$parent.$parent.noteCount || 0) + 1
       divIcon.options.html = "<span>" + scope.note.index + "</span>"
       scope.markers = []

@@ -26,7 +26,7 @@ app.directive('note', function(segmentio) {
 
       scope.flatmapCtrl = flatmapCtrl
       scope.map = scope.flatmapCtrl.scope.zoom.map
-      scope.jsonLayer = jsonToLayer(scope.note.firebase)
+      scope.jsonLayer = jsonToLayer(scope.note.geoJSON)
       scope.note.index = scope.$parent.$parent.noteCount = (scope.$parent.$parent.noteCount || 0) + 1
       divIcon.options.html = "<span>" + scope.note.index + "</span>"
       scope.markers = []
