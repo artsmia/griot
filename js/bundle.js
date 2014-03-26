@@ -105,20 +105,18 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'cont
 
 
 },{}],4:[function(require,module,exports){
-app.controller('mainCtrl', ['$scope', '$routeParams', 'contents', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
-  function($scope, $routeParams, contents, segmentio, $rootScope, $timeout, orderByFilter) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
+  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter) {
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
-    contents().then(function(data) {
+    notes().then(function(data) {
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
-        $scope.lockup = data.lockup
         var all = []
-        angular.forEach($scope.objects.ids, function(id) { all.push(id) })
+        angular.forEach($scope.objects, function(id) { all.push(id) })
         angular.forEach($scope.stories, function(story) { all.push(story) })
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
-        $scope.all.push($scope.lockup);
       } else {
         $scope.all = $rootScope.randomizedAll
       }

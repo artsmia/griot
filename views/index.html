@@ -1,10 +1,10 @@
 <ul id="cover">
-  <li ng-class="{story: thing.id != undefined, noPoster: !thing.poster}" ng-repeat="thing in all" ng-switch="thing.id == undefined">
-    <a href="#/o/{{thing}}" ng-switch-when="true">
-      <img ng-src="fallback/img/{{thing}}.jpg">
+  <li ng-class="{story: thing.recordtype == 'story', noPoster: !thing.thumbnail}" ng-repeat="thing in all" ng-switch="thing.recordType == 'object'" ng-hide="!thing.thumbnail">
+    <a href="#/o/{{thing.id}}" ng-switch-when="true">
+      <img ng-src="{{thing.thumbnail}}">
     </a>
-    <a ng-href="#/stories/{{thing.id}}">
-      <div class='poster' style="background-image: url({{thing.poster}})"></div>
+    <a ng-href="#/stories/{{thing.id}}" ng-switch-when="false">
+      <div class='poster' style="background-image: url({{thing.thumbnail}})"></div>
       <span class='title'><strong ng-bind="thing.title"></strong></span>
     </a>
   </li>
