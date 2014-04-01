@@ -1,5 +1,5 @@
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'contents', 'notes', 'segmentio', '$rootScope', 'credits',
-  function($scope, $routeParams, $location, $sce, contents, notes, segmentio, $rootScope, credits) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'contents', 'notes', 'segmentio', '$rootScope',
+  function($scope, $routeParams, $location, $sce, contents, notes, segmentio, $rootScope ) {
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     contents().then(function(data) {
@@ -27,9 +27,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'co
         $scope.$$phase || $scope.$apply()
       }
     })
-
-    credits().then(function(_credits) { $scope.credits = _credits })
-
+    
     var loadDetails = function() {
       $scope.notes = $scope.wp.views
       angular.forEach($scope.notes, function(view) {

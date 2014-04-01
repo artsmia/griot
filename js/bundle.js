@@ -37,7 +37,8 @@ app.constant('envConfig', {
     return tileUrl.replace('http://0.', 'http://{s}.')
   },
   crashpad: 'http://new.artsmia.org/crashpad/griot/',
-  cdn: 'http://cdn.dx.artsmia.org/'
+  cdn: 'http://cdn.dx.artsmia.org/',
+  mediaMetaUrl: 'http://cdn.dx.artsmia.org/credits.json'
 })
 
 
@@ -172,8 +173,8 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
 
 
 },{}],6:[function(require,module,exports){
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'contents', 'notes', 'segmentio', '$rootScope', 'credits',
-  function($scope, $routeParams, $location, $sce, contents, notes, segmentio, $rootScope, credits) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'contents', 'notes', 'segmentio', '$rootScope',
+  function($scope, $routeParams, $location, $sce, contents, notes, segmentio, $rootScope ) {
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     contents().then(function(data) {
@@ -201,9 +202,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'co
         $scope.$$phase || $scope.$apply()
       }
     })
-
-    credits().then(function(_credits) { $scope.credits = _credits })
-
+    
     var loadDetails = function() {
       $scope.notes = $scope.wp.views
       angular.forEach($scope.notes, function(view) {
@@ -314,7 +313,18 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'co
 
 
 },{}],7:[function(require,module,exports){
-app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'credits', '$rootScope', function($scope, $routeParams, $sce, segmentio, wp, credits, $rootScope) {
+app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'fetchMediaMeta', '$rootScope', 'envConfig', function($scope, $routeParams, $sce, segmentio, wp, fetchMediaMeta, $rootScope, config) {
+ 
+  $scope.usingMediaAdapter = false;
+  if( config.mediaMetaUrl !== null ) {
+    try{
+      fetchMediaMeta().then( function( mediaMeta ){ 
+        $scope.usingMediaAdapter = true;
+        $scope.mediaMeta = mediaMeta;
+      });
+    } catch(e) {}
+  }
+
   wp().then(function(wordpress) {
     $scope.id = $routeParams.id
     $scope.story = wordpress.stories[$scope.id]
@@ -344,12 +354,40 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
         this.storyCaptionOpen = !this.storyCaptionOpen;
         setTimeout(Zoomer.windowResized, 100)
       }
-    })
+
+      if( $scope.usingMediaAdapter ) {
+
+        // Identify the key - URL for videos, ID for zoomers.
+        var key = null, keyB = null;
+        switch( page.type ) {
+          case 'text':
+            break;
+          case 'video':
+            key = page.video;
+            break;
+          case 'image':
+            key = page.image;
+            break;
+          case 'comparison':
+            key = page.image;
+            keyB = page.imageB;
+            break;
+        }
+
+        // Look up in mediaMeta hash, or default to GriotWP value if blank.
+        if( key ) {
+          page.meta = $scope.mediaMeta[key] || page.meta;
+        }
+        if( keyB ) {
+          page.metaB = $scope.mediaMeta[keyB] || page.metaB;
+        }
+
+      }
+
+    });
 
     segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
   })
-
-  credits().then(function(_credits) { $scope.credits = _credits })
 
   setTimeout(Zoomer.windowResized, 100)
   $scope.storyMenuOpen = false
@@ -656,13 +694,38 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-app.factory('credits', ['$http', 'envConfig', function($http, config) {
+/**
+ * fetchMediaMeta
+ * 
+ * Grabs media metadata from an external source and massages it into a hash
+ * connecting a media ID/URL to a single block of text containing a description 
+ * and/or credit line. The default implementation is specific to the MIA; you 
+ * should overwrite this adapter if you'd like to use your own service to pull
+ * media metadata. If you'd rather manually enter metadata using GriotWP, simply  
+ * set config.mediaMetaUrl to null.
+ */
+app.factory( 'fetchMediaMeta', [ '$http', 'envConfig', function( $http, config ) {
+
   return function() {
-    return $http.get(config.cdn + 'credits.json', {cache: true}).then(function(result) {
-      return result.data;
-    })
-  }
-}])
+
+    return $http.get( config.mediaMetaUrl, { cache: true } ).then( function( rawResult ) {
+
+      var result = rawResult.data;
+      var mediaMeta = {};
+
+      for( var id in result ) {
+        var description = result[ id ].description ? result[id].description + "\n" : '';
+        var credit = result[ id ].credit || '';
+        mediaMeta[ id ] = description + credit;
+      }
+
+      return mediaMeta;
+
+    });
+
+  };
+
+}]);
 
 
 },{}],13:[function(require,module,exports){

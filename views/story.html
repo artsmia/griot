@@ -19,18 +19,11 @@
         <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
         <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
         <div ng-bind-html="page.trustedText" class='caption'></div>
-        <aside>
-          <p ng-bind="credits[page.image].description" ng-if="credits[page.image].description"></p>
-          <p ng-bind="credits[page.image].credit" ng-if="credits[page.image].credit"></p>
-          <p ng-bind="page.credit" ng-if="page.type == 'video'">
+        <aside ng-if="page.meta">
+          <p ng-bind="page.meta"></p>
         </aside>
-        <aside ng-if="page.type == 'comparison'">
-          <p ng-bind="credits[page.imageB].description" ng-if="credits[page.imageB].description"></p>
-          <p ng-bind="credits[page.imageB].credit" ng-if="credits[page.imageB].credit"></p>
-        </aside>
-        <aside ng-if="page.type == 'comparison'">
-          <p ng-bind="credits[page.imageB].description" ng-if="credits[page.imageB].description"></p>
-          <p ng-bind="credits[page.imageB].credit" ng-if="credits[page.imageB].credit"></p>
+        <aside ng-if="page.metaB">
+          <p ng-bind="page.metaB"></p>
         </aside>
       </div>
 

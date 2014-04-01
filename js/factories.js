@@ -20,11 +20,36 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-app.factory('credits', ['$http', 'envConfig', function($http, config) {
+/**
+ * fetchMediaMeta
+ * 
+ * Grabs media metadata from an external source and massages it into a hash
+ * connecting a media ID/URL to a single block of text containing a description 
+ * and/or credit line. The default implementation is specific to the MIA; you 
+ * should overwrite this adapter if you'd like to use your own service to pull
+ * media metadata. If you'd rather manually enter metadata using GriotWP, simply  
+ * set config.mediaMetaUrl to null.
+ */
+app.factory( 'fetchMediaMeta', [ '$http', 'envConfig', function( $http, config ) {
+
   return function() {
-    return $http.get(config.cdn + 'credits.json', {cache: true}).then(function(result) {
-      return result.data;
-    })
-  }
-}])
+
+    return $http.get( config.mediaMetaUrl, { cache: true } ).then( function( rawResult ) {
+
+      var result = rawResult.data;
+      var mediaMeta = {};
+
+      for( var id in result ) {
+        var description = result[ id ].description ? result[id].description + "\n" : '';
+        var credit = result[ id ].credit || '';
+        mediaMeta[ id ] = description + credit;
+      }
+
+      return mediaMeta;
+
+    });
+
+  };
+
+}]);
 
