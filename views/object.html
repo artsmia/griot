@@ -5,9 +5,9 @@
         <a id="back" class="fitts-law" href="#" title="Back"><span class="typcn icon-home icon slide-object-nav"></span></a>
       </nav>
       <div class="tombstone" ng-class="{extended: showExtendedTombstone}" ng-click="toggleExtendedTombstone()">
-        <h3 ng-bind-template="{{wp.title || json.title}}"></h3>
-        <h5 ng-bind-template="{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}"></h5>
-        <h6>{{json.dated}}
+        <h3 ng-bind-template="{{wp.title}}"></h3>
+        <h5>{{wp.meta1}}</h5>
+        <h6>{{wp.meta2}}
           <a ng-click="toggleExtendedTombstone($event)" id="toggleTombstone" class="typcn icon-info-circled" ng-class="{open: showExtendedTombstone}" ng-click="toggleExtendedTombstone()"></a>
         </h6>
       </div>
@@ -18,14 +18,11 @@
       </div>
 
       <aside class="tombstone" ng-class="{extended: showExtendedTombstone}">
-        <h6>{{json.medium}}</h6>
-        <h6>{{json.dimension}}</h6>
-        <h6>{{json.creditline}}</h6>
-        <h6>{{json.accession_number}}</h6>
+        <h6 ng-bind-html="wp.meta3"></h6>
       </aside>
       <div class="object-stories">
         <div id="about-object" ng-if="activeSection == 'about'">
-          <p ng-bind-html="wp.trustedDescription || json.trustedDescription"></p>
+          <p ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
         </div>
 
         <div id="more" ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
@@ -52,12 +49,11 @@
                       <a class="back icon-back icon" ng-click="toggleAttachment(attachment, true, $event)">
                         Back
                       </a>
-                      <a class="credits icon-info-circled icon" ng-click="toggleAttachmentCredits(attachment)" ng-hide="showAttachmentCredits">
+                      <a class="credits icon-info-circled icon" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)" ng-hide="showAttachmentCredits">
                         Info
                       </a>
-                      <aside ng-show="showAttachmentCredits" ng-click="toggleAttachmentCredits(attachment)">
-                        <p ng-bind="credits[attachment].description"></p>
-                        <p ng-bind="credits[attachment].credit"></p>
+                      <aside ng-show="showAttachmentCredits" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)">
+                        <p ng-bind="attachment.meta"></p>
                       </aside>
                     </div>
                   </div>

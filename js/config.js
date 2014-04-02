@@ -6,7 +6,8 @@ app.constant('envConfig', {
   },
   crashpad: 'http://new.artsmia.org/crashpad/griot/',
   cdn: 'http://cdn.dx.artsmia.org/',
-  mediaMetaUrl: 'http://cdn.dx.artsmia.org/credits.json'
+  mediaMetaUrl: 'http://cdn.dx.artsmia.org/credits.json',
+  objectMetaUrl: 'contents.json'
 })
 
 
