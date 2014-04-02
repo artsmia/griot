@@ -70,8 +70,6 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
       _this.isActive = true;
 
-      var result = result.objects;
-
       for( var id in result ) {
 
         var groupings = {}, 

@@ -56,7 +56,7 @@ app.constant('envConfig', {
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
   miaObjectMetaActive: true,
-  miaObjectMetaSrc: '../contents.json',
+  miaObjectMetaSrc: '../mia-object-meta.json',
 
   miaThumbnailActive: true,
   miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
@@ -91,7 +91,6 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
             }
             if( objectThumb.isActive ) {
               att.thumb = objectThumb.get( att.image_id );
-              console.log( att.thumb );
             }
           })
         })
@@ -837,8 +836,6 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
       _this.isActive = true;
 
-      var result = result.objects;
-
       for( var id in result ) {
 
         var groupings = {}, 
@@ -887,7 +884,8 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 /**
  * miaThumbnailAdapter
  * 
- * Returns a media thumbnail URL based on media ID.
+ * Provides a method for retrieving an image thumbnail from an external source,
+ * given an image ID.
  */
 app.service( 'miaThumbnailAdapter', function() {
 
