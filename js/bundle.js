@@ -57,11 +57,12 @@ app.constant('envConfig', {
 
 });
 },{}],3:[function(require,module,exports){
-app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'contents', function($scope, $sce, segmentio, wp, contents) {
+app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', function($scope, $sce, segmentio, wp, objectMeta ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
     Zoomer.windowResized()
     $scope.goldweights = wordpress.objects['196']
+    $scope.goldweights.trustedDescription = $sce.trustAsHtml( $scope.goldweights.description );
     $scope.showDescription = true
 
     var loadNotes = function() {
@@ -72,17 +73,23 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'cont
           ann.proverb = proverbId
           ann.trustedAudio = $sce.trustAsResourceUrl($scope.cdn+'goldweights/'+proverbId+'.mp3')
           ann.trustedDescription = $sce.trustAsHtml(ann.description.replace(proverbLinkPattern, ''))
+          angular.forEach(ann.attachments, function(att) {
+            var mash = att.image_id.split(' ');
+            att.image_id = mash[0];
+            att.object_id = mash[1];
+            att.meta1 = att.metaG = '';
+            if( objectMeta.isActive ) { // Let's hope it is, because this data does not exist elsewhere
+              att.title = objectMeta.get( att.object_id, 'gw_title' );
+              att.meta1 = objectMeta.get( att.object_id, 'meta1' );
+              att.meta2 = objectMeta.get( att.object_id, 'gw_meta2' );
+            }
+          })
         })
       })
       $scope.$$phase || $scope.$apply()
     }
     $scope.$on('viewChanged', loadNotes)
     if($scope.mapLoaded) loadNotes()
-  })
-
-  contents().then(function(_contents) {
-    $scope.objects = _contents.objects
-    $scope.$$phase || $scope.$apply()
   })
 
   $scope.play = function(scope, $event) {
@@ -113,11 +120,10 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'cont
 
   $scope.home = function() {
     angular.forEach($scope.notes[0].annotations, function(note) { note.active = false })
-    $scope.$apply()
+    $scope.$$phase || $scope.$apply()
   }
+
 }])
-
-
 },{}],4:[function(require,module,exports){
 app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
   function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter) {
@@ -752,8 +758,8 @@ app.config(['$routeProvider', function($routeProvider) {
 /**
  * These adapters are specific to the MIA's implementation of Griot. You should
  * overwrite them if you'd like to use your own service to pull data. If you'd
- * rather manually enter metadata using GriotWP, set config.use_mia_media_meta 
- * and config.use_mia_object_meta to false in config.js.
+ * rather manually enter metadata using GriotWP, set config.miaMediaMetaActive 
+ * and config.miaObjectMetaActive to false in config.js.
 */
 
 /**
@@ -807,8 +813,12 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
   this.metaHash = {};  
 
-  this.get = function( id, level ) {
-    return _this.metaHash[ id ][ level ] || false;
+  this.get = function( id, grouping ) {
+    try{
+      return _this.metaHash[ id ][ grouping ];
+    } catch(e) {
+      return null;
+    }
   }
 
   this.build = function( src ) {
@@ -821,7 +831,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
       for( var id in result ) {
 
-        var levels = {}, 
+        var groupings = {}, 
             artist, 
             culture, 
             country, 
@@ -847,11 +857,15 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
         accession_number = result[id].accession_number || '';
         trustedDescription = $sce.trustAsHtml( result[id].description );
 
-        levels.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
-        levels.meta2 = dated;
-        levels.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
+        groupings.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
+        groupings.meta2 = dated;
+        groupings.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
 
-        _this.metaHash[id] = levels;
+        // Special editions for goldweights
+        groupings.gw_title = $sce.trustAsHtml( result[id].title );
+        groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
+
+        _this.metaHash[id] = groupings;
 
       }
 

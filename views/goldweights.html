@@ -17,20 +17,19 @@
       </p>
 
       <ul>
-        <li class="weight" ng-class="{tombstoned: popupWeight == this}" ng-init="mash = mash.split(' ')" ng-repeat="mash in note.attachments" ng-click="toggle(this)"> <!-- this is sketchy. I'm storing "imageName TMS_ID AccessionNumber" in the attachments field -->
+        <li class="weight" ng-class="{tombstoned: popupWeight == this}" ng-repeat="att in note.attachments" ng-click="toggle(this)">
           <a>
             <img ng-src="{{cdn}}thumbs/tn_{{mash[0]}}.jpg">
           </a>
-          <aside ng-init="json = objects[mash[1]]" class="tombstone" ng-show="popupWeight == this">
-            <h4>{{json.title}}</h4>
-            <h5 ng-bind-template"{{json.artist || 'Artist unknown'}}, {{json.culture && json.culture + ','}} {{json.country}}"></h5>
-            <h6>{{json.creditline}}</h6>
-            <h6>{{json.accession_number}}</h6>
+          <aside class="tombstone" ng-show="popupWeight == this">
+            <h4 ng-if="att.title" ng-bind-html="att.title"></h4>
+            <h5 ng-if="att.meta">{{att.meta1}}</h5>
+            <h6 ng-if="att.meta2" ng-bind-html="att.meta2"></h6>
           </aside>
         </li>
       </ul>
     </li>
-    <li class="home grouping" ng-class="{active: showDescription}"><h3>Goldweights</h3><div class="description"><p ng-bind="goldweights.description"></p></div></li>
+    <li class="home grouping" ng-class="{active: showDescription}"><h3>Goldweights</h3><div class="description"><p ng-bind-html="goldweights.trustedDescription"></p></div></li>
   </ol>
   <hr>
 

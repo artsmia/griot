@@ -56,8 +56,12 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
   this.metaHash = {};  
 
-  this.get = function( id, level ) {
-    return _this.metaHash[ id ][ level ] || false;
+  this.get = function( id, grouping ) {
+    try{
+      return _this.metaHash[ id ][ grouping ];
+    } catch(e) {
+      return null;
+    }
   }
 
   this.build = function( src ) {
@@ -70,7 +74,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
       for( var id in result ) {
 
-        var levels = {}, 
+        var groupings = {}, 
             artist, 
             culture, 
             country, 
@@ -96,11 +100,15 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
         accession_number = result[id].accession_number || '';
         trustedDescription = $sce.trustAsHtml( result[id].description );
 
-        levels.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
-        levels.meta2 = dated;
-        levels.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
+        groupings.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
+        groupings.meta2 = dated;
+        groupings.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
 
-        _this.metaHash[id] = levels;
+        // Special editions for goldweights
+        groupings.gw_title = $sce.trustAsHtml( result[id].title );
+        groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
+
+        _this.metaHash[id] = groupings;
 
       }
 
