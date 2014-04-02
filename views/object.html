@@ -53,7 +53,7 @@
                         Info
                       </a>
                       <aside ng-show="showAttachmentCredits" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)">
-                        <p ng-bind="attachment.meta"></p>
+                        <p ng-bind-html="attachment.meta"></p>
                       </aside>
                     </div>
                   </div>

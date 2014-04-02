@@ -20,10 +20,10 @@
         <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
         <div ng-bind-html="page.trustedText" class='caption'></div>
         <aside ng-if="page.meta">
-          <p ng-bind="page.meta"></p>
+          <p ng-bind-html="page.meta"></p>
         </aside>
         <aside ng-if="page.metaB">
-          <p ng-bind="page.metaB"></p>
+          <p ng-bind-html="page.metaB"></p>
         </aside>
       </div>
 

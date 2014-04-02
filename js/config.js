@@ -1,4 +1,5 @@
 app.constant('envConfig', {
+
   contents: 'contents.json',
   tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
   tileUrlSubdomain: function(tileUrl) {
@@ -6,8 +7,11 @@ app.constant('envConfig', {
   },
   crashpad: 'http://new.artsmia.org/crashpad/griot/',
   cdn: 'http://cdn.dx.artsmia.org/',
-  mediaMetaUrl: 'http://cdn.dx.artsmia.org/credits.json',
-  objectMetaUrl: 'contents.json'
-})
 
+  miaMediaMetaActive: true,
+  miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
+  miaObjectMetaActive: true,
+  miaObjectMetaSrc: '../contents.json'
+
+});

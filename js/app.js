@@ -12,9 +12,18 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', function(root, config) { root.cdn = config.cdn }])
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', function( root, config, mediaMeta, objectMeta ) { 
+	root.cdn = config.cdn;
+	if( config.miaMediaMetaActive ) {
+		mediaMeta.build( config.miaMediaMetaSrc );
+	}
+	if( config.miaObjectMetaActive ) {
+		objectMeta.build( config.miaObjectMetaSrc );
+	}
+}])
 
 require('./factories')
+require('./services')
 require('./filters')
 
 require('./controllers/object')

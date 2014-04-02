@@ -1,28 +1,19 @@
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'fetchMediaMeta', 'fetchObjectMeta', 'envConfig', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, fetchMediaMeta, fetchObjectMeta, config ) {
-
-    $scope.usingMediaAdapter = false;
-    if( config.mediaMetaUrl !== null ) {
-      try{
-        fetchMediaMeta().then( function( mediaMeta ){ 
-          $scope.usingMediaAdapter = true;
-          $scope.mediaMeta = mediaMeta;
-        });
-      } catch(e) {}
-    }
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
       $scope.wp = _wp.objects[$scope.id]
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
+      
+      $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
 
-      if( config.objectMetaUrl ) {
-        fetchObjectMeta().then(function(objectMeta) {
-          $scope.wp.meta1 = objectMeta[ $scope.id ][0] || $scope.wp.meta1;
-          $scope.wp.meta2 = objectMeta[ $scope.id ][1] || $scope.wp.meta2;
-          $scope.wp.meta3 = objectMeta[ $scope.id ][2] || $sce.trustAsHtml( $scope.wp.meta3 );
-        });
+      // Replace object metadata if using adapter
+      if( objectMeta.isActive ) {
+        $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
+        $scope.wp.meta2 = objectMeta.get( $scope.id, 'meta2' ) || $scope.wp.meta2;
+        $scope.wp.meta3 = objectMeta.get( $scope.id, 'meta3' ) || $scope.wp.meta3;
       }
       
       $scope.relatedStories = []
@@ -48,11 +39,14 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       angular.forEach($scope.notes, function(view) {
         angular.forEach(view.annotations, function(ann) {
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
+
+          // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
-            if( $scope.usingMediaAdapter ) {
-              att.meta = $scope.mediaMeta[att.image_id] || att.meta;
+            if( mediaMeta.isActive ) {
+              att.meta = mediaMeta.get( att.image_id ) || att.meta;
             }
           })
+
         })
       })
       $scope.$$phase || $scope.$apply()

@@ -13,9 +13,18 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', function(root, config) { root.cdn = config.cdn }])
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', function( root, config, mediaMeta, objectMeta ) { 
+	root.cdn = config.cdn;
+	if( config.miaMediaMetaActive ) {
+		mediaMeta.build( config.miaMediaMetaSrc );
+	}
+	if( config.miaObjectMetaActive ) {
+		objectMeta.build( config.miaObjectMetaSrc );
+	}
+}])
 
 require('./factories')
+require('./services')
 require('./filters')
 
 require('./controllers/object')
@@ -29,8 +38,9 @@ require('./directives/note')
 require('./directives/scroll')
 require('./directives/onPlay')
 
-},{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./factories":12,"./filters":13,"./routes":14}],2:[function(require,module,exports){
+},{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./factories":12,"./filters":13,"./routes":14,"./services":15}],2:[function(require,module,exports){
 app.constant('envConfig', {
+
   contents: 'contents.json',
   tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
   tileUrlSubdomain: function(tileUrl) {
@@ -38,12 +48,14 @@ app.constant('envConfig', {
   },
   crashpad: 'http://new.artsmia.org/crashpad/griot/',
   cdn: 'http://cdn.dx.artsmia.org/',
-  mediaMetaUrl: 'http://cdn.dx.artsmia.org/credits.json',
-  objectMetaUrl: 'contents.json'
-})
 
+  miaMediaMetaActive: true,
+  miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
+  miaObjectMetaActive: true,
+  miaObjectMetaSrc: '../contents.json'
 
+});
 },{}],3:[function(require,module,exports){
 app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'contents', function($scope, $sce, segmentio, wp, contents) {
   wp().then(function(wordpress) {
@@ -174,31 +186,22 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
 
 
 },{}],6:[function(require,module,exports){
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'fetchMediaMeta', 'fetchObjectMeta', 'envConfig', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, fetchMediaMeta, fetchObjectMeta, config ) {
-
-    $scope.usingMediaAdapter = false;
-    if( config.mediaMetaUrl !== null ) {
-      try{
-        fetchMediaMeta().then( function( mediaMeta ){ 
-          $scope.usingMediaAdapter = true;
-          $scope.mediaMeta = mediaMeta;
-        });
-      } catch(e) {}
-    }
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
       $scope.wp = _wp.objects[$scope.id]
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
+      
+      $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
 
-      if( config.objectMetaUrl ) {
-        fetchObjectMeta().then(function(objectMeta) {
-          $scope.wp.meta1 = objectMeta[ $scope.id ][0] || $scope.wp.meta1;
-          $scope.wp.meta2 = objectMeta[ $scope.id ][1] || $scope.wp.meta2;
-          $scope.wp.meta3 = objectMeta[ $scope.id ][2] || $sce.trustAsHtml( $scope.wp.meta3 );
-        });
+      // Replace object metadata if using adapter
+      if( objectMeta.isActive ) {
+        $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
+        $scope.wp.meta2 = objectMeta.get( $scope.id, 'meta2' ) || $scope.wp.meta2;
+        $scope.wp.meta3 = objectMeta.get( $scope.id, 'meta3' ) || $scope.wp.meta3;
       }
       
       $scope.relatedStories = []
@@ -224,11 +227,14 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       angular.forEach($scope.notes, function(view) {
         angular.forEach(view.annotations, function(ann) {
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
+
+          // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
-            if( $scope.usingMediaAdapter ) {
-              att.meta = $scope.mediaMeta[att.image_id] || att.meta;
+            if( mediaMeta.isActive ) {
+              att.meta = mediaMeta.get( att.image_id ) || att.meta;
             }
           })
+
         })
       })
       $scope.$$phase || $scope.$apply()
@@ -334,101 +340,93 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
 },{}],7:[function(require,module,exports){
-app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'fetchMediaMeta', '$rootScope', 'envConfig', function($scope, $routeParams, $sce, segmentio, wp, fetchMediaMeta, $rootScope, config) {
+app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'miaMediaMetaAdapter', '$rootScope', 
+  function($scope, $routeParams, $sce, segmentio, wp, mediaMeta, $rootScope ) {
  
-  $scope.usingMediaAdapter = false;
-  if( config.mediaMetaUrl !== null ) {
-    try{
-      fetchMediaMeta().then( function( mediaMeta ){ 
-        $scope.usingMediaAdapter = true;
-        $scope.mediaMeta = mediaMeta;
-      });
-    } catch(e) {}
-  }
-
-  wp().then(function(wordpress) {
-    $scope.id = $routeParams.id
-    $scope.story = wordpress.stories[$scope.id]
-    $scope.relatedObjects = [];
-    angular.forEach($scope.story.relatedObjects, function(id){
-      $scope.relatedObjects.push({
-        'id':id,
-        'title':wordpress.objects[id].title,
-        'image':wordpress.objects[id].views[0].image
+    wp().then(function(wordpress) {
+      $scope.id = $routeParams.id
+      $scope.usingMediaAdapter = false;
+      $scope.story = wordpress.stories[$scope.id]
+      $scope.relatedObjects = [];
+      angular.forEach($scope.story.relatedObjects, function(id){
+        $scope.relatedObjects.push({
+          'id':id,
+          'title':wordpress.objects[id].title,
+          'image':wordpress.objects[id].views[0].image
+        })
       })
+
+      angular.forEach($scope.story.pages, function(page) {
+        if(page.text) {
+          var iframe_pattern = /<p>\[(http:\/\/.*)\]<\/p>/,
+            match = page.text.match(iframe_pattern)
+          if(match && match[1]) {
+            page.iframe = $sce.trustAsResourceUrl(match[1])
+            page.text = page.text.replace(/<p>\[(http:\/\/.*)\]<\/p>/, '').trim()
+          }
+          page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
+        }
+        page.trustedVideo = $sce.trustAsResourceUrl(page.video)
+        page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
+        page.storyCaptionOpen = true;
+        page.toggleStoryCaption = function(){
+          this.storyCaptionOpen = !this.storyCaptionOpen;
+          setTimeout(Zoomer.windowResized, 100)
+        }
+        page.meta = $sce.trustAsHtml( page.meta );
+        page.metaB = $sce.trustAsHtml( page.metaB );
+
+        if( mediaMeta.isActive ) {
+          // Identify the key - media URL for videos, media ID for zoomers.
+          var key = null, keyB = null;
+          switch( page.type ) {
+            case 'text':
+              break;
+            case 'video':
+              key = page.video;
+              break;
+            case 'image':
+              key = page.image;
+              break;
+            case 'comparison':
+              key = page.image;
+              keyB = page.imageB;
+              break;
+          }
+          // Look up in mediaMeta hash or fall back to GriotWP value.
+          if( key ) {
+            page.meta = mediaMeta.get( key ) || page.meta;
+          }
+          if( keyB ) {
+            page.metaB = mediaMeta.get( keyB ) || page.metaB;
+          }
+        }
+
+      });
+
+      segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
     })
 
-    angular.forEach($scope.story.pages, function(page) {
-      if(page.text) {
-        var iframe_pattern = /<p>\[(http:\/\/.*)\]<\/p>/,
-          match = page.text.match(iframe_pattern)
-        if(match && match[1]) {
-          page.iframe = $sce.trustAsResourceUrl(match[1])
-          page.text = page.text.replace(/<p>\[(http:\/\/.*)\]<\/p>/, '').trim()
-        }
-        page.trustedText = $sce.trustAsHtml(page.text.replace(/<p>(&nbsp;)?<\/p>/,''))
-      }
-      page.trustedVideo = $sce.trustAsResourceUrl(page.video)
-      page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
-      page.storyCaptionOpen = true;
-      page.toggleStoryCaption = function(){
-        this.storyCaptionOpen = !this.storyCaptionOpen;
-        setTimeout(Zoomer.windowResized, 100)
-      }
-
-      if( $scope.usingMediaAdapter ) {
-
-        // Identify the key - URL for videos, ID for zoomers.
-        var key = null, keyB = null;
-        switch( page.type ) {
-          case 'text':
-            break;
-          case 'video':
-            key = page.video;
-            break;
-          case 'image':
-            key = page.image;
-            break;
-          case 'comparison':
-            key = page.image;
-            keyB = page.imageB;
-            break;
-        }
-
-        // Look up in mediaMeta hash, or default to GriotWP value if blank.
-        if( key ) {
-          page.meta = $scope.mediaMeta[key] || page.meta;
-        }
-        if( keyB ) {
-          page.metaB = $scope.mediaMeta[keyB] || page.metaB;
-        }
-
-      }
-
-    });
-
-    segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
-  })
-
-  setTimeout(Zoomer.windowResized, 100)
-  $scope.storyMenuOpen = false
-  $scope.toggleStoryMenu = function(){
-    $scope.storyMenuOpen = !$scope.storyMenuOpen
-  }
-
-  $scope.activePage = 0
-  $scope.updateActivePage = function(newPage){
-    if((newPage > -1) && (newPage < $scope.story.pages.length)){
-      $scope.activePage = newPage
-      segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
+    setTimeout(Zoomer.windowResized, 100)
+    $scope.storyMenuOpen = false
+    $scope.toggleStoryMenu = function(){
+      $scope.storyMenuOpen = !$scope.storyMenuOpen
     }
-    setTimeout(Zoomer.windowResized, 200)
+
+    $scope.activePage = 0
+    $scope.updateActivePage = function(newPage){
+      if((newPage > -1) && (newPage < $scope.story.pages.length)){
+        $scope.activePage = newPage
+        segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
+      }
+      setTimeout(Zoomer.windowResized, 200)
+    }
+    $scope.backToObject=function(){
+      $rootScope.nextView = 'more'
+      history.go(-1);
+    }
   }
-  $scope.backToObject=function(){
-    $rootScope.nextView = 'more'
-    history.go(-1);
-  }
-}])
+])
 
 },{}],8:[function(require,module,exports){
 app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
@@ -714,94 +712,6 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-
-/**
- * fetchMediaMeta
- * 
- * Grabs media metadata from an external source and massages it into a hash
- * connecting a media ID/URL to a single block of text containing a description 
- * and/or credit line. The default implementation is specific to the MIA; you 
- * should overwrite this adapter if you'd like to use your own service to pull
- * media metadata. If you'd rather manually enter metadata using GriotWP, simply  
- * set config.mediaMetaUrl to null.
- */
-app.factory( 'fetchMediaMeta', [ '$http', 'envConfig', function( $http, config ) {
-
-  return function() {
-
-    return $http.get( config.mediaMetaUrl, { cache: true } ).then( function( rawResult ) {
-
-      var result = rawResult.data;
-      var mediaMeta = {};
-
-      for( var id in result ) {
-        var description = result[ id ].description ? result[id].description + "\n" : '';
-        var credit = result[ id ].credit || '';
-        mediaMeta[ id ] = description + credit;
-      }
-
-      return mediaMeta;
-
-    });
-
-  };
-
-}]);
-
-/**
- * fetchObjectMeta
- * 
- * Grabs object metadata from an external source and massages it into a hash
- * connecting an object ID to an object with three levels of metadata. The 
- * default implementation is specific to the MIA; you should overwrite this 
- * adapter if you'd like to use your own service to pull media metadata. If 
- * you'd rather manually enter metadata using GriotWP, simply set 
- * config.objectMetaUrl to null.
- */
-app.factory( 'fetchObjectMeta', [ '$http', 'envConfig', '$sce', function( $http, config, $sce ) {
-
-  return function() {
-
-    return $http.get( config.objectMetaUrl, { cache: true } ).then( function( rawResult ) {
-
-      var result = rawResult.data.objects;
-      var objectMeta = {};
-
-      for( var id in result ) {
-
-        var levels = [], artist, culture, country, dated, medium, dimension, creditline, accession_number, trustedDescription;
-
-        // Skip ID
-        if( 'ids' === id ) {
-          continue;
-        }
-
-        artist = result[id].artist || 'Artist unknown';
-        culture = result[id].culture || '';
-        country = result[id].country || '';
-        dated = result[id].dated || '';
-        medium = result[id].medium || '';
-        dimension = result[id].dimension || '';
-        creditline = result[id].creditline || '';
-        accession_number = result[id].accession_number || '';
-        trustedDescription = $sce.trustAsHtml( result[id].description );
-
-        levels[0] = artist + ', ' + ( culture && culture + ', ' ) + country;
-        levels[1] = dated;
-        levels[2] = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
-
-        objectMeta[id] = levels;
-
-      }
-
-      return objectMeta;
-
-    });
-
-  };
-
-}]);
-
 },{}],13:[function(require,module,exports){
 app.filter('titleCase', function () {
   return function (input) {
@@ -838,4 +748,115 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 
+},{}],15:[function(require,module,exports){
+/**
+ * These adapters are specific to the MIA's implementation of Griot. You should
+ * overwrite them if you'd like to use your own service to pull data. If you'd
+ * rather manually enter metadata using GriotWP, set config.use_mia_media_meta 
+ * and config.use_mia_object_meta to false in config.js.
+*/
+
+/**
+ * miaMediaMetaAdapter
+ * 
+ * Grabs media metadata from an external source and massages it into a hash
+ * connecting a media ID/URL to a single block of text containing a description 
+ * and/or credit line.
+ */
+app.service( 'miaMediaMetaAdapter', function( $http, $sce ) {
+
+  var _this = this;
+
+  this.isActive = false;
+
+  this.metaHash = {};
+
+  this.get = function( id ) {
+    return _this.metaHash[ id ] || false;
+  }
+
+  this.build = function( src ){
+
+    $http.get( src, { cache: true } ).success( function( result ) {
+
+      _this.isActive = true;
+      
+      for( var id in result ) {
+        var description = result[ id ].description ? result[id].description + "<br />" : '';
+        var credit = result[ id ].credit || '';
+        _this.metaHash[ id ] = $sce.trustAsHtml( description + credit );
+      }
+
+    });
+
+  }
+
+});
+
+/**
+ * miaObjectMetaAdapter
+ * 
+ * Grabs object metadata from an external source and massages it into a hash
+ * connecting an object ID to an object with three levels of metadata.
+ */
+app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
+
+  var _this = this;
+
+  this.isActive = false;
+
+  this.metaHash = {};  
+
+  this.get = function( id, level ) {
+    return _this.metaHash[ id ][ level ] || false;
+  }
+
+  this.build = function( src ) {
+
+    $http.get( src, { cache: true } ).success( function( result ) {
+
+      _this.isActive = true;
+
+      var result = result.objects;
+
+      for( var id in result ) {
+
+        var levels = {}, 
+            artist, 
+            culture, 
+            country, 
+            dated, 
+            medium, 
+            dimension, 
+            creditline, 
+            accession_number, 
+            trustedDescription;
+
+        // Skip ID listing
+        if( 'ids' === id ) {
+          continue;
+        }
+
+        artist = result[id].artist || 'Artist unknown';
+        culture = result[id].culture || '';
+        country = result[id].country || '';
+        dated = result[id].dated || '';
+        medium = result[id].medium || '';
+        dimension = result[id].dimension || '';
+        creditline = result[id].creditline || '';
+        accession_number = result[id].accession_number || '';
+        trustedDescription = $sce.trustAsHtml( result[id].description );
+
+        levels.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
+        levels.meta2 = dated;
+        levels.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
+
+        _this.metaHash[id] = levels;
+
+      }
+
+    });
+  }
+
+});
 },{}]},{},[1])
