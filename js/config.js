@@ -12,6 +12,9 @@ app.constant('envConfig', {
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
   miaObjectMetaActive: true,
-  miaObjectMetaSrc: '../contents.json'
+  miaObjectMetaSrc: '../contents.json',
+
+  miaThumbnailActive: true,
+  miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
 
 });

@@ -13,13 +13,16 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', function( root, config, mediaMeta, objectMeta ) { 
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) { 
 	root.cdn = config.cdn;
 	if( config.miaMediaMetaActive ) {
 		mediaMeta.build( config.miaMediaMetaSrc );
 	}
 	if( config.miaObjectMetaActive ) {
 		objectMeta.build( config.miaObjectMetaSrc );
+	}
+	if( config.miaThumbnailActive ) {
+		objectThumb.init( config.miaThumbnailSrc );
 	}
 }])
 
@@ -53,11 +56,14 @@ app.constant('envConfig', {
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
   miaObjectMetaActive: true,
-  miaObjectMetaSrc: '../contents.json'
+  miaObjectMetaSrc: '../contents.json',
+
+  miaThumbnailActive: true,
+  miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
 
 });
 },{}],3:[function(require,module,exports){
-app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', function($scope, $sce, segmentio, wp, objectMeta ) {
+app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
     Zoomer.windowResized()
@@ -82,6 +88,10 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
               att.title = objectMeta.get( att.object_id, 'gw_title' );
               att.meta1 = objectMeta.get( att.object_id, 'meta1' );
               att.meta2 = objectMeta.get( att.object_id, 'gw_meta2' );
+            }
+            if( objectThumb.isActive ) {
+              att.thumb = objectThumb.get( att.image_id );
+              console.log( att.thumb );
             }
           })
         })
@@ -765,9 +775,8 @@ app.config(['$routeProvider', function($routeProvider) {
 /**
  * miaMediaMetaAdapter
  * 
- * Grabs media metadata from an external source and massages it into a hash
- * connecting a media ID/URL to a single block of text containing a description 
- * and/or credit line.
+ * Grabs media metadata from an external source and provides a method for
+ * retrieving that metadata by ID.
  */
 app.service( 'miaMediaMetaAdapter', function( $http, $sce ) {
 
@@ -802,8 +811,9 @@ app.service( 'miaMediaMetaAdapter', function( $http, $sce ) {
 /**
  * miaObjectMetaAdapter
  * 
- * Grabs object metadata from an external source and massages it into a hash
- * connecting an object ID to an object with three levels of metadata.
+ * Grabs object metadata from an external source and provides a method for
+ * retrieving metadata reformatted into a particular grouping, i.e. to match
+ * the groups in GriotWP.
  */
 app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
@@ -870,6 +880,30 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
       }
 
     });
+  }
+
+});
+
+/**
+ * miaThumbnailAdapter
+ * 
+ * Returns a media thumbnail URL based on media ID.
+ */
+app.service( 'miaThumbnailAdapter', function() {
+
+  var _this = this;
+
+  this.isActive = false;
+
+  this.cdn = '';
+
+  this.init = function( cdn ) {
+    _this.isActive = true;
+    _this.cdn = cdn;
+  }
+
+  this.get = function( id ) {
+    return _this.cdn + 'thumbs/tn_' + id + '.jpg';
   }
 
 });

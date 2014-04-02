@@ -1,4 +1,4 @@
-app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', function($scope, $sce, segmentio, wp, objectMeta ) {
+app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
     Zoomer.windowResized()
@@ -23,6 +23,9 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
               att.title = objectMeta.get( att.object_id, 'gw_title' );
               att.meta1 = objectMeta.get( att.object_id, 'meta1' );
               att.meta2 = objectMeta.get( att.object_id, 'gw_meta2' );
+            }
+            if( objectThumb.isActive ) {
+              att.thumb = objectThumb.get( att.image_id );
             }
           })
         })

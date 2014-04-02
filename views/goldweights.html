@@ -19,7 +19,7 @@
       <ul>
         <li class="weight" ng-class="{tombstoned: popupWeight == this}" ng-repeat="att in note.attachments" ng-click="toggle(this)">
           <a>
-            <img ng-src="{{cdn}}thumbs/tn_{{mash[0]}}.jpg">
+            <img ng-src="{{att.thumb}}">
           </a>
           <aside class="tombstone" ng-show="popupWeight == this">
             <h4 ng-if="att.title" ng-bind-html="att.title"></h4>

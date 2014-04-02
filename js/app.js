@@ -12,13 +12,16 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', function( root, config, mediaMeta, objectMeta ) { 
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) { 
 	root.cdn = config.cdn;
 	if( config.miaMediaMetaActive ) {
 		mediaMeta.build( config.miaMediaMetaSrc );
 	}
 	if( config.miaObjectMetaActive ) {
 		objectMeta.build( config.miaObjectMetaSrc );
+	}
+	if( config.miaThumbnailActive ) {
+		objectThumb.init( config.miaThumbnailSrc );
 	}
 }])
 
