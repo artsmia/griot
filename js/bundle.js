@@ -901,7 +901,9 @@ app.service( 'miaThumbnailAdapter', function() {
   }
 
   this.get = function( id ) {
-    return _this.cdn + 'thumbs/tn_' + id + '.jpg';
+    var trimmed_id = id.replace( '.tif', '' );
+    console.log( trimmed_id );
+    return _this.cdn + 'thumbs/tn_' + trimmed_id + '.jpg';
   }
 
 });
