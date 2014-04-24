@@ -85,3 +85,5 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     }
   }
 ])
+
+console.log( 'hollar' );

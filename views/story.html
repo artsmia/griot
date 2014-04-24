@@ -3,28 +3,50 @@
 
     <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
 
-      <div class="story-comparison" ng-if="page.type == 'comparison'">
-        <flatmap image={{page.image}} class='flatmap-a'></flatmap>
-        <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
+      <div class='story-illustration' ng-if="page.type != 'text'">
+
+        <!-- Comparison -->
+        <div class='story-comparison' ng-if="page.type == 'comparison'">
+          <flatmap image={{page.image}} class='flatmap-a'></flatmap>
+          <flatmap image={{page.imageB}} class='flatmap-b'></flatmap>
+        </div>
+
+        <!-- Image -->
+        <div class='story-image' ng=if="page.type == 'image'" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
+          <flatmap image={{page.image}}></flatmap>
+        </div>
+
+        <!-- Video -->
+        <div class='story-video' ng-if="page.type == 'video'">
+          <video controls ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
+        </div>
+
+        <!-- Iframe -->
+        <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
+
       </div>
 
-      <div ng-if="page.image && activePage == $index && page.type != 'comparison'" class='story-image' ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
-        <flatmap image={{page.image}}></flatmap>
+      <div class='story-content' ng-if="page.type == 'text'">
+        <h6 class='header'>Text</h6>
+        <div ng-bind-html="page.trustedText" class='caption'></div>
       </div>
+
+      <!-- old stuff -->
 
       <div class='caption-wrap' ng-show="page.storyCaptionOpen && page.image != 'lockup'">
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
           <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
         </div>
-        <video controls ng-if="page.type == 'video'" ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
-        <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
-        <div ng-bind-html="page.trustedText" class='caption'></div>
+
+
         <aside ng-if="page.meta">
           <p ng-bind-html="page.meta"></p>
         </aside>
+
         <aside ng-if="page.metaB">
           <p ng-bind-html="page.metaB"></p>
         </aside>
+
       </div>
 
       <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Text</span>

@@ -443,6 +443,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
   }
 ])
 
+console.log( 'hollar' );
 },{}],8:[function(require,module,exports){
 app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
   return {
@@ -902,7 +903,6 @@ app.service( 'miaThumbnailAdapter', function() {
 
   this.get = function( id ) {
     var trimmed_id = id.replace( '.tif', '' );
-    console.log( trimmed_id );
     return _this.cdn + 'thumbs/tn_' + trimmed_id + '.jpg';
   }
 
