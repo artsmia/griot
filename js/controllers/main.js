@@ -3,11 +3,16 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
+      console.log( data );
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
         var all = []
-        angular.forEach($scope.objects, function(id) { all.push(id) })
+        angular.forEach($scope.objects, function(id) { 
+          if( id ) {
+            all.push(id);
+          }
+        });
         angular.forEach($scope.stories, function(story) { all.push(story) })
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {

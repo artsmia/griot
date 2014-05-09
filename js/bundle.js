@@ -40,8 +40,9 @@ require('./directives/flatmap')
 require('./directives/note')
 require('./directives/scroll')
 require('./directives/onPlay')
+require('./directives/vcenter')
 
-},{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./factories":12,"./filters":13,"./routes":14,"./services":15}],2:[function(require,module,exports){
+},{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./directives/vcenter":12,"./factories":13,"./filters":14,"./routes":15,"./services":16}],2:[function(require,module,exports){
 app.constant('envConfig', {
 
   contents: 'contents.json',
@@ -139,11 +140,16 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
+      console.log( data );
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
         var all = []
-        angular.forEach($scope.objects, function(id) { all.push(id) })
+        angular.forEach($scope.objects, function(id) { 
+          if( id ) {
+            all.push(id);
+          }
+        });
         angular.forEach($scope.stories, function(story) { all.push(story) })
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {
@@ -207,6 +213,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
+      console.log(_wp);
       $scope.wp = _wp.objects[$scope.id]
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
       
@@ -221,10 +228,12 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       
       $scope.relatedStories = []
       angular.forEach($scope.wp.relatedStories, function(story_id){
-        $scope.relatedStories.push({
-          'id':story_id,
-          'title':_wp.stories[story_id].title
-        })
+        if( _wp.stories[story_id] ) { 
+          $scope.relatedStories.push({
+            'id':story_id,
+            'title':_wp.stories[story_id].title
+          })
+        }
       })
       if($scope.wp) {
         $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
@@ -361,7 +370,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     wp().then(function(wordpress) {
       $scope.id = $routeParams.id
       $scope.usingMediaAdapter = false;
-      $scope.story = wordpress.stories[$scope.id]
+      $scope.story = wordpress.stories[$scope.id];
       $scope.relatedObjects = [];
       angular.forEach($scope.story.relatedObjects, function(id){
         $scope.relatedObjects.push({
@@ -707,6 +716,41 @@ app.directive("scroll", function ($window) {
 
 
 },{}],12:[function(require,module,exports){
+app.directive('vcenter', function() {
+
+	return{
+		restrict:'C',
+		replace:false,
+		controller: function( $scope, $element, $attrs ) {
+
+			var _scope = $scope;
+
+			$scope.vc_height = 0;
+			$scope.vc_parent = 0;
+
+			$scope.vc_interval = setInterval( function(){
+
+				if( jQuery( $element ).height() !== $scope.vc_height || jQuery( $element ).parent().height() !== $scope.vc_parent ) {
+		  		var topBuffer = ( jQuery( $element ).parent().height() - jQuery( $element ).height() ) / 2;
+		  		jQuery( $element ).css({
+		  			'position':'relative', 
+		  			'top':topBuffer 
+		  		});
+		  		$scope.vc_height = jQuery( $element ).height();
+		  		$scope.vc_parent = jQuery( $element ).parent().height();
+		  	}
+			}, 100 );
+
+			$scope.$on("$destroy", function(){
+        clearInterval(_scope.vc_interval);
+				console.log( 'clearing' );
+			});
+
+		}
+	}
+
+});
+},{}],13:[function(require,module,exports){
 app.factory('contents', ['$http', 'envConfig', function($http, config) {
   return function() {
     return $http.get(config.contents, {cache: true}).then(function(result) { return result.data; })
@@ -728,7 +772,7 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 app.filter('titleCase', function () {
   return function (input) {
     var words = input.replace('_', ' ').split(' ');
@@ -741,7 +785,7 @@ app.filter('titleCase', function () {
 
 
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 app.config(['$routeProvider', function($routeProvider) {
   return $routeProvider.when('/', {
     templateUrl: 'views/index.html',
@@ -764,7 +808,7 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * These adapters are specific to the MIA's implementation of Griot. You should
  * overwrite them if you'd like to use your own service to pull data. If you'd

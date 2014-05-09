@@ -4,6 +4,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
+      console.log(_wp);
       $scope.wp = _wp.objects[$scope.id]
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
       
@@ -18,10 +19,12 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       
       $scope.relatedStories = []
       angular.forEach($scope.wp.relatedStories, function(story_id){
-        $scope.relatedStories.push({
-          'id':story_id,
-          'title':_wp.stories[story_id].title
-        })
+        if( _wp.stories[story_id] ) { 
+          $scope.relatedStories.push({
+            'id':story_id,
+            'title':_wp.stories[story_id].title
+          })
+        }
       })
       if($scope.wp) {
         $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)

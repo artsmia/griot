@@ -4,6 +4,7 @@
 .icon-cancel:before { content: '\e80f'; } /* '' */
 .icon-cancel-circled-outline:before { content: '\e80e'; } /* '' */
 .icon-cancel-circled:before { content: '\e80d'; } /* '' */
+.icon-info:before { content: '\e813'; } /* '' */
 .icon-home:before { content: '\e802'; } /* '' */
 .icon-menu:before { content: '\e803'; } /* '' */
 .icon-resize-full:before { content: '\e800'; } /* '' */

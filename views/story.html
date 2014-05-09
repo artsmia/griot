@@ -1,9 +1,13 @@
-<article class="story">
-  <div id='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
+<h1 class='story-header' ng-bind="story.title"></h1>
+<a class='home-link' href='#'></a>
 
+<article class="story">
+
+  <div class='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
+    
     <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
 
-      <div class='story-illustration' ng-if="page.type != 'text'">
+      <div class='story-illustration' ng-if="page.type != 'text'" ng-class="{collapsed: page.storyCaptionOpen }">
 
         <!-- Comparison -->
         <div class='story-comparison' ng-if="page.type == 'comparison'">
@@ -12,27 +16,32 @@
         </div>
 
         <!-- Image -->
-        <div class='story-image' ng=if="page.type == 'image'" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
+        <div class='story-image' ng-if="page.type == 'image'" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
           <flatmap image={{page.image}}></flatmap>
         </div>
 
         <!-- Video -->
         <div class='story-video' ng-if="page.type == 'video'">
-          <video controls ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
+          <video class='vcenter' controls ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
         </div>
 
         <!-- Iframe -->
-        <iframe ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
+        <iframe class='story-iframe' ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
 
       </div>
 
-      <div class='story-content' ng-if="page.type == 'text'">
-        <h6 class='header'>Text</h6>
+      <div class='story-content' ng-if="page.text" ng-class="{expanded: page.storyCaptionOpen }">
+
         <div ng-bind-html="page.trustedText" class='caption'></div>
+        <aside ng-if="page.meta" ng-bind-html="page.meta"></aside>
+        <aside ng-if="page.metaB" ng-bind-html="page.metaB"></aside>
+
       </div>
+      
+      <a class='content-toggle' ng-if="page.text" ng-class="{closed: ! page.storyCaptionOpen }" ng-click="page.toggleStoryCaption()"></a>
 
       <!-- old stuff -->
-
+      <!--
       <div class='caption-wrap' ng-show="page.storyCaptionOpen && page.image != 'lockup'">
         <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
           <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
@@ -51,29 +60,16 @@
 
       <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Text</span>
 
+      -->
+
     </section>
 
   </div>
 
-  <div id='story-header'>
-    <a id='story-back' class="typcn icon-home icon slide-object-nav" href="#"></a>
-    <h1 ng-bind="story.title"></h1>
-  </div>
+  <!-- Navigation -->
+  <a class='return-link page-prev page-nav' ng-click="backToObject()" ng-show="activePage == 0">Back</a>
+  <a class='prev-link page-prev page-nav' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0">Prev Page</a>
+  <a class='return-link page-next page-nav' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1">Back</a>
+  <a class='next-link page-next page-nav' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)">Next Page</a>
 
-  <div id='page-prev' class='page-arrow return' ng-click="backToObject()" ng-show="activePage == 0">
-    <span class='page-arrow-text'>Back</span>
-    <span class='page-arrow-icon typcn icon-back icon'></span>
-  </div>
-  <div id='page-prev' class='page-arrow' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0">
-    <span class='page-arrow-text'>Prev Page</span>
-    <span class='page-arrow-icon typcn icon-left-small icon'></span>
-  </div>
-  <div id='page-next' class='page-arrow return' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1">
-    <span class='page-arrow-text'>Back</span>
-    <span class='page-arrow-icon typcn icon-back icon'></span>
-  </div>
-  <div id='page-next' class='page-arrow' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)">
-    <span class='page-arrow-text'>Next Page</span>
-    <span class='page-arrow-icon typcn icon-right-small icon'></span>
-  </div>
 </article>
