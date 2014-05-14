@@ -718,3 +718,30 @@ body:after {
   /*   z-index: 1; */
   /* } */
 }
+
+aside.tombstone {
+  opacity: 0;
+  transition: all 0.2s ease-in;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  position: relative;
+  z-index: -1;
+  max-height: 0; }
+
+aside.tombstone.extended {
+  margin: -1em 0 1em 0;
+  max-height: 100em;
+  opacity: 1;
+  z-index: 0; }
+
+#toggleTombstone {
+  color: #222;
+  border-radius: 1em;
+  font-size: 1.5em;
+  float: right;
+  margin: -.1em 0.1em 0 0; }
+
+#toggleTombstone.open {
+  color: #eee;
+  background: #222;
+  font-weight: 700; }
