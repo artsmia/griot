@@ -45,6 +45,8 @@ require('./directives/vcenter')
 },{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./directives/vcenter":12,"./factories":13,"./filters":14,"./routes":15,"./services":16}],2:[function(require,module,exports){
 app.constant('envConfig', {
 
+  coverSize: 300,
+
   contents: 'contents.json',
   tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
   tileUrlSubdomain: function(tileUrl) {
@@ -140,7 +142,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
-      console.log( data );
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
@@ -156,7 +157,27 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.all = $rootScope.randomizedAll
       }
 
-      var $cover = document.querySelector('#cover')
+      var initPackery = function() {
+
+        if( window.innerHeight > window.innerWidth ) {
+          return;
+        }
+
+        var cover = document.querySelector('#cover');
+
+        $scope.p = new Packery( cover, {
+          layoutMode:'horizontal',
+          itemSelector:'.packery-item',
+          containerStyle:null
+        });
+
+        $rootScope.loaded = true;
+
+      };
+
+     typeof $rootScope.loaded == 'undefined' ? $timeout( initPackery, 750 ) : $timeout( initPackery, 0 );
+
+      /*
       var initPackery = function() {
         $scope.p = new Packery($cover, {layoutMode: 'horizontal', rowHeight:310})
         $scope.p.unbindResize()
@@ -166,6 +187,8 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         if(window.innerWidth > 320) initPackery()
         if($rootScope.pageXOffset) { window.scrollTo($rootScope.pageXOffset, 0) }
       }, 0)
+      */
+
     })
 
     $scope.random = function() {
@@ -451,8 +474,6 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     }
   }
 ])
-
-console.log( 'hollar' );
 },{}],8:[function(require,module,exports){
 app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
   return {

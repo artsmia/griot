@@ -1,5 +1,7 @@
 app.constant('envConfig', {
 
+  coverSize: 300,
+
   contents: 'contents.json',
   tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
   tileUrlSubdomain: function(tileUrl) {

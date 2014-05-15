@@ -1,63 +1,9 @@
 /* STORY MODE */
 
-/* Mixins */
-
-@mixin box-shadow( $params ) {
-  -webkit-box-shadow:$params;
-  -moz-box-shadow:$params;
-  box-shadow:$params;
-}
-@mixin transition( $params... ) {
-  -webkit-transition: $params;
-  -moz-transition: $params;
-  -o-transition: $params;
-}
-@mixin transform( $params ) {
-  -webkit-transform:$params;
-  -moz-transform:$params;
-  -o-transform:$params;
-  -ms-transform:$params;
-  transform:$params;
-}
-@mixin label{
-  color:#222;
-  font-size:0.8em;
-  font-family:'Source Sans Pro', sans-serif;
-  text-align:center;
-  text-transform:uppercase;
-}
-@mixin meta{
-  color:#888;
-  font-size:0.9em;
-  font-family:'Source Sans Pro', sans-serif;
-  font-style:italic;
-}
-@mixin icon( $content ){
-  font-style:normal;
-  cursor:pointer;
-  &:before{
-    position:absolute;
-    display:block;
-    top:50%;
-    width:100%;
-    margin-top:-12px;
-    text-align:center;
-    line-height:100%;
-    font-family:'griot';
-    font-size:24px;
-    content: $content;
-  }
-}
-
-/* Media queries */
-
-$small:'screen and (max-width:768px)';
-
 /* Variables */
 
 $nav-width-large:60px;
 $nav-width-small:100px;
-
 
 /**
  * Header
@@ -96,7 +42,7 @@ $nav-width-small:100px;
 /**
  * Structure and content 
  */
-.story {
+#story {
   position:fixed;
   top:50px;
   right:0;

@@ -3,7 +3,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
-      console.log( data );
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
@@ -19,7 +18,27 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.all = $rootScope.randomizedAll
       }
 
-      var $cover = document.querySelector('#cover')
+      var initPackery = function() {
+
+        if( window.innerHeight > window.innerWidth ) {
+          return;
+        }
+
+        var cover = document.querySelector('#cover');
+
+        $scope.p = new Packery( cover, {
+          layoutMode:'horizontal',
+          itemSelector:'.packery-item',
+          containerStyle:null
+        });
+
+        $rootScope.loaded = true;
+
+      };
+
+      typeof $rootScope.loaded == 'undefined' ? $timeout( initPackery, 750 ) : $timeout( initPackery, 0 );
+
+      /*
       var initPackery = function() {
         $scope.p = new Packery($cover, {layoutMode: 'horizontal', rowHeight:310})
         $scope.p.unbindResize()
@@ -29,6 +48,8 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         if(window.innerWidth > 320) initPackery()
         if($rootScope.pageXOffset) { window.scrollTo($rootScope.pageXOffset, 0) }
       }, 0)
+      */
+
     })
 
     $scope.random = function() {

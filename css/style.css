@@ -1,0 +1,83 @@
+/* Mixins */
+/* Media queries */
+.cover_wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
+
+#cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; }
+
+#cover li { display: block; vertical-align: top; margin: 0 10px 10px 0; height: 300px; }
+@media screen and (max-width: 768px) { #cover li { height: auto; margin: 0 auto 10px; max-height: 300px; max-width: 100%; } }
+
+#cover li.object img { display: block; max-height: 100%; margin: 0 auto; border: 1px solid #999; }
+#cover li.object .title { display: none; }
+
+#cover li.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
+#cover li.story a { text-decoration: none; }
+#cover li.story .poster { width: 100%; height: 200px; background-size: cover; background-position: 50% 50%; border: 1px solid #999; }
+#cover li.story .caption { position: relative; height: 85px; margin: 0; padding: 10px; }
+#cover li.story .title { font-size: 1.1em; color: #222; text-align: center; line-height: 1.1; padding: 0; margin: 0; }
+
+#instructions { display: block; position: fixed; bottom: 0; font-size: 1em; font-style: italic; text-align: center; width: 100%; height: 3em; vertical-align: middle; line-height: 3; }
+
+/* STORY MODE */
+/* Variables */
+/** Header */
+.story-header { position: fixed; display: block; top: 0; left: 0; height: 50px; width: 100%; margin: 0; background-color: #000; text-align: center; font-size: 1.5em; color: #fff; font-weight: 600; line-height: 50px; }
+
+.home-link { font-style: normal; cursor: pointer; position: fixed; display: block; top: 0; left: 0; width: 50px; height: 50px; }
+.home-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e802"; }
+.home-link:before { color: #fff; font-size: 20px; margin-top: -10px; }
+
+/** Structure and content  */
+#story { position: fixed; top: 50px; right: 0; bottom: 0; left: 0; overflow: hidden; background: #ffffff; background: -moz-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #e5e5e5)); background: -webkit-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -o-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -ms-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: radial-gradient(ellipse at center, white 0%, #e5e5e5 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); }
+
+.pages-wrap { -webkit-transition: all 500ms cubic-bezier(0.81, 0.11, 0.11, 0.91); -moz-transition: all 500ms cubic-bezier(0.81, 0.11, 0.11, 0.91); -o-transition: all 500ms cubic-bezier(0.81, 0.11, 0.11, 0.91); position: relative; top: 0; left: 0; width: 100%; height: 100%; white-space: nowrap; }
+
+.page { position: relative; display: inline-block; width: 100%; height: 100%; vertical-align: top; white-space: normal; overflow: hidden; }
+
+.story-illustration { position: absolute; left: 0; width: 100%; height: 100%; }
+.story-illustration.collapsed { width: 66%; height: 100%; }
+@media screen and (max-width: 768px) { .story-illustration.collapsed { width: 100%; height: 34%; } }
+.story-illustration .story-video, .story-illustration .story-image, .story-illustration .story-comparison, .story-illustration .story-iframe { position: relative; width: 100%; height: 100%; }
+.story-illustration .story-video video { -webkit-transition: top 100ms linear; -moz-transition: top 100ms linear; -o-transition: top 100ms linear; display: block; margin: 0px auto; width: auto; max-width: 100%; height: auto; max-height: 100%; }
+.story-illustration .story-image .flatmap { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+
+.story-content { -webkit-transition: right 250ms ease, bottom 250ms ease; -moz-transition: right 250ms ease, bottom 250ms ease; -o-transition: right 250ms ease, bottom 250ms ease; -webkit-box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.13); -moz-box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.13); box-shadow: -3px 0px 5px rgba(0, 0, 0, 0.13); position: absolute; right: -34%; bottom: 0; width: 34%; height: 100%; background-color: rgba(255, 255, 255, 0.9); overflow-y: scroll; z-index: 0; }
+.story-content.expanded { right: 0; }
+@media screen and (max-width: 768px) { .story-content { bottom: -100%; height: 66%; right: 0; left: 0; width: 100%; }
+  .story-content.expanded { bottom: 0; margin-top: 0; padding-bottom: 75px; }
+  .story-content:after { -webkit-transition: bottom 250ms ease; -moz-transition: bottom 250ms ease; -o-transition: bottom 250ms ease; position: fixed; width: 100%; left: 0; bottom: 0; content: ' '; height: 65px; background: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, white)); background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%); background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%); background: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, white 100%); background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); } }
+.story-content .caption { padding: 2em; }
+.story-content .caption p { margin: 0 60px 0 0; }
+.story-content .caption p:last-child { margin-bottom: 0; }
+@media screen and (max-width: 768px) { .story-content .caption p { margin: 0; } }
+.story-content aside { color: #888; font-size: 0.9em; font-family: 'Source Sans Pro', sans-serif; font-style: italic; padding: 0 2em 2em; margin-right: 60px; }
+@media screen and (max-width: 768px) { .story-content aside { margin: 0; } }
+
+.content-toggle { display: block; position: absolute; width: 30px; height: 30px; right: 0; margin: 15px 15px 0 0; border-radius: 1000px; background-color: #000; z-index: 1; font-style: normal; cursor: pointer; }
+.content-toggle:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e80f"; }
+.content-toggle:before { color: #fff; font-size: 16px; margin-top: -8px; }
+.content-toggle.closed { font-style: normal; cursor: pointer; }
+.content-toggle.closed:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e813"; }
+.content-toggle.closed:before { color: #fff; font-size: 16px; margin-top: -8px; }
+@media screen and (max-width: 768px) { .content-toggle { bottom: 18px; left: 50%; margin-left: -15px; } }
+
+/** Navigation */
+.page-nav { position: fixed; width: 60px; height: 80px; top: 50%; margin-top: -40px; cursor: pointer; background-color: #000; color: #fff; border: 1px solid #333; font-size: 0.7em; text-transform: uppercase; text-align: center; padding: 10px 5px 5px; z-index: 3; }
+@media screen and (max-width: 768px) { .page-nav { width: 100px; top: auto; bottom: 0; height: 65px; }
+  .page-nav:before { top: 50%; } }
+
+.page-prev { left: 0; border-left: none; }
+
+.page-next { right: 0; border-right: none; }
+
+.prev-link { font-style: normal; cursor: pointer; }
+.prev-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e808"; }
+.prev-link:before { top: auto; left: 0; bottom: 10px; }
+
+.next-link { font-style: normal; cursor: pointer; }
+.next-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e809"; }
+.next-link:before { top: auto; left: 0; bottom: 10px; }
+
+.return-link { background-color: #fff; color: #000; font-style: normal; cursor: pointer; }
+.return-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e812"; }
+.return-link:before { top: auto; left: 0; bottom: 10px; color: #222; }

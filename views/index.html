@@ -1,15 +1,20 @@
-<ul id="cover">
-  <li ng-class="{story: thing.recordtype == 'story', noPoster: !thing.thumbnail}" ng-repeat="thing in all" ng-switch="thing.recordType == 'object'" ng-hide="!thing.thumbnail">
-    <a href="#/o/{{thing.id}}" ng-switch-when="true">
-      <img ng-src="{{thing.thumbnail}}">
-    </a>
-    <a ng-href="#/stories/{{thing.id}}" ng-switch-when="false">
-      <div class='poster' style="background-image: url({{thing.thumbnail}})"></div>
-      <span class='title'><strong ng-bind="thing.title"></strong></span>
-    </a>
-  </li>
-</ul>
+<div class='cover_wrapper'>
+  <ul id='cover'>
+    <li class='packery-item' ng-class="{story: thing.recordType != 'object', object: thing.recordType == 'object', noPoster: !thing.thumbnail}" ng-repeat="thing in all" ng-hide="!thing.thumbnail">
+      <a href="#/o/{{thing.id}}" ng-if="thing.recordType == 'object'">
+        <img ng-src="{{thing.thumbnail}}">
+        <h2 class='title' ng-bind="thing.title"></h2>
+      </a>
+      <a ng-href="#/stories/{{thing.id}}" ng-if="thing.recordType != 'object'">
+        <div class='poster' style="background-image: url({{thing.thumbnail}})"></div>
+        <div class='caption'>
+          <h2 class='title vcenter' ng-bind="thing.title" ></h2>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
 
 <aside id="instructions">
-  <p>Slide to browse, tap to view</p>
+  Slide to browse, tap to view
 </aside>

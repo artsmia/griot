@@ -48,7 +48,7 @@
 /**
  * Structure and content 
  */
-.story {
+#story {
   position: fixed;
   top: 50px;
   right: 0;
