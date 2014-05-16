@@ -50,3 +50,17 @@
 /* Media queries */
 
 $small:'screen and (max-width:768px)';
+
+/* Vertical centering */
+
+.vcenter_outer {
+  position:relative;
+  display:table;
+  width:100%;
+  height:100%;
+}
+.vcenter_inner {
+  position:relative;
+  display:table-cell;
+  vertical-align:middle;
+}

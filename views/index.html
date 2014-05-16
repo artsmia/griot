@@ -7,8 +7,8 @@
       </a>
       <a ng-href="#/stories/{{thing.id}}" ng-if="thing.recordType != 'object'">
         <div class='poster' style="background-image: url({{thing.thumbnail}})"></div>
-        <div class='caption'>
-          <h2 class='title vcenter' ng-bind="thing.title" ></h2>
+        <div class='caption vcenter'>
+          <h2 class='title' ng-bind="thing.title"></h2>
         </div>
       </a>
     </li>
