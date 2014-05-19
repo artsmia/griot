@@ -1,5 +1,10 @@
 /* Mixins */
 
+@mixin box-sizing( $params ) {
+  -webkit-box-sizing:$params;
+  -moz-box-sizing:$params;
+  box-sizing:$params;
+}
 @mixin box-shadow( $params ) {
   -webkit-box-shadow:$params;
   -moz-box-shadow:$params;
@@ -50,47 +55,3 @@
 /* Media queries */
 
 $small:'screen and (max-width:768px)';
-
-/* Vertical centering */
-
-.vcenter_outer {
-  position:relative;
-  display:table;
-  width:100%;
-  height:100%;
-}
-.vcenter_inner {
-  position:relative;
-  display:table-cell;
-  vertical-align:middle;
-}
-
-/* Navigation */
-.home-link {
-  @include icon('\e802');
-  position:fixed;
-  display:block;
-  top:0;
-  left:0;
-  width:50px;
-  height:50px;
-  z-index:3;
-  #object & {
-    background-color:#222;
-    border-radius:1000px;
-    top:10px;
-    left:10px;
-    width:30px;
-    height:30px;
-  }
-  &:before {
-    color:#fff;
-    font-size:20px;
-    margin-top:-10px;
-  }
-  #object &:before{
-    font-size:14px;
-    margin-top:-7px;
-  }
-}
-

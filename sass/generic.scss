@@ -1,0 +1,110 @@
+/* Structure */
+
+*,
+*:before,
+*:after {
+  @include box-sizing( border-box );
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  text-rendering:optimizeLegibility;
+  -moz-font-feature-settings:"kern=0";
+  -webkit-font-feature-settings:"kern" 0;
+  -o-font-feature-settings:"kern" 0;
+  -ms-font-feature-settings:"kern" 0;
+  font-feature-settings:"kern" 0;
+}
+
+/* Fluid images */
+
+img,
+object {
+  max-width: 100%;
+  outline:0;
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+/* Clearfix */
+
+.clearfix:after {
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
+
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+
+/* Vertical centering */
+
+.vcenter_outer {
+  position:relative;
+  display:table;
+  width:100%;
+  height:100%;
+}
+.vcenter_inner {
+  position:relative;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+/* Type */
+
+html,
+body{
+  font-family: 'Source Sans Pro', sans-serif;
+  line-height:1.4;
+}
+
+h1 { font-size: 2.125em; }
+h2 { font-size: 1.6875em; }
+h3 { font-size: 1.375em; }
+h4 { font-size: 1.125em; }
+h5 { font-size: 1.125em; }
+h6 { font-size: 1em; }
+
+/* Colors */
+
+html,
+body{
+  background-color:#ededed;
+}
+
+/* Navigation */
+
+.home-link {
+  @include icon('\e802');
+  position:fixed;
+  display:block;
+  top:0;
+  left:0;
+  width:50px;
+  height:50px;
+  z-index:3;
+  #object & {
+    background-color:#222;
+    border-radius:1000px;
+    top:10px;
+    left:10px;
+    width:30px;
+    height:30px;
+  }
+  &:before {
+    color:#fff;
+    font-size:20px;
+    margin-top:-10px;
+  }
+  #object &:before{
+    font-size:14px;
+    margin-top:-7px;
+  }
+}
