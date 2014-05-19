@@ -1,6 +1,8 @@
 app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
   function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
 
+    $scope.movedZoomer = false;
+
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
@@ -60,6 +62,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
 
     $scope.currentAttachment = null
+    $scope.minimizeContent = true
 
     $scope.next = function(direction) {
       var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
@@ -153,6 +156,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     $scope.toggleExtendedTombstone = function(event) {
       $scope.showExtendedTombstone = !$scope.showExtendedTombstone
       if(event) event.stopPropagation()
+    }
+
+    $scope.toggleMinimizeContent = function() {
+      $scope.minimizeContent = !$scope.minimizeContent;
+      setTimeout( Zoomer.windowResized, 125);
     }
   }
 ])

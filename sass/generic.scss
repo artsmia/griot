@@ -65,8 +65,8 @@ body{
   line-height:1.4;
 }
 
-h1 { font-size: 2.125em; }
-h2 { font-size: 1.6875em; }
+h1 { font-size: 1.6875em; }
+h2 { font-size: 1.375em; }
 h3 { font-size: 1.375em; }
 h4 { font-size: 1.125em; }
 h5 { font-size: 1.125em; }
@@ -77,34 +77,4 @@ h6 { font-size: 1em; }
 html,
 body{
   background-color:#ededed;
-}
-
-/* Navigation */
-
-.home-link {
-  @include icon('\e802');
-  position:fixed;
-  display:block;
-  top:0;
-  left:0;
-  width:50px;
-  height:50px;
-  z-index:3;
-  #object & {
-    background-color:#222;
-    border-radius:1000px;
-    top:10px;
-    left:10px;
-    width:30px;
-    height:30px;
-  }
-  &:before {
-    color:#fff;
-    font-size:20px;
-    margin-top:-10px;
-  }
-  #object &:before{
-    font-size:14px;
-    margin-top:-7px;
-  }
 }

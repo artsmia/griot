@@ -1,17 +1,28 @@
-<article id='object'>
+<article id='object' ng-class='{contentMinimized: minimizeContent}'>
+
+  <!-- Zoomer -->
+  <flatmap class='object-zoomer' image="{{id}}">
+    <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
+      <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
+    </div>
+  </flatmap>
 
   <!-- Content -->
   <div class='object-content'>
 
-	  <h3 class='title' ng-bind-template="{{wp.title}}"></h3>
+    <menu class='object-menu'>
+      <a class='home-link' href='#'></a>
+      <a class='minimize-content' ng-click='toggleMinimizeContent()'></a>
+      <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()'></a>
+    </menu>
+
+	  <h1 class='object-title' ng-bind-template="{{wp.title}}"></h1>
 
 	  <div class='object-tombstone' ng-class='{extended: showExtendedTombstone}'>
 		  <h5 class='meta1'>{{wp.meta1}}</h5>
 		  <h6 class='meta2'>{{wp.meta2}}</h6>
 	    <h6 class='meta3' ng-bind-html="wp.meta3"></h6>
 	  </div>
-
-    <a class='meta-toggle' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()'></a>
 
     <nav class='object-nav clearfix'>
       <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
@@ -51,15 +62,6 @@
 	  </div>
 
   </div>
-
-  <!-- Zoomer -->
-  <flatmap class='object-zoomer' image="{{id}}">
-  	<div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
-      <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
-    </div>
-  </flatmap>
-
-  <a class='home-link' href='#'></a>
 
 	<!-- Fullscreen attachments -->
   <div class='attachment-big' ng-repeat='attachment in allAttachments' ng-class="{active: attachment == currentAttachment}">
