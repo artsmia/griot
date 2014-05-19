@@ -338,7 +338,6 @@ ol#annotations ol li.active div{
 .attachments{
   position:relative;
   margin-bottom:25px;
-  border-left:1px solid #333;
   padding-left:25px;
 }
 .attachments h4{

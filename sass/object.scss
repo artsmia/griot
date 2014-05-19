@@ -1,0 +1,194 @@
+/* Content */
+
+.object-content{
+	position:fixed;
+	top:33%;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:1;
+	background-color:#ededed;
+	overflow-x:hidden;
+	overflow-y:scroll;
+	padding:0 15px;
+}
+.object-content .title{
+	margin:15px 40px 0 0;
+}
+.meta1{
+	@include transition( max-height 125ms ease );
+	max-height:0;
+	margin:0 40px 0 0;
+	overflow:hidden;
+	.extended & {
+		max-height:200px;
+	}
+}
+.meta2,
+.meta3{
+	@include transition( max-height 125ms ease );
+	margin:0;
+	font-size:0.9em;
+	font-weight:normal;
+	max-height:0;
+	overflow:hidden;
+	.extended & {
+		max-height:200px;
+	}
+}
+.meta-toggle{
+	display:block;
+  position:absolute;
+  width:30px;
+  height:30px;
+  top:0;
+  right:0;
+  margin:15px 15px 0 0;
+  border-radius:1000px;
+  background-color:#000;
+  @include icon( '\e813' );
+  &:before{
+    color:#fff;
+    font-size:16px;
+    margin-top:-8px;
+  }
+  &.open{
+    @include icon( '\e80f' );
+    &:before{
+      color:#fff;
+      font-size:16px;
+      margin-top:-8px;
+    }
+  }
+}
+
+
+/* Content: Attachments */
+
+.annotation-attachments{
+	@include transition( max-height 125ms ease );
+	max-height:0;
+	overflow:hidden;
+	padding:0;
+	margin:0;
+	.annotation.active &{
+		max-height:500px;
+	}
+}
+.annotation-attachments p{
+	font-size:0.75em;
+	margin:15px 0 10px;
+	text-transform:uppercase;
+	color:#999;
+	font-weight:bold;
+	border-top:1px solid #ccc;
+}
+.attachment-thumb{
+	width:75px;
+	height:75px;
+	position:relative;
+	cursor:pointer;
+	background-size:cover;
+}
+.attachment-big{
+	@include transition( top 125ms ease );
+  display:block;
+  position:fixed;
+  width:100%;
+  height:100%;
+  left:0;
+  top:100%;
+  background-color:rgba(0,0,0,0.9);
+  z-index:1000000001;
+  text-align:center;
+  &.active {
+  	top:0;
+	}
+}
+
+
+/* Content: More */
+
+.more-title {
+	margin:15px 0 0;
+}
+
+
+/* Nav bar */
+
+.object-nav {
+	margin:15px 0 0;
+}
+.object-nav a {
+	display:block;
+	width:33.3%;
+	float:left;
+	padding:0.5em 0;
+	border:1px solid #222;
+	text-transform: uppercase;
+	font-size:0.85em;
+	color:#222;
+	font-weight:700;
+	text-align:center;
+	background-color: #ededed;
+	cursor:pointer;
+
+	&.selected,
+	&:hover{
+		color:#ededed;
+		background-color: #222;
+	}
+}
+
+
+/* Zoomer */
+
+.object-zoomer {
+	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.13) );
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:67%;
+	left:0;
+	z-index:2;
+}
+
+
+/* Annotations List */
+
+.object-details{
+	list-style:none;
+	padding:0;
+}
+.annotation{
+	padding:0 0 15px 0;
+	position:relative;
+}
+.annotation-title{
+	margin:0 0 0 40px;
+	cursor:pointer;
+}
+.annotation-index{
+	position:absolute;
+	top:0;
+	left:0;
+	display:block;
+	width:30px;
+	height:30px;
+	background-color:#222;
+	color:#fff;
+	border-radius:1000px;
+	text-align:center;
+	margin-right:10px;
+}
+.annotation-content{
+	@include transition( max-height 125ms ease );
+	max-height:0;
+	overflow:hidden;
+	p {
+		margin:10px 0 0 0;
+	}
+	.annotation.active &{
+		max-height:500px;
+	}
+}

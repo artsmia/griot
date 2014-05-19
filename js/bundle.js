@@ -236,7 +236,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
     notes().then(function(_wp) {
-      console.log(_wp);
       $scope.wp = _wp.objects[$scope.id]
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
       
@@ -270,16 +269,21 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     })
     
     var loadDetails = function() {
-      $scope.notes = $scope.wp.views
+      $scope.notes = $scope.wp.views;
+      $scope.allNotes = [];
+      $scope.allAttachments = [];
       angular.forEach($scope.notes, function(view) {
         angular.forEach(view.annotations, function(ann) {
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
+          ann.view = view;
+          $scope.allNotes.push( ann );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
             if( mediaMeta.isActive ) {
               att.meta = mediaMeta.get( att.image_id ) || att.meta;
             }
+            $scope.allAttachments.push( att );
           })
 
         })
