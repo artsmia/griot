@@ -6,10 +6,11 @@
 .icon-cancel-circled:before { content: '\e80d'; } /* '' */
 .icon-info:before { content: '\e813'; } /* '' */
 .icon-home:before { content: '\e802'; } /* '' */
+.icon-doc-text:before { content: '\e814'; } /* '' */
 .icon-menu:before { content: '\e803'; } /* '' */
 .icon-resize-full:before { content: '\e800'; } /* '' */
-.icon-resize-normal:before { content: '\e801'; } /* '' */
 .icon-cancel-outline:before { content: '\e810'; } /* '' */
+.icon-left-open:before { content: '\e804'; } /* '' */
 .icon-right-open:before { content: '\e805'; } /* '' */
 .icon-left:before { content: '\e806'; } /* '' */
 .icon-right:before { content: '\e807'; } /* '' */
@@ -18,4 +19,4 @@
 .icon-play:before { content: '\e80a'; } /* '' */
 .icon-pause:before { content: '\e811'; } /* '' */
 .icon-info-circled:before { content: '\e80b'; } /* '' */
-.icon-left-open:before { content: '\e804'; } /* '' */
+.icon-resize-normal:before { content: '\e801'; } /* '' */

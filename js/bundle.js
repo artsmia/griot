@@ -754,7 +754,22 @@ app.directive( 'vcenter', function(){
 	return{
 		restrict: 'C',
 		transclude: true,
-		template: "<div class='vcenter_outer'><div class='vcenter_inner' ng-transclude></div></div>"
+		template: "<div class='vcenter-table'><div class='vcenter-cell' ng-transclude></div></div>",
+		link: function( scope, elem, attrs ) {
+
+			scope.container = jQuery( elem );
+
+			var unwatch = scope.$watch( function(){
+				return scope.container.height();
+			}, function( containerHeight ){
+				scope.container.find( '.vcenter-cell' ).children('video').css( 'max-height', containerHeight );
+			});
+
+			scope.$on("$destroy", function(){
+        unwatch();
+    	});
+
+		}
 	}
 
 });
