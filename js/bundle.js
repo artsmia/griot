@@ -759,16 +759,19 @@ app.directive( 'vcenter', function(){
 
 			scope.container = jQuery( elem );
 
-			var unwatch = scope.$watch( function(){
-				return scope.container.height();
-			}, function( containerHeight ){
-				scope.container.find( '.vcenter-cell' ).children('video').css( 'max-height', containerHeight );
-			});
+			if( scope.container.find( 'video' ).length ) {
 
-			scope.$on("$destroy", function(){
-        unwatch();
-    	});
+				var unwatch = scope.$watch( function(){
+					return scope.container.height();
+				}, function( containerHeight ){
+					scope.container.find( '.vcenter-cell' ).children('video').css( 'max-height', containerHeight );
+				});
 
+				scope.$on("$destroy", function(){
+	        unwatch();
+	    	});
+	    	
+			}
 		}
 	}
 
