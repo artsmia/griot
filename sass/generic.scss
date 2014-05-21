@@ -113,3 +113,194 @@ body{
 .flatmap.zoomed .hint {
   opacity: 0;
 }
+
+/**
+ * Button and Icon styles
+ *
+ * @extend these and define positioning and special styling.
+ */
+
+.home-icon{
+  @include icon('\e802');
+  width:30px;
+  height:30px;
+  background-color:#222;
+  border-radius:1000px;
+  border:1px solid #fff;
+  cursor:pointer;
+
+  &:before {
+    color:#fff;
+    font-size:14px;
+    margin-top:-7px;
+  }
+}
+
+.content-icon {
+  @include icon( '\e814' );
+  @include transition( margin-top 100ms linear );
+  width:30px;
+  height:30px;
+  border-radius:1000px;
+  background-color:#fff;
+  border:1px solid #222;
+  cursor:pointer;
+
+  &:before{
+    margin-top:-7px;
+    color:#222;
+    font-size:14px;
+  }
+
+  .contentMinimized &{
+    background-color:#222;
+    border-color:#fff;
+
+    &:before{
+      margin-top:-7px;
+      color:#fff;
+      font-size:14px;
+    }
+  }
+}
+
+.meta-icon {
+  @include icon( '\e813' );
+  @include transition( all 125ms ease );
+  width:30px;
+  height:30px;
+  background-color:#222;
+  border-radius:1000px;
+  border:1px solid #fff;
+
+  // Icon
+  &:before{
+    color:#fff;
+    font-size:16px;
+    margin-top:-8px;
+  }
+
+  &.open,
+  .showAttachmentMeta &{
+    background-color:#fff;
+    border-color:#222;
+
+    // Icon
+    &:before{
+      color:#222;
+    }
+  }
+}
+
+/**
+ * Navigation
+ */
+.nav-button {
+  position:fixed;
+  top:auto;
+  bottom:0;
+  width:45px;
+  height:45px;
+  margin-top:-40px;
+  padding:10px 5px 5px;
+  background-color:#000;
+  color:#fff;
+  font-size:0.7em;
+  text-transform:uppercase;
+  text-align:center;
+  cursor:pointer;
+  z-index:3;
+
+  // Icon
+  &:before{
+    top:50%;
+  }
+
+  @media #{$medium} {
+    top:50%;
+    width:60px;
+    height:80px;
+    margin-top:-40px;
+    border:1px solid #222;
+  }
+
+}
+.nav-button-left {
+  left:0;
+  border-left:none;
+}
+.nav-button-right {
+  right:0;
+  border-right:none;
+}
+.prev-icon {
+  @include icon( '\e808' );
+
+  // Icon
+  &:before{
+    top:auto;
+    bottom:10px;
+    left:0;
+  }
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Prev Page';
+    }
+  }
+}
+.next-icon {
+  @include icon( '\e809' );
+
+  // Icon
+  &:before{
+    top:auto;
+    bottom:10px;
+    left:0;
+  }
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Next Page';
+    }
+  }
+}
+.return-icon {
+  @include icon( '\e812' );
+  background-color:#fff;
+  color:#000;
+  
+  &.nav-button-left {
+    border-right:1px solid #ccc;
+  }
+
+  &.nav-button-right {
+    border-left:1px solid #ccc;
+  }
+
+  // Icon
+  &:before{
+    top:auto;
+    bottom:10px;
+    left:0;
+    color:#222;
+  }
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Back';
+    }
+    &.nav-button-left {
+      border-right:1px solid #222;
+    }
+    &.nav-button-right {
+      border-left:1px solid #222;
+    }
+  }
+}
+
+
+

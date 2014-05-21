@@ -45,85 +45,29 @@
 	padding:0;
 }
 .object-home-link {
-  @include icon('\e802');
+	@extend .home-icon;
   position:relative;
   display:block;
   float:left;
-  width:30px;
-  height:30px;
  	margin:0 5px 0 0;
-  background-color:#222;
-  border-radius:1000px;
-  border:1px solid #fff;
-  &:before {
-    margin-top:-7px;
-    color:#fff;
-    font-size:14px;
-  }
 }
 .object-menu .toggle-content {
-	@include transition( all 125ms ease );
-	@include icon( '\e814' );
+	@extend .content-icon;
 	position:relative;
 	display:block;
 	float:left;
-	width:30px;
-	height:30px;
 	margin:0 5px 0 0;
-	background-color:#fff;
-	border-radius:1000px;
-	border:1px solid #222;
-
-	// Icon
-	&:before {
-		margin-top:-7px;
-		color:#222;
-		font-size:14px;
-	}
-
-	.contentMinimized &{
-		background-color:#222;
-		border-color:#fff;
-
-		// Icon
-		&:before{
-			color:#fff;
-		}
-	}
 
 	@media #{$medium} {
 		display:none;
 	}
 }
 .object-menu .toggle-meta{
-	@include transition( all 125ms ease );
-  @include icon( '\e813' );
+	@extend .meta-icon;
 	position:relative;
 	display:block;
 	float:left;
-  width:30px;
-  height:30px;
   margin:0 5px 0 0;
-  background-color:#222;
-  border-radius:1000px;
-  border:1px solid #fff;
-
-  // Icon
-  &:before{
-    color:#fff;
-    font-size:16px;
-    margin-top:-8px;
-  }
-
-  &.open{
-    background-color:#fff;
-    border-color:#222;
-
-    // Icon
-    &:before{
-      color:#222;
-    }
-  }
 }
 .object-title{
 	margin:5px 0 0;
@@ -326,40 +270,20 @@
 	}
 }
 .attachment-big .return-link{
+	@extend .nav-button;
+	@extend .nav-button-left;
+	@extend .return-icon;
 	position:absolute;
 	border-top:1px solid #222;
 	border-right:1px solid #222;
 }
 .attachment-toggle-meta{
-	@include transition( all 125ms ease );
-  @include icon( '\e813' );
+	@extend .meta-icon;
 	position:absolute;
 	display:block;
 	right:12px;
 	bottom:8px;
-  width:30px;
-  height:30px;
   margin:0;
-  background-color:#222;
-  border-radius:1000px;
-  border:1px solid #fff;
-
-  // Icon
-  &:before{
-    color:#fff;
-    font-size:16px;
-    margin-top:-8px;
-  }
-
-	.showAttachmentMeta &{
-	  background-color:#fff;
-	  border-color:#222;
-
-	  // Icon
-	  &:before{
-	    color:#222;
-	  }
-	}
 }
 .attachment-tombstone{
 	@include transition( bottom 125ms ease );
@@ -419,7 +343,7 @@
 .object-zoomer {
 	@include transition( bottom 125ms ease );
 	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
-	position:absolute;
+	position:fixed;
 	top:0;
 	right:0;
 	bottom:67%;

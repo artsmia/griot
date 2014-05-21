@@ -48,9 +48,9 @@
   </div>
 
   <!-- Navigation -->
-  <a class='return-link page-nav left-nav' ng-click="backToObject()" ng-show="activePage == 0"></a>
-  <a class='prev-link page-nav left-nav' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
-  <a class='return-link page-nav right-nav' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
-  <a class='next-link page-nav right-nav' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
+  <a class='story-return nav-button-left' ng-click="backToObject()" ng-show="activePage == 0"></a>
+  <a class='story-prev-page' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
+  <a class='story-return nav-button-right' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
+  <a class='story-next-page' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
 
 </article>

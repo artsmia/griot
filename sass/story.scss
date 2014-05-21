@@ -22,27 +22,12 @@
 }
 
 .story-home-link {
-  @include icon('\e802');
+  @extend .home-icon;
   position:fixed;
   display:block;
-  width:30px;
-  height:30px;
   top:10px;
   left:10px;
-  background-color:#222;
-  border-radius:1000px;
-  border:1px solid #fff;
-  vertical-align:top;
   z-index:1;
-  cursor:pointer;
-
-  // Icon
-  &:before {
-    color:#fff;
-    font-size:14px;
-    margin-top:-7px;
-  }
-
 }
 
 
@@ -249,41 +234,13 @@
 }
 
 .story-menu .toggle-content {
-  @include icon( '\e814' );
-  @include transition( margin-top 100ms linear );
+  @extend .content-icon;
   @include box-shadow( none );
   position:relative;
   display:inline-block;
-  width:30px;
-  height:30px;
   margin:0px 3px 0 0;
-  vertical-align:top;
-  border-radius:1000px;
   border:1px solid #ccc;
-  background-color:#fff;
-  cursor:pointer;
   z-index:1;
-
-  // Icon
-  &:before{
-    margin-top:-8px;
-    color:#222;
-    font-size:16px;
-  }
-
-  .contentMinimized &{
-    @include box-shadow( 0 2px 2px rgba(0,0,0,0.13) );
-    margin-top:-1px;
-    background-color:#222;
-
-    // Icon
-    &:before{
-      margin-top:-8px;
-      color:#fff;
-      font-size:16px;
-    }
-
-  }
 
   @media #{$medium} {
     position:absolute;
@@ -292,116 +249,23 @@
     right:10px;
   }
 
-}
-
-
-/**
- * Navigation
- */
-.page-nav {
-  position:fixed;
-  top:auto;
-  bottom:0;
-  width:45px;
-  height:45px;
-  margin-top:-40px;
-  padding:10px 5px 5px;
-  background-color:#000;
-  color:#fff;
-  font-size:0.7em;
-  text-transform:uppercase;
-  text-align:center;
-  cursor:pointer;
-  z-index:3;
-
-  // Icon
-  &:before{
-    top:50%;
-  }
-
-  @media #{$medium} {
-    top:50%;
-    width:60px;
-    height:80px;
-    margin-top:-40px;
-    border:1px solid #222;
-  }
-
-}
-.left-nav {
-  left:0;
-  border-left:none;
-}
-.right-nav {
-  right:0;
-  border-right:none;
-}
-.prev-link {
-  @include icon( '\e808' );
-
-  // Icon
-  &:before{
-    top:auto;
-    bottom:10px;
-    left:0;
-  }
-
-  @media #{$medium} {
-    // Text
-    &:after{
-      content:'Prev Page';
-    }
-  }
-}
-.next-link {
-  @include icon( '\e809' );
-
-  // Icon
-  &:before{
-    top:auto;
-    bottom:10px;
-    left:0;
-  }
-
-  @media #{$medium} {
-    // Text
-    &:after{
-      content:'Next Page';
-    }
-  }
-}
-.return-link {
-  @include icon( '\e812' );
-  background-color:#fff;
-  color:#000;
-  
-  &.page-prev {
-    border-right:1px solid #ccc;
-  }
-
-  &.page-next {
-    border-left:1px solid #ccc;
-  }
-
-  // Icon
-  &:before{
-    top:auto;
-    bottom:10px;
-    left:0;
-    color:#222;
-  }
-
-  @media #{$medium} {
-    // Text
-    &:after{
-      content:'Back';
-    }
-    &.page-prev {
-      border-right:1px solid #222;
-    }
-    &.page-next {
-      border-left:1px solid #222;
-    }
+  .contentMinimized &{
+    @include box-shadow( 0 2px 2px rgba(0,0,0,0.13) );
+    margin-top:-1px;
   }
 }
 
+.story-return{
+  @extend .nav-button;
+  @extend .return-icon;
+}
+.story-prev-page{
+  @extend .nav-button;
+  @extend .nav-button-left;
+  @extend .prev-icon;
+}
+.story-next-page{
+  @extend .nav-button;
+  @extend .nav-button-right;
+  @extend .next-icon;
+}
