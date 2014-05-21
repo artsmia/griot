@@ -200,8 +200,8 @@ html, body { background-color: #ededed; }
 @media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; } }
 
 /* Zoomer - Markers */
-.leaflet-overlay-pane { display: none; }
-.object-zoomer.annotations .leaflet-overlay-pane { display: block; }
+.leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
+.object-zoomer.annotations .leaflet-overlay-pane, .object-zoomer.annotations .leaflet-marker-pane { display: block; }
 
 .noteMarker { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; padding: 3em; margin: -3em !important; text-align: center; font-family: 'Source Sans Pro', sans-serif; font-weight: bold; font-size: 1em; color: #fff; z-index: 1000000 !important; }
 
