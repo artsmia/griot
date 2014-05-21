@@ -1,4 +1,4 @@
-.cover_wrapper {
+.cover-wrapper {
   position:fixed;
   top:0;
   right:0;
@@ -20,80 +20,80 @@
   padding:0 25px;
 }
 
-#cover li {
+.cover-item {
   display:block;
   vertical-align:top;
   margin:0 auto 10px;
   height:auto;
   max-height:300px;
   max-width:100%;
+
+  &.story {
+    max-width:100%;
+    width:300px;
+    height:300px;
+    padding:15px;
+    background-color:#fff;
+    border:1px solid #999;
+
+  }
+
+  a {
+    text-decoration:none;
+  }
+
   @media #{$medium} {
     height:300px;
     margin:0 10px 10px 0;
   }
 }
 
-#cover li.object {
+.cover-item-image {
+  display:block;
+  max-height:100%;
+  margin:0 auto;
+  border:1px solid #999;
+}
 
-  img {
-    display:block;
-    max-height:100%;
-    margin:0 auto;
-    border:1px solid #999;
-  }
+.cover-item-title {
+  font-size:1.1em;
+  color:#222;
+  text-align:center;
+  line-height:1.1;
+  padding:0;
+  margin:0;
 
-  .title {
+  .object & {
     display:none;
   }
 }
 
-#cover li.story {
-  max-width:100%;
-  width:300px;
-  height:300px;
-  padding:15px;
-  background-color:#fff;
-  border:1px solid #999;
+.cover-item-poster{
+  width:100%;
+  height:200px;
+  background-size:cover;
+  background-position:50% 50%;
+  border:1px solid #999;  
+}
 
-  a {
-    text-decoration:none;
-  }
-
-  .poster {
-    width:100%;
-    height:200px;
-    background-size:cover;
-    background-position:50% 50%;
-    border:1px solid #999;  
-  }
-
-  .caption {
-    position:relative;
-    height:85px;
-    margin:0;
-    padding:10px;
-  }
-
-  .title {
-    font-size:1.1em;
-    color:#222;
-    text-align:center;
-    line-height:1.1;
-    padding:0;
-    margin:0;
-  }
-
+.cover-item-caption {
+  position:relative;
+  height:85px;
+  margin:0;
+  padding:10px;
 } 
 
-#instructions {
-  display:block;
+.cover-instructions {
+  @include box-shadow(0 -3px 5px rgba(0,0,0,0.23));
   position:fixed;
+  display:block;
   bottom:0;
   font-size:1em;
   font-style:italic;
   text-align:center;
   width:100%;
-  height:3em;
+  height:50px;
+  line-height:50px;
   vertical-align:middle;
-  line-height:3;
+  background-color:#ddd;
 }

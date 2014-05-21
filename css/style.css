@@ -93,23 +93,25 @@ html, body { background-color: #ededed; }
   .return-icon.nav-button-left, .attachment-big .return-link, .nav-button-left.story-return, .story-return.story-prev-page, .return-icon.story-prev-page { border-right: 1px solid #222; }
   .return-icon.nav-button-right, .attachment-big .nav-button-right.return-link, .attachment-big .return-link.story-next-page, .nav-button-right.story-return, .story-return.story-next-page, .return-icon.story-next-page { border-left: 1px solid #222; } }
 
-.cover_wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
+.cover-wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
 
 #cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; }
 
-#cover li { display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; }
-@media screen and (min-width: 1024px) { #cover li { height: 300px; margin: 0 10px 10px 0; } }
+.cover-item { display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; }
+.cover-item.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
+.cover-item a { text-decoration: none; }
+@media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 10px 10px 0; } }
 
-#cover li.object img { display: block; max-height: 100%; margin: 0 auto; border: 1px solid #999; }
-#cover li.object .title { display: none; }
+.cover-item-image { display: block; max-height: 100%; margin: 0 auto; border: 1px solid #999; }
 
-#cover li.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
-#cover li.story a { text-decoration: none; }
-#cover li.story .poster { width: 100%; height: 200px; background-size: cover; background-position: 50% 50%; border: 1px solid #999; }
-#cover li.story .caption { position: relative; height: 85px; margin: 0; padding: 10px; }
-#cover li.story .title { font-size: 1.1em; color: #222; text-align: center; line-height: 1.1; padding: 0; margin: 0; }
+.cover-item-title { font-size: 1.1em; color: #222; text-align: center; line-height: 1.1; padding: 0; margin: 0; }
+.object .cover-item-title { display: none; }
 
-#instructions { display: block; position: fixed; bottom: 0; font-size: 1em; font-style: italic; text-align: center; width: 100%; height: 3em; vertical-align: middle; line-height: 3; }
+.cover-item-poster { width: 100%; height: 200px; background-size: cover; background-position: 50% 50%; border: 1px solid #999; }
+
+.cover-item-caption { position: relative; height: 85px; margin: 0; padding: 10px; }
+
+.cover-instructions { -webkit-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); position: fixed; display: block; bottom: 0; font-size: 1em; font-style: italic; text-align: center; width: 100%; height: 50px; line-height: 50px; vertical-align: middle; background-color: #ddd; }
 
 /* STORY MODE */
 /** Content - "Above the Fold" (Controls and Meta) */
