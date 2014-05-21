@@ -246,8 +246,8 @@ html, body { background-color: #ededed; }
 
 .story-content .caption { padding: 2em; }
 
-.story-content .caption p { margin: 0; }
-@media screen and (min-width: 1024px) { .story-content .caption p { margin: 0 60px 0 0; }
+.story-content .caption p { margin: 0 0 1em 0; }
+@media screen and (min-width: 1024px) { .story-content .caption p { margin: 0 60px 1em 0; }
   .story-content .caption p:last-child { margin-bottom: 0; } }
 
 .story-content aside { color: #888; font-size: 0.9em; font-family: 'Source Sans Pro', sans-serif; font-style: italic; padding: 0 2em 2em; margin: 0; }

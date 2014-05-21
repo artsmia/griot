@@ -337,7 +337,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       } else {
         $scope.currentAttachment = attachment;
         $scope.showAttachmentCredits = false
-        setTimeout(Zoomer.windowResized, 0);
       }
       if($event) $event.stopPropagation();
     }

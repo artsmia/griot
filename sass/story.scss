@@ -184,10 +184,10 @@
 }
 
 .story-content .caption p{
-  margin:0;
+  margin:0 0 1em 0;
 
   @media #{$medium} {
-    margin:0 60px 0 0;
+    margin:0 60px 1em 0;
     &:last-child{
       margin-bottom:0;
     }
