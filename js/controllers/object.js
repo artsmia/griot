@@ -62,7 +62,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
 
     $scope.currentAttachment = null
-    $scope.minimizeContent = true
+    $scope.contentMinimized = true
 
     $scope.next = function(direction) {
       var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
@@ -111,6 +111,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
     $scope.toggleAttachmentCredits = function(attachment) {
       $scope.showAttachmentCredits = !$scope.showAttachmentCredits
+      setTimeout(Zoomer.windowResized, 125)
     }
 
     $scope.toggleView(undefined, true)
@@ -159,7 +160,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
 
     $scope.toggleMinimizeContent = function() {
-      $scope.minimizeContent = !$scope.minimizeContent;
+      $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
   }

@@ -76,3 +76,40 @@ html,
 body{
   background-color:#ededed;
 }
+
+/* Flatmaps */
+
+.flatmap {
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+}
+.flatmap .hint {
+  @include transition( opacity 250ms linear );
+  position: absolute;
+  right:15px;
+  top:15px;
+  margin: 0;
+  padding: 10px;
+  color: #444;
+  background: rgba(255, 255, 255, 0.75);
+  font-style:italic;
+  white-space:nowrap;
+  opacity:1;
+  z-index: 3;
+
+  // Override Leaflet font styles
+  font-family: 'Source Sans Pro', sans-serif !important;
+  font-size: 16px !important;
+  line-height:1.4 !important;
+
+  @media #{$large} {
+    display:none;
+  }
+
+}
+.flatmap.zoomed .hint {
+  opacity: 0;
+}

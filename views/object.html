@@ -1,18 +1,20 @@
-<article id='object' ng-class='{contentMinimized: minimizeContent}'>
+<article id='object' ng-class='{contentMinimized: contentMinimized}'>
 
   <!-- Zoomer -->
-  <flatmap class='object-zoomer' image="{{id}}">
-    <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
-      <note ng-repeat="note in view.annotations" ng-class="{active: note.active}"></note>
-    </div>
-  </flatmap>
+  <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations'}">
+    <flatmap image="{{id}}">
+      <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
+        <note ng-repeat="note in view.annotations"></note>
+      </div>
+    </flatmap>
+  </div>
 
   <!-- Content -->
   <div class='object-content'>
 
     <menu class='object-menu'>
-      <a class='home-link' href='#'></a>
-      <a class='minimize-content' ng-click='toggleMinimizeContent()'></a>
+      <a class='object-home-link' href='#'></a>
+      <a class='toggle-content' ng-click='toggleMinimizeContent()'></a>
       <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()'></a>
     </menu>
 
@@ -52,9 +54,9 @@
 
 	    <div class='object-more' ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
 	      <h5 class='more-title' ng-show="relatedStories">Interactive Features</h5>
-	      <ol id="relatedStories">
+	      <ol class='object-related'>
 	        <li ng-repeat="story in relatedStories">
-	        <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>
+            <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>
 	        </li>
 	      </ol>
 	    </div>
@@ -64,17 +66,13 @@
   </div>
 
 	<!-- Fullscreen attachments -->
-  <div class='attachment-big' ng-repeat='attachment in allAttachments' ng-class="{active: attachment == currentAttachment}">
+  <div class='attachment-big' ng-repeat='attachment in allAttachments' ng-class="{active: attachment == currentAttachment, showAttachmentMeta: showAttachmentCredits}">
     <flatmap class='attachment-zoomer' image="{{attachment.image_id}}"></flatmap>
-    <a class="back icon-back icon" ng-click="toggleAttachment(attachment, true, $event)">
-      Back
-    </a>
-    <a class="credits icon-info-circled icon" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)" ng-hide="showAttachmentCredits">
-      Info
-    </a>
-    <aside ng-show="showAttachmentCredits" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)">
+    <aside class='attachment-tombstone' ng-if="attachment.meta">
       <p ng-bind-html="attachment.meta"></p>
     </aside>
+    <a class="page-nav return-link left-nav" ng-click="toggleAttachment(attachment, true, $event)"></a>
+    <a class="attachment-toggle-meta" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)"></a>
   </div>
 
 </article>

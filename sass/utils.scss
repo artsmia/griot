@@ -54,5 +54,6 @@
 
 /* Media queries */
 
-$small:'screen and (max-width:768px)';
 $medium:'screen and (min-width:1024px)';
+// TODO: Less dumb method to detect 'non-tablet'
+$large:'screen and (min-width:1025px)';

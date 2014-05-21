@@ -1,6 +1,17 @@
-/* Content: Controls and Meta */
+/* STORY MODE */
 
+/**
+ * Content - "Above the Fold" (Controls and Meta)
+ */
 .object-content{
+	position:absolute;
+	right:0;
+	bottom:0;
+	left:0;
+	max-height:67%;
+	padding:15px;
+	overflow-x:hidden;
+	overflow-y:scroll;
 	background: -moz-linear-gradient(top,  rgba(237,237,237,0) 0%, rgba(237,237,237,0.9) 25%, rgba(237,237,237,0.9) 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,237,237,0)), color-stop(25%,rgba(237,237,237,0.9)), color-stop(100%,rgba(237,237,237,0.9)));
 	background: -webkit-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
@@ -8,22 +19,11 @@
 	background: -ms-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
 	background: linear-gradient(to bottom,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 );
-	position:absolute;
-	right:0;
-	bottom:0;
-	left:0;
-	z-index:1;
-	overflow-x:hidden;
-	overflow-y:scroll;
-	padding:15px;
 	z-index:2;
-	max-height:67%;
+
 	.contentMinimized &{
 		padding:0 15px 15px;
-		@media #{$medium} {
-			padding:15px;
-			max-height:100%;
-		}
+
 	}
 
 	@media #{$medium} {
@@ -31,6 +31,11 @@
 		right:67%;
 		bottom:0;
 		left:0;
+
+		.contentMinimized &{
+			max-height:100%;
+			padding:15px;
+		}
 	}
 }
 .object-menu {
@@ -39,7 +44,7 @@
 	margin:0;
 	padding:0;
 }
-.object-menu .home-link {
+.object-home-link {
   @include icon('\e802');
   position:relative;
   display:block;
@@ -51,12 +56,12 @@
   border-radius:1000px;
   border:1px solid #fff;
   &:before {
+    margin-top:-7px;
     color:#fff;
     font-size:14px;
-    margin-top:-7px;
   }
 }
-.object-menu .minimize-content {
+.object-menu .toggle-content {
 	@include transition( all 125ms ease );
 	@include icon( '\e814' );
 	position:relative;
@@ -68,22 +73,27 @@
 	background-color:#fff;
 	border-radius:1000px;
 	border:1px solid #222;
+
+	// Icon
 	&:before {
+		margin-top:-7px;
 		color:#222;
 		font-size:14px;
-		margin-top:-7px;
 	}
+
 	.contentMinimized &{
 		background-color:#222;
 		border-color:#fff;
+
+		// Icon
 		&:before{
 			color:#fff;
 		}
 	}
+
 	@media #{$medium} {
 		display:none;
 	}
-
 }
 .object-menu .toggle-meta{
 	@include transition( all 125ms ease );
@@ -97,14 +107,19 @@
   background-color:#222;
   border-radius:1000px;
   border:1px solid #fff;
+
+  // Icon
   &:before{
     color:#fff;
     font-size:16px;
     margin-top:-8px;
   }
+
   &.open{
     background-color:#fff;
     border-color:#222;
+
+    // Icon
     &:before{
       color:#222;
     }
@@ -118,6 +133,7 @@
 	max-height:0;
 	margin:0;
 	overflow:hidden;
+
 	.extended & {
 		max-height:200px;
 	}
@@ -134,19 +150,25 @@
 	font-weight:normal;
 	max-height:0;
 	overflow:hidden;
+
 	.extended & {
 		max-height:200px;
 	}
 }
 
 
-/* Nav bar */
-
+/**
+ * Navbar
+ */
 .object-nav {
 	margin:15px 0 0;
+
 	.contentMinimized &{
 		display:none;
-		@media #{$medium} {
+	}
+
+	@media #{$medium} {
+		.contentMinimized &{
 			display:block;
 		}
 	}
@@ -158,13 +180,21 @@
 	padding:0.5em 0;
 	border:1px solid #222;
 	border-right:none;
+	color:#222;
 	text-transform: uppercase;
 	font-size:0.85em;
-	color:#222;
 	font-weight:700;
 	text-align:center;
 	background-color: #ededed;
 	cursor:pointer;
+
+	&.disabled,
+	&.disabled:hover {
+		color:#bbb;
+		background-color:#ededed;
+		cursor:default;
+	}
+
 	&:last-child{
 		border-right:1px solid #222;
 	}
@@ -177,30 +207,80 @@
 }
 
 
-/* Content */
-
+/**
+ * Content - Container
+ */
 .object-stories{
-	@include transition( max-height 125ms ease );
-	max-height:1500px;
+	margin:0;
+	padding:0;
+
 	.contentMinimized &{
-		max-height:0;
 		display:none;
-		@media #{$medium} {
+	}
+
+	@media #{$medium} {
+		.contentMinimized &{
 			display:block;
 		}
 	}
-
 }
 
 
-/* Content: Attachments */
+/**
+ * Content - Details/Annotations
+ */
+.object-details{
+	list-style:none;
+	padding:0;
+}
+.annotation{
+	padding:0 0 15px 0;
+	position:relative;
+}
+.annotation-title{
+	margin:0 0 0 40px;
+	cursor:pointer;
+}
+.annotation-index{
+	position:absolute;
+	display:block;
+	top:0;
+	left:0;
+	width:30px;
+	height:30px;
+	margin-right:10px;
+	color:#fff;
+	background-color:#222;
+	border-radius:1000px;
+	border:1px solid #fff;
+	text-align:center;
+	line-height:28px;
+	font-size:1.125rem;
+}
+.annotation-content{
+	@include transition( max-height 125ms ease );
+	max-height:0;
+	overflow:hidden;
 
+	.annotation.active &{
+		max-height:500px;
+	}
+}
+.annotation-content p{
+	margin:10px 0 0 0;
+}
+
+
+/**
+ * Content - Details/Annotations - Attachments
+ */
 .annotation-attachments{
 	@include transition( max-height 125ms ease );
 	max-height:0;
 	overflow:hidden;
 	padding:0;
 	margin:0;
+
 	.annotation.active &{
 		max-height:500px;
 	}
@@ -230,24 +310,112 @@
   height:100%;
   left:0;
   top:100%;
-  background-color:rgba(0,0,0,0.9);
+  background-color:#ddd;
   z-index:1000000001;
   text-align:center;
+
   &.active {
   	top:0;
 	}
 }
+.attachment-zoomer{
+	@include transition( height 125ms ease );
 
+	.showAttachmentMeta & {
+		height:67%;
+	}
+}
+.attachment-big .return-link{
+	position:absolute;
+	border-top:1px solid #222;
+	border-right:1px solid #222;
+}
+.attachment-toggle-meta{
+	@include transition( all 125ms ease );
+  @include icon( '\e813' );
+	position:absolute;
+	display:block;
+	right:12px;
+	bottom:8px;
+  width:30px;
+  height:30px;
+  margin:0;
+  background-color:#222;
+  border-radius:1000px;
+  border:1px solid #fff;
 
-/* Content: More */
+  // Icon
+  &:before{
+    color:#fff;
+    font-size:16px;
+    margin-top:-8px;
+  }
 
-.more-title {
-	margin:15px 0 0;
+	.showAttachmentMeta &{
+	  background-color:#fff;
+	  border-color:#222;
+
+	  // Icon
+	  &:before{
+	    color:#222;
+	  }
+	}
+}
+.attachment-tombstone{
+	@include transition( bottom 125ms ease );
+	@include box-shadow( inset 0 5px 5px rgba(0,0,0,0.23));
+	position:absolute;
+	right:0;
+	bottom:-33%;
+	left:0;
+	height:33%;
+	padding:15px 60px;
+	overflow-y:scroll;
+	font-size:0.9em;
+	text-align:left;
+	background-color:#ededed;
+	color:#444;
+
+	.showAttachmentMeta & {
+		bottom:0;
+	}
 }
 
 
-/* Zoomer */
+/**
+ * Content - Stories/"More"
+ */
+.more-title {
+	margin:15px 0 0;
+  text-transform:uppercase;
+}
 
+.object-related{
+  list-style:none;
+  padding:0;
+}
+.object-related a{
+  color:#222;
+  width:100%;
+  border:1px solid #222;
+  padding:10px 15px;
+  display:block;
+  margin:5px 0px;
+  text-align:left;
+  font-size:1em;
+  transition:all 250ms linear;
+  text-decoration: none;
+
+  &:hover {
+  	color:#ededed;
+  	background-color:#222;
+  }
+}
+
+
+/**
+ * Zoomer
+ */
 .object-zoomer {
 	@include transition( bottom 125ms ease );
 	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
@@ -256,6 +424,8 @@
 	right:0;
 	bottom:67%;
 	left:0;
+	background-color:#ccc;
+	text-align:center;
 	z-index:2;
 	
 	.contentMinimized &{
@@ -271,42 +441,46 @@
 }
 
 
-/* Annotations List */
+/*
+ * Zoomer - Markers
+ */
+.leaflet-overlay-pane{
+  display:none;
 
-.object-details{
-	list-style:none;
-	padding:0;
+  .object-zoomer.annotations & {
+  	display:block;
+ 	}
 }
-.annotation{
-	padding:0 0 15px 0;
-	position:relative;
+.noteMarker {
+	@include transition( all 125ms ease );
+  padding: 3em;
+  margin: -3em !important;
+  text-align: center;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: bold;
+	font-size: 1em ;
+  color: #fff;
+  z-index:1000000 !important;
 }
-.annotation-title{
-	margin:0 0 0 40px;
-	cursor:pointer;
+.noteMarker span {
+	@include transition( all 125ms ease );
+  display: block;
+  height: 30px;
+  width: 30px;
+  margin: -15px 0 0 -15px;
+  padding: 0;
+  border-radius: 1000px;
+  border: 1px solid #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.125rem;
+  background-color: #222;
+  line-height:28px;
+  vertical-align:middle;
 }
-.annotation-index{
-	position:absolute;
-	top:0;
-	left:0;
-	display:block;
-	width:30px;
-	height:30px;
-	background-color:#222;
-	color:#fff;
-	border-radius:1000px;
-	text-align:center;
-	margin-right:10px;
-	line-height:28px;
-}
-.annotation-content{
-	@include transition( max-height 125ms ease );
-	max-height:0;
-	overflow:hidden;
-	p {
-		margin:10px 0 0 0;
-	}
-	.annotation.active &{
-		max-height:500px;
-	}
+.noteMarker:hover span{
+  width:36px;
+  height:36px;
+  margin: -18px 0 0 -18px;
+  line-height:34px;
 }

@@ -1,10 +1,5 @@
 /* STORY MODE */
 
-/* Variables */
-
-$nav-width-large:60px;
-$nav-width-small:65px;
-
 /**
  * Header
  */
@@ -16,31 +11,43 @@ $nav-width-small:65px;
   height:50px;
   width:100%;
   margin:0;
-  background-color:#000;
+  background-color:#222;
   text-align:center;
-  font-size:1.5em;
+  font-size:1.3em;
   color:#fff;
   font-weight:600;
   line-height:50px; 
+  padding:0 45px;
+  overflow:hidden;
 }
+
 .story-home-link {
   @include icon('\e802');
   position:fixed;
   display:block;
-  top:0;
-  left:0;
-  width:50px;
-  height:50px;
-  z-index:3;
+  width:30px;
+  height:30px;
+  top:10px;
+  left:10px;
+  background-color:#222;
+  border-radius:1000px;
+  border:1px solid #fff;
+  vertical-align:top;
+  z-index:1;
+  cursor:pointer;
+
+  // Icon
   &:before {
     color:#fff;
-    font-size:20px;
-    margin-top:-10px;
+    font-size:14px;
+    margin-top:-7px;
   }
+
 }
 
+
 /**
- * Structure and content 
+ * Slider structure 
  */
 #story {
   position:fixed;
@@ -75,222 +82,311 @@ $nav-width-small:65px;
   vertical-align:top;
   white-space:normal;
   overflow:hidden;
+  background-color:#ededed;
 }
 
+
+/**
+ * Illustration
+ */
 .story-illustration {
+  @include transition( right 100ms ease, bottom 100ms ease );
   @include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
   position:absolute;
+  top:0;
+  right:0;
+  bottom:67%;
   left:0;
-  width:100%;
-  height:100%;
   z-index:1;
-  &.collapsed {
-    width:66%;
-    height:100%;
-  }
-  @media #{$small} {
-    &.collapsed {
-      width:100%;
-      height:34%;
-    }
+  background-color:#ddd;
+
+  .contentMinimized & {
+    bottom:45px;
   }
 
-  .story-video,
-  .story-image,
-  .story-comparison,
-  .story-iframe{
-    position:relative;
-    width:100%;
-    height:100%;
-  }
-
-  .story-video video{
-    @include transition( top 100ms linear );
-    display:block;
-    margin:0px auto;
-    width:auto;
-    max-width:100%;
-    height:auto;
-    max-height:100%;
-  }
-
-  .story-image .flatmap{
-    position:absolute;
+  @media #{$medium} {
     top:0;
-    right:0;
+    right:33%;
     bottom:0;
     left:0;
+
+    .contentMinimized & {
+      right:0;
+      bottom:0;
+    }
+
+  }
+}
+.story-video,
+.story-image,
+.story-comparison,
+.story-iframe{
+  position:relative;
+  width:100%;
+  height:100%;
+}
+.story-video video{
+  @include transition( top 100ms linear, max-height 100ms ease );
+  display:block;
+  width:auto;
+  max-width:100%;
+  height:auto;
+  max-height:100%;
+  margin:0px auto;
+}
+.story-image .flatmap{
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+}
+
+
+/**
+ * Content
+ */
+.story-content {
+  @include transition( right 100ms ease, bottom 100ms ease );
+  position:absolute;
+  right:0;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:67%;
+  margin-top:0;
+  padding-bottom:45px;
+  overflow-y:scroll;
+  background-color:#ededed;
+  z-index:0;
+
+  .contentMinimized &{
+    bottom:-100%;
+  }
+
+  @media #{$medium}{
+    right:0;
+    bottom:0;
+    left:auto;
+    width:33%;
+    height:100%;
+
+    .contentMinimized &{
+      right:-33%;
+      bottom:0;
+    }
+
   }
 }
 
-.story-content {
-  @include transition( right 250ms ease, bottom 250ms ease );
-  position:absolute;
-  right:-34%;
-  bottom:0;
-  width:34%;
-  height:100%;
-  background-color:#ededed;
-  overflow-y:scroll;
-  z-index:0;
-  &.expanded{
-    right:0;
-  }
-  @media #{$small}{
-    bottom:-100%;
-    height:66%;
-    right:0;
-    left:0;
-    width:100%;
-    &.expanded{
-      bottom:0;
-      margin-top:0;
-      padding-bottom:75px;
-    }
-    &:after{
-      @include transition( bottom 250ms ease );
-      position:fixed;
-      width:100%;
-      left:0;
-      bottom:0;
-      content:' ';
-      height:65px;
-      background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,1)));
-      background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-      background: -o-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-      background: -ms-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-      background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
-    }
-  }
+.story-content .caption {
+  padding:2em;
+}
 
-  .caption {
-    padding:2em;
-  }
+.story-content .caption p{
+  margin:0;
 
-  .caption p {
-    margin:0 $nav-width-large 0 0;
+  @media #{$medium} {
+    margin:0 60px 0 0;
     &:last-child{
       margin-bottom:0;
     }
-    @media #{$small} {
-      margin:0;
-    }
   }
-
-  aside {
-    @include meta;
-    padding:0 2em 2em;
-    margin-right:$nav-width-large;
-    @media #{$small} {
-      margin:0;
-    }
-  }
-
 }
 
-.content-toggle {
-  display:block;
+.story-content aside {
+  @include meta;
+  padding:0 2em 2em;
+  margin:0;
+
+  @media #{$medium} {
+    margin-right:60px;
+  }
+}
+
+
+/**
+ * Action menu
+ */
+.story-menu {
+  @include box-shadow( 0px -3px 5px rgba(0,0,0,0.23) );
   position:absolute;
+  right:0;
+  bottom:0;
+  left:0;
+  height:45px;
+  margin:0;
+  padding:7px 0 8px;
+  text-align:center;
+  background-color:#ddd;
+  z-index:2;
+
+  @media #{$medium} {
+    @include box-shadow(none);
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:auto;
+    left:auto;
+    width:45px;
+    background-color:transparent;
+  }
+}
+
+.story-menu .toggle-content {
+  @include icon( '\e814' );
+  @include transition( margin-top 100ms linear );
+  @include box-shadow( none );
+  position:relative;
+  display:inline-block;
   width:30px;
   height:30px;
-  right:0;
-  margin:15px 15px 0 0;
+  margin:0px 3px 0 0;
+  vertical-align:top;
   border-radius:1000px;
-  background-color:#000;
+  border:1px solid #ccc;
+  background-color:#fff;
+  cursor:pointer;
   z-index:1;
-  @include icon( '\e80f' );
+
+  // Icon
   &:before{
-    color:#fff;
-      font-size:16px;
-      margin-top:-8px;
+    margin-top:-8px;
+    color:#222;
+    font-size:16px;
   }
-  &.closed{
-    @include icon( '\e813' );
+
+  .contentMinimized &{
+    @include box-shadow( 0 2px 2px rgba(0,0,0,0.13) );
+    margin-top:-1px;
+    background-color:#222;
+
+    // Icon
     &:before{
+      margin-top:-8px;
       color:#fff;
       font-size:16px;
-      margin-top:-8px;
     }
+
   }
-  @media #{$small} {
-    bottom:18px;
-    left:50%;
-    margin-left:-15px;
+
+  @media #{$medium} {
+    position:absolute;
+    display:block;
+    top:10px;
+    right:10px;
   }
+
 }
+
 
 /**
  * Navigation
  */
 .page-nav {
   position:fixed;
-  width:$nav-width-large;
-  height:80px;
-  top:50%;
+  top:auto;
+  bottom:0;
+  width:45px;
+  height:45px;
   margin-top:-40px;
-  cursor:pointer;
+  padding:10px 5px 5px;
   background-color:#000;
   color:#fff;
-  border:1px solid #333;
   font-size:0.7em;
   text-transform:uppercase;
   text-align:center;
-  padding:10px 5px 5px;
+  cursor:pointer;
   z-index:3;
-  @media #{$small} {
-    width:$nav-width-small;
-    top:auto;
-    bottom:0;
-    height:65px;
-    &:before{
-      top:50%;
-    }
+
+  // Icon
+  &:before{
+    top:50%;
   }
+
+  @media #{$medium} {
+    top:50%;
+    width:60px;
+    height:80px;
+    margin-top:-40px;
+    border:1px solid #222;
+  }
+
 }
-.page-prev {
+.left-nav {
   left:0;
   border-left:none;
 }
-.page-next {
+.right-nav {
   right:0;
   border-right:none;
 }
 .prev-link {
   @include icon( '\e808' );
+
+  // Icon
   &:before{
     top:auto;
-    left:0;
     bottom:10px;
+    left:0;
   }
-  &:after{
-    content:'Prev';
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Prev Page';
+    }
   }
 }
 .next-link {
   @include icon( '\e809' );
+
+  // Icon
   &:before{
     top:auto;
-    left:0;
     bottom:10px;
+    left:0;
   }
-  &:after{
-    content:'Next';
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Next Page';
+    }
   }
 }
 .return-link {
+  @include icon( '\e812' );
   background-color:#fff;
   color:#000;
-  @include icon( '\e812' );
+  
+  &.page-prev {
+    border-right:1px solid #ccc;
+  }
+
+  &.page-next {
+    border-left:1px solid #ccc;
+  }
+
+  // Icon
   &:before{
     top:auto;
-    left:0;
     bottom:10px;
+    left:0;
     color:#222;
   }
-  &:after{
-    content:'Back';
+
+  @media #{$medium} {
+    // Text
+    &:after{
+      content:'Back';
+    }
+    &.page-prev {
+      border-right:1px solid #222;
+    }
+    &.page-next {
+      border-left:1px solid #222;
+    }
   }
 }
 

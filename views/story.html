@@ -1,11 +1,12 @@
 <article id="story">
 
   <h1 class='story-title' ng-bind="story.title"></h1>
+
   <a class='story-home-link' href='#'></a>
 
   <div class='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
     
-    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen, contentMinimized:page.contentMinimized}">
 
       <div class='story-illustration' ng-if="page.type != 'text'" ng-class="{collapsed: page.storyCaptionOpen }">
 
@@ -38,38 +39,18 @@
 
       </div>
       
-      <a class='content-toggle' ng-if="page.text" ng-class="{closed: ! page.storyCaptionOpen }" ng-click="page.toggleStoryCaption()"></a>
-
-      <!-- old stuff -->
-      <!--
-      <div class='caption-wrap' ng-show="page.storyCaptionOpen && page.image != 'lockup'">
-        <div class='caption-close-wrap' ng-hide="page.type == 'video' || page.type == 'text'">
-          <span class='typcn icon-cancel-circled icon caption-close fitts-law' href='#' title='close' ng-click="page.toggleStoryCaption()"></span>
-        </div>
-
-
-        <aside ng-if="page.meta">
-          <p ng-bind-html="page.meta"></p>
-        </aside>
-
-        <aside ng-if="page.metaB">
-          <p ng-bind-html="page.metaB"></p>
-        </aside>
-
-      </div>
-
-      <span class='caption-open' ng-hide="page.storyCaptionOpen" ng-click="page.toggleStoryCaption()">Text</span>
-
-      -->
+      <menu class='story-menu'>
+        <a class='toggle-content' ng-if="page.text" ng-click="page.toggleMinimizeContent()"></a>
+      </menu>
 
     </section>
 
   </div>
 
   <!-- Navigation -->
-  <a class='return-link page-prev page-nav' ng-click="backToObject()" ng-show="activePage == 0"></a>
-  <a class='prev-link page-prev page-nav' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
-  <a class='return-link page-next page-nav' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
-  <a class='next-link page-next page-nav' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
+  <a class='return-link page-nav left-nav' ng-click="backToObject()" ng-show="activePage == 0"></a>
+  <a class='prev-link page-nav left-nav' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
+  <a class='return-link page-nav right-nav' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
+  <a class='next-link page-nav right-nav' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
 
 </article>

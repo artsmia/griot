@@ -26,9 +26,9 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
         }
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
-        page.storyCaptionOpen = true;
-        page.toggleStoryCaption = function(){
-          this.storyCaptionOpen = !this.storyCaptionOpen;
+        page.contentMinimized = false;
+        page.toggleMinimizeContent = function(){
+          this.contentMinimized = !this.contentMinimized;
           setTimeout(Zoomer.windowResized, 100)
         }
         page.meta = $sce.trustAsHtml( page.meta );

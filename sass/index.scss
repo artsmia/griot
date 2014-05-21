@@ -23,13 +23,13 @@
 #cover li {
   display:block;
   vertical-align:top;
-  margin:0 10px 10px 0;
-  height:300px;
-  @media #{$small} {
-    height:auto;
-    margin:0 auto 10px;
-    max-height:300px;
-    max-width:100%;
+  margin:0 auto 10px;
+  height:auto;
+  max-height:300px;
+  max-width:100%;
+  @media #{$medium} {
+    height:300px;
+    margin:0 10px 10px 0;
   }
 }
 

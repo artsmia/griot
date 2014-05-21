@@ -294,7 +294,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
 
     $scope.currentAttachment = null
-    $scope.minimizeContent = true
+    $scope.contentMinimized = true
 
     $scope.next = function(direction) {
       var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
@@ -343,6 +343,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
     $scope.toggleAttachmentCredits = function(attachment) {
       $scope.showAttachmentCredits = !$scope.showAttachmentCredits
+      setTimeout(Zoomer.windowResized, 125)
     }
 
     $scope.toggleView(undefined, true)
@@ -391,7 +392,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     }
 
     $scope.toggleMinimizeContent = function() {
-      $scope.minimizeContent = !$scope.minimizeContent;
+      $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
   }
@@ -427,9 +428,9 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
         }
         page.trustedVideo = $sce.trustAsResourceUrl(page.video)
         page.poster = $sce.trustAsResourceUrl(page.video + '.jpg')
-        page.storyCaptionOpen = true;
-        page.toggleStoryCaption = function(){
-          this.storyCaptionOpen = !this.storyCaptionOpen;
+        page.contentMinimized = false;
+        page.toggleMinimizeContent = function(){
+          this.contentMinimized = !this.contentMinimized;
           setTimeout(Zoomer.windowResized, 100)
         }
         page.meta = $sce.trustAsHtml( page.meta );
@@ -761,16 +762,23 @@ app.directive( 'vcenter', function(){
 
 			if( scope.container.find( 'video' ).length ) {
 
-				var unwatch = scope.$watch( function(){
-					return scope.container.height();
-				}, function( containerHeight ){
-					scope.container.find( '.vcenter-cell' ).children('video').css( 'max-height', containerHeight );
-				});
+				var unwatch = scope.$watch( 
+					function(){
+						return scope.container.height();
+					}, 
+					function(){
+						setTimeout( function(){
+							// Use post-transition height (not the one returned by $watch)
+							var finalHeight = scope.container.height();
+							scope.container.find( '.vcenter-cell' ).children('video').css( 'max-height', finalHeight );
+						}, 150 );
+					}
+				);
 
 				scope.$on("$destroy", function(){
 	        unwatch();
 	    	});
-	    	
+
 			}
 		}
 	}
