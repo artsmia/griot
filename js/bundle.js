@@ -654,7 +654,7 @@ app.directive('note', function(segmentio) {
       }
       var scrollNoteTextIntoView = function() { // this is hacky
         var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
-        if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
+        if(noteEl) noteEl.scrollIntoViewIfNeeded && noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
       }
       var toggleNoteZoom = function() {
         scope.$apply(function() { scope.note.active = !scope.note.active })
@@ -723,13 +723,16 @@ app.directive("onPlay", function ($window) {
 
 
 },{}],11:[function(require,module,exports){
+var _requestAF = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame,
+    _cancelAF = window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame
+
 app.directive("scroll", function ($window) {
   return function(scope, element, attrs) {
     var e = document.querySelector('#info')
     scope._scrollCallback = scope.$eval(attrs['scroll'])
     var scrollCallback = function(event) {
-      if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
-      scope.scrollAnimation = window.webkitRequestAnimationFrame(function() { // TODO: not just -webkit
+      if(scope.scrollAnimation) _requestAF(scope.scrollAnimation)
+      scope.scrollAnimation = _cancelAF(function() {
         scope.scrolled = e.scrollTop >= 100
         scope.pageXOffset = window.pageXOffset
         if(scope._scrollCallback) scope._scrollCallback(element)

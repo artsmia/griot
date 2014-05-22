@@ -1,10 +1,13 @@
+var _requestAF = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame,
+    _cancelAF = window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame
+
 app.directive("scroll", function ($window) {
   return function(scope, element, attrs) {
     var e = document.querySelector('#info')
     scope._scrollCallback = scope.$eval(attrs['scroll'])
     var scrollCallback = function(event) {
-      if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
-      scope.scrollAnimation = window.webkitRequestAnimationFrame(function() { // TODO: not just -webkit
+      if(scope.scrollAnimation) _requestAF(scope.scrollAnimation)
+      scope.scrollAnimation = _cancelAF(function() {
         scope.scrolled = e.scrollTop >= 100
         scope.pageXOffset = window.pageXOffset
         if(scope._scrollCallback) scope._scrollCallback(element)

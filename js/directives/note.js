@@ -46,7 +46,7 @@ app.directive('note', function(segmentio) {
       }
       var scrollNoteTextIntoView = function() { // this is hacky
         var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
-        if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
+        if(noteEl) noteEl.scrollIntoViewIfNeeded && noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
       }
       var toggleNoteZoom = function() {
         scope.$apply(function() { scope.note.active = !scope.note.active })
