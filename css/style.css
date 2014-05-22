@@ -43,7 +43,7 @@ html, body { background-color: #ededed; }
 /* Flatmaps */
 .flatmap { position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
 
-.flatmap .hint { -webkit-transition: opacity 250ms linear; -moz-transition: opacity 250ms linear; -o-transition: opacity 250ms linear; position: absolute; right: 15px; top: 15px; margin: 0; padding: 10px; color: #444; background: rgba(255, 255, 255, 0.75); font-style: italic; white-space: nowrap; opacity: 1; z-index: 3; font-family: 'Source Sans Pro', sans-serif !important; font-size: 16px !important; line-height: 1.4 !important; }
+.flatmap .hint { -webkit-transition: opacity 250ms linear; -moz-transition: opacity 250ms linear; -o-transition: opacity 250ms linear; position: absolute; right: 15px; bottom: 15px; margin: 0; padding: 10px; color: #444; background: rgba(255, 255, 255, 0.75); font-style: italic; white-space: nowrap; opacity: 1; z-index: 3; font-family: 'Source Sans Pro', sans-serif !important; font-size: 16px !important; line-height: 1.4 !important; }
 @media screen and (min-width: 1025px) { .flatmap .hint { display: none; } }
 
 .flatmap.zoomed .hint { opacity: 0; }
@@ -208,6 +208,11 @@ html, body { background-color: #ededed; }
 .noteMarker span { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; display: block; height: 30px; width: 30px; margin: -15px 0 0 -15px; padding: 0; border-radius: 1000px; border: 1px solid #fff; font-weight: bold; text-align: center; font-size: 1.125rem; background-color: #222; line-height: 28px; vertical-align: middle; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
+
+.object-content { -webkit-transition: left, right 225ms ease; -moz-transition: left, right 225ms ease; -o-transition: left, right 225ms ease; left: 0; }
+
+.object-zoomer-fullscreen .object-content { left: -33%; right: 100%; -webkit-transition: left, right 525ms ease; -moz-transition: left, right 525ms ease; -o-transition: left, right 525ms ease; }
+.object-zoomer-fullscreen .leaflet-container { background: #999; }
 
 /* STORY MODE */
 /** Header */

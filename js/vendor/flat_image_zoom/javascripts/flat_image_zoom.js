@@ -538,6 +538,11 @@ Zoomer.setupMap = function (zoomer) {
         zoomer.map.on('dblclick', Zoomer.zoomAtMouseLocation);
         zoomer.map.options.touchZoom = true; // now we DO want this option...
         zoomer.map.addHandler('touchZoom', Zoomer.Map.TouchZoom); // ...but use ours.
+        if(!L.Browser.touch) new L.Control.Zoom({position: 'topright'}).addTo(zoomer.map);
+        new L.Control.Fullscreen({position: 'topright'}).addTo(zoomer.map);
+        zoomer.map.on('fullscreenchange', function () {
+          document.querySelector('body').classList.toggle('object-zoomer-fullscreen')
+        });
     }
     zoomer.map._zoomer = zoomer;
     zoomer.map._setNoTilesScale();

@@ -409,3 +409,19 @@
   margin: -18px 0 0 -18px;
   line-height:34px;
 }
+
+.object-content {
+  @include transition(left, right 225ms ease);
+  left: 0;
+}
+.object-zoomer-fullscreen {
+  .object-content {
+    left: -33%;
+    right: 100%;
+    @include transition(left, right 525ms ease);
+  }
+
+  .leaflet-container {
+    background: #999;
+  }
+}
