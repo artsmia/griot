@@ -1,5 +1,5 @@
-app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
-  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter',
+  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter) {
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
@@ -7,12 +7,23 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.objects = data.objects
         $scope.stories = data.stories
         var all = []
-        angular.forEach($scope.objects, function(id) { 
-          if( id ) {
-            all.push(id);
+        angular.forEach($scope.objects, function(object) { 
+          if( object ) {
+            if( thumbnailAdapter.isActive ) {
+              object.thumbnail = thumbnailAdapter.get( object.views[0].image ) || object.thumbnail;
+            }
+            all.push(object);
           }
         });
-        angular.forEach($scope.stories, function(story) { all.push(story) })
+        angular.forEach($scope.stories, function(story) { 
+          /*
+          if( thumbnailAdapter.isActive ) {
+            story.thumbnail = thumbnailAdapter.get( story.image_id ) || story.thumbnail;
+          }
+          */
+          console.log( story );
+          all.push(story);
+        });
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {
         $scope.all = $rootScope.randomizedAll

@@ -163,6 +163,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
+
+    $scope.$on( 'toggleZoomerFull', function(){
+      $scope.contentMinimized = ! $scope.contentMinimized;
+      setTimeout( Zoomer.windowResized, 125 );
+    });
   }
 ])
 

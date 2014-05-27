@@ -1,0 +1,74 @@
+.leaflet-top .leaflet-bar{
+	@include box-shadow(none);
+}
+
+.leaflet-bar a,
+.leaflet-bar a:first-child,
+.leaflet-bar a:last-child{
+	@include transition( all 125ms ease );
+	width:30px;
+	height:30px;
+	border-radius:1000px;
+	margin:0 0 5px;
+	line-height:26px;
+	vertical-align:middle;
+	background-color:#222;
+	color:#fff;
+	border:1px solid #fff;
+	text-indent:-60px;
+	overflow:hidden;
+	position:relative;
+
+}
+
+.leaflet-control-zoom-in{
+	@include icon('\e815');
+	&:before{
+		font-size:16px;
+		margin-top:-8px;
+		text-indent:0;
+	}
+}
+
+.leaflet-control-zoom-out{
+	@include icon('\e816');
+	&:before{
+		font-size:16px;
+		margin-top:-8px;
+		text-indent:0;
+	}
+}
+
+.fullscreen-toggle{
+	@include icon('\e800');
+	position:absolute;
+	display:block;
+	top:80px;
+	right:10px;
+	width:30px;
+	height:30px;
+	background-color:#222;
+	border:1px solid #fff;
+	border-radius:1000px;
+	z-index:1001;
+
+	&:before{
+		color:#fff;
+		font-size:16px;
+		margin-top:-8px;
+	}
+
+	.contentMinimized &{
+		background-color:#fff;
+		border-color:#222;
+		@include icon('\e801');
+
+		&:before{
+			color:#222;
+			font-size:16px;
+			margin-top:-8px;
+		}
+
+	}
+
+}

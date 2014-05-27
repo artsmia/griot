@@ -137,8 +137,8 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
 
 }])
 },{}],4:[function(require,module,exports){
-app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
-  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter',
+  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter) {
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
@@ -146,12 +146,23 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.objects = data.objects
         $scope.stories = data.stories
         var all = []
-        angular.forEach($scope.objects, function(id) { 
-          if( id ) {
-            all.push(id);
+        angular.forEach($scope.objects, function(object) { 
+          if( object ) {
+            if( thumbnailAdapter.isActive ) {
+              object.thumbnail = thumbnailAdapter.get( object.views[0].image ) || object.thumbnail;
+            }
+            all.push(object);
           }
         });
-        angular.forEach($scope.stories, function(story) { all.push(story) })
+        angular.forEach($scope.stories, function(story) { 
+          /*
+          if( thumbnailAdapter.isActive ) {
+            story.thumbnail = thumbnailAdapter.get( story.image_id ) || story.thumbnail;
+          }
+          */
+          console.log( story );
+          all.push(story);
+        });
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {
         $scope.all = $rootScope.randomizedAll
@@ -337,6 +348,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       } else {
         $scope.currentAttachment = attachment;
         $scope.showAttachmentCredits = false
+        setTimeout(Zoomer.windowResized, 0);
       }
       if($event) $event.stopPropagation();
     }
@@ -394,6 +406,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
+
+    $scope.$on( 'toggleZoomerFull', function(){
+      $scope.contentMinimized = ! $scope.contentMinimized;
+      setTimeout( Zoomer.windowResized, 125 );
+    });
   }
 ])
 
@@ -497,7 +514,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p><a class="fullscreen-toggle" ng-click="toggleZoomerFull()"></a></div>',
     controller: function($scope) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
@@ -580,6 +597,10 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
       scope.$on('changeView', function(event, message) {
         if(message.image != scope.image) loadImage(message.image)
       })
+
+      scope.toggleZoomerFull = function() {
+        scope.$emit( 'toggleZoomerFull' );
+      }
 
       // TODO: get this working better
       // scope.$on('viewChanged', function() {

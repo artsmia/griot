@@ -4,6 +4,7 @@
  * Content - "Above the Fold" (Controls and Meta)
  */
 .object-content{
+	@include transition( left 125ms ease );
 	position:absolute;
 	right:0;
 	bottom:0;
@@ -23,18 +24,17 @@
 
 	.contentMinimized &{
 		padding:0 15px 15px;
-
 	}
 
 	@media #{$medium} {
 		top:0;
-		right:67%;
+		right:auto;
 		bottom:0;
 		left:0;
+		width:33%;
 
 		.contentMinimized &{
-			max-height:100%;
-			padding:15px;
+			left:-33%;
 		}
 	}
 }
@@ -341,7 +341,7 @@
  * Zoomer
  */
 .object-zoomer {
-	@include transition( bottom 125ms ease );
+	@include transition( bottom 125ms ease, left 125ms ease );
 	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
 	position:fixed;
 	top:0;
@@ -361,6 +361,10 @@
 		right:0;
 		bottom:0;
 		left:33%;
+
+		.contentMinimized &{
+			left:0;
+		}
 	}
 }
 
@@ -408,20 +412,4 @@
   height:36px;
   margin: -18px 0 0 -18px;
   line-height:34px;
-}
-
-.object-content {
-  @include transition(left, right 225ms ease);
-  left: 0;
-}
-.object-zoomer-fullscreen {
-  .object-content {
-    left: -33%;
-    right: 100%;
-    @include transition(left, right 525ms ease);
-  }
-
-  .leaflet-container {
-    background: #999;
-  }
 }

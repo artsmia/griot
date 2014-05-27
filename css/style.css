@@ -113,10 +113,10 @@ html, body { background-color: #ededed; }
 
 /* STORY MODE */
 /** Content - "Above the Fold" (Controls and Meta) */
-.object-content { position: absolute; right: 0; bottom: 0; left: 0; max-height: 67%; padding: 15px; overflow-x: hidden; overflow-y: scroll; background: -moz-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(237, 237, 237, 0)), color-stop(25%, rgba(237, 237, 237, 0.9)), color-stop(100%, rgba(237, 237, 237, 0.9))); background: -webkit-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -o-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -ms-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: linear-gradient(to bottom, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 ); z-index: 2; }
+.object-content { -webkit-transition: left 125ms ease; -moz-transition: left 125ms ease; -o-transition: left 125ms ease; position: absolute; right: 0; bottom: 0; left: 0; max-height: 67%; padding: 15px; overflow-x: hidden; overflow-y: scroll; background: -moz-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(237, 237, 237, 0)), color-stop(25%, rgba(237, 237, 237, 0.9)), color-stop(100%, rgba(237, 237, 237, 0.9))); background: -webkit-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -o-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -ms-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: linear-gradient(to bottom, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 ); z-index: 2; }
 .contentMinimized .object-content { padding: 0 15px 15px; }
-@media screen and (min-width: 1024px) { .object-content { top: 0; right: 67%; bottom: 0; left: 0; }
-  .contentMinimized .object-content { max-height: 100%; padding: 15px; } }
+@media screen and (min-width: 1024px) { .object-content { top: 0; right: auto; bottom: 0; left: 0; width: 33%; }
+  .contentMinimized .object-content { left: -33%; } }
 
 .object-menu { display: block; height: 30px; margin: 0; padding: 0; }
 
@@ -195,9 +195,10 @@ html, body { background-color: #ededed; }
 .object-related a:hover { color: #ededed; background-color: #222; }
 
 /** Zoomer */
-.object-zoomer { -webkit-transition: bottom 125ms ease; -moz-transition: bottom 125ms ease; -o-transition: bottom 125ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: fixed; top: 0; right: 0; bottom: 67%; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
+.object-zoomer { -webkit-transition: bottom 125ms ease, left 125ms ease; -moz-transition: bottom 125ms ease, left 125ms ease; -o-transition: bottom 125ms ease, left 125ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: fixed; top: 0; right: 0; bottom: 67%; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
 .contentMinimized .object-zoomer { bottom: 0; }
-@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; } }
+@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; }
+  .contentMinimized .object-zoomer { left: 0; } }
 
 /* Zoomer - Markers */
 .leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
@@ -208,11 +209,6 @@ html, body { background-color: #ededed; }
 .noteMarker span { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; display: block; height: 30px; width: 30px; margin: -15px 0 0 -15px; padding: 0; border-radius: 1000px; border: 1px solid #fff; font-weight: bold; text-align: center; font-size: 1.125rem; background-color: #222; line-height: 28px; vertical-align: middle; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
-
-.object-content { -webkit-transition: left, right 225ms ease; -moz-transition: left, right 225ms ease; -o-transition: left, right 225ms ease; left: 0; }
-
-.object-zoomer-fullscreen .object-content { left: -33%; right: 100%; -webkit-transition: left, right 525ms ease; -moz-transition: left, right 525ms ease; -o-transition: left, right 525ms ease; }
-.object-zoomer-fullscreen .leaflet-container { background: #999; }
 
 /* STORY MODE */
 /** Header */
@@ -265,3 +261,22 @@ html, body { background-color: #ededed; }
 .story-menu .toggle-content { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: relative; display: inline-block; margin: 0px 3px 0 0; border: 1px solid #ccc; z-index: 1; }
 @media screen and (min-width: 1024px) { .story-menu .toggle-content { position: absolute; display: block; top: 10px; right: 10px; } }
 .contentMinimized .story-menu .toggle-content { -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.13); -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.13); box-shadow: 0 2px 2px rgba(0, 0, 0, 0.13); margin-top: -1px; }
+
+.leaflet-top .leaflet-bar { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
+
+.leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; border-radius: 1000px; margin: 0 0 5px; line-height: 26px; vertical-align: middle; background-color: #222; color: #fff; border: 1px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }
+
+.leaflet-control-zoom-in { font-style: normal; cursor: pointer; }
+.leaflet-control-zoom-in:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e815"; }
+.leaflet-control-zoom-in:before { font-size: 16px; margin-top: -8px; text-indent: 0; }
+
+.leaflet-control-zoom-out { font-style: normal; cursor: pointer; }
+.leaflet-control-zoom-out:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e816"; }
+.leaflet-control-zoom-out:before { font-size: 16px; margin-top: -8px; text-indent: 0; }
+
+.fullscreen-toggle { font-style: normal; cursor: pointer; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 1px solid #fff; border-radius: 1000px; z-index: 1001; }
+.fullscreen-toggle:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
+.fullscreen-toggle:before { color: #fff; font-size: 16px; margin-top: -8px; }
+.contentMinimized .fullscreen-toggle { background-color: #fff; border-color: #222; font-style: normal; cursor: pointer; }
+.contentMinimized .fullscreen-toggle:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
+.contentMinimized .fullscreen-toggle:before { color: #222; font-size: 16px; margin-top: -8px; }
