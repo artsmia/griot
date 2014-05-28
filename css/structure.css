@@ -276,8 +276,6 @@
 	text-align:center;
   height: 100%;
 }
-#zoomer.full_width {
-}
 
 #zoomer #flat_image, #zoomer .flatmap {
   position: relative;

@@ -1,3 +1,11 @@
+default: sass browserify
+
+sass:
+	sass --watch -t compact sass/all.scss:css/style.css
+
+browserify:
+	browserify js/app.js -o js/bundle.js
+
 cdnify:
 	curl -L http://new.artsmia.org/crashpad/json > fallback/crashpad.json
 	scp fallback/crashpad.json dx:/apps/cdn/crashpad.json

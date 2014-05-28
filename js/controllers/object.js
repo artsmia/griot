@@ -47,11 +47,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
           ann.view = view;
           $scope.allNotes.push( ann );
+          console.log( $scope.allNotes );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
             if( mediaMeta.isActive ) {
-              att.meta = mediaMeta.get( att.image_id ) || att.meta;
+              // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
+              att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
             }
             $scope.allAttachments.push( att );
           })
@@ -163,6 +165,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
+
+    $scope.$on( 'toggleZoomerFull', function(){
+      $scope.contentMinimized = ! $scope.contentMinimized;
+      setTimeout( Zoomer.windowResized, 125 );
+    });
   }
 ])
 

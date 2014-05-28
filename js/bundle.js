@@ -137,8 +137,8 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
 
 }])
 },{}],4:[function(require,module,exports){
-app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter',
-  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter',
+  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter) {
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
@@ -146,12 +146,14 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.objects = data.objects
         $scope.stories = data.stories
         var all = []
-        angular.forEach($scope.objects, function(id) { 
-          if( id ) {
-            all.push(id);
+        angular.forEach($scope.objects, function(object) { 
+          if( object ) {
+            all.push(object);
           }
         });
-        angular.forEach($scope.stories, function(story) { all.push(story) })
+        angular.forEach($scope.stories, function(story) { 
+          all.push(story);
+        });
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {
         $scope.all = $rootScope.randomizedAll
@@ -279,11 +281,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
           ann.view = view;
           $scope.allNotes.push( ann );
+          console.log( $scope.allNotes );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
             if( mediaMeta.isActive ) {
-              att.meta = mediaMeta.get( att.image_id ) || att.meta;
+              // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
+              att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
             }
             $scope.allAttachments.push( att );
           })
@@ -337,6 +341,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       } else {
         $scope.currentAttachment = attachment;
         $scope.showAttachmentCredits = false
+        setTimeout(Zoomer.windowResized, 0);
       }
       if($event) $event.stopPropagation();
     }
@@ -394,6 +399,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
+
+    $scope.$on( 'toggleZoomerFull', function(){
+      $scope.contentMinimized = ! $scope.contentMinimized;
+      setTimeout( Zoomer.windowResized, 125 );
+    });
   }
 ])
 
@@ -497,7 +507,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p><a class="fullscreen-toggle" ng-click="toggleZoomerFull()"></a></div>',
     controller: function($scope) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
@@ -581,6 +591,10 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
         if(message.image != scope.image) loadImage(message.image)
       })
 
+      scope.toggleZoomerFull = function() {
+        scope.$emit( 'toggleZoomerFull' );
+      }
+
       // TODO: get this working better
       // scope.$on('viewChanged', function() {
       //   scope.zoom.map.on('zoomedBeyondMin', function(e) {
@@ -654,7 +668,7 @@ app.directive('note', function(segmentio) {
       }
       var scrollNoteTextIntoView = function() { // this is hacky
         var noteEl = $('#annotations li.note:nth-child(' + (scope.$index+1) + ')')[0]
-        if(noteEl) noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
+        if(noteEl) noteEl.scrollIntoViewIfNeeded && noteEl.scrollIntoViewIfNeeded() || noteEl.scrollIntoView()
       }
       var toggleNoteZoom = function() {
         scope.$apply(function() { scope.note.active = !scope.note.active })
@@ -723,13 +737,16 @@ app.directive("onPlay", function ($window) {
 
 
 },{}],11:[function(require,module,exports){
+var _requestAF = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.msRequestAnimationFrame,
+    _cancelAF = window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame
+
 app.directive("scroll", function ($window) {
   return function(scope, element, attrs) {
     var e = document.querySelector('#info')
     scope._scrollCallback = scope.$eval(attrs['scroll'])
     var scrollCallback = function(event) {
-      if(scope.scrollAnimation) window.webkitCancelAnimationFrame(scope.scrollAnimation)
-      scope.scrollAnimation = window.webkitRequestAnimationFrame(function() { // TODO: not just -webkit
+      if(scope.scrollAnimation) _requestAF(scope.scrollAnimation)
+      scope.scrollAnimation = _cancelAF(function() {
         scope.scrolled = e.scrollTop >= 100
         scope.pageXOffset = window.pageXOffset
         if(scope._scrollCallback) scope._scrollCallback(element)

@@ -538,6 +538,7 @@ Zoomer.setupMap = function (zoomer) {
         zoomer.map.on('dblclick', Zoomer.zoomAtMouseLocation);
         zoomer.map.options.touchZoom = true; // now we DO want this option...
         zoomer.map.addHandler('touchZoom', Zoomer.Map.TouchZoom); // ...but use ours.
+        if(!L.Browser.touch) new L.Control.Zoom({position: 'topright', zoomInText:' ', zoomOutText:' ', zoomInTitle:'different'}).addTo(zoomer.map);
     }
     zoomer.map._zoomer = zoomer;
     zoomer.map._setNoTilesScale();
