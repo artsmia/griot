@@ -1,7 +1,10 @@
 app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
   function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
 
+    // Defaults
     $scope.movedZoomer = false;
+    $scope.currentAttachment = null;
+    $scope.contentMinimized = false;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -10,7 +13,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
       
       $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
-
+  
       // Replace object metadata if using adapter
       if( objectMeta.isActive ) {
         $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
@@ -62,9 +65,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       })
       $scope.$$phase || $scope.$apply()
     }
-
-    $scope.currentAttachment = null
-    $scope.contentMinimized = true
 
     $scope.next = function(direction) {
       var next = $scope.objects.ids[$scope.objects.ids.indexOf(parseInt($scope.id))+1]
