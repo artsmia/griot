@@ -38,37 +38,3 @@
 		text-indent:0;
 	}
 }
-
-.fullscreen-toggle{
-	@include icon('\e800');
-	position:absolute;
-	display:block;
-	top:80px;
-	right:10px;
-	width:30px;
-	height:30px;
-	background-color:#222;
-	border:1px solid #fff;
-	border-radius:1000px;
-	z-index:1001;
-
-	&:before{
-		color:#fff;
-		font-size:16px;
-		margin-top:-8px;
-	}
-
-	.contentMinimized &{
-		background-color:#fff;
-		border-color:#222;
-		@include icon('\e801');
-
-		&:before{
-			color:#222;
-			font-size:16px;
-			margin-top:-8px;
-		}
-
-	}
-
-}

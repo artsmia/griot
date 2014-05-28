@@ -63,7 +63,7 @@
 		display:none;
 	}
 }
-.object-menu .toggle-meta{
+.object-menu .toggle-meta {
 	@extend .meta-icon;
 	position:relative;
 	display:block;
@@ -367,6 +367,16 @@
 			left:0;
 		}
 	}
+}
+.object-zoomer .toggle-fullscreen {
+	@extend .fullscreen-icon;
+  position:fixed;
+  display:block;
+  top:80px;
+  right:10px;
+  width:30px;
+  height:30px;
+  z-index:10000;
 }
 
 

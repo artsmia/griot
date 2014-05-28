@@ -50,7 +50,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
           ann.view = view;
           $scope.allNotes.push( ann );
-          console.log( $scope.allNotes );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
@@ -165,11 +164,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
-
-    $scope.$on( 'toggleZoomerFull', function(){
-      $scope.contentMinimized = ! $scope.contentMinimized;
-      setTimeout( Zoomer.windowResized, 125 );
-    });
   }
 ])
 

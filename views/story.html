@@ -8,7 +8,7 @@
     
     <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen, contentMinimized:page.contentMinimized}">
 
-      <div class='story-illustration' ng-class="{collapsed: page.storyCaptionOpen }">
+      <div class='story-illustration story-type-{{page.type}}' ng-class="{collapsed: page.storyCaptionOpen }">
 
         <!-- Comparison -->
         <div class='story-comparison' ng-if="page.type == 'comparison'">
@@ -29,6 +29,8 @@
         <!-- Iframe -->
         <iframe class='story-iframe' ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
 
+        <a class="toggle-fullscreen" ng-click="page.toggleMinimizeContent()"></a>
+
       </div>
 
       <div class='story-content' ng-if="page.text" ng-class="{expanded: page.storyCaptionOpen }">
@@ -39,10 +41,6 @@
 
       </div>
       
-      <menu class='story-menu'>
-        <a class='toggle-content' ng-if="page.text" ng-click="page.toggleMinimizeContent()"></a>
-      </menu>
-
     </section>
 
   </div>

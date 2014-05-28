@@ -102,6 +102,20 @@
 
   }
 }
+.story-illustration .toggle-fullscreen{
+  @extend .fullscreen-icon;
+  position:absolute;
+  display:block;
+  top:80px;
+  right:10px;
+  width:30px;
+  height:30px;
+  z-index:10000;
+}
+.story-illustration.story-type-video .toggle-fullscreen,
+.story-illustration.story-type-iframe .toggle-fullscreen{
+  top:10px;
+}
 .story-video,
 .story-image,
 .story-comparison,

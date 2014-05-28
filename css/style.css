@@ -93,6 +93,13 @@ html, body { background-color: #ededed; }
   .return-icon.nav-button-left, .attachment-big .return-link, .nav-button-left.story-return, .story-return.story-prev-page, .return-icon.story-prev-page { border-right: 1px solid #222; }
   .return-icon.nav-button-right, .attachment-big .nav-button-right.return-link, .attachment-big .return-link.story-next-page, .nav-button-right.story-return, .story-return.story-next-page, .return-icon.story-next-page { border-left: 1px solid #222; } }
 
+.fullscreen-icon, .object-zoomer .toggle-fullscreen, .story-illustration .toggle-fullscreen { font-style: normal; cursor: pointer; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 1px solid #fff; border-radius: 1000px; z-index: 1001; }
+.fullscreen-icon:before, .object-zoomer .toggle-fullscreen:before, .story-illustration .toggle-fullscreen:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
+.fullscreen-icon:before, .object-zoomer .toggle-fullscreen:before, .story-illustration .toggle-fullscreen:before { color: #fff; font-size: 16px; margin-top: -8px; }
+.contentMinimized .fullscreen-icon, .contentMinimized .object-zoomer .toggle-fullscreen, .object-zoomer .contentMinimized .toggle-fullscreen, .contentMinimized .story-illustration .toggle-fullscreen, .story-illustration .contentMinimized .toggle-fullscreen { background-color: #fff; border-color: #222; font-style: normal; cursor: pointer; }
+.contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before, .contentMinimized .story-illustration .toggle-fullscreen:before, .story-illustration .contentMinimized .toggle-fullscreen:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
+.contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before, .contentMinimized .story-illustration .toggle-fullscreen:before, .story-illustration .contentMinimized .toggle-fullscreen:before { color: #222; font-size: 16px; margin-top: -8px; }
+
 .cover-wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
 
 #cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; }
@@ -202,6 +209,8 @@ html, body { background-color: #ededed; }
 @media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; }
   .contentMinimized .object-zoomer { left: 0; } }
 
+.object-zoomer .toggle-fullscreen { position: fixed; display: block; top: 80px; right: 10px; width: 30px; height: 30px; z-index: 10000; }
+
 /* Zoomer - Markers */
 .leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
 .object-zoomer.annotations .leaflet-overlay-pane, .object-zoomer.annotations .leaflet-marker-pane { display: block; }
@@ -230,6 +239,10 @@ html, body { background-color: #ededed; }
 .contentMinimized .story-illustration { bottom: 45px; }
 @media screen and (min-width: 1024px) { .story-illustration { top: 0; right: 33%; bottom: 0; left: 0; }
   .contentMinimized .story-illustration { right: 0; bottom: 0; } }
+
+.story-illustration .toggle-fullscreen { position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; z-index: 10000; }
+
+.story-illustration.story-type-video .toggle-fullscreen, .story-illustration.story-type-iframe .toggle-fullscreen { top: 10px; }
 
 .story-video, .story-image, .story-comparison, .story-iframe { position: relative; width: 100%; height: 100%; }
 
@@ -275,10 +288,3 @@ html, body { background-color: #ededed; }
 .leaflet-control-zoom-out { font-style: normal; cursor: pointer; }
 .leaflet-control-zoom-out:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e816"; }
 .leaflet-control-zoom-out:before { font-size: 16px; margin-top: -8px; text-indent: 0; }
-
-.fullscreen-toggle { font-style: normal; cursor: pointer; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 1px solid #fff; border-radius: 1000px; z-index: 1001; }
-.fullscreen-toggle:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
-.fullscreen-toggle:before { color: #fff; font-size: 16px; margin-top: -8px; }
-.contentMinimized .fullscreen-toggle { background-color: #fff; border-color: #222; font-style: normal; cursor: pointer; }
-.contentMinimized .fullscreen-toggle:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
-.contentMinimized .fullscreen-toggle:before { color: #222; font-size: 16px; margin-top: -8px; }

@@ -5,7 +5,6 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
       $scope.id = $routeParams.id
       $scope.usingMediaAdapter = false;
       $scope.story = wordpress.stories[$scope.id];
-      console.log( $scope.story );
       $scope.relatedObjects = [];
       angular.forEach($scope.story.relatedObjects, function(id){
         $scope.relatedObjects.push({

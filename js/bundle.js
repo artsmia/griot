@@ -284,7 +284,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
           ann.view = view;
           $scope.allNotes.push( ann );
-          console.log( $scope.allNotes );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
@@ -399,11 +398,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       setTimeout( Zoomer.windowResized, 125);
     }
-
-    $scope.$on( 'toggleZoomerFull', function(){
-      $scope.contentMinimized = ! $scope.contentMinimized;
-      setTimeout( Zoomer.windowResized, 125 );
-    });
   }
 ])
 
@@ -507,7 +501,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p><a class="fullscreen-toggle" ng-click="toggleZoomerFull()"></a></div>',
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
     controller: function($scope) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
@@ -590,10 +584,6 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
       scope.$on('changeView', function(event, message) {
         if(message.image != scope.image) loadImage(message.image)
       })
-
-      scope.toggleZoomerFull = function() {
-        scope.$emit( 'toggleZoomerFull' );
-      }
 
       // TODO: get this working better
       // scope.$on('viewChanged', function() {
