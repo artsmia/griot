@@ -32,6 +32,7 @@
 		bottom:0;
 		left:0;
 		width:33%;
+		max-height:none;
 
 		.contentMinimized &{
 			left:-33%;
