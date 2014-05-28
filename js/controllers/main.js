@@ -9,19 +9,10 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         var all = []
         angular.forEach($scope.objects, function(object) { 
           if( object ) {
-            if( thumbnailAdapter.isActive ) {
-              object.thumbnail = thumbnailAdapter.get( object.views[0].image ) || object.thumbnail;
-            }
             all.push(object);
           }
         });
         angular.forEach($scope.stories, function(story) { 
-          /*
-          if( thumbnailAdapter.isActive ) {
-            story.thumbnail = thumbnailAdapter.get( story.image_id ) || story.thumbnail;
-          }
-          */
-          console.log( story );
           all.push(story);
         });
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)

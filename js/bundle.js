@@ -148,19 +148,10 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         var all = []
         angular.forEach($scope.objects, function(object) { 
           if( object ) {
-            if( thumbnailAdapter.isActive ) {
-              object.thumbnail = thumbnailAdapter.get( object.views[0].image ) || object.thumbnail;
-            }
             all.push(object);
           }
         });
         angular.forEach($scope.stories, function(story) { 
-          /*
-          if( thumbnailAdapter.isActive ) {
-            story.thumbnail = thumbnailAdapter.get( story.image_id ) || story.thumbnail;
-          }
-          */
-          console.log( story );
           all.push(story);
         });
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
@@ -290,11 +281,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           ann.trustedDescription = $sce.trustAsHtml(ann.description)
           ann.view = view;
           $scope.allNotes.push( ann );
+          console.log( $scope.allNotes );
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
             if( mediaMeta.isActive ) {
-              att.meta = mediaMeta.get( att.image_id ) || att.meta;
+              // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
+              att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
             }
             $scope.allAttachments.push( att );
           })
