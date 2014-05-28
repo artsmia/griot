@@ -113,7 +113,8 @@
   z-index:10000;
 }
 .story-illustration.story-type-video .toggle-fullscreen,
-.story-illustration.story-type-iframe .toggle-fullscreen{
+.story-illustration.story-type-iframe .toggle-fullscreen,
+.story-illustration.story-type-text .toggle-fullscreen{
   top:10px;
 }
 .story-video,
@@ -222,7 +223,7 @@
 /**
  * Action menu
  */
-.story-menu {
+.story-nav {
   @include box-shadow( 0px -3px 5px rgba(0,0,0,0.23) );
   position:absolute;
   right:0;
@@ -240,9 +241,8 @@
     position:absolute;
     top:0;
     right:0;
-    bottom:auto;
-    left:auto;
-    width:45px;
+    width:0;
+    height:0;
     background-color:transparent;
   }
 }

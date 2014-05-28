@@ -46,9 +46,11 @@
   </div>
 
   <!-- Navigation -->
-  <a class='story-return nav-button-left' ng-click="backToObject()" ng-show="activePage == 0"></a>
-  <a class='story-prev-page' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
-  <a class='story-return nav-button-right' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
-  <a class='story-next-page' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
+  <nav class='story-nav'>
+    <a class='story-return nav-button-left' ng-click="backToObject()" ng-show="activePage == 0"></a>
+    <a class='story-prev-page' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
+    <a class='story-return nav-button-right' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
+    <a class='story-next-page' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
+  </nav>
 
 </article>

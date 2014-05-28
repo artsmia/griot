@@ -242,7 +242,7 @@ html, body { background-color: #ededed; }
 
 .story-illustration .toggle-fullscreen { position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; z-index: 10000; }
 
-.story-illustration.story-type-video .toggle-fullscreen, .story-illustration.story-type-iframe .toggle-fullscreen { top: 10px; }
+.story-illustration.story-type-video .toggle-fullscreen, .story-illustration.story-type-iframe .toggle-fullscreen, .story-illustration.story-type-text .toggle-fullscreen { top: 10px; }
 
 .story-video, .story-image, .story-comparison, .story-iframe { position: relative; width: 100%; height: 100%; }
 
@@ -270,8 +270,8 @@ html, body { background-color: #ededed; }
 @media screen and (min-width: 1024px) { .story-content aside { margin-right: 60px; } }
 
 /** Action menu */
-.story-menu { -webkit-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); position: absolute; right: 0; bottom: 0; left: 0; height: 45px; margin: 0; padding: 7px 0 8px; text-align: center; background-color: #ddd; z-index: 2; }
-@media screen and (min-width: 1024px) { .story-menu { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: absolute; top: 0; right: 0; bottom: auto; left: auto; width: 45px; background-color: transparent; } }
+.story-nav { -webkit-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); position: absolute; right: 0; bottom: 0; left: 0; height: 45px; margin: 0; padding: 7px 0 8px; text-align: center; background-color: #ddd; z-index: 2; }
+@media screen and (min-width: 1024px) { .story-nav { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: absolute; top: 0; right: 0; width: 0; height: 0; background-color: transparent; } }
 
 .story-menu .toggle-content { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: relative; display: inline-block; margin: 0px 3px 0 0; border: 1px solid #ccc; z-index: 1; }
 @media screen and (min-width: 1024px) { .story-menu .toggle-content { position: absolute; display: block; top: 10px; right: 10px; } }
