@@ -136,30 +136,28 @@ body{
   }
 }
 
-.content-icon {
-  @include icon( '\e814' );
+.minimize-icon {
+  @include icon( '\e801' );
   @include transition( margin-top 100ms linear );
   width:30px;
   height:30px;
   border-radius:1000px;
-  background-color:#fff;
-  border:1px solid #222;
+  background-color:#222;
+  border:1px solid #fff;
   cursor:pointer;
 
   &:before{
-    margin-top:-7px;
-    color:#222;
-    font-size:14px;
+    margin-top:-8px;
+    color:#fff;
+    font-size:16px;
   }
 
   .contentMinimized &{
-    background-color:#222;
-    border-color:#fff;
+    @include icon( '\e800' );
 
     &:before{
-      margin-top:-7px;
-      color:#fff;
-      font-size:14px;
+      margin-top:-8px;
+      font-size:16px;
     }
   }
 }

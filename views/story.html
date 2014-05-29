@@ -29,8 +29,6 @@
         <!-- Iframe -->
         <iframe class='story-iframe' ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
 
-        <a class="toggle-fullscreen" ng-click="page.toggleMinimizeContent()"></a>
-
       </div>
 
       <div class='story-content' ng-if="page.text" ng-class="{expanded: page.storyCaptionOpen }">
@@ -41,6 +39,10 @@
 
       </div>
       
+      <menu class='story-menu'>
+        <a class='toggle-content' ng-if="page.text" ng-click="page.toggleMinimizeContent()"></a>
+      </menu>
+
     </section>
 
   </div>

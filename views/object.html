@@ -7,7 +7,6 @@
         <note ng-repeat="note in view.annotations"></note>
       </div>
     </flatmap>
-    <a class="toggle-fullscreen" ng-click="toggleMinimizeContent()"></a>
   </div>
 
   <!-- Content -->
@@ -15,6 +14,7 @@
 
     <menu class='object-menu'>
       <a class='object-home-link' href='#'></a>
+      <a class='toggle-content' ng-class='{active: contentMinimized}' ng-click='toggleMinimizeContent()'></a>
       <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 || wp.meta2 || wp.meta3'></a>
     </menu>
 

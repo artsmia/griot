@@ -35,6 +35,7 @@
 		max-height:none;
 
 		.contentMinimized &{
+			padding:15px;
 			left:-33%;
 		}
 	}
@@ -53,14 +54,20 @@
  	margin:0 5px 0 0;
 }
 .object-menu .toggle-content {
-	@extend .content-icon;
+	@include transition( all 150ms ease );
+	@extend .minimize-icon;
 	position:relative;
 	display:block;
 	float:left;
 	margin:0 5px 0 0;
 
 	@media #{$medium} {
-		display:none;
+		position:fixed;
+		top:15px;
+		left:50px;
+		.contentMinimized & {
+			left:9px;
+		}
 	}
 }
 .object-menu .toggle-meta {
@@ -69,6 +76,10 @@
 	display:block;
 	float:left;
   margin:0 5px 0 0;
+
+  @media #{$medium} {
+  	margin:0 0 0 35px;
+  }
 }
 .object-title{
 	margin:5px 0 0;
@@ -364,7 +375,7 @@
 		left:33%;
 
 		.contentMinimized &{
-			left:0;
+			left:50px;
 		}
 	}
 }

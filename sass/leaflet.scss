@@ -8,8 +8,7 @@
 	@include transition( all 125ms ease );
 	width:30px;
 	height:30px;
-	border-radius:1000px;
-	margin:0 0 5px;
+	margin:0;
 	line-height:26px;
 	vertical-align:middle;
 	background-color:#222;
@@ -18,11 +17,12 @@
 	text-indent:-60px;
 	overflow:hidden;
 	position:relative;
-
 }
 
-.leaflet-control-zoom-in{
+.leaflet-bar a.leaflet-control-zoom-in{
 	@include icon('\e815');
+	border-top-left-radius:1000px;
+	border-top-right-radius:1000px;
 	&:before{
 		font-size:16px;
 		margin-top:-8px;
@@ -30,8 +30,10 @@
 	}
 }
 
-.leaflet-control-zoom-out{
+.leaflet-bar a.leaflet-control-zoom-out{
 	@include icon('\e816');
+	border-bottom-left-radius:1000px;
+	border-bottom-right-radius:1000px;
 	&:before{
 		font-size:16px;
 		margin-top:-8px;
