@@ -15,7 +15,7 @@
     <menu class='object-menu'>
       <a class='object-home-link' href='#'></a>
       <a class='toggle-content' ng-class='{active: contentMinimized}' ng-click='toggleMinimizeContent()'></a>
-      <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 || wp.meta2 || wp.meta3'></a>
+      <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 !== null || wp.meta2 !== null || wp.meta3 !== null'></a>
     </menu>
 
 	  <h1 class='object-title' ng-bind-template="{{wp.title}}"></h1>
