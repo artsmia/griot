@@ -36,10 +36,11 @@
  */
 #story {
   position:fixed;
-  top:50px;
+  top:0;
   right:0;
   bottom:0;
   left:0;
+  padding:50px 0 0 0;
   overflow:hidden;
   background: #ffffff;
   background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%);
