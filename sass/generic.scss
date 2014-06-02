@@ -122,8 +122,8 @@ body{
 
 .home-icon{
   @include icon('\e802');
-  width:30px;
-  height:30px;
+  width:40px;
+  height:40px;
   background-color:#222;
   border-radius:1000px;
   border:1px solid #fff;
@@ -131,33 +131,54 @@ body{
 
   &:before {
     color:#fff;
-    font-size:14px;
-    margin-top:-7px;
+    font-size:18px;
+    margin-top:-9px;
+  }
+
+  @media #{$medium} {
+    width:30px;
+    height:30px;
+
+    &:before{
+      font-size:14px;
+      margin-top:-7px;
+    }
   }
 }
 
 .minimize-icon {
   @include icon( '\e801' );
   @include transition( margin-top 100ms linear );
-  width:30px;
-  height:30px;
+  width:40px;
+  height:40px;
   border-radius:1000px;
   background-color:#222;
   border:1px solid #fff;
   cursor:pointer;
 
   &:before{
-    margin-top:-8px;
     color:#fff;
-    font-size:16px;
+    font-size:20px;
+    margin-top:-10px;
   }
 
   .contentMinimized &{
     @include icon( '\e800' );
 
     &:before{
-      margin-top:-8px;
+      font-size:20px;
+      margin-top:-10px;
+    }
+  }
+
+  @media #{$medium} {
+    width:30px;
+    height:30px;
+
+    &:before,
+    .contentMinimized &:before{
       font-size:16px;
+      margin-top:-8px;
     }
   }
 }
@@ -165,8 +186,8 @@ body{
 .meta-icon {
   @include icon( '\e813' );
   @include transition( all 125ms ease );
-  width:30px;
-  height:30px;
+  width:40px;
+  height:40px;
   background-color:#222;
   border-radius:1000px;
   border:1px solid #fff;
@@ -174,8 +195,8 @@ body{
   // Icon
   &:before{
     color:#fff;
-    font-size:16px;
-    margin-top:-8px;
+    font-size:20px;
+    margin-top:-10px;
   }
 
   &.open,
@@ -186,6 +207,16 @@ body{
     // Icon
     &:before{
       color:#222;
+    }
+  }
+
+  @media #{$medium} {
+    width:30px;
+    height:30px;
+
+    &:before{
+      font-size:16px;
+      margin-top:-8px;
     }
   }
 }

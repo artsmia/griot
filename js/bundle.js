@@ -59,7 +59,7 @@ app.constant('envConfig', {
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
 
   miaObjectMetaActive: true,
-  miaObjectMetaSrc: '../mia_object_meta.json',
+  miaObjectMetaSrc: 'mia_object_meta.json',
 
   miaThumbnailActive: true,
   miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
@@ -272,6 +272,9 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         // Open the More tab when returning from a story via the 'Back' button
         $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
         $scope.$$phase || $scope.$apply()
+
+        console.log( $scope.wp );
+
       }
     })
     

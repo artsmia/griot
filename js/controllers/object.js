@@ -38,6 +38,9 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         // Open the More tab when returning from a story via the 'Back' button
         $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
         $scope.$$phase || $scope.$apply()
+
+        console.log( $scope.wp );
+
       }
     })
     

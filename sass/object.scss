@@ -42,9 +42,13 @@
 }
 .object-menu {
 	display:block;
-	height:30px;
+	height:40px;
 	margin:0;
 	padding:0;
+
+	@media #{$medium} {
+		height:30px;
+	}
 }
 .object-home-link {
 	@extend .home-icon;
