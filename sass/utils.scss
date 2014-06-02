@@ -35,9 +35,12 @@
   font-family:'Source Sans Pro', sans-serif;
   font-style:italic;
 }
+
 @mixin icon( $content ){
   font-style:normal;
   cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+
   &:before{
     position:absolute;
     display:block;

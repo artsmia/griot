@@ -31,6 +31,11 @@ object {
   padding:0;
 }
 
+/* Remove link highlighting */
+a { 
+  -webkit-tap-highlight-color: transparent; 
+}
+
 /* Clearfix */
 
 .clearfix:after {
