@@ -111,7 +111,7 @@ html, body { background-color: #ededed; }
 
 .cover-wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
 
-#cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; }
+#cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; overflow: scroll; -webkit-overflow-scrolling: touch; }
 
 .cover-item { display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; }
 .cover-item.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
