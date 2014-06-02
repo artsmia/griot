@@ -68,7 +68,7 @@
 	<!-- Fullscreen attachments -->
   <div class='attachment-big' ng-repeat='attachment in allAttachments' ng-class="{active: attachment == currentAttachment, showAttachmentMeta: showAttachmentCredits}">
     <flatmap class='attachment-zoomer' image="{{attachment.image_id}}"></flatmap>
-    <aside class='attachment-tombstone' ng-if="attachment.meta">
+    <aside class='attachment-tombstone scrollable' ng-if="attachment.meta">
       <p ng-bind-html="attachment.meta"></p>
     </aside>
     <a class="page-nav return-link left-nav" ng-click="toggleAttachment(attachment, true, $event)"></a>

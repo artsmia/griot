@@ -17,6 +17,7 @@ body {
   -o-font-feature-settings:"kern" 0;
   -ms-font-feature-settings:"kern" 0;
   font-feature-settings:"kern" 0;
+  -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
 }
 
 /* Fluid images */

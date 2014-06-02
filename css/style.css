@@ -3,7 +3,7 @@
 /* Structure */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-html, body { margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLegibility; -moz-font-feature-settings: "kern=0"; -webkit-font-feature-settings: "kern" 0; -o-font-feature-settings: "kern" 0; -ms-font-feature-settings: "kern" 0; font-feature-settings: "kern" 0; }
+html, body { margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLegibility; -moz-font-feature-settings: "kern=0"; -webkit-font-feature-settings: "kern" 0; -o-font-feature-settings: "kern" 0; -ms-font-feature-settings: "kern" 0; font-feature-settings: "kern" 0; -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */ }
 
 /* Fluid images */
 img, object { max-width: 100%; outline: 0; border: 0; margin: 0; padding: 0; }
@@ -165,7 +165,8 @@ html, body { background-color: #ededed; }
 .object-nav a { display: block; width: 33.3%; float: left; padding: 0.5em 0; border: 1px solid #222; border-right: none; color: #222; text-transform: uppercase; font-size: 0.85em; font-weight: 700; text-align: center; background-color: #ededed; cursor: pointer; }
 .object-nav a.disabled, .object-nav a.disabled:hover { color: #bbb; background-color: #ededed; cursor: default; }
 .object-nav a:last-child { border-right: 1px solid #222; }
-.object-nav a.selected, .object-nav a:hover { color: #ededed; background-color: #222; }
+.object-nav a.selected { color: #ededed; background-color: #222; }
+@media screen and (min-width: 1024px) { .object-nav a:hover { color: #ededed; background-color: #222; } }
 
 /** Content - Container */
 .object-stories { margin: 0; padding: 0; }
@@ -194,17 +195,17 @@ html, body { background-color: #ededed; }
 
 .attachment-thumb { display: inline-block; width: 75px; height: 75px; position: relative; margin: 0 5px 5px 0; cursor: pointer; background-size: cover; }
 
-.attachment-big { -webkit-transition: top 125ms ease; -moz-transition: top 125ms ease; -o-transition: top 125ms ease; display: block; position: fixed; width: 100%; height: 100%; left: 0; top: 100%; background-color: #ddd; z-index: 1000000001; text-align: center; }
-.attachment-big.active { top: 0; }
+.attachment-big { -webkit-transition: left 375ms ease; -moz-transition: left 375ms ease; -o-transition: left 375ms ease; display: block; position: fixed; width: 100%; height: 100%; left: -300%; top: 0; background-color: #ddd; z-index: 1000000001; text-align: center; }
+.attachment-big.active { left: 0; }
 
-.attachment-zoomer { -webkit-transition: height 125ms ease; -moz-transition: height 125ms ease; -o-transition: height 125ms ease; }
+.attachment-zoomer { -webkit-transition: height 125ms ease; -moz-transition: height 125ms ease; -o-transition: height 125ms ease; height: 100%; }
 .showAttachmentMeta .attachment-zoomer { height: 67%; }
 
 .attachment-big .return-link { position: absolute; border-top: 1px solid #222; border-right: 1px solid #222; }
 
-.attachment-toggle-meta { position: absolute; display: block; right: 12px; bottom: 8px; margin: 0; }
+.attachment-toggle-meta { position: absolute; display: block; right: 12px; bottom: 8px; margin: 0; z-index: 4; }
 
-.attachment-tombstone { -webkit-transition: bottom 125ms ease; -moz-transition: bottom 125ms ease; -o-transition: bottom 125ms ease; -webkit-box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); position: absolute; right: 0; bottom: -33%; left: 0; height: 33%; padding: 15px 60px; overflow-y: scroll; font-size: 0.9em; text-align: left; background-color: #ededed; color: #444; }
+.attachment-tombstone { -webkit-transition: bottom 125ms ease; -moz-transition: bottom 125ms ease; -o-transition: bottom 125ms ease; -webkit-box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); box-shadow: inset 0 5px 5px rgba(0, 0, 0, 0.23); position: absolute; right: 0; bottom: -33%; left: 0; height: 33%; padding: 15px 60px; overflow-y: scroll; overflow-x: hidden; font-size: 0.9em; text-align: left; background-color: #ededed; color: #444; }
 .showAttachmentMeta .attachment-tombstone { bottom: 0; }
 
 /** Content - Stories/"More" */
@@ -213,7 +214,7 @@ html, body { background-color: #ededed; }
 .object-related { list-style: none; padding: 0; }
 
 .object-related a { color: #222; width: 100%; border: 1px solid #222; padding: 10px 15px; display: block; margin: 5px 0px; text-align: left; font-size: 1em; transition: all 250ms linear; text-decoration: none; }
-.object-related a:hover { color: #ededed; background-color: #222; }
+@media screen and (min-width: 1024px) { .object-related a:hover { color: #ededed; background-color: #222; } }
 
 /** Zoomer */
 .object-zoomer { -webkit-transition: bottom 125ms ease, left 125ms ease; -moz-transition: bottom 125ms ease, left 125ms ease; -o-transition: bottom 125ms ease, left 125ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: fixed; top: 0; right: 0; bottom: 67%; left: 0; background-color: #ccc; text-align: center; z-index: 2; }

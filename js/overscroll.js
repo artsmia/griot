@@ -21,3 +21,7 @@ $('body').on('touchmove', selScrollable, function(e) {
         e.stopPropagation();
     }
 });
+
+$(window).on('orientationchange', function() {
+  window.scrollTo(0, 0);
+});
