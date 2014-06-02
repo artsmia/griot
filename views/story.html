@@ -31,7 +31,7 @@
 
       </div>
 
-      <div class='story-content' ng-if="page.text" ng-class="{expanded: page.storyCaptionOpen }">
+      <div class='story-content' ng-if="page.text" ng-class="{ scrollable: ! page.contentMinimized }">
 
         <div ng-bind-html="page.trustedText" class='caption'></div>
         <aside ng-if="page.meta" ng-bind-html="page.meta"></aside>

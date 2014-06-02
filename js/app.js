@@ -40,3 +40,5 @@ require('./directives/note')
 require('./directives/scroll')
 require('./directives/onPlay')
 require('./directives/vcenter')
+
+require('./overscroll')

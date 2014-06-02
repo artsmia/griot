@@ -107,6 +107,8 @@ html, body { background-color: #ededed; }
 .contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
 .contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before { color: #222; font-size: 16px; margin-top: -8px; }
 
+.scrollable { -webkit-overflow-scrolling: touch; }
+
 .cover-wrapper { position: fixed; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 25px 0 0; overflow: scroll; -webkit-overflow-scrolling: touch; }
 
 #cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; }

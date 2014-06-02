@@ -1,4 +1,4 @@
-<div class='cover-wrapper'>
+<div class='cover-wrapper scrollable'>
   <ul id='cover'>
     <li class='packery-item cover-item' ng-class="{story: thing.recordType != 'object', object: thing.recordType == 'object', noPoster: !thing.thumbnail}" ng-repeat="thing in all" ng-hide="!thing.thumbnail">
       <a href="#/o/{{thing.id}}" ng-if="thing.recordType == 'object'">
