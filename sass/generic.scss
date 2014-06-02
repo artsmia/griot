@@ -140,16 +140,6 @@ body{
     font-size:18px;
     margin-top:-9px;
   }
-
-  @media #{$medium} {
-    width:30px;
-    height:30px;
-
-    &:before{
-      font-size:14px;
-      margin-top:-7px;
-    }
-  }
 }
 
 .minimize-icon {
@@ -174,17 +164,6 @@ body{
     &:before{
       font-size:20px;
       margin-top:-10px;
-    }
-  }
-
-  @media #{$medium} {
-    width:30px;
-    height:30px;
-
-    &:before,
-    .contentMinimized &:before{
-      font-size:16px;
-      margin-top:-8px;
     }
   }
 }
@@ -213,16 +192,6 @@ body{
     // Icon
     &:before{
       color:#222;
-    }
-  }
-
-  @media #{$medium} {
-    width:30px;
-    height:30px;
-
-    &:before{
-      font-size:16px;
-      margin-top:-8px;
     }
   }
 }

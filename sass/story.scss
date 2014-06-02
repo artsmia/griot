@@ -28,11 +28,6 @@
   top:5px;
   left:5px;
   z-index:1;
-
-  @media #{$medium} {
-    top:10px;
-    left:10px;
-  }
 }
 
 
@@ -102,7 +97,7 @@
     left:0;
 
     .contentMinimized & {
-      right:50px;
+      right:60px;
       bottom:0;
     }
 
@@ -246,15 +241,15 @@
   @include box-shadow( none );
   position:relative;
   display:inline-block;
-  margin:3px 0 0;
+  margin:0;
   border:1px solid #ccc;
   z-index:1;
 
   @media #{$medium} {
     position:absolute;
     display:block;
-    top:5px;
-    right:5px;
+    top:10px;
+    right:8px;
   }
 
 }

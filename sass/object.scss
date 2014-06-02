@@ -46,17 +46,13 @@
 	height:40px;
 	margin:0;
 	padding:0;
-
-	@media #{$medium} {
-		height:30px;
-	}
 }
 .object-home-link {
 	@extend .home-icon;
   position:relative;
   display:block;
   float:left;
- 	margin:0 5px 0 0;
+ 	margin:0 10px 0 0;
 }
 .object-menu .toggle-content {
 	@include transition( all 150ms ease );
@@ -64,12 +60,12 @@
 	position:relative;
 	display:block;
 	float:left;
-	margin:0 5px 0 0;
+	margin:0 10px 0 0;
 
 	@media #{$medium} {
 		position:fixed;
 		top:15px;
-		left:50px;
+		left:60px;
 		.contentMinimized & {
 			left:9px;
 		}
@@ -80,10 +76,10 @@
 	position:relative;
 	display:block;
 	float:left;
-  margin:0 5px 0 0;
+  margin:0 10px 0 0;
 
   @media #{$medium} {
-  	margin:0 0 0 35px;
+  	margin:0 0 0 40px;
   }
 }
 .object-title{
@@ -391,7 +387,7 @@
 		left:33%;
 
 		.contentMinimized &{
-			left:50px;
+			left:60px;
 		}
 	}
 }

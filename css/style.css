@@ -55,8 +55,6 @@ html, body { background-color: #ededed; }
 .home-icon, .object-home-link, .story-home-link { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 1px solid #fff; cursor: pointer; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e802"; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { color: #fff; font-size: 18px; margin-top: -9px; }
-@media screen and (min-width: 1024px) { .home-icon, .object-home-link, .story-home-link { width: 30px; height: 30px; }
-  .home-icon:before, .object-home-link:before, .story-home-link:before { font-size: 14px; margin-top: -7px; } }
 
 .minimize-icon, .object-menu .toggle-content, .story-menu .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: margin-top 100ms linear; -moz-transition: margin-top 100ms linear; -o-transition: margin-top 100ms linear; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 1px solid #fff; cursor: pointer; }
 .minimize-icon:before, .object-menu .toggle-content:before, .story-menu .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
@@ -64,16 +62,12 @@ html, body { background-color: #ededed; }
 .contentMinimized .minimize-icon, .contentMinimized .object-menu .toggle-content, .object-menu .contentMinimized .toggle-content, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .contentMinimized .minimize-icon:before, .contentMinimized .object-menu .toggle-content:before, .object-menu .contentMinimized .toggle-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
 .contentMinimized .minimize-icon:before, .contentMinimized .object-menu .toggle-content:before, .object-menu .contentMinimized .toggle-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { font-size: 20px; margin-top: -10px; }
-@media screen and (min-width: 1024px) { .minimize-icon, .object-menu .toggle-content, .story-menu .toggle-content { width: 30px; height: 30px; }
-  .minimize-icon:before, .object-menu .toggle-content:before, .story-menu .toggle-content:before, .contentMinimized .minimize-icon:before, .contentMinimized .object-menu .toggle-content:before, .object-menu .contentMinimized .toggle-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { font-size: 16px; margin-top: -8px; } }
 
 .meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 1px solid #fff; }
 .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e813"; }
 .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { color: #fff; font-size: 20px; margin-top: -10px; }
 .meta-icon.open, .object-menu .open.toggle-meta, .open.attachment-toggle-meta, .showAttachmentMeta .meta-icon, .showAttachmentMeta .object-menu .toggle-meta, .object-menu .showAttachmentMeta .toggle-meta, .showAttachmentMeta .attachment-toggle-meta { background-color: #fff; border-color: #222; }
 .meta-icon.open:before, .object-menu .open.toggle-meta:before, .open.attachment-toggle-meta:before, .showAttachmentMeta .meta-icon:before, .showAttachmentMeta .object-menu .toggle-meta:before, .object-menu .showAttachmentMeta .toggle-meta:before, .showAttachmentMeta .attachment-toggle-meta:before { color: #222; }
-@media screen and (min-width: 1024px) { .meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { width: 30px; height: 30px; }
-  .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { font-size: 16px; margin-top: -8px; } }
 
 /** Navigation */
 .nav-button, .attachment-big .return-link, .story-return, .story-prev-page, .story-next-page { position: fixed; top: auto; bottom: 0; width: 45px; height: 45px; margin-top: -40px; padding: 10px 5px 5px; background-color: #000; color: #fff; font-size: 0.7em; text-transform: uppercase; text-align: center; cursor: pointer; z-index: 3; }
@@ -140,16 +134,15 @@ html, body { background-color: #ededed; }
   .contentMinimized .object-content { padding: 15px; left: -33%; overflow: visible; } }
 
 .object-menu { display: block; height: 40px; margin: 0; padding: 0; }
-@media screen and (min-width: 1024px) { .object-menu { height: 30px; } }
 
-.object-home-link { position: relative; display: block; float: left; margin: 0 5px 0 0; }
+.object-home-link { position: relative; display: block; float: left; margin: 0 10px 0 0; }
 
-.object-menu .toggle-content { -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; -o-transition: all 150ms ease; position: relative; display: block; float: left; margin: 0 5px 0 0; }
-@media screen and (min-width: 1024px) { .object-menu .toggle-content { position: fixed; top: 15px; left: 50px; }
+.object-menu .toggle-content { -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; -o-transition: all 150ms ease; position: relative; display: block; float: left; margin: 0 10px 0 0; }
+@media screen and (min-width: 1024px) { .object-menu .toggle-content { position: fixed; top: 15px; left: 60px; }
   .contentMinimized .object-menu .toggle-content { left: 9px; } }
 
-.object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 5px 0 0; }
-@media screen and (min-width: 1024px) { .object-menu .toggle-meta { margin: 0 0 0 35px; } }
+.object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 10px 0 0; }
+@media screen and (min-width: 1024px) { .object-menu .toggle-meta { margin: 0 0 0 40px; } }
 
 .object-title { margin: 5px 0 0; }
 
@@ -223,7 +216,7 @@ html, body { background-color: #ededed; }
 .object-zoomer { -webkit-transition: bottom 125ms ease, left 125ms ease; -moz-transition: bottom 125ms ease, left 125ms ease; -o-transition: bottom 125ms ease, left 125ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: fixed; top: 0; right: 0; bottom: 67%; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
 .contentMinimized .object-zoomer { bottom: 0; }
 @media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; }
-  .contentMinimized .object-zoomer { left: 50px; } }
+  .contentMinimized .object-zoomer { left: 60px; } }
 
 .object-zoomer .toggle-fullscreen { position: fixed; display: block; top: 80px; right: 10px; width: 30px; height: 30px; z-index: 10000; }
 
@@ -242,7 +235,6 @@ html, body { background-color: #ededed; }
 .story-title { position: fixed; display: block; top: 0; left: 0; height: 50px; width: 100%; margin: 0; background-color: #222; text-align: center; font-size: 1.3em; color: #fff; font-weight: 600; line-height: 50px; padding: 0 45px; overflow: hidden; }
 
 .story-home-link { position: fixed; display: block; top: 5px; left: 5px; z-index: 1; }
-@media screen and (min-width: 1024px) { .story-home-link { top: 10px; left: 10px; } }
 
 /** Slider structure  */
 #story { position: fixed; top: 0; right: 0; bottom: 0; left: 0; padding: 50px 0 0 0; overflow: hidden; background: #ffffff; background: -moz-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, white), color-stop(100%, #e5e5e5)); background: -webkit-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -o-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: -ms-radial-gradient(center, ellipse cover, white 0%, #e5e5e5 100%); background: radial-gradient(ellipse at center, white 0%, #e5e5e5 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=1 ); }
@@ -255,7 +247,7 @@ html, body { background-color: #ededed; }
 .story-illustration { -webkit-transition: right 100ms ease, bottom 100ms ease; -moz-transition: right 100ms ease, bottom 100ms ease; -o-transition: right 100ms ease, bottom 100ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: absolute; top: 0; right: 0; bottom: 67%; left: 0; z-index: 1; background-color: #ddd; }
 .contentMinimized .story-illustration { bottom: 45px; }
 @media screen and (min-width: 1024px) { .story-illustration { top: 0; right: 33%; bottom: 0; left: 0; }
-  .contentMinimized .story-illustration { right: 50px; bottom: 0; } }
+  .contentMinimized .story-illustration { right: 60px; bottom: 0; } }
 
 .story-video, .story-image, .story-comparison, .story-iframe { position: relative; width: 100%; height: 100%; }
 
@@ -286,8 +278,8 @@ html, body { background-color: #ededed; }
 .story-menu { -webkit-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px -3px 5px rgba(0, 0, 0, 0.23); position: absolute; right: 0; bottom: 0; left: 0; height: 45px; margin: 0; padding: 0; text-align: center; background-color: #ddd; z-index: 2; }
 @media screen and (min-width: 1024px) { .story-menu { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: absolute; top: 0; right: 0; bottom: auto; left: auto; width: 35px; height: 35px; padding: 0; background-color: transparent; } }
 
-.story-menu .toggle-content { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: relative; display: inline-block; margin: 3px 0 0; border: 1px solid #ccc; z-index: 1; }
-@media screen and (min-width: 1024px) { .story-menu .toggle-content { position: absolute; display: block; top: 5px; right: 5px; } }
+.story-menu .toggle-content { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: relative; display: inline-block; margin: 0; border: 1px solid #ccc; z-index: 1; }
+@media screen and (min-width: 1024px) { .story-menu .toggle-content { position: absolute; display: block; top: 10px; right: 8px; } }
 
 .leaflet-top .leaflet-bar { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 
