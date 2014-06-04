@@ -41,7 +41,6 @@ require('./directives/note')
 require('./directives/scroll')
 require('./directives/onPlay')
 require('./directives/vcenter')
-
 },{"./config":2,"./controllers/goldweights":3,"./controllers/main":4,"./controllers/notes":5,"./controllers/object":6,"./controllers/story":7,"./directives/flatmap":8,"./directives/note":9,"./directives/onPlay":10,"./directives/scroll":11,"./directives/vcenter":12,"./factories":13,"./filters":14,"./routes":15,"./services":16}],2:[function(require,module,exports){
 app.constant('envConfig', {
 
@@ -272,8 +271,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         // Open the More tab when returning from a story via the 'Back' button
         $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
         $scope.$$phase || $scope.$apply()
-
-        console.log( $scope.wp );
 
       }
     })

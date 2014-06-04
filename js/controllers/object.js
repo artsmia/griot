@@ -39,8 +39,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
         $scope.$$phase || $scope.$apply()
 
-        console.log( $scope.wp );
-
       }
     })
     

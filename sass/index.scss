@@ -1,12 +1,12 @@
 .cover-wrapper {
-  position:fixed;
+  position:absolute;
   top:0;
   right:0;
   bottom:3em;
   left:0;
   list-style:none;
   padding:25px 0 0;
-  overflow:scroll;
+  overflow:auto;
   -webkit-overflow-scrolling:touch;
 
 }
@@ -18,7 +18,7 @@
   display:block;
   margin:0;
   padding:0 25px;
-  overflow:scroll;
+  overflow:auto;
   -webkit-overflow-scrolling:touch;
 }
 
@@ -87,7 +87,7 @@
 
 .cover-instructions {
   @include box-shadow(0 -3px 5px rgba(0,0,0,0.23));
-  position:fixed;
+  position:absolute;
   display:block;
   bottom:0;
   font-size:1em;

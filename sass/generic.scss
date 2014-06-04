@@ -6,6 +6,7 @@
   @include box-sizing( border-box );
 }
 
+
 html,
 body {
   margin: 0;
@@ -18,6 +19,37 @@ body {
   -ms-font-feature-settings:"kern" 0;
   font-feature-settings:"kern" 0;
   -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
+}
+
+body {
+  @media screen and (device-height:568px) and (device-width:320px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape),
+  screen and (device-height:480px) and (device-width:320px) and (orientation:landscape) {
+    &:after{
+      position:absolute;
+      display:block;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      text-align:center;
+      margin-top:150px;
+      font-size:1.2em;
+      content:'Please rotate your phone';
+    }
+  }
+}
+
+/* Container styles */
+.container {
+  @include transition( opacity 150ms ease );
+  position:absolute;
+  width:100%;
+  height:100%;
+
+  @media screen and (device-height:568px) and (device-width:320px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape),
+  screen and (device-height:480px) and (device-width:320px) and (orientation:landscape) {
+    opacity:0;
+  }
 }
 
 /* Fluid images */

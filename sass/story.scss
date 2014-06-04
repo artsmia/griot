@@ -4,7 +4,7 @@
  * Header
  */
 .story-title{
-  position:fixed;
+  position:absolute;
   display:block;
   top:0;
   left:0;
@@ -23,7 +23,7 @@
 
 .story-home-link {
   @extend .home-icon;
-  position:fixed;
+  position:absolute;
   display:block;
   top:5px;
   left:5px;
@@ -35,7 +35,7 @@
  * Slider structure 
  */
 #story {
-  position:fixed;
+  position:absolute;
   top:0;
   right:0;
   bottom:0;
