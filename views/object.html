@@ -14,7 +14,7 @@
 
     <menu class='object-menu'>
       <a class='object-home-link' href='#'></a>
-      <a class='toggle-content' ng-class='{active: contentMinimized}' ng-click='toggleMinimizeContent()'></a>
+      <a class='object-minimize-content' ng-click='toggleMinimizeContent()'></a>
       <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 !== null || wp.meta2 !== null || wp.meta3 !== null'></a>
     </menu>
 
@@ -74,5 +74,7 @@
     <a class="page-nav return-link left-nav" ng-click="toggleAttachment(attachment, true, $event)"></a>
     <a class="attachment-toggle-meta" ng-if="attachment.meta" ng-click="toggleAttachmentCredits(attachment)"></a>
   </div>
+
+  <a class='object-maximize-content' ng-click='toggleMinimizeContent()'></a>
 
 </article>

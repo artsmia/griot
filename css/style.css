@@ -179,7 +179,7 @@ body {
     font-size: 18px;
     margin-top: -9px; }
 
-.minimize-icon, .object-menu .toggle-content, .story-menu .toggle-content {
+.minimize-icon, .object-minimize-content, .story-menu .toggle-content {
   font-style: normal;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -192,7 +192,7 @@ body {
   background-color: #222;
   border: 1px solid #fff;
   cursor: pointer; }
-  .minimize-icon:before, .object-menu .toggle-content:before, .story-menu .toggle-content:before {
+  .minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before {
     position: absolute;
     display: block;
     top: 50%;
@@ -203,15 +203,15 @@ body {
     font-family: 'griot';
     font-size: 24px;
     content: "\e801"; }
-  .minimize-icon:before, .object-menu .toggle-content:before, .story-menu .toggle-content:before {
+  .minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before {
     color: #fff;
     font-size: 20px;
     margin-top: -10px; }
-  .contentMinimized .minimize-icon, .contentMinimized .object-menu .toggle-content, .object-menu .contentMinimized .toggle-content, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content {
+  .contentMinimized .minimize-icon, .contentMinimized .object-minimize-content, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content {
     font-style: normal;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent; }
-    .contentMinimized .minimize-icon:before, .contentMinimized .object-menu .toggle-content:before, .object-menu .contentMinimized .toggle-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before {
+    .contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before {
       position: absolute;
       display: block;
       top: 50%;
@@ -222,9 +222,35 @@ body {
       font-family: 'griot';
       font-size: 24px;
       content: "\e800"; }
-    .contentMinimized .minimize-icon:before, .contentMinimized .object-menu .toggle-content:before, .object-menu .contentMinimized .toggle-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before {
+    .contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before {
       font-size: 20px;
       margin-top: -10px; }
+
+.maximize-icon, .object-maximize-content {
+  font-style: normal;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 1000px;
+  background-color: #222;
+  border: 1px solid #fff;
+  cursor: pointer; }
+  .maximize-icon:before, .object-maximize-content:before {
+    position: absolute;
+    display: block;
+    top: 50%;
+    width: 100%;
+    margin-top: -12px;
+    text-align: center;
+    line-height: 100%;
+    font-family: 'griot';
+    font-size: 24px;
+    content: "\e800"; }
+  .maximize-icon:before, .object-maximize-content:before {
+    color: #fff;
+    font-size: 20px;
+    margin-top: -10px; }
 
 .meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta {
   font-style: normal;
@@ -375,7 +401,7 @@ body {
     .return-icon.nav-button-right, .attachment-big .nav-button-right.return-link, .attachment-big .return-link.story-next-page, .nav-button-right.story-return, .story-return.story-next-page, .return-icon.story-next-page {
       border-left: 1px solid #222; } }
 
-.fullscreen-icon, .object-zoomer .toggle-fullscreen {
+.fullscreen-icon {
   font-style: normal;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -389,7 +415,7 @@ body {
   border: 1px solid #fff;
   border-radius: 1000px;
   z-index: 1001; }
-  .fullscreen-icon:before, .object-zoomer .toggle-fullscreen:before {
+  .fullscreen-icon:before {
     position: absolute;
     display: block;
     top: 50%;
@@ -400,17 +426,17 @@ body {
     font-family: 'griot';
     font-size: 24px;
     content: "\e800"; }
-  .fullscreen-icon:before, .object-zoomer .toggle-fullscreen:before {
+  .fullscreen-icon:before {
     color: #fff;
     font-size: 16px;
     margin-top: -8px; }
-  .contentMinimized .fullscreen-icon, .contentMinimized .object-zoomer .toggle-fullscreen, .object-zoomer .contentMinimized .toggle-fullscreen {
+  .contentMinimized .fullscreen-icon {
     background-color: #fff;
     border-color: #222;
     font-style: normal;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent; }
-    .contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before {
+    .contentMinimized .fullscreen-icon:before {
       position: absolute;
       display: block;
       top: 50%;
@@ -421,7 +447,7 @@ body {
       font-family: 'griot';
       font-size: 24px;
       content: "\e801"; }
-    .contentMinimized .fullscreen-icon:before, .contentMinimized .object-zoomer .toggle-fullscreen:before, .object-zoomer .contentMinimized .toggle-fullscreen:before {
+    .contentMinimized .fullscreen-icon:before {
       color: #222;
       font-size: 16px;
       margin-top: -8px; }
@@ -567,30 +593,31 @@ body {
   float: left;
   margin: 0 10px 0 0; }
 
-.object-menu .toggle-content {
-  -webkit-transition: all 150ms ease;
-  -moz-transition: all 150ms ease;
-  -o-transition: all 150ms ease;
+.object-minimize-content {
   position: relative;
   display: block;
   float: left;
   margin: 0 10px 0 0; }
+
+.object-maximize-content {
+  -webkit-transition: all 150ms ease;
+  -moz-transition: all 150ms ease;
+  -o-transition: all 150ms ease;
+  position: absolute;
+  top: 15px;
+  left: -100px;
+  width: 40px;
+  height: 40px;
+  z-index: 2; }
   @media screen and (min-width: 1024px) {
-    .object-menu .toggle-content {
-      position: absolute;
-      top: 15px;
-      left: 60px; }
-      .contentMinimized .object-menu .toggle-content {
-        left: 9px; } }
+    .contentMinimized .object-maximize-content {
+      left: 15px; } }
 
 .object-menu .toggle-meta {
   position: relative;
   display: block;
   float: left;
   margin: 0 10px 0 0; }
-  @media screen and (min-width: 1024px) {
-    .object-menu .toggle-meta {
-      margin: 0 0 0 40px; } }
 
 .object-title {
   margin: 5px 0 0; }
@@ -860,16 +887,7 @@ body {
       bottom: 0;
       left: 33%; }
       .contentMinimized .object-zoomer {
-        left: 60px; } }
-
-.object-zoomer .toggle-fullscreen {
-  position: absolute;
-  display: block;
-  top: 80px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  z-index: 10000; }
+        left: 0; } }
 
 /*
  * Zoomer - Markers

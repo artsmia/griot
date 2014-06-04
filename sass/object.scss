@@ -54,20 +54,26 @@
   float:left;
  	margin:0 10px 0 0;
 }
-.object-menu .toggle-content {
-	@include transition( all 150ms ease );
+.object-minimize-content {
 	@extend .minimize-icon;
 	position:relative;
 	display:block;
 	float:left;
 	margin:0 10px 0 0;
+}
+.object-maximize-content {
+	@include transition( all 150ms ease );
+	@extend .maximize-icon;
+	position:absolute;
+	top:15px;
+	left: -100px;
+	width:40px;
+	height:40px;
+	z-index:2;
 
 	@media #{$medium} {
-		position:absolute;
-		top:15px;
-		left:60px;
 		.contentMinimized & {
-			left:9px;
+			left: 15px;
 		}
 	}
 }
@@ -77,10 +83,6 @@
 	display:block;
 	float:left;
   margin:0 10px 0 0;
-
-  @media #{$medium} {
-  	margin:0 0 0 40px;
-  }
 }
 .object-title{
 	margin:5px 0 0;
@@ -387,19 +389,9 @@
 		left:33%;
 
 		.contentMinimized &{
-			left:60px;
+			left:0;
 		}
 	}
-}
-.object-zoomer .toggle-fullscreen {
-	@extend .fullscreen-icon;
-  position:absolute;
-  display:block;
-  top:80px;
-  right:10px;
-  width:30px;
-  height:30px;
-  z-index:10000;
 }
 
 
