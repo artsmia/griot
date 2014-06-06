@@ -1,3 +1,7 @@
+/**
+ * Application routing
+ */
+
 app.config(['$routeProvider', function($routeProvider) {
   return $routeProvider.when('/', {
     templateUrl: 'views/index.html',

@@ -1,3 +1,7 @@
+/**
+ * Set up application and load modules.
+ */
+
 /*jshint asi: true*/
 'use strict';
 
@@ -14,6 +18,8 @@ app.config(
 
 app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) { 
 	root.cdn = config.cdn;
+
+	// If adapters are enabled, retrieve and prepare alternate data
 	if( config.miaMediaMetaActive ) {
 		mediaMeta.build( config.miaMediaMetaSrc );
 	}
@@ -26,8 +32,7 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 }])
 
 require('./factories')
-require('./services')
-require('./filters')
+require('./adapters')
 
 require('./controllers/object')
 require('./controllers/story')
@@ -37,6 +42,4 @@ require('./controllers/goldweights')
 
 require('./directives/flatmap')
 require('./directives/note')
-require('./directives/scroll')
-require('./directives/onPlay')
 require('./directives/vcenter')

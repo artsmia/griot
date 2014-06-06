@@ -1,3 +1,7 @@
+/**
+ * Controller for notes template.
+ */
+
 app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
   function($scope, $routeParams, wp) {
     $scope.id = $routeParams.id
@@ -7,4 +11,3 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     })
   }
 ])
-

@@ -1,4 +1,7 @@
-// http://stackoverflow.com/questions/10238084
+/**
+ * Prevent overscroll on iOS. Adapted from 
+ * http://stackoverflow.com/questions/10238084
+ */
 
 var selScrollable = '.scrollable';
 

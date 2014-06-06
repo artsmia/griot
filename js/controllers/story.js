@@ -1,3 +1,7 @@
+/**
+ * Controller for story template.
+ */
+
 app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'miaMediaMetaAdapter', '$rootScope', 
   function($scope, $routeParams, $sce, segmentio, wp, mediaMeta, $rootScope ) {
  

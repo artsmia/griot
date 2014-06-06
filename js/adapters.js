@@ -1,8 +1,11 @@
 /**
+ * Adapters (MIA-specific)
+ *
  * These adapters are specific to the MIA's implementation of Griot. You should
  * overwrite them if you'd like to use your own service to pull data. If you'd
- * rather manually enter metadata using GriotWP, set config.miaMediaMetaActive 
- * and config.miaObjectMetaActive to false in config.js.
+ * rather pull all data from GriotWP or another service, set 
+ * config.miaMediaMetaActive, config.miaObjectMetaActive, and 
+ * config.miaThumbnailAdapterActive to false in config.js.
 */
 
 /**

@@ -1,4 +1,10 @@
-/* Mixins */
+/**
+ * Media queries, vendor prefixes, and base styles for frequently used elements.
+ */
+
+$medium:'screen and (min-width:1024px)';
+// TODO: Less dumb method to detect 'non-tablet'
+$large:'screen and (min-width:1025px)';
 
 @mixin box-sizing( $params ) {
   -webkit-box-sizing:$params;
@@ -42,7 +48,6 @@
   font-family:'Source Sans Pro', sans-serif;
   font-style:italic;
 }
-
 @mixin icon( $content ){
   font-style:normal;
   cursor:pointer;
@@ -61,9 +66,3 @@
     content: $content;
   }
 }
-
-/* Media queries */
-
-$medium:'screen and (min-width:1024px)';
-// TODO: Less dumb method to detect 'non-tablet'
-$large:'screen and (min-width:1025px)';

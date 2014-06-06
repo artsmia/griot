@@ -1,3 +1,7 @@
+/**
+ * Overrides for default Leaflet control-button styles.
+ */
+
 .leaflet-top .leaflet-bar{
 	@include box-shadow(none);
 }

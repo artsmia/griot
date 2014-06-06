@@ -1,3 +1,7 @@
+/**
+ * Creates a zoomable image element.
+ */
+
 app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
   return {
     restrict: 'E',

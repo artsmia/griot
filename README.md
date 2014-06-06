@@ -4,10 +4,15 @@ Griot is an open-source iPad application that facilitates engagement with a coll
 
 The Griot framework requires three components:
 
-1. The Griot software itself, (this);
+1. The Griot software itself (this);
 2. A server for creating and serving tiled images ([tilesaw][]); and
-3. An interface  for loading content and bundling it in JSON format
+3. An interface for loading content and bundling it in JSON format
    ([GriotWP][]).
+
+## Installation
+
+1. Deploy Griot to the directory where you would like it to run.
+2. Edit `js/config.js` to point to your source of image tiles (i.e. your implementation of [tilesaw][]) and application content (i.e. your implementation of [GriotWP][]).
 
 [tilesaw]: https://github.com/artsmia/tilesaw
 [GriotWP]: https://github.com/artsmia/GriotWP

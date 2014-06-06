@@ -7,5 +7,3 @@ app.filter('titleCase', function () {
     return words.join(' ');
   } // https://gist.github.com/maruf-nc/5625869
 });
-
-

@@ -1,3 +1,7 @@
+/**
+ * Controller for cover page (index template).
+ */
+ 
 app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter',
   function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter) {
     $rootScope.nextView = undefined

@@ -1,3 +1,8 @@
+/**
+ * Vertically centers an element within a container. Apply 'vcenter' class to 
+ * element to be centered and make sure parent is positioned.
+ */
+
 app.directive( 'vcenter', function(){
 
 	return{

@@ -1,15 +1,15 @@
-app.factory('contents', ['$http', 'envConfig', function($http, config) {
-  return function() {
-    return $http.get(config.contents, {cache: true}).then(function(result) { return result.data; })
-  }
-}])
+/**
+ * Retrieve external data.
+ */
 
+// Tile data
 app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
   return { get: function(image) {
     return $http.get(config.tilesaw + image + '.tif', {cache: true}).then(function(result) { return result.data; })
   }}
 }])
 
+// Application content
 app.factory('notes', ['$http', 'envConfig', function($http, config) {
   return function() {
     // TODO: how do we want to cache/bundle the JSON? WP is slow

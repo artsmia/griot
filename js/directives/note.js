@@ -1,3 +1,7 @@
+/**
+ * Creates and controls annotation markers on a zoomable image (flatmap).
+ */
+
 app.directive('note', function(segmentio) {
   var divIcon = L.divIcon({className: 'noteMarker'})
   return {
