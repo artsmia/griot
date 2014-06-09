@@ -16,7 +16,6 @@
 }
 
 #cover {
-  @include transition( top 150ms ease );
   position:absolute;
   top:0;
   right:0;
@@ -30,12 +29,14 @@
 }
 
 .cover-item {
+  @include transition( opacity 300ms ease );
   display:block;
   vertical-align:top;
   margin:0 auto 10px;
   height:auto;
   max-height:300px;
   max-width:100%;
+  opacity:0;
 
   &.story {
     max-width:100%;

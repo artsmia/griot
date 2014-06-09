@@ -68,7 +68,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         })
       })
       $scope.$$phase || $scope.$apply()
-      console.log( $scope.allNotes );
     }
 
     $scope.next = function(direction) {

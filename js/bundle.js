@@ -337,19 +337,14 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
 
         var centerCover = function(){
 
-          console.log( 'Centering ...' )
-
           // Get height of container
           var availableHeight = $('.cover-wrapper').height();
-          console.log( 'Available Height: ' + availableHeight );
 
           // Get number of rows - 300px plus 10px gutter.
           var rowCount = Math.floor( availableHeight / 310 );
-          console.log( 'Row Count: ' + rowCount );
 
           // Get height that will wrap snugly around rows
           var newHeight = ( rowCount * 310 ) + 1;
-          console.log( 'Used Height: ' + newHeight );
 
           // Get new top for #cover
           var newTop = ( availableHeight - newHeight) / 2;
@@ -360,48 +355,35 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
             'top': newTop + 'px'
           });
 
-          console.log( 'Done' );
         }
 
         $scope.iso.on( 'layoutComplete', function(){
+
           centerCover();
+
+          $('.cover-item').css({
+            'opacity':1
+          });
+
+          $rootScope.loaded = true;
+
         });
 
         $(window).on( 'resize', function(){
-          $timeout( function(){
-            centerCover();
-          });
+          centerCover();
         });
 
         $scope.iso.layout();
         
-        /*
-        var _scope = $scope;
-        $(window).resize( function(){
-          _scope.p.layout();
-          console.log('window resize');
-        });
-        */
-        $rootScope.loaded = true;
-
       };
 
       imagesLoaded( document.querySelector('#cover'), function(){
-        $timeout( initIsotope );
+        $timeout( 
+          function(){
+            initIsotope();
+          }, 350 
+        );
       });
-
-      /*
-      var initPackery = function() {
-        $scope.p = new Packery($cover, {layoutMode: 'horizontal', rowHeight:310})
-        $scope.p.unbindResize()
-        document.body.scrollWidth < 4000 ? $timeout(initPackery, 300) : ($scope.loaded = true)
-      }
-      $timeout(function() {
-        if(window.innerWidth > 320) initPackery()
-        if($rootScope.pageXOffset) { window.scrollTo($rootScope.pageXOffset, 0) }
-      }, 0)
-      */
-
     })
 
     $scope.random = function() {
@@ -515,7 +497,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         })
       })
       $scope.$$phase || $scope.$apply()
-      console.log( $scope.allNotes );
     }
 
     $scope.next = function(direction) {
