@@ -9,19 +9,22 @@
   bottom:3em;
   left:0;
   list-style:none;
-  padding:25px 0 0;
+  padding:0;
   overflow:auto;
   -webkit-overflow-scrolling:touch;
 
 }
 
 #cover {
-  position:relative;
-  height:100%;
-  width:100%;
+  @include transition( top 150ms ease );
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
   display:block;
+  padding:0 0 0 10px;
   margin:0;
-  padding:0 25px;
   overflow:auto;
   -webkit-overflow-scrolling:touch;
 }
@@ -41,7 +44,6 @@
     padding:15px;
     background-color:#fff;
     border:1px solid #999;
-
   }
 
   a {
@@ -50,7 +52,7 @@
 
   @media #{$medium} {
     height:300px;
-    margin:0 10px 10px 0;
+    margin:0 10px 0 0;
   }
 }
 

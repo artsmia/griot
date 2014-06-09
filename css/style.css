@@ -1,6 +1,5 @@
-/* Mixins */
-/* Media queries */
-/* Structure */
+/** Media queries, vendor prefixes, and base styles for frequently used elements. */
+/** Site and reusable element styles. */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 html, body { margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLegibility; -moz-font-feature-settings: "kern=0"; -webkit-font-feature-settings: "kern" 0; -o-font-feature-settings: "kern" 0; -ms-font-feature-settings: "kern" 0; font-feature-settings: "kern" 0; -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */ }
@@ -8,7 +7,7 @@ html, body { margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLeg
 @media screen and (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape), screen and (device-height: 480px) and (device-width: 320px) and (orientation: landscape) { body:after { position: absolute; display: block; top: 0; left: 0; width: 100%; height: 100%; text-align: center; margin-top: 150px; font-size: 1.2em; content: 'Please rotate your phone'; } }
 
 /* Container styles */
-.container { -webkit-transition: opacity 150ms ease; -moz-transition: opacity 150ms ease; -o-transition: opacity 150ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden; }
+.container { -webkit-transition: opacity 150ms ease; -moz-transition: opacity 150ms ease; -o-transition: opacity 150ms ease; position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
 @media screen and (device-height: 568px) and (device-width: 320px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape), screen and (device-height: 480px) and (device-width: 320px) and (orientation: landscape) { .container { opacity: 0; } }
 
 /* Fluid images */
@@ -116,14 +115,15 @@ html, body { background-color: #ededed; }
 
 .scrollable { -webkit-overflow-scrolling: touch; }
 
-.cover-wrapper { position: absolute; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 15px 0 0; overflow: auto; -webkit-overflow-scrolling: touch; }
+/** Styles for the cover page. */
+.cover-wrapper { position: absolute; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
 
-#cover { position: relative; height: 100%; width: 100%; display: block; margin: 0; padding: 0 25px; overflow: auto; -webkit-overflow-scrolling: touch; }
+#cover { -webkit-transition: top 150ms ease; -moz-transition: top 150ms ease; -o-transition: top 150ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: block; padding: 0 0 0 10px; margin: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
 
-.cover-item { display: block; vertical-align: top; margin: 0 auto 15px; height: auto; max-height: 300px; max-width: 100%; }
-.cover-item.story { max-width: 100%; width: 300px; height: 300px; max-height: 100%; padding: 15px; background-color: #fff; border: 1px solid #999; }
+.cover-item { display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; }
+.cover-item.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
 .cover-item a { text-decoration: none; }
-@media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 10px 10px 0; } }
+@media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 10px 0 0; } }
 
 .cover-item-image { display: block; max-height: 100%; margin: 0 auto; border: 1px solid #999; }
 
@@ -136,7 +136,7 @@ html, body { background-color: #ededed; }
 
 .cover-instructions { -webkit-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); position: absolute; display: block; bottom: 0; font-size: 1em; font-style: italic; text-align: center; width: 100%; height: 50px; line-height: 50px; vertical-align: middle; background-color: #ddd; }
 
-/* STORY MODE */
+/** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
 .object-content { -webkit-transition: left 125ms ease; -moz-transition: left 125ms ease; -o-transition: left 125ms ease; position: absolute; right: 0; bottom: 0; left: 0; max-height: 67%; padding: 15px; overflow-x: hidden; overflow-y: auto; background: -moz-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(237, 237, 237, 0)), color-stop(25%, rgba(237, 237, 237, 0.9)), color-stop(100%, rgba(237, 237, 237, 0.9))); background: -webkit-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -o-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -ms-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: linear-gradient(to bottom, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 ); z-index: 2; }
 .contentMinimized .object-content { padding: 0 15px 15px; }
@@ -238,7 +238,7 @@ html, body { background-color: #ededed; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
 
-/* STORY MODE */
+/** Story template styles. */
 /** Header */
 .story-title { position: absolute; display: block; top: 0; left: 0; height: 50px; width: 100%; margin: 0; background-color: #222; text-align: center; font-size: 1.3em; color: #fff; font-weight: 600; line-height: 50px; padding: 0 45px; overflow: hidden; }
 
@@ -289,6 +289,7 @@ html, body { background-color: #ededed; }
 .story-menu .toggle-content { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; position: relative; display: inline-block; margin: 0; border: 1px solid #ccc; z-index: 1; }
 @media screen and (min-width: 1024px) { .story-menu .toggle-content { position: absolute; display: block; top: 10px; right: 8px; } }
 
+/** Overrides for default Leaflet control-button styles. */
 .leaflet-top .leaflet-bar { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 
 .leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; margin: 0; line-height: 26px; vertical-align: middle; background-color: #222; color: #fff; border: 1px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }

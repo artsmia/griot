@@ -203,7 +203,7 @@ app.constant('envConfig', {
     return tileUrl.replace('http://0.', 'http://{s}.')
   },
 
-  // Content
+  // Location of content
   crashpad: 'http://new.artsmia.org/crashpad/griot/',
 
   // CDN for Goldweights audio (specific to MIA implementation)
@@ -316,7 +316,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         $scope.all = $rootScope.randomizedAll
       }
 
-      var initPackery = function() {
+      var initIsotope = function() {
 
         if( window.innerHeight > window.innerWidth ) {
           return;
@@ -324,17 +324,71 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
 
         var cover = document.querySelector('#cover');
 
-        $scope.p = new Packery( cover, {
-          layoutMode:'horizontal',
-          itemSelector:'.packery-item',
-          containerStyle:null
+        $scope.iso = new Isotope( cover, {
+          itemSelector:'.isotope-item',
+          layoutMode:'masonryHorizontal',
+          masonryHorizontal: {
+            rowHeight: 300,
+            gutter: 10
+          },
+          containerStyle: null,
+          isInitLayout: false
         });
 
+        var centerCover = function(){
+
+          console.log( 'Centering ...' )
+
+          // Get height of container
+          var availableHeight = $('.cover-wrapper').height();
+          console.log( 'Available Height: ' + availableHeight );
+
+          // Get number of rows - 300px plus 10px gutter.
+          var rowCount = Math.floor( availableHeight / 310 );
+          console.log( 'Row Count: ' + rowCount );
+
+          // Get height that will wrap snugly around rows
+          var newHeight = ( rowCount * 310 ) + 1;
+          console.log( 'Used Height: ' + newHeight );
+
+          // Get new top for #cover
+          var newTop = ( availableHeight - newHeight) / 2;
+
+          // Update cover height and top margin
+          $('#cover').css({
+            'height': newHeight + 'px',
+            'top': newTop + 'px'
+          });
+
+          console.log( 'Done' );
+        }
+
+        $scope.iso.on( 'layoutComplete', function(){
+          centerCover();
+        });
+
+        $(window).on( 'resize', function(){
+          $timeout( function(){
+            centerCover();
+          });
+        });
+
+        $scope.iso.layout();
+        
+        /*
+        var _scope = $scope;
+        $(window).resize( function(){
+          _scope.p.layout();
+          console.log('window resize');
+        });
+        */
         $rootScope.loaded = true;
 
       };
 
-      typeof $rootScope.loaded == 'undefined' ? $timeout( initPackery, 750 ) : $timeout( initPackery, 0 );
+      imagesLoaded( document.querySelector('#cover'), function(){
+        $timeout( initIsotope );
+      });
 
       /*
       var initPackery = function() {
