@@ -218,6 +218,7 @@ app.constant('envConfig', {
   miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
 
 });
+
 },{}],4:[function(require,module,exports){
 app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
@@ -294,15 +295,15 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
  * Controller for cover page (index template).
  */
  
-app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter',
-  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce',
+  function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce) {
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
-      console.log( data );
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
         $scope.stories = data.stories
+        $scope.panels = data.panels
         var all = []
         angular.forEach($scope.objects, function(object) { 
           if( object ) {
@@ -314,10 +315,25 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
             all.push(story);
           }
         });
+        angular.forEach($scope.panels, function(panel) {
+          if( panel && panel.position == 'random' ) {
+            all.push(panel);
+          }
+        })
         $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
       } else {
         $scope.all = $rootScope.randomizedAll
       }
+
+      angular.forEach( $scope.panels, function(panel) {
+        panel.trustedContent = $sce.trustAsHtml( panel.content );
+        if( panel && panel.position == 'start' ) {
+          $scope.all.unshift( panel );
+        }
+        else if( panel && panel.position == 'end' ) {
+          $scope.all.push( panel );
+        }
+      })
 
       var initIsotope = function() {
 

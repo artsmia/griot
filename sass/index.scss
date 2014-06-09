@@ -47,6 +47,34 @@
     border:1px solid #999;
   }
 
+  &.panel{
+    padding:15px;
+    background-color:#fff;
+    border:1px solid #999;
+    max-width:100%;
+    max-height:100%;
+  }
+
+  &.panel-big{
+    width:610px;
+    height:610px;
+  }
+
+  &.panel-portrait{
+    width:300px;
+    height:610px;
+  }
+
+  &.panel-landscape{
+    width:610px;
+    height:300px;
+  }
+
+  &.panel-small{
+    width:300px;
+    height:300px;
+  }
+
   a {
     text-decoration:none;
   }
@@ -91,6 +119,10 @@
   margin:0;
   padding:10px;
 } 
+
+.cover-panel-wrap{
+  height:100%;
+}
 
 .cover-instructions {
   @include box-shadow(0 -3px 5px rgba(0,0,0,0.23));

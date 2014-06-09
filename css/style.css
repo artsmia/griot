@@ -122,6 +122,11 @@ html, body { background-color: #ededed; }
 
 .cover-item { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; opacity: 0; }
 .cover-item.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
+.cover-item.panel { padding: 15px; background-color: #fff; border: 1px solid #999; max-width: 100%; max-height: 100%; }
+.cover-item.panel-big { width: 610px; height: 610px; }
+.cover-item.panel-portrait { width: 300px; height: 610px; }
+.cover-item.panel-landscape { width: 610px; height: 300px; }
+.cover-item.panel-small { width: 300px; height: 300px; }
 .cover-item a { text-decoration: none; }
 @media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 10px 0 0; } }
 
@@ -133,6 +138,8 @@ html, body { background-color: #ededed; }
 .cover-item-poster { width: 100%; height: 200px; background-size: cover; background-position: 50% 50%; border: 1px solid #999; }
 
 .cover-item-caption { position: relative; height: 85px; margin: 0; padding: 10px; }
+
+.cover-panel-wrap { height: 100%; }
 
 .cover-instructions { -webkit-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.23); position: absolute; display: block; bottom: 0; font-size: 1em; font-style: italic; text-align: center; width: 100%; height: 50px; line-height: 50px; vertical-align: middle; background-color: #ddd; }
 
