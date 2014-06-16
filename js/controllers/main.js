@@ -67,7 +67,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
           var availableHeight = $('.cover-wrapper').height();
 
           // Get number of rows - 300px plus 10px gutter.
-          var rowCount = Math.floor( availableHeight / 310 );
+          var rowCount = Math.floor( availableHeight / 310 ) || 1;
 
           // Get height that will wrap snugly around rows
           var newHeight = ( rowCount * 310 ) + 1;
@@ -100,7 +100,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         });
 
         $scope.iso.layout();
-        
+
       };
 
       imagesLoaded( document.querySelector('#cover'), function(){
