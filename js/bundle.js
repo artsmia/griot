@@ -717,7 +717,11 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     }
     $scope.backToObject=function(){
       $rootScope.nextView = 'more'
-      history.go(-1);
+      if(history.length > 1) {
+        history.back();
+      } else {
+        window.location = window.location.origin + window.location.pathname
+      }
     }
   }
 ])
