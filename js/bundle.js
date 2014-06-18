@@ -335,8 +335,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
         }
       })
 
-      $scope.hideInstructions = false;
-
       var initIsotope = function() {
 
         if( window.innerHeight > window.innerWidth ) {
@@ -396,12 +394,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
 
         $scope.iso.layout();
 
-        if( $('.cover-wrapper').width() < 570 ) {
-          $(window).on( 'touchmove', function(){
-            $scope.hideInstructions = true;
-          });
-        }
-        
       };
 
       imagesLoaded( document.querySelector('#cover'), function(){
