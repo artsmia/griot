@@ -817,12 +817,14 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
       })
 
       // TODO: get this working better
-      // scope.$on('viewChanged', function() {
-      //   scope.zoom.map.on('zoomedBeyondMin', function(e) {
-      //     if(scope.$parent && scope.$parent.changeZoomerForViews)
-      //       scope.$parent.changeZoomerForViews(this, scope)
-      //   })
-      // })
+      scope.$on('viewChanged', function() {
+        console.log('setting zoom out to see views')
+        scope.zoom.map.on('zoomedBeyondMin', function(e) {
+          console.log('zoomedBeyondMin', scope.$parent.changeZoomerForViews)
+          if(scope.$parent && scope.$parent.changeZoomerForViews)
+            scope.$parent.changeZoomerForViews(this, scope)
+        })
+      })
 
       return {
         loadImage: loadImage,
@@ -915,6 +917,8 @@ app.directive('note', function(segmentio) {
         }
         if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
+        // The active marker goes to the SW (lower-left) corner of bounds
+        // inactive markers, center of bounds
         var layer = scope.jsonLayer, index = 0
         eachLayer(layer, function(_layer) {
           scope.markers[index].setLatLng(newVal ? _layer._latlngs[0] : _layer.getBounds().getCenter())

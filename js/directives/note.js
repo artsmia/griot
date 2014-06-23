@@ -72,6 +72,8 @@ app.directive('note', function(segmentio) {
         }
         if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
+        // The active marker goes to the SW (lower-left) corner of bounds
+        // inactive markers, center of bounds
         var layer = scope.jsonLayer, index = 0
         eachLayer(layer, function(_layer) {
           scope.markers[index].setLatLng(newVal ? _layer._latlngs[0] : _layer.getBounds().getCenter())

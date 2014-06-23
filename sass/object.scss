@@ -448,3 +448,26 @@
   margin: -18px 0 0 -18px;
   line-height:34px;
 }
+
+.flatmap > div:first-child {
+  position: absolute;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: rgba(22, 22, 22, .55);
+}
+.flatmap .view img {
+  width: 33.3% !important;
+  float: left;
+}
+.flatmap .view {
+  display: none;
+}
+.showAllViews .flatmap .view {
+  display: inline;
+  min-height: 3em;
+}
+// .showAllViews .flatmap [class^=leaflet-] {
+//   opacity: 0;
+//   display: none;
+// }

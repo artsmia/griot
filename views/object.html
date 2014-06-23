@@ -1,10 +1,13 @@
-<article id='object' ng-class='{contentMinimized: contentMinimized}'>
+<article id='object' ng-class='{contentMinimized: contentMinimized, showAllViews: showViews}'>
 
   <!-- Zoomer -->
   <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations'}">
     <flatmap image="{{id}}">
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
+        <a class="view" ng-click="activateView(view)">
+          <img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg">
+        </a>
       </div>
     </flatmap>
   </div>
