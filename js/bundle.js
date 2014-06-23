@@ -206,7 +206,7 @@ app.constant('envConfig', {
   },
 
   // Location of content
-  crashpad: 'http://new.artsmia.org/crashpad/griot/',
+  crashpad: 'http://author.loc/griot/',
 
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
@@ -512,6 +512,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
               // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
               att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
             }
+            att.trustedDescription = $sce.trustAsHtml(att.description);
             $scope.allAttachments.push( att );
           })
 
