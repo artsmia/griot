@@ -301,7 +301,9 @@ html, body { background-color: #ededed; }
 /** Overrides for default Leaflet control-button styles. */
 .leaflet-top .leaflet-bar { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 
-.leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; margin: 0; line-height: 26px; vertical-align: middle; background-color: #222; color: #fff; border: 1px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }
+.leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; margin: 0; line-height: 26px; vertical-align: middle; background-color: rgba(22, 22, 22, 0.55); color: #fff; border: 1px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }
+
+.leaflet-bar a:last-child { border-width: 0 1px 1px 1px; }
 
 .leaflet-bar a.leaflet-control-zoom-in { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; border-top-left-radius: 1000px; border-top-right-radius: 1000px; }
 .leaflet-bar a.leaflet-control-zoom-in:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e815"; }
