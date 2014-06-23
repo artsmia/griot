@@ -79,6 +79,10 @@
 		}
 	}
 }
+.contentMinimized .object-maximize-content {
+  background-color: rgba(22, 22, 22, .55);
+}
+
 .object-menu .toggle-meta {
 	@extend .meta-icon;
 	position:relative;
@@ -219,9 +223,9 @@
 	color:#fff;
 	background-color:#222;
 	border-radius:1000px;
-	border:1px solid #fff;
+	border:2px solid #fff;
 	text-align:center;
-	line-height:28px;
+	line-height:26px;
 	font-size:1.125rem;
 }
 .annotation-content{
@@ -430,12 +434,12 @@
   margin: -15px 0 0 -15px;
   padding: 0;
   border-radius: 1000px;
-  border: 1px solid #fff;
+  border: 2px solid #fff;
   font-weight: bold;
   text-align: center;
   font-size: 1.125rem;
-  background-color: #222;
-  line-height:28px;
+  background-color: rgba(22, 22, 22, .55);
+  line-height:26px;
   vertical-align:middle;
 }
 .noteMarker:hover span{

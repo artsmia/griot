@@ -61,18 +61,18 @@ html, body { background-color: #ededed; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e802"; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { color: #fff; font-size: 18px; margin-top: -9px; }
 
-.minimize-icon, .object-minimize-content, .story-menu .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: margin-top 100ms linear; -moz-transition: margin-top 100ms linear; -o-transition: margin-top 100ms linear; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 1px solid #fff; cursor: pointer; }
+.minimize-icon, .object-minimize-content, .story-menu .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: margin-top 100ms linear; -moz-transition: margin-top 100ms linear; -o-transition: margin-top 100ms linear; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
 .minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
 .minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before { color: #fff; font-size: 20px; margin-top: -10px; }
 .contentMinimized .minimize-icon, .contentMinimized .object-minimize-content, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
 .contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { font-size: 20px; margin-top: -10px; }
 
-.maximize-icon, .object-maximize-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 1px solid #fff; cursor: pointer; }
+.maximize-icon, .object-maximize-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
 .maximize-icon:before, .object-maximize-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
 .maximize-icon:before, .object-maximize-content:before { color: #fff; font-size: 20px; margin-top: -10px; }
 
-.meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 1px solid #fff; }
+.meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 2px solid #fff; }
 .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e813"; }
 .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { color: #fff; font-size: 20px; margin-top: -10px; }
 .meta-icon.open, .object-menu .open.toggle-meta, .open.attachment-toggle-meta, .showAttachmentMeta .meta-icon, .showAttachmentMeta .object-menu .toggle-meta, .object-menu .showAttachmentMeta .toggle-meta, .showAttachmentMeta .attachment-toggle-meta { background-color: #fff; border-color: #222; }
@@ -106,7 +106,7 @@ html, body { background-color: #ededed; }
   .return-icon.nav-button-left, .attachment-big .return-link, .nav-button-left.story-return, .story-return.story-prev-page, .return-icon.story-prev-page { border-right: 1px solid #222; }
   .return-icon.nav-button-right, .attachment-big .nav-button-right.return-link, .attachment-big .return-link.story-next-page, .nav-button-right.story-return, .story-return.story-next-page, .return-icon.story-next-page { border-left: 1px solid #222; } }
 
-.fullscreen-icon { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 1px solid #fff; border-radius: 1000px; z-index: 1001; }
+.fullscreen-icon { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 2px solid #fff; border-radius: 1000px; z-index: 1001; }
 .fullscreen-icon:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
 .fullscreen-icon:before { color: #fff; font-size: 16px; margin-top: -8px; }
 .contentMinimized .fullscreen-icon { background-color: #fff; border-color: #222; font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; }
@@ -161,6 +161,8 @@ html, body { background-color: #ededed; }
 .object-maximize-content { -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; -o-transition: all 150ms ease; position: absolute; top: 15px; left: -100px; width: 40px; height: 40px; z-index: 2; }
 @media screen and (min-width: 1024px) { .contentMinimized .object-maximize-content { left: 15px; } }
 
+.contentMinimized .object-maximize-content { background-color: rgba(22, 22, 22, 0.55); }
+
 .object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 10px 0 0; }
 
 .object-title { margin: 5px 0 0; }
@@ -195,7 +197,7 @@ html, body { background-color: #ededed; }
 
 .annotation-title { margin: 0 0 0 40px; cursor: pointer; }
 
-.annotation-index { position: absolute; display: block; top: 0; left: 0; width: 30px; height: 30px; margin-right: 10px; color: #fff; background-color: #222; border-radius: 1000px; border: 1px solid #fff; text-align: center; line-height: 28px; font-size: 1.125rem; }
+.annotation-index { position: absolute; display: block; top: 0; left: 0; width: 30px; height: 30px; margin-right: 10px; color: #fff; background-color: #222; border-radius: 1000px; border: 2px solid #fff; text-align: center; line-height: 26px; font-size: 1.125rem; }
 
 .annotation-content { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; max-height: 0; overflow: hidden; }
 .annotation.active .annotation-content { max-height: 500px; }
@@ -243,7 +245,7 @@ html, body { background-color: #ededed; }
 
 .noteMarker { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; padding: 3em; margin: -3em !important; text-align: center; font-family: 'Source Sans Pro', sans-serif; font-weight: bold; font-size: 1em; color: #fff; z-index: 1000000 !important; }
 
-.noteMarker span { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; display: block; height: 30px; width: 30px; margin: -15px 0 0 -15px; padding: 0; border-radius: 1000px; border: 1px solid #fff; font-weight: bold; text-align: center; font-size: 1.125rem; background-color: #222; line-height: 28px; vertical-align: middle; }
+.noteMarker span { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; display: block; height: 30px; width: 30px; margin: -15px 0 0 -15px; padding: 0; border-radius: 1000px; border: 2px solid #fff; font-weight: bold; text-align: center; font-size: 1.125rem; background-color: rgba(22, 22, 22, 0.55); line-height: 26px; vertical-align: middle; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
 
@@ -301,7 +303,9 @@ html, body { background-color: #ededed; }
 /** Overrides for default Leaflet control-button styles. */
 .leaflet-top .leaflet-bar { -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; }
 
-.leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; margin: 0; line-height: 26px; vertical-align: middle; background-color: #222; color: #fff; border: 1px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }
+.leaflet-bar a, .leaflet-bar a:first-child, .leaflet-bar a:last-child { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 30px; height: 30px; margin: 0; line-height: 26px; vertical-align: middle; background-color: rgba(22, 22, 22, 0.55); color: #fff; border: 2px solid #fff; text-indent: -60px; overflow: hidden; position: relative; }
+
+.leaflet-bar a:last-child { border-width: 0 2px 2px 2px; }
 
 .leaflet-bar a.leaflet-control-zoom-in { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; border-top-left-radius: 1000px; border-top-right-radius: 1000px; }
 .leaflet-bar a.leaflet-control-zoom-in:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e815"; }
