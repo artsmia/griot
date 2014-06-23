@@ -458,7 +458,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
-    $scope.contentMinimized = false;
+    $scope.contentMinimized = window.outerWidth < 1024;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
