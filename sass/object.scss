@@ -79,6 +79,10 @@
 		}
 	}
 }
+.contentMinimized .object-maximize-content {
+  background-color: rgba(22, 22, 22, .55);
+}
+
 .object-menu .toggle-meta {
 	@extend .meta-icon;
 	position:relative;
