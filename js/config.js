@@ -11,7 +11,7 @@ app.constant('envConfig', {
   },
 
   // Location of content
-  crashpad: 'http://author.loc/griot/',
+  crashpad: 'http://new.artsmia.org/crashpad/griot/',
 
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
