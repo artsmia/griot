@@ -1,5 +1,6 @@
 default: sass browserify
 
+.PHONY: sass
 sass:
 	sass --watch -t compact sass/all.scss:css/style.css
 
