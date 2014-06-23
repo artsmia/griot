@@ -62,6 +62,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
               // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
               att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
             }
+            att.trustedDescription = $sce.trustAsHtml(att.description);
             $scope.allAttachments.push( att );
           })
 
