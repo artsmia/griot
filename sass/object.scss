@@ -363,7 +363,8 @@
   transition:all 250ms linear;
   text-decoration: none;
 
-  @media #{$large} {
+  // TODO: Target non-touch devices
+  @media screen and (min-width:1025px) {
 	  &:hover {
 	  	color:#ededed;
 	  	background-color:#222;
