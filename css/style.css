@@ -161,6 +161,8 @@ html, body { background-color: #ededed; }
 .object-maximize-content { -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; -o-transition: all 150ms ease; position: absolute; top: 15px; left: -100px; width: 40px; height: 40px; z-index: 2; }
 @media screen and (min-width: 1024px) { .contentMinimized .object-maximize-content { left: 15px; } }
 
+.contentMinimized .object-maximize-content { background-color: rgba(22, 22, 22, 0.55); }
+
 .object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 10px 0 0; }
 
 .object-title { margin: 5px 0 0; }
