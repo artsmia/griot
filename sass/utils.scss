@@ -2,9 +2,8 @@
  * Media queries, vendor prefixes, and base styles for frequently used elements.
  */
 
+$landscape:'screen and (orientation:landscape)';
 $medium:'screen and (min-width:1024px)';
-// TODO: Less dumb method to detect 'non-tablet'
-$large:'screen and (min-width:1025px)';
 
 @mixin box-sizing( $params ) {
   -webkit-box-sizing:$params;
