@@ -5,29 +5,35 @@
 /**
  * Content - "Above the Fold" (Controls and Meta)
  */
-.object-content{
-	@include transition( left 125ms ease );
+.object-content-frame{
+	@include transition( top 125ms ease, left 125ms ease, opacity 400ms 200ms ease );
+	@include box-shadow( 0 -5px 10px rgba(0,0,0,0.13) );
 	position:absolute;
 	right:0;
-	bottom:0;
+	top:60px;
 	left:0;
-	max-height:67%;
-	padding:15px;
-	overflow-x:hidden;
-	overflow-y:auto;
-	background: -moz-linear-gradient(top,  rgba(237,237,237,0) 0%, rgba(237,237,237,0.9) 25%, rgba(237,237,237,0.9) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,237,237,0)), color-stop(25%,rgba(237,237,237,0.9)), color-stop(100%,rgba(237,237,237,0.9)));
-	background: -webkit-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: -o-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: -ms-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: linear-gradient(to bottom,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 );
+	width:100%;
+	max-width:25rem;
+	bottom:0;
+	padding:0 15px;
 	z-index:2;
+	background-color:#ededed;
 
 	.contentMinimized &{
-		padding:0 15px 15px;
+		top:80%;
 	}
 
+	@media #{$landscape} {
+		@include box-shadow( 5px 0 10px rgba(0,0,0,0.13) );
+		top:0;
+		left:0;
+
+		.contentMinimized &{
+			top:0;
+			left:-25rem;
+		}
+	}
+	/*
 	@media #{$medium} {
 		top:0;
 		right:auto;
@@ -42,7 +48,55 @@
 			overflow:visible;
 		}
 	}
+	*/
 }
+
+.object-minimize-content {
+	@include transition( top 125ms ease );
+	@include icon( '\e814' );
+	position:absolute;
+	display:block;
+	top:-50px;
+	left:50%;
+	margin:0 0 0 -25px;
+	width:50px;
+	height:50px;
+	background-color:rgba(22,22,22,0.55);
+	border:2px solid #ededed;
+	border-bottom-width:0;
+
+	&:before{
+		color:#fff;
+	}
+
+	@media #{$landscape} {
+		top:50%;
+		right:0;
+		margin:-25px 0 0 0;
+		right:-50px;
+		left:auto;
+		border-bottom-width:2px;
+		border-left-width:0;
+
+		.contentMinimized &{
+			right:-50px;
+		}
+	}
+}
+
+.object-content{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	margin:0 auto;
+	background-color:#ededed;
+	padding:15px;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
 .object-menu {
 	display:block;
 	height:40px;
@@ -54,30 +108,7 @@
   position:relative;
   display:block;
   float:left;
- 	margin:0 10px 0 0;
-}
-.object-minimize-content {
-	@extend .minimize-icon;
-	position:relative;
-	display:block;
-	float:left;
-	margin:0 10px 0 0;
-}
-.object-maximize-content {
-	@include transition( all 150ms ease );
-	@extend .maximize-icon;
-	position:absolute;
-	top:15px;
-	left: -100px;
-	width:40px;
-	height:40px;
-	z-index:2;
-
-	@media #{$medium} {
-		.contentMinimized & {
-			left: 15px;
-		}
-	}
+ 	margin:0 5px 0 0;
 }
 .contentMinimized .object-maximize-content {
   background-color: rgba(22, 22, 22, .55);
@@ -205,6 +236,7 @@
 	padding:0;
 }
 .annotation{
+	@include no-select;
 	padding:0 0 15px 0;
 	position:relative;
 }
@@ -377,30 +409,22 @@
  * Zoomer
  */
 .object-zoomer {
-	@include transition( bottom 125ms ease, left 125ms ease );
 	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
+	@include transition( opacity 125ms ease );
 	position:absolute;
 	top:0;
 	right:0;
-	bottom:67%;
+	bottom:0;
 	left:0;
 	background-color:#ccc;
 	text-align:center;
 	z-index:2;
 	
-	.contentMinimized &{
-		bottom:0;
-	}
-
 	@media #{$medium} {
 		top:0;
 		right:0;
 		bottom:0;
 		left:33%;
-
-		.contentMinimized &{
-			left:0;
-		}
 	}
 }
 

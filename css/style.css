@@ -1,4 +1,6 @@
 /** Media queries, vendor prefixes, and base styles for frequently used elements. */
+.transparentized { -webkit-transition: opacity 400ms 200ms ease; -moz-transition: opacity 400ms 200ms ease; -o-transition: opacity 400ms 200ms ease; opacity: 0.05 !important; }
+
 /** Site and reusable element styles. */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
@@ -58,16 +60,16 @@ html, body { background-color: #ededed; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e802"; }
 .home-icon:before, .object-home-link:before, .story-home-link:before { color: #fff; font-size: 18px; margin-top: -9px; }
 
-.minimize-icon, .object-minimize-content, .story-menu .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: margin-top 100ms linear; -moz-transition: margin-top 100ms linear; -o-transition: margin-top 100ms linear; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
-.minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
-.minimize-icon:before, .object-minimize-content:before, .story-menu .toggle-content:before { color: #fff; font-size: 20px; margin-top: -10px; }
-.contentMinimized .minimize-icon, .contentMinimized .object-minimize-content, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
-.contentMinimized .minimize-icon:before, .contentMinimized .object-minimize-content:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { font-size: 20px; margin-top: -10px; }
+.minimize-icon, .story-menu .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: margin-top 100ms linear; -moz-transition: margin-top 100ms linear; -o-transition: margin-top 100ms linear; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
+.minimize-icon:before, .story-menu .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e801"; }
+.minimize-icon:before, .story-menu .toggle-content:before { color: #fff; font-size: 20px; margin-top: -10px; }
+.contentMinimized .minimize-icon, .contentMinimized .story-menu .toggle-content, .story-menu .contentMinimized .toggle-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.contentMinimized .minimize-icon:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
+.contentMinimized .minimize-icon:before, .contentMinimized .story-menu .toggle-content:before, .story-menu .contentMinimized .toggle-content:before { font-size: 20px; margin-top: -10px; }
 
-.maximize-icon, .object-maximize-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
-.maximize-icon:before, .object-maximize-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
-.maximize-icon:before, .object-maximize-content:before { color: #fff; font-size: 20px; margin-top: -10px; }
+.maximize-icon { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; width: 40px; height: 40px; border-radius: 1000px; background-color: #222; border: 2px solid #fff; cursor: pointer; }
+.maximize-icon:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e800"; }
+.maximize-icon:before { color: #fff; font-size: 20px; margin-top: -10px; }
 
 .meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 2px solid #fff; }
 .meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e813"; }
@@ -144,19 +146,37 @@ html, body { background-color: #ededed; }
 
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
-.object-content { -webkit-transition: left 125ms ease; -moz-transition: left 125ms ease; -o-transition: left 125ms ease; position: absolute; right: 0; bottom: 0; left: 0; max-height: 67%; padding: 15px; overflow-x: hidden; overflow-y: auto; background: -moz-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(237, 237, 237, 0)), color-stop(25%, rgba(237, 237, 237, 0.9)), color-stop(100%, rgba(237, 237, 237, 0.9))); background: -webkit-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -o-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: -ms-linear-gradient(top, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); background: linear-gradient(to bottom, rgba(237, 237, 237, 0) 0%, rgba(237, 237, 237, 0.9) 25%, rgba(237, 237, 237, 0.9) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 ); z-index: 2; }
-.contentMinimized .object-content { padding: 0 15px 15px; }
-@media screen and (min-width: 1024px) { .object-content { top: 0; right: auto; bottom: 0; left: 0; width: 33%; max-height: none; }
-  .contentMinimized .object-content { padding: 15px; left: -33%; overflow: visible; } }
+.object-content-frame { -webkit-transition: top 125ms ease, left 125ms ease, opacity 400ms 200ms ease; -moz-transition: top 125ms ease, left 125ms ease, opacity 400ms 200ms ease; -o-transition: top 125ms ease, left 125ms ease, opacity 400ms 200ms ease; -webkit-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); position: absolute; right: 0; top: 60px; left: 0; width: 100%; max-width: 25rem; bottom: 0; padding: 0 15px; z-index: 2; background-color: #ededed; 	/*
+	@media screen and (min-width:1024px) {
+		top:0;
+		right:auto;
+		bottom:0;
+		left:0;
+		width:33%;
+		max-height:none;
+
+		.contentMinimized &{
+			padding:15px;
+			left:-33%;
+			overflow:visible;
+		}
+	}
+	*/ }
+.contentMinimized .object-content-frame { top: 80%; }
+@media screen and (orientation: landscape) { .object-content-frame { -webkit-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); top: 0; left: 0; }
+  .contentMinimized .object-content-frame { top: 0; left: -25rem; } }
+
+.object-minimize-content { -webkit-transition: top 125ms ease; -moz-transition: top 125ms ease; -o-transition: top 125ms ease; font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; position: absolute; display: block; top: -50px; left: 50%; margin: 0 0 0 -25px; width: 50px; height: 50px; background-color: rgba(22, 22, 22, 0.55); border: 2px solid #ededed; border-bottom-width: 0; }
+.object-minimize-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e814"; }
+.object-minimize-content:before { color: #fff; }
+@media screen and (orientation: landscape) { .object-minimize-content { top: 50%; right: 0; margin: -25px 0 0 0; right: -50px; left: auto; border-bottom-width: 2px; border-left-width: 0; }
+  .contentMinimized .object-minimize-content { right: -50px; } }
+
+.object-content { position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: 0 auto; background-color: #ededed; padding: 15px; overflow-x: hidden; overflow-y: auto; }
 
 .object-menu { display: block; height: 40px; margin: 0; padding: 0; }
 
-.object-home-link { position: relative; display: block; float: left; margin: 0 10px 0 0; }
-
-.object-minimize-content { position: relative; display: block; float: left; margin: 0 10px 0 0; }
-
-.object-maximize-content { -webkit-transition: all 150ms ease; -moz-transition: all 150ms ease; -o-transition: all 150ms ease; position: absolute; top: 15px; left: -100px; width: 40px; height: 40px; z-index: 2; }
-@media screen and (min-width: 1024px) { .contentMinimized .object-maximize-content { left: 15px; } }
+.object-home-link { position: relative; display: block; float: left; margin: 0 5px 0 0; }
 
 .contentMinimized .object-maximize-content { background-color: rgba(22, 22, 22, 0.55); }
 
@@ -190,7 +210,7 @@ html, body { background-color: #ededed; }
 /** Content - Details/Annotations */
 .object-details { list-style: none; padding: 0; }
 
-.annotation { padding: 0 0 15px 0; position: relative; }
+.annotation { -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-user-drag: none; padding: 0 0 15px 0; position: relative; }
 
 .annotation-title { margin: 0 0 0 40px; cursor: pointer; }
 
@@ -231,10 +251,8 @@ html, body { background-color: #ededed; }
 @media screen and (min-width: 1025px) { .object-related a:hover { color: #ededed; background-color: #222; } }
 
 /** Zoomer */
-.object-zoomer { -webkit-transition: bottom 125ms ease, left 125ms ease; -moz-transition: bottom 125ms ease, left 125ms ease; -o-transition: bottom 125ms ease, left 125ms ease; -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); position: absolute; top: 0; right: 0; bottom: 67%; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
-.contentMinimized .object-zoomer { bottom: 0; }
-@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; }
-  .contentMinimized .object-zoomer { left: 0; } }
+.object-zoomer { -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -webkit-transition: opacity 125ms ease; -moz-transition: opacity 125ms ease; -o-transition: opacity 125ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
+@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; } }
 
 /* Zoomer - Markers */
 .leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
