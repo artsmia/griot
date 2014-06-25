@@ -190,7 +190,8 @@ require('./controllers/goldweights')
 require('./directives/flatmap')
 require('./directives/note')
 require('./directives/vcenter')
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/flatmap":9,"./directives/note":10,"./directives/vcenter":11,"./factories":12,"./routes":13}],3:[function(require,module,exports){
+require('./directives/transparentize')
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/flatmap":9,"./directives/note":10,"./directives/transparentize":11,"./directives/vcenter":12,"./factories":13,"./routes":14}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -456,7 +457,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
-    $scope.contentMinimized = false;
+    $scope.contentMinimized = window.outerWidth < 1024;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -616,7 +617,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
     $scope.toggleMinimizeContent = function() {
       $scope.contentMinimized = !$scope.contentMinimized;
-      setTimeout( Zoomer.windowResized, 125);
+      //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
   }
 ])
@@ -942,6 +943,29 @@ app.directive('note', function(segmentio) {
 
 },{}],11:[function(require,module,exports){
 /**
+ * Turn a parent element transparent on touchstart.
+ */
+
+app.directive( 'transparentize', function(){
+
+	return function( scope, elem, attrs ) {
+
+		var $target = jQuery( attrs.transparentize );
+
+		elem.on( 'touchstart', function(){
+			$target.addClass('transparentized');
+		});
+
+		elem.on( 'touchmove touchend', function(e){
+			$target.removeClass('transparentized');
+			e.preventDefault();
+		});
+
+	}
+
+});
+},{}],12:[function(require,module,exports){
+/**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
  */
@@ -980,7 +1004,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1002,7 +1026,7 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Application routing
  */

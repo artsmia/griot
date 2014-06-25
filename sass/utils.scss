@@ -34,6 +34,15 @@ $medium:'screen and (min-width:1024px)';
   -ms-transform-origin:$params;
   transform-origin:$params;
 }
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 @mixin label{
   color:#222;
   font-size:0.8em;
@@ -64,4 +73,8 @@ $medium:'screen and (min-width:1024px)';
     font-size:24px;
     content: $content;
   }
+}
+.transparentized{
+  @include transition( opacity 400ms 200ms ease );
+  opacity: 0.05 !important;
 }

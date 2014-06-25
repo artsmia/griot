@@ -8,7 +8,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
-    $scope.contentMinimized = false;
+    $scope.contentMinimized = window.outerWidth < 1024;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -168,7 +168,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
     $scope.toggleMinimizeContent = function() {
       $scope.contentMinimized = !$scope.contentMinimized;
-      setTimeout( Zoomer.windowResized, 125);
+      //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
   }
 ])
