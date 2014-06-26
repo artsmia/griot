@@ -249,13 +249,20 @@ html, body { background-color: #ededed; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
 
-.flatmap > div:first-child { position: absolute; bottom: 0; z-index: 100; width: 100%; background-color: rgba(22, 22, 22, 0.55); }
+.object-zoomer .flatmap > div:first-child { z-index: 100; width: 100%; }
 
-.flatmap .view img { width: 33.3% !important; float: left; }
+.object-zoomer .flatmap .view { margin-left: -100em; -webkit-transition: margin 125ms ease-out; -moz-transition: margin 125ms ease-out; -o-transition: margin 125ms ease-out; }
 
-.flatmap .view { display: none; }
+.showAllViews .object-zoomer .flatmap .view { display: inline; min-height: 3em; margin-left: 0; -webkit-transition: margin 125ms ease; -moz-transition: margin 125ms ease; -o-transition: margin 125ms ease; }
 
-.showAllViews .flatmap .view { display: inline; min-height: 3em; }
+.object-zoomer .flatmap .leaflet-map-pane { -webkit-transition: -webkit-transform 250ms ease-out; -moz-transition: -webkit-transform 250ms ease-out; -o-transition: -webkit-transform 250ms ease-out; }
+
+.showAllViews .object-zoomer .flatmap .leaflet-map-pane { -webkit-transform: scale(0.25) translateX(-1000px) !important; }
+
+.more-views a, a.view { height: 8em; width: 33.3%; background-size: cover; background-position: 50% 15%; display: block; float: left; }
+.more-views a.open, .more-views a:hover, a.view.open, a.view:hover { border-bottom: 1px solid gold; margin-bottom: -1px; }
+
+.object-zoomer .flatmap a.view { height: 17em; }
 
 /** Story template styles. */
 /** Header */

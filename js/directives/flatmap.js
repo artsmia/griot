@@ -97,9 +97,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
 
       // TODO: get this working better
       scope.$on('viewChanged', function() {
-        console.log('setting zoom out to see views')
         scope.zoom.map.on('zoomedBeyondMin', function(e) {
-          console.log('zoomedBeyondMin', scope.$parent.changeZoomerForViews)
           if(scope.$parent && scope.$parent.changeZoomerForViews)
             scope.$parent.changeZoomerForViews(this, scope)
         })

@@ -132,6 +132,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
     }
@@ -148,7 +149,8 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.showViews = false
       $scope.activeView = view
       $scope.deactivateAllNotes()
-      $scope.$broadcast('changeView', view)
+
+      $scope.flatmapScope.$broadcast('changeView', view)
     }
     $scope.activateViewAndShowFirstAnnotation = function(view) {
       $scope.activateView(view)

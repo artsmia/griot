@@ -580,6 +580,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
     }
@@ -596,7 +597,8 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.showViews = false
       $scope.activeView = view
       $scope.deactivateAllNotes()
-      $scope.$broadcast('changeView', view)
+
+      $scope.flatmapScope.$broadcast('changeView', view)
     }
     $scope.activateViewAndShowFirstAnnotation = function(view) {
       $scope.activateView(view)
@@ -818,9 +820,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
 
       // TODO: get this working better
       scope.$on('viewChanged', function() {
-        console.log('setting zoom out to see views')
         scope.zoom.map.on('zoomedBeyondMin', function(e) {
-          console.log('zoomedBeyondMin', scope.$parent.changeZoomerForViews)
           if(scope.$parent && scope.$parent.changeZoomerForViews)
             scope.$parent.changeZoomerForViews(this, scope)
         })
