@@ -13,33 +13,24 @@
 	right:0;
 	bottom:0;
 	width:100%;
-	max-width:25rem;
+	max-width:24rem;
 	padding:0 15px;
 	z-index:2;
 	background-color:#ededed;
 
-	@media #{$landscape} {
+	@media #{$small} {
 		@include box-shadow( 5px 0 10px rgba(0,0,0,0.13) );
 		top:0;
 		right:auto;
 		left:-25rem;
 	}
-	/*
+
 	@media #{$medium} {
 		top:0;
 		right:auto;
 		bottom:0;
 		left:0;
-		width:33%;
-		max-height:none;
-
-		.contentMinimized &{
-			padding:15px;
-			left:-33%;
-			overflow:visible;
-		}
 	}
-	*/
 }
 
 .object-minimize-content {
@@ -62,7 +53,7 @@
 	right:0;
 	z-index:1;
 
-	@media #{$portrait}{
+	@media #{$smallPortrait}{
 		&.attached{
 			position:absolute;
 			top:0;
@@ -71,19 +62,24 @@
 		}
 	}
 
-	@media #{$landscape} {
+	@media #{$small} {
 		&:before{
 			@include transform( rotate( 90deg ) );
 		}
 
 		// Size and positioning
-		// On landscape, button is never unattached
+		// On landscape and medium screens, button is attached regardless of class
 		position:absolute;
 		top:auto;
 		right:-70px;
 		bottom:0;
 		left:auto;
 	}
+
+	@media #{$medium}{
+		display:none;
+	}
+
 }
 
 .object-glance{
@@ -106,6 +102,10 @@
 
 	.object-content-frame.open &{
 		opacity:1;
+	}
+
+	@media #{$small}{
+		display:none;
 	}
 }
 
@@ -134,9 +134,6 @@
   display:block;
   float:left;
  	margin:0 5px 0 0;
-}
-.contentMinimized .object-maximize-content {
-  background-color: rgba(22, 22, 22, .55);
 }
 
 .object-menu .toggle-meta {
@@ -428,7 +425,7 @@
 		top:0;
 		right:0;
 		bottom:0;
-		left:33%;
+		left:24rem;
 	}
 }
 

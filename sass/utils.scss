@@ -2,8 +2,8 @@
  * Media queries, vendor prefixes, and base styles for frequently used elements.
  */
 
-$portrait:'screen and (orientation:portrait)';
-$landscape:'screen and (orientation:landscape)';
+$smallPortrait:'screen and (orientation:portrait) and (max-width:640px)';
+$small:'screen and (min-width:641px), screen and (orientation:landscape)';
 $medium:'screen and (min-width:1024px)';
 
 @mixin box-sizing( $params ) {

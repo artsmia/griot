@@ -25,8 +25,8 @@ app.directive( 'handle', function( $timeout ){
 
 				drawerCtrl.track( touch );
 
-				switch( drawerCtrl.orientation ){
-					case 'portrait':
+				switch( drawerCtrl.drawerMode ){
+					case 'vertical':
 				    if( ( window.outerHeight - touch.pageY ) > $(this).outerHeight() ){
 				    	scope.$apply( function(){
 				    		scope.attached = true;
@@ -53,9 +53,9 @@ app.directive( 'handle', function( $timeout ){
 
 				drawerCtrl.moving = false;
 
-				switch( drawerCtrl.orientation ){
+				switch( drawerCtrl.drawerMode ){
 
-					case 'portrait':
+					case 'vertical':
 
 						if( touch.pageY < ( window.outerHeight / 2 ) ){
 				    	drawerCtrl.open();
@@ -68,7 +68,7 @@ app.directive( 'handle', function( $timeout ){
 				    }
 				    break;
 
-				  case 'landscape':
+				  case 'horizontal':
 
 						if( touch.pageX > ( $('.object-content-frame').outerWidth() / 2 ) ){
 				    	drawerCtrl.open();
