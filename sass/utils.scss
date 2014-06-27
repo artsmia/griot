@@ -78,3 +78,76 @@ $medium:'screen and (min-width:1024px)';
   @include transition( opacity 100ms ease );
   opacity: 0 !important;
 }
+%drawer{
+  @include transition( opacity 400ms 200ms ease );
+  @include box-shadow( 0 -5px 10px rgba(0,0,0,0.13) );
+  position:absolute;
+  top:100%;
+  right:0;
+  bottom:0;
+  width:100%;
+  max-width:24rem;
+  padding:0 15px;
+  z-index:2;
+  background-color:#ededed;
+
+  @media #{$small} {
+    @include box-shadow( 5px 0 10px rgba(0,0,0,0.13) );
+    top:0;
+    right:auto;
+    left:-25rem;
+  }
+
+  @media #{$medium} {
+    top:0;
+    right:auto;
+    bottom:0;
+    left:0;
+  }
+}
+%handle{
+  // Base styles
+  @include icon( '\e817' );
+  display:block;
+  width:70px;
+  height:70px;
+  background-color:rgba(237,237,237,0.4);
+  &:before{
+    font-size:30px;
+    margin-top:-15px;
+  }
+
+  // Size and positioning
+  position:fixed;
+  margin:0;
+  bottom:0;
+  right:0;
+  z-index:1;
+
+  @media #{$smallPortrait}{
+    &.attached{
+      position:absolute;
+      top:0;
+      bottom:auto;
+      background-color:transparent;
+    }
+  }
+
+  @media #{$small} {
+    &:before{
+      @include transform( rotate( 90deg ) );
+    }
+
+    // Size and positioning
+    // On landscape and medium screens, button is attached regardless of class
+    position:absolute;
+    top:auto;
+    right:-70px;
+    bottom:0;
+    left:auto;
+  }
+
+  @media #{$medium}{
+    display:none;
+  }
+}
