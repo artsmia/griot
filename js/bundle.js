@@ -737,19 +737,41 @@ app.directive( 'drawer', function( $timeout ){
 			// Get actual jQuery array so we can use animation methods.
 			var $drawer = this.$element = $( $element[0] );
 
-			$scope._setOrientation = function(){
-	      _this.orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+			$scope.drawerState = null;
+
+			// Vertical mode only applies to portrait mobile devices. Landscape mobile
+			// and portrait iPad slide horizontally.
+			$scope._setDrawerMode = function(){
+				if( window.outerHeight > window.outerWidth && window.outerWidth <  641 ){
+					_this.drawerMode = 'vertical';
+				}
+				else if( window.outerWidth < 1024 ){
+					_this.drawerMode = 'horizontal';
+				}
+				else{
+					_this.drawerMode = 'off';
+				}
 	    }
 
 	    $scope._setDrawerState = function(){
-	    	switch( _this.orientation ){
-	    		case 'portrait':
-	    			$timeout( function(){
-	    				_this.peek();
-	    			}, 300 );
+	    	switch( _this.drawerMode ){
+	    		case 'vertical':
+	    			if( ! $scope.drawerState ){
+		    			$timeout( function(){
+		    				_this.peek();
+		    			}, 300 );
+		    		} else if( $scope.drawerState == 'open' ){
+		    			_this.open();
+		    		} else {
+		    			_this.close();
+		    		}
 	    			break;
-	    		case 'landscape':
-	    			_this.close();
+	    		case 'horizontal':
+	    			if( $scope.drawerState == 'close' ){
+	    				_this.close();
+	    			} else {
+	    				_this.open();
+	    			}
 	    			break;
 	    	}
 	    }
@@ -761,15 +783,15 @@ app.directive( 'drawer', function( $timeout ){
 				_this.moving = true;
 				$scope.drawerState = null;
 
-				switch( _this.orientation ){
+				switch( _this.drawerMode ){
 
-					case 'portrait':
+					case 'vertical':
 				    $drawer.css({
 				    	'top': ( touch.pageY ) + 'px'
 				    });
 				    break;
 
-			    case 'landscape':
+			    case 'horizontal':
 				  	if( touch.pageX < $drawer.outerWidth() ) {
 				   	  $drawer.css({
 					    	'left': ( touch.pageX - $drawer.outerWidth() ) + 'px'
@@ -780,15 +802,15 @@ app.directive( 'drawer', function( $timeout ){
 			}
 
 			this.open = function() {
-				switch( _this.orientation ){
+				switch( _this.drawerMode ){
 
-					case 'portrait':
+					case 'vertical':
 						$drawer.animate({
 							'top': '70px'
 						}, 300 );
 						break;
 
-					case 'landscape':
+					case 'horizontal':
 						$drawer.animate({
 			    		'left': 0
 			    	}, 300 );
@@ -799,17 +821,17 @@ app.directive( 'drawer', function( $timeout ){
 			}
 
 			this.close = function(){
-				switch( _this.orientation ) {
+				switch( _this.drawerMode ) {
 				
-					case 'portrait':
+					case 'vertical':
 						$drawer.animate({
 				    	'top': '100%'
 				    }, 300 );
 				    break;
 
-				  case 'landscape':
+				  case 'horizontal':
 				  	$drawer.animate({
-				    	'left': '-25rem'
+				    	'left': '-24rem'
 				  	}, 300 );
 				  	break;
 				}
@@ -818,9 +840,9 @@ app.directive( 'drawer', function( $timeout ){
 			}
 
 			this.peek = function(){
-				switch( _this.orientation ) {
+				switch( _this.drawerMode ) {
 
-					case 'portrait':
+					case 'vertical':
 
 						var spaceNeeded = $('.object-title').height() + 70;
 			    	var frameTop = window.outerHeight - spaceNeeded;
@@ -830,7 +852,7 @@ app.directive( 'drawer', function( $timeout ){
 			    	}, 300 );
 			    	break;
 
-			    case 'landscape':
+			    case 'horizontal':
 			    	this.close();
 			     	break;
 			  }
@@ -841,7 +863,7 @@ app.directive( 'drawer', function( $timeout ){
 			this.cycle = function(){
 				switch( $scope.drawerState ){
 					case 'open':
-						if( _this.orientation == 'portrait'){
+						if( _this.drawerMode == 'vertical'){
 							_this.peek();
 						} else {
 							_this.close();
@@ -859,15 +881,12 @@ app.directive( 'drawer', function( $timeout ){
 					'top':'',
 					'left':''
 				});
+				$scope._setDrawerMode();
+				$scope._setDrawerState();
 			}
 		},
 		link: function( scope, elem, attrs ){
-
-			scope._setOrientation();
-			$(window).on( 'resize orientationChange', function(){
-				scope._setOrientation() 
-			});
-
+			scope._setDrawerMode();
 			scope.$on( '$viewContentLoaded', scope._setDrawerState );
 		}
 	}
@@ -1022,8 +1041,8 @@ app.directive( 'handle', function( $timeout ){
 
 				drawerCtrl.track( touch );
 
-				switch( drawerCtrl.orientation ){
-					case 'portrait':
+				switch( drawerCtrl.drawerMode ){
+					case 'vertical':
 				    if( ( window.outerHeight - touch.pageY ) > $(this).outerHeight() ){
 				    	scope.$apply( function(){
 				    		scope.attached = true;
@@ -1050,9 +1069,9 @@ app.directive( 'handle', function( $timeout ){
 
 				drawerCtrl.moving = false;
 
-				switch( drawerCtrl.orientation ){
+				switch( drawerCtrl.drawerMode ){
 
-					case 'portrait':
+					case 'vertical':
 
 						if( touch.pageY < ( window.outerHeight / 2 ) ){
 				    	drawerCtrl.open();
@@ -1065,7 +1084,7 @@ app.directive( 'handle', function( $timeout ){
 				    }
 				    break;
 
-				  case 'landscape':
+				  case 'horizontal':
 
 						if( touch.pageX > ( $('.object-content-frame').outerWidth() / 2 ) ){
 				    	drawerCtrl.open();

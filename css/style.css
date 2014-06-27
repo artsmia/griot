@@ -146,41 +146,27 @@ html, body { background-color: #ededed; }
 
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
-.object-content-frame { -webkit-transition: opacity 400ms 200ms ease; -moz-transition: opacity 400ms 200ms ease; -o-transition: opacity 400ms 200ms ease; -webkit-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); position: absolute; top: 100%; right: 0; bottom: 0; width: 100%; max-width: 25rem; padding: 0 15px; z-index: 2; background-color: #ededed; 	/*
-	@media screen and (min-width:1024px) {
-		top:0;
-		right:auto;
-		bottom:0;
-		left:0;
-		width:33%;
-		max-height:none;
-
-		.contentMinimized &{
-			padding:15px;
-			left:-33%;
-			overflow:visible;
-		}
-	}
-	*/ }
-@media screen and (orientation: landscape) { .object-content-frame { -webkit-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); top: 0; right: auto; left: -25rem; } }
+.object-content-frame { -webkit-transition: opacity 400ms 200ms ease; -moz-transition: opacity 400ms 200ms ease; -o-transition: opacity 400ms 200ms ease; -webkit-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.13); position: absolute; top: 100%; right: 0; bottom: 0; width: 100%; max-width: 24rem; padding: 0 15px; z-index: 2; background-color: #ededed; }
+@media screen and (min-width: 641px), screen and (orientation: landscape) { .object-content-frame { -webkit-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); box-shadow: 5px 0 10px rgba(0, 0, 0, 0.13); top: 0; right: auto; left: -25rem; } }
+@media screen and (min-width: 1024px) { .object-content-frame { top: 0; right: auto; bottom: 0; left: 0; } }
 
 .object-minimize-content { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; display: block; width: 70px; height: 70px; background-color: rgba(237, 237, 237, 0.4); position: fixed; margin: 0; bottom: 0; right: 0; z-index: 1; }
 .object-minimize-content:before { position: absolute; display: block; top: 50%; width: 100%; margin-top: -12px; text-align: center; line-height: 100%; font-family: 'griot'; font-size: 24px; content: "\e817"; }
 .object-minimize-content:before { font-size: 30px; margin-top: -15px; }
-@media screen and (orientation: portrait) { .object-minimize-content.attached { position: absolute; top: 0; bottom: auto; background-color: transparent; } }
-@media screen and (orientation: landscape) { .object-minimize-content { position: absolute; top: auto; right: -70px; bottom: 0; left: auto; }
+@media screen and (orientation: portrait) and (max-width: 640px) { .object-minimize-content.attached { position: absolute; top: 0; bottom: auto; background-color: transparent; } }
+@media screen and (min-width: 641px), screen and (orientation: landscape) { .object-minimize-content { position: absolute; top: auto; right: -70px; bottom: 0; left: auto; }
   .object-minimize-content:before { -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg); transform: rotate(90deg); } }
+@media screen and (min-width: 1024px) { .object-minimize-content { display: none; } }
 
 .object-glance { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; -webkit-transform: translate3d(0, 0, 0); -moz-transform: translate3d(0, 0, 0); -o-transform: translate3d(0, 0, 0); -ms-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.13); -moz-box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.13); box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.13); width: 100%; background-color: rgba(255, 255, 255, 0.75); height: 70px; position: absolute; top: -70px; left: 0; margin: 0; opacity: 0; line-height: 70px; vertical-align: middle; font-style: italic; text-align: center; }
 .object-content-frame.open .object-glance { opacity: 1; }
+@media screen and (min-width: 641px), screen and (orientation: landscape) { .object-glance { display: none; } }
 
 .object-content { position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: 0 auto; background-color: #ededed; padding: 15px; overflow-x: hidden; overflow-y: auto; }
 
 .object-menu { display: block; height: 40px; margin: 0; padding: 0; }
 
 .object-home-link { position: relative; display: block; float: left; margin: 0 5px 0 0; }
-
-.contentMinimized .object-maximize-content { background-color: rgba(22, 22, 22, 0.55); }
 
 .object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 10px 0 0; }
 
@@ -250,7 +236,7 @@ html, body { background-color: #ededed; }
 
 /** Zoomer */
 .object-zoomer { -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -webkit-transition: opacity 125ms ease; -moz-transition: opacity 125ms ease; -o-transition: opacity 125ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: #ccc; text-align: center; z-index: 2; }
-@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 33%; } }
+@media screen and (min-width: 1024px) { .object-zoomer { top: 0; right: 0; bottom: 0; left: 24rem; } }
 
 /* Zoomer - Markers */
 .leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
