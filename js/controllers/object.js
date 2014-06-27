@@ -1,9 +1,9 @@
 /**
  * Controller for object template.
  */
- 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
+
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -170,7 +170,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
-
   }
 ])
 

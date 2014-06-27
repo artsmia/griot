@@ -16,7 +16,7 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) { 
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) {
 	root.cdn = config.cdn;
 
 	// If adapters are enabled, retrieve and prepare alternate data
@@ -45,3 +45,4 @@ require('./directives/note')
 require('./directives/vcenter')
 require('./directives/transparentize')
 require('./directives/drawerify')
+require('./directives/share')

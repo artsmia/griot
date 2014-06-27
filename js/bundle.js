@@ -163,7 +163,7 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) { 
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) {
 	root.cdn = config.cdn;
 
 	// If adapters are enabled, retrieve and prepare alternate data
@@ -192,7 +192,9 @@ require('./directives/note')
 require('./directives/vcenter')
 require('./directives/transparentize')
 require('./directives/drawerify')
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/note":11,"./directives/transparentize":12,"./directives/vcenter":13,"./factories":14,"./routes":15}],3:[function(require,module,exports){
+require('./directives/share')
+
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/note":11,"./directives/share":12,"./directives/transparentize":13,"./directives/vcenter":14,"./factories":15,"./routes":16}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -210,6 +212,8 @@ app.constant('envConfig', {
 
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
+
+  emailServer: 'http://10.1.8.115:33445/',
 
   // Adapters - set to false to use GriotWP for everything.
   miaMediaMetaActive: true,
@@ -451,9 +455,9 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
 /**
  * Controller for object template.
  */
- 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
+
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -620,7 +624,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
-
   }
 ])
 
@@ -1525,6 +1528,36 @@ app.directive('note', function(segmentio) {
 
 
 },{}],12:[function(require,module,exports){
+app.directive('share', function(email) {
+  var template = '<form name="share" ng-submit="sendEmail()">' +
+    '<input id="shareEmail" type="email" ng-model="email" required></input>' +
+    '<input type="submit" ng-disabled="!share.$valid" value="Email this page" ng-click="sendEmail()"></input>' +
+    '</form>'
+
+  return {
+    restrict: 'A',
+    template: template,
+    link: function(scope, element, attrs) {
+      scope.showEmail = false
+      scope.el = element
+      var emailI = scope.el.find('input')[0]
+
+      scope.toggleEmail = function(e) {
+        if((e.toElement || e.currentTarget).nodeName == 'A') scope.showEmail = !scope.showEmail
+        emailI.focus()
+      }
+
+      scope.sendEmail = function() {
+        email.share(scope.email, {subject: scope.wp.title, body: window.location.href})
+        scope.email = ''
+        scope.showEmail = false
+        emailI.blur()
+      }
+    }
+  }
+})
+
+},{}],13:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1546,7 +1579,7 @@ app.directive( 'transparentize', function(){
 	}
 
 });
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -1586,7 +1619,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1608,7 +1641,18 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-},{}],15:[function(require,module,exports){
+
+app.factory('email', ['$http', 'envConfig', function($http, config) {
+  return {
+    share: function(email, params) {
+      return $http.post(config.emailServer + email, params).success(function(response) {
+        return response
+      })
+    }
+  }
+}])
+
+},{}],16:[function(require,module,exports){
 /**
  * Application routing
  */

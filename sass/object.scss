@@ -31,21 +31,24 @@
 	margin:0;
 	padding:0;
 }
-.object-home-link {
-	@extend .home-icon;
+.object-menu > a {
   position:relative;
   display:block;
   float:left;
  	margin:0 5px 0 0;
 }
-
+.object-home-link {
+	@extend .home-icon;
+}
 .object-menu .toggle-meta {
 	@extend .meta-icon;
-	position:relative;
-	display:block;
-	float:left;
-  margin:0 10px 0 0;
 }
+.object-menu .email {
+  @extend .meta-icon;
+  @include icon( '\e818' );
+  font-size: 21px;
+}
+
 .object-title{
 	margin:5px 0 0;
 }
@@ -375,4 +378,19 @@
   height:36px;
   margin: -18px 0 0 -18px;
   line-height:34px;
+}
+
+#share.email form {
+  margin-top: -0.5em;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 2.5em;
+  -webkit-transition: all 125ms ease-out;
+}
+
+#share.email.open form {
+  position: relative;
+  z-index: 2;
+  max-width: 33em;
+  opacity: 1;
 }
