@@ -12,9 +12,8 @@ app.directive( 'transparentize', function(){
 			$target.addClass('transparentized');
 		});
 
-		elem.on( 'touchmove touchend', function(e){
+		elem.on( 'touchend', function(e){
 			$target.removeClass('transparentized');
-			e.preventDefault();
 		});
 
 	}

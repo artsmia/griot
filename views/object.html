@@ -1,7 +1,7 @@
-<article id='object' ng-class='{contentMinimized: contentMinimized, showAllViews: showViews}'>
+<article id='object' ng-class='{showAllViews: showViews}'>
 
   <!-- Zoomer -->
-  <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations' && ! contentMinimized }">
+  <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations' }">
     <flatmap image="{{id}}">
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
@@ -11,11 +11,12 @@
   </div>
 
   <!-- Content -->
-  <div class='object-content-frame'>
+  <div class='object-content-frame' ng-class="{'open': drawerState == 'open' }" drawer>
 
-    <a class='object-minimize-content' ng-click='toggleMinimizeContent()'></a>
+    <p class='object-glance' transparentize=".object-content-frame">Hold to glance at image</p>
+    <a class='object-minimize-content' handle ng-class="{'attached':attached}"></a>
 
-    <div class='object-content' ng-class='{scrollable: ! contentMinimized}'>
+    <div class='object-content scrollable'>
  
       <menu class='object-menu'>
         <a class='object-home-link' href='#'></a>
@@ -42,7 +43,7 @@
   	    <p class='object-about' ng-if="activeSection == 'about'" ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
 
   	    <ol class='object-details' ng-class="{active: activeSection == 'annotations'}" ng-if="activeSection == 'annotations'">
-          <li ng-repeat="note in allNotes" ng-class="{active: note.active}" class="annotation" transparentize='.object-content-frame'>
+          <li ng-repeat="note in allNotes" ng-class="{active: note.active}" class="annotation">
 
             <h3 class='annotation-title' ng-click="activateNote(note, note.view)"><span class='annotation-index'>{{note.index}}</span>{{note.title || 'Annotation'}}</h3>
             <div class='annotation-content' ng-bind-html="note.trustedDescription"></div>
