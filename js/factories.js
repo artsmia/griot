@@ -19,3 +19,13 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
+
+app.factory('email', ['$http', 'envConfig', function($http, config) {
+  return {
+    share: function(email, params) {
+      return $http.post(config.emailServer + email, params).success(function(response) {
+        return response
+      })
+    }
+  }
+}])

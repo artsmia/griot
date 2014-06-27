@@ -71,11 +71,11 @@ html, body { background-color: #ededed; }
 .maximize-icon:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e800"; left: 0; }
 .maximize-icon:before { color: #fff; font-size: 20px; margin-top: -10px; }
 
-.meta-icon, .object-menu .toggle-meta, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 2px solid #fff; }
-.meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e813"; left: 0; }
-.meta-icon:before, .object-menu .toggle-meta:before, .attachment-toggle-meta:before { color: #fff; font-size: 20px; margin-top: -10px; }
-.meta-icon.open, .object-menu .open.toggle-meta, .open.attachment-toggle-meta, .showAttachmentMeta .meta-icon, .showAttachmentMeta .object-menu .toggle-meta, .object-menu .showAttachmentMeta .toggle-meta, .showAttachmentMeta .attachment-toggle-meta { background-color: #fff; border-color: #222; }
-.meta-icon.open:before, .object-menu .open.toggle-meta:before, .open.attachment-toggle-meta:before, .showAttachmentMeta .meta-icon:before, .showAttachmentMeta .object-menu .toggle-meta:before, .object-menu .showAttachmentMeta .toggle-meta:before, .showAttachmentMeta .attachment-toggle-meta:before { color: #222; }
+.meta-icon, .object-menu .toggle-meta, .object-menu .email, .attachment-toggle-meta { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; width: 40px; height: 40px; background-color: #222; border-radius: 1000px; border: 2px solid #fff; }
+.meta-icon:before, .object-menu .toggle-meta:before, .object-menu .email:before, .attachment-toggle-meta:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e813"; left: 0; }
+.meta-icon:before, .object-menu .toggle-meta:before, .object-menu .email:before, .attachment-toggle-meta:before { color: #fff; font-size: 20px; margin-top: -10px; }
+.meta-icon.open, .object-menu .open.toggle-meta, .object-menu .open.email, .open.attachment-toggle-meta, .showAttachmentMeta .meta-icon, .showAttachmentMeta .object-menu .toggle-meta, .object-menu .showAttachmentMeta .toggle-meta, .showAttachmentMeta .object-menu .email, .object-menu .showAttachmentMeta .email, .showAttachmentMeta .attachment-toggle-meta { background-color: #fff; border-color: #222; }
+.meta-icon.open:before, .object-menu .open.toggle-meta:before, .object-menu .open.email:before, .open.attachment-toggle-meta:before, .showAttachmentMeta .meta-icon:before, .showAttachmentMeta .object-menu .toggle-meta:before, .object-menu .showAttachmentMeta .toggle-meta:before, .showAttachmentMeta .object-menu .email:before, .object-menu .showAttachmentMeta .email:before, .showAttachmentMeta .attachment-toggle-meta:before { color: #222; }
 
 /** Navigation */
 .nav-button, .attachment-big .return-link, .story-return, .story-prev-page, .story-next-page { position: fixed; margin-top: 0; padding: 10px 5px 5px; background-color: #222; color: #fff; font-size: 0.7em; text-transform: uppercase; text-align: center; cursor: pointer; z-index: 3; padding: 0; width: 70px; height: 40px; border-width: 0; }
@@ -170,9 +170,10 @@ color:#222;
 
 .object-menu { display: block; height: 40px; margin: 0; padding: 0; }
 
-.object-home-link { position: relative; display: block; float: left; margin: 0 5px 0 0; }
+.object-menu > a { position: relative; display: block; float: left; margin: 0 5px 0 0; }
 
-.object-menu .toggle-meta { position: relative; display: block; float: left; margin: 0 10px 0 0; }
+.object-menu .email { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; font-size: 21px; }
+.object-menu .email:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e818"; left: 0; }
 
 .object-title { margin: 5px 0 0; }
 
@@ -270,6 +271,10 @@ color:#222;
 .leaflet-control-container * { -webkit-transition: opacity 125ms ease-out; -moz-transition: opacity 125ms ease-out; -o-transition: opacity 125ms ease-out; }
 
 .showAllViews .object-zoomer .leaflet-control-container .leaflet-right { opacity: 0; }
+
+#share.email form { margin-top: -0.5em; max-width: 0; opacity: 0; margin-left: 2.5em; -webkit-transition: all 125ms ease-out; }
+
+#share.email.open form { position: relative; z-index: 2; max-width: 33em; opacity: 1; }
 
 /** Story template styles. */
 /** Header */
