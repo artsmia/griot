@@ -170,6 +170,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
+
   }
 ])
 

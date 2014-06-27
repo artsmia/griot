@@ -191,7 +191,9 @@ require('./directives/flatmap')
 require('./directives/note')
 require('./directives/vcenter')
 require('./directives/transparentize')
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/flatmap":9,"./directives/note":10,"./directives/transparentize":11,"./directives/vcenter":12,"./factories":13,"./routes":14}],3:[function(require,module,exports){
+require('./directives/drawer')
+require('./directives/handle')
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawer":9,"./directives/flatmap":10,"./directives/handle":11,"./directives/note":12,"./directives/transparentize":13,"./directives/vcenter":14,"./factories":15,"./routes":16}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -619,6 +621,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
+
   }
 ])
 
@@ -721,6 +724,156 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
 ])
 },{}],9:[function(require,module,exports){
 /**
+ * Drawer directive
+ *
+ * Provides controls for interacting with the content frame on mobile.
+ */
+app.directive( 'drawer', function( $timeout ){
+	return{
+		controller: function( $scope, $element, $attrs ){
+
+			var _this = this;
+
+			// Get actual jQuery array so we can use animation methods.
+			var $drawer = this.$element = $( $element[0] );
+
+			$scope._setOrientation = function(){
+	      _this.orientation = window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+	    }
+
+	    $scope._setDrawerState = function(){
+	    	switch( _this.orientation ){
+	    		case 'portrait':
+	    			$timeout( function(){
+	    				_this.peek();
+	    			}, 300 );
+	    			break;
+	    		case 'landscape':
+	    			_this.close();
+	    			break;
+	    	}
+	    }
+
+			this.moving = false;
+
+			this.track = function( touch ){
+
+				_this.moving = true;
+				$scope.drawerState = null;
+
+				switch( _this.orientation ){
+
+					case 'portrait':
+				    $drawer.css({
+				    	'top': ( touch.pageY ) + 'px'
+				    });
+				    break;
+
+			    case 'landscape':
+				  	if( touch.pageX < $drawer.outerWidth() ) {
+				   	  $drawer.css({
+					    	'left': ( touch.pageX - $drawer.outerWidth() ) + 'px'
+					    });
+				   	}
+				   	break;
+				}
+			}
+
+			this.open = function() {
+				switch( _this.orientation ){
+
+					case 'portrait':
+						$drawer.animate({
+							'top': '70px'
+						}, 300 );
+						break;
+
+					case 'landscape':
+						$drawer.animate({
+			    		'left': 0
+			    	}, 300 );
+			    	break;
+				}
+				$scope.drawerState = 'open';
+				$scope.$broadcast( 'drawerOpen' );
+			}
+
+			this.close = function(){
+				switch( _this.orientation ) {
+				
+					case 'portrait':
+						$drawer.animate({
+				    	'top': '100%'
+				    }, 300 );
+				    break;
+
+				  case 'landscape':
+				  	$drawer.animate({
+				    	'left': '-25rem'
+				  	}, 300 );
+				  	break;
+				}
+				$scope.drawerState = 'close';
+				$scope.$broadcast( 'drawerClose' );
+			}
+
+			this.peek = function(){
+				switch( _this.orientation ) {
+
+					case 'portrait':
+
+						var spaceNeeded = $('.object-title').height() + 70;
+			    	var frameTop = window.outerHeight - spaceNeeded;
+
+			    	$drawer.animate({
+			    		'top': frameTop + 'px'
+			    	}, 300 );
+			    	break;
+
+			    case 'landscape':
+			    	this.close();
+			     	break;
+			  }
+			  $scope.drawerState = 'peek';
+			  $scope.$broadcast( 'drawerPeek' );
+			}
+
+			this.cycle = function(){
+				switch( $scope.drawerState ){
+					case 'open':
+						if( _this.orientation == 'portrait'){
+							_this.peek();
+						} else {
+							_this.close();
+						}
+						break;
+					case 'peek':
+					case 'close':
+						_this.open();
+						break;
+				}
+			}
+
+			this.reset = function(){
+				$drawer.css({
+					'top':'',
+					'left':''
+				});
+			}
+		},
+		link: function( scope, elem, attrs ){
+
+			scope._setOrientation();
+			$(window).on( 'resize orientationChange', function(){
+				scope._setOrientation() 
+			});
+
+			scope.$on( '$viewContentLoaded', scope._setDrawerState );
+		}
+	}
+});
+},{}],10:[function(require,module,exports){
+/**
  * Creates a zoomable image element.
  */
 
@@ -733,7 +886,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div></div>',
     controller: function($scope) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
@@ -841,7 +994,115 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
 })
 
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
+/**
+ * Handle touch interaction with content drawer.
+ */
+
+app.directive( 'handle', function( $timeout ){
+
+	return{
+		require: '^drawer',
+		link: function( scope, elem, attrs, drawerCtrl ) {
+
+			var _scope = scope;
+
+			// Reset content frame and button attachment status
+			$( window ).on( 'resize orientationChange', function(){
+				drawerCtrl.reset();
+				scope.$apply( function(){
+					scope.attached = false;
+				});
+			});
+
+			// Track drawer with touch
+			elem.on( 'touchmove', function(e){
+
+				var touch = e.targetTouches[0];
+
+				drawerCtrl.track( touch );
+
+				switch( drawerCtrl.orientation ){
+					case 'portrait':
+				    if( ( window.outerHeight - touch.pageY ) > $(this).outerHeight() ){
+				    	scope.$apply( function(){
+				    		scope.attached = true;
+				    	});
+				    }
+				    else {
+				    	scope.$apply( function(){
+				    		scope.attached = false; 
+				    	});
+				    }
+				    break;
+				}
+			});
+
+			elem.on( 'touchend', function(e){
+
+				var touch = e.changedTouches[0];
+
+				// If drawer is not being manipulated, cycle to next position.
+				if( ! drawerCtrl.moving ){
+					drawerCtrl.cycle();
+					return;
+				} 
+
+				drawerCtrl.moving = false;
+
+				switch( drawerCtrl.orientation ){
+
+					case 'portrait':
+
+						if( touch.pageY < ( window.outerHeight / 2 ) ){
+				    	drawerCtrl.open();
+				    } 
+				    else if ( touch.pageY > ( window.outerHeight / 2 ) && touch.pageY < ( window.outerHeight * 0.9 ) ) {
+				    	drawerCtrl.peek();
+				    } 
+				    else {
+				    	drawerCtrl.close();
+				    }
+				    break;
+
+				  case 'landscape':
+
+						if( touch.pageX > ( $('.object-content-frame').outerWidth() / 2 ) ){
+				    	drawerCtrl.open();
+				    } 
+				    else {
+				    	drawerCtrl.close();
+				    }
+				    break;
+
+				}
+
+		    e.preventDefault();
+
+			});
+
+			scope.$on( 'drawerOpen', function(){
+				$timeout( function(){
+					scope.attached = true;
+				}, 50 );
+			});
+
+			scope.$on( 'drawerPeek', function(){
+				$timeout( function(){
+					scope.attached = true;
+				}, 50 );
+			});
+
+			scope.$on( 'drawerClose', function(){
+				$timeout( function(){
+					scope.attached = false;
+				}, 250 );
+			});
+
+		}
+	}
+});
+},{}],12:[function(require,module,exports){
 /**
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
@@ -941,7 +1202,7 @@ app.directive('note', function(segmentio) {
 })
 
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -956,15 +1217,14 @@ app.directive( 'transparentize', function(){
 			$target.addClass('transparentized');
 		});
 
-		elem.on( 'touchmove touchend', function(e){
+		elem.on( 'touchend', function(e){
 			$target.removeClass('transparentized');
-			e.preventDefault();
 		});
 
 	}
 
 });
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -1004,7 +1264,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1026,7 +1286,7 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Application routing
  */

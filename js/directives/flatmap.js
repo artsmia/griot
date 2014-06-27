@@ -11,7 +11,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><p class="hint">Pinch to zoom</p></div>',
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div></div>',
     controller: function($scope) {
       var scope = $scope
       scope.$parent.flatmapScope = scope

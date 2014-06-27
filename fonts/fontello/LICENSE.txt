@@ -1,13 +1,13 @@
 Font license info
 
 
-## Entypo
+## Typicons
 
-   Copyright (C) 2012 by Daniel Bruce
+   (c) Stephen Hutchings 2012
 
-   Author:    Daniel Bruce
-   License:   CC BY-SA (http://creativecommons.org/licenses/by-sa/2.0/)
-   Homepage:  http://www.entypo.com
+   Author:    Stephen Hutchings
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://typicons.com/
 
 
 ## MFG Labs
@@ -19,12 +19,21 @@ Font license info
    Homepage:  http://www.mfglabs.com/
 
 
-## Typicons
+## Entypo
 
-   (c) Stephen Hutchings 2012
+   Copyright (C) 2012 by Daniel Bruce
 
-   Author:    Stephen Hutchings
-   License:   CC BY-SA 3.0 (http://creativecommons.org/licenses/by-sa/3.0/)
-   Homepage:  http://typicons.com/
+   Author:    Daniel Bruce
+   License:   SIL (http://scripts.sil.org/OFL)
+   Homepage:  http://www.entypo.com
+
+
+## Font Awesome
+
+   Copyright (C) 2012 by Dave Gandy
+
+   Author:    Dave Gandy
+   License:   SIL ()
+   Homepage:  http://fortawesome.github.com/Font-Awesome/
 
 

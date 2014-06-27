@@ -2,6 +2,7 @@
  * Media queries, vendor prefixes, and base styles for frequently used elements.
  */
 
+$portrait:'screen and (orientation:portrait)';
 $landscape:'screen and (orientation:landscape)';
 $medium:'screen and (min-width:1024px)';
 
@@ -41,7 +42,6 @@ $medium:'screen and (min-width:1024px)';
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-user-drag: none;
 }
 @mixin label{
   color:#222;
@@ -75,6 +75,6 @@ $medium:'screen and (min-width:1024px)';
   }
 }
 .transparentized{
-  @include transition( opacity 400ms 200ms ease );
-  opacity: 0.05 !important;
+  @include transition( opacity 100ms ease );
+  opacity: 0 !important;
 }
