@@ -27,7 +27,7 @@ app.directive( 'handle', function( $timeout ){
 
 				switch( drawerCtrl.drawerMode ){
 					case 'vertical':
-				    if( ( window.outerHeight - touch.pageY ) > $(this).outerHeight() ){
+				    if( ( window.outerHeight - touch.pageY ) > ( $(this).outerHeight() + 40 ) ){
 				    	scope.$apply( function(){
 				    		scope.attached = true;
 				    	});
@@ -48,7 +48,7 @@ app.directive( 'handle', function( $timeout ){
 				// If drawer is not being manipulated, cycle to next position.
 				if( ! drawerCtrl.moving ){
 					drawerCtrl.cycle();
-					return;
+					return false;
 				} 
 
 				drawerCtrl.moving = false;
@@ -60,7 +60,7 @@ app.directive( 'handle', function( $timeout ){
 						if( touch.pageY < ( window.outerHeight / 2 ) ){
 				    	drawerCtrl.open();
 				    } 
-				    else if ( touch.pageY > ( window.outerHeight / 2 ) && touch.pageY < ( window.outerHeight * 0.9 ) ) {
+				    else if ( touch.pageY > ( window.outerHeight / 2 ) && touch.pageY < ( window.outerHeight * 0.9 ) && $('.object-title').length ) {
 				    	drawerCtrl.peek();
 				    } 
 				    else {
@@ -70,7 +70,7 @@ app.directive( 'handle', function( $timeout ){
 
 				  case 'horizontal':
 
-						if( touch.pageX > ( $('.object-content-frame').outerWidth() / 2 ) ){
+						if( touch.pageX > ( drawerCtrl.$element.outerWidth() / 2 ) ){
 				    	drawerCtrl.open();
 				    } 
 				    else {

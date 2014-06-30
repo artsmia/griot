@@ -31,7 +31,7 @@ app.directive( 'drawer', function( $timeout ){
 	    $scope._setDrawerState = function(){
 	    	switch( _this.drawerMode ){
 	    		case 'vertical':
-	    			if( ! $scope.drawerState ){
+	    			if( ! $scope.drawerState && $('.object-title').length ){
 		    			$timeout( function(){
 		    				_this.peek();
 		    			}, 300 );
@@ -80,9 +80,16 @@ app.directive( 'drawer', function( $timeout ){
 				switch( _this.drawerMode ){
 
 					case 'vertical':
-						$drawer.animate({
-							'top': '70px'
-						}, 300 );
+						if( $('.object-title').length ){
+							$drawer.animate({
+								'top': '70px'
+							}, 300 );
+						} 
+						else {
+							$drawer.animate({
+								'top': '110px'
+							}, 300 );							
+						}
 						break;
 
 					case 'horizontal':
@@ -100,7 +107,7 @@ app.directive( 'drawer', function( $timeout ){
 				
 					case 'vertical':
 						$drawer.animate({
-				    	'top': '100%'
+				    	'top': $(window).height() + 'px'
 				    }, 300 );
 				    break;
 
@@ -138,9 +145,10 @@ app.directive( 'drawer', function( $timeout ){
 			this.cycle = function(){
 				switch( $scope.drawerState ){
 					case 'open':
-						if( _this.drawerMode == 'vertical'){
+						if( _this.drawerMode == 'vertical' && $('.object-title').length ){
 							_this.peek();
-						} else {
+						} 
+						else {
 							_this.close();
 						}
 						break;
