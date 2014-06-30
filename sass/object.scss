@@ -5,39 +5,12 @@
 /**
  * Content - "Above the Fold" (Controls and Meta)
  */
-.object-content-frame{
+.object-content-drawer {
 	@extend %drawer;
 }
 
-.object-minimize-content {
+.object-content-handle {
 	@extend %handle;
-}
-
-.object-glance{
-	@include transition( opacity 300ms ease );
-	@include transform( translate3d( 0, 0, 0 ) );
-	@include no-select;
-	@include box-shadow( inset 0 -5px 10px rgba(0,0,0,0.13));
-	width:100%;
-	background-color:rgba(255,255,255,0.75);
-	height:70px;
-	position:absolute;
-	top:-70px;
-	left:0;
-	margin:0;
-	opacity:0;
-	line-height:70px;
-	vertical-align:middle;
-	font-style:italic;
-	text-align:center;
-
-	.object-content-frame.open &{
-		opacity:1;
-	}
-
-	@media #{$small}{
-		display:none;
-	}
 }
 
 .object-content{
