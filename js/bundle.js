@@ -190,7 +190,9 @@ require('./controllers/goldweights')
 require('./directives/flatmap')
 require('./directives/note')
 require('./directives/vcenter')
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/flatmap":9,"./directives/note":10,"./directives/vcenter":11,"./factories":12,"./routes":13}],3:[function(require,module,exports){
+require('./directives/ngPoster')
+
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/flatmap":9,"./directives/ngPoster":10,"./directives/note":11,"./directives/vcenter":12,"./factories":13,"./routes":14}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -840,6 +842,20 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
 
 
 },{}],10:[function(require,module,exports){
+app.directive('ngPoster', function() {
+  return {
+    priority: 99, // it needs to run after the attributes are interpolated
+    link: function(scope, element, attr) {
+      attr.$observe('ngPoster', function(value) {
+        if (!value) return;
+        attr.$set('poster', value);
+      })
+    }
+  }
+}) // https://github.com/angular/angular.js/blob/v1.2.0/src/ng/directive/booleanAttrs.js#L86
+
+
+},{}],11:[function(require,module,exports){
 /**
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
@@ -939,7 +955,7 @@ app.directive('note', function(segmentio) {
 })
 
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -979,7 +995,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1001,7 +1017,7 @@ app.factory('notes', ['$http', 'envConfig', function($http, config) {
     })
   }
 }])
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Application routing
  */
