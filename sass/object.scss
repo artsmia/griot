@@ -5,14 +5,13 @@
 /**
  * Content - "Above the Fold" (Controls and Meta)
  */
-.object-content-drawer {
-	@extend %drawer;
+.object-content-container{
+	position:absolute;
+	top:0;
+	left:0;
+	width:33%;
+	height:100%;
 }
-
-.object-content-handle {
-	@extend %handle;
-}
-
 .object-content{
 	position:absolute;
 	top:0;
@@ -323,7 +322,6 @@
 	left:0;
 	background-color:#ccc;
 	text-align:center;
-	z-index:2;
 	
 	@media #{$medium} {
 		top:0;

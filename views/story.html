@@ -33,10 +33,12 @@
 
   </div>
 
-  <div class='story-content-drawer' ng-class="{'open': drawerState == 'open' }" drawer>
+  <div class='story-content-container' drawerify="{
+      320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open' },
+      1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open' } 
+    }">
 
-    <p class='glance' transparentize=".story-content-drawer">Hold to glance</p>
-    <a class='story-content-handle' handle ng-class="{'attached':attached}"></a>
+    <!--<p class='glance' transparentize=".story-content-drawer">Hold to glance</p>-->
 
     <div class='story-content scrollable'>
       <a class='story-home-link' href='#'></a>

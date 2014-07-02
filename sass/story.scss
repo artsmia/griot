@@ -6,6 +6,7 @@
  * Header
  */
 .story-title{
+  @include truncate;
   @include box-shadow( 0 5px 5px rgba(0,0,0,0.13) );
   position:absolute;
   display:block;
@@ -16,13 +17,17 @@
   margin:0;
   background-color:#222;
   text-align:center;
-  font-size:1.3em;
+  font-size:1.1em;
   color:#fff;
   font-weight:600;
   line-height:40px; 
   padding:0 45px;
   overflow:hidden;
   z-index:2;
+
+  @media #{$medium}{
+    font-size:1.3em;
+  }
 }
 
 .story-home-link {
@@ -151,11 +156,13 @@
 /**
  * Content
  */
-.story-content-drawer {
-  @extend %drawer;
-}
-.story-content-handle {
-  @extend %handle;
+.story-content-container{
+  position:absolute;
+  top:40px;
+  right:0;
+  bottom:40px;
+  left:0;
+  z-index:1;
 }
 .story-content {
   position:absolute;
