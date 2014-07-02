@@ -3,12 +3,15 @@
  * 
  * Converts the contents of a container to a sliding drawer.
  */
-app.directive( 'drawerify', function(){
+app.directive( 'drawerify', function( $timeout ){
 	return {
 		restrict: 'A',
 		transclude: true,
 		replace: true,
-		template: "<div class='drawerify-drawer'><a class='drawerify-handle' ng-class=\"{'horizontal':drawerify.orientation == 'horizontal', 'vertical':drawerify.orientation == 'vertical'}\"></a><div class='drawerify-content' ng-transclude></div></div>",
+		template: "<div class='drawerify-drawer' ng-class=\"{'drawerify-horizontal':drawerify.orientation == 'horizontal', 'drawerify-vertical':drawerify.orientation == 'vertical', 'drawerify-full':drawerify.fullWidth, 'drawerify-open': drawerify.activeState == 'open', 'drawerify-closed':drawerify.activeState == 'closed' }\">" +
+				"<a class='drawerify-handle'></a>" +
+				"<div class='drawerify-content' ng-transclude></div>" +
+			"</div>",
 		controller: function( $scope, $element, $attrs ){
 
 			$scope.drawerify = this;
@@ -290,7 +293,7 @@ app.directive( 'drawerify', function(){
 			this._track = function( touch ){
 
 				this.isMoving = true;
-				this.state = null;
+				this.activeState = null;
 
 				var trackStyles = {};
 
@@ -369,7 +372,7 @@ app.directive( 'drawerify', function(){
 
 				this.orientation = props.orientation || 'vertical';
 				this.attachTo = props.attachTo || 'right';
-				this.startingState = this.state = props.startingState || 'open';
+				this.startingState = props.startingState || 'open';
 				this.maxWidth = props.maxWidth || -1;
 				this.customStates = props.customStates || null;
 
@@ -384,6 +387,7 @@ app.directive( 'drawerify', function(){
 				this.handleWidth = 70;
 				this.handleHeight = 70;
 				this.drawerWidth = this._getDrawerWidth();
+				this.fullWidth = this.orientation == 'vertical' && this.drawerWidth == this.containerWidth;
 				this.drawerHeight = this._getDrawerHeight();
 				this.limits = this._getDragLimits();
 
@@ -419,8 +423,7 @@ app.directive( 'drawerify', function(){
 
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
 				this.drawer.animate( this.states[ state ].css, transition );
-				this.state = state;
-
+				this.activeState = state;
 			}
 
 
@@ -431,7 +434,7 @@ app.directive( 'drawerify', function(){
 			 */
 			this.toggle = function(){
 
-				if( this.state == 'open' ){
+				if( this.activeState == 'open' ){
 					this.to( 'closed' );
 				} 
 				else {
@@ -478,11 +481,15 @@ app.directive( 'drawerify', function(){
 
 				// Drag
 				if( scope.drawerify.isMoving ){
-					scope.drawerify._untrack( touch );
+					scope.$apply( function(){
+						scope.drawerify._untrack( touch );
+					});
 				} 
 				// Click
 				else {
-					scope.drawerify.toggle();
+					scope.$apply( function(){
+						scope.drawerify.toggle();
+					});
 				}
 
 			});
@@ -496,7 +503,7 @@ app.directive( 'drawerify', function(){
 
 
 			$('.object-title').on('click', function(){
-				scope.drawerify.disable();
+				console.log( scope.drawerify.activeState );
 			});
 		}
 	}

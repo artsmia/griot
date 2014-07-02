@@ -492,21 +492,28 @@ body{
   @include transform( translate3d( 0, 0, 0 ) );
   @include no-select;
   @include box-shadow( inset 0 -5px 10px rgba(0,0,0,0.13));
+  display:none;
   width:100%;
   background-color:rgba(255,255,255,0.75);
-  height:70px;
+  height:80px;
   position:absolute;
-  top:-70px;
+  top:-80px;
   left:0;
   margin:0;
   opacity:0;
-  line-height:70px;
+  line-height:80px;
   vertical-align:middle;
   font-style:italic;
   text-align:center;
+  z-index:-1;
 
-  .open &{
+  .drawerify-vertical.drawerify-full &{
+    display:block;
+  }  
+
+  .drawerify-open &{
     opacity:1;
+    z-index:1;
   }
 
   @media #{$small}{
