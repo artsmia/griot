@@ -28,24 +28,24 @@
         <iframe class='story-iframe' ng-src="{{page.iframe}}" ng-if="page.iframe"></iframe>
 
       </div>
+
+      <div class='story-content-container' drawerify="{
+        320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open' },
+        1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open' } 
+      }">
+
+        <!--<p class='glance' transparentize=".story-content-drawer">Hold to glance</p>-->
+
+        <div class='story-content scrollable'>
+          <a class='story-home-link' href='#'></a>
+          <div ng-bind-html="page.trustedText" class='caption'></div>
+          <aside ng-if="page.meta" ng-bind-html="page.meta"></aside>
+          <aside ng-if="page.metaB" ng-bind-html="page.metaB"></aside>
+        </div>
+
+      </div>
       
     </section>
-
-  </div>
-
-  <div class='story-content-container' drawerify="{
-      320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open' },
-      1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open' } 
-    }">
-
-    <!--<p class='glance' transparentize=".story-content-drawer">Hold to glance</p>-->
-
-    <div class='story-content scrollable'>
-      <a class='story-home-link' href='#'></a>
-      <div ng-bind-html="story.pages[ activePage].trustedText" class='caption'></div>
-      <aside ng-if="story.pages[ activePage].meta" ng-bind-html="story.pages[ activePage].meta"></aside>
-      <aside ng-if="story.pages[ activePage].metaB" ng-bind-html="story.pages[ activePage].metaB"></aside>
-    </div>
 
   </div>
 

@@ -158,22 +158,15 @@
  */
 .story-content-container{
   position:absolute;
-  top:40px;
-  right:0;
-  bottom:40px;
-  left:0;
-  z-index:1;
-}
-.story-content {
-  position:absolute;
   top:0;
   right:0;
-  bottom:0;
-  left:0;
-  margin:0 auto;
+  width:33%;
+  height:100%;
   background-color:#ededed;
   padding:15px;
-  overflow-x:hidden;
+}
+.story-content{
+  overflow-x:visible;
   overflow-y:auto;
 }
 
