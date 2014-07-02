@@ -9,8 +9,8 @@ app.directive( 'drawerify', function( $timeout ){
 		transclude: true,
 		replace: true,
 		template: "<div class='drawerify-drawer' ng-class=\"{'drawerify-horizontal':drawerify.orientation == 'horizontal', 'drawerify-vertical':drawerify.orientation == 'vertical', 'drawerify-full':drawerify.fullWidth, 'drawerify-open': drawerify.activeState == 'open', 'drawerify-closed':drawerify.activeState == 'closed' }\">" +
-				"<a class='drawerify-handle'></a>" +
 				"<div class='drawerify-content' ng-transclude></div>" +
+				"<a class='drawerify-handle' ng-class=\"{'drawerify-collapsed':drawerify.states[ drawerify.activeState ].handleState == 'collapsed' } \"></a>" +
 			"</div>",
 		controller: function( $scope, $element, $attrs ){
 
@@ -132,20 +132,20 @@ app.directive( 'drawerify', function( $timeout ){
 			/**
 			 * _getHandleStaticStyles
 			 *
-			 * Calculate CSS for handle that won't change with state.
+			 * Calculate CSS for handle that won't change.
 			 */
 			this._getHandleStaticStyles = function(){
 
 				var handleStyles = { display: 'block' };
 
 				if( 'vertical' == this.orientation && 'left' == this.attachTo ){
-					handleStyles.top = '-' + this.handleHeight + 'px';
+					// handleStyles.top is dynamic
 					handleStyles.right = 'auto';
 					handleStyles.bottom = 'auto';
 					handleStyles.left = '0';
 				}
 				else if( 'vertical' == this.orientation && 'right' == this.attachTo ){
-					handleStyles.top = '-' + this.handleHeight + 'px';
+					// handleStyles.top is dynamic
 					handleStyles.right = '0';
 					handleStyles.bottom = 'auto';
 					handleStyles.left = 'auto';
@@ -154,17 +154,61 @@ app.directive( 'drawerify', function( $timeout ){
 					handleStyles.top = 'auto';
 					handleStyles.right = 'auto';
 					handleStyles.bottom = '0';
-					handleStyles.left = this.drawerWidth + 'px';					
+					// handleStyles.left is dynamic		
 				}
 				else if( 'horizontal' == this.orientation && 'right' == this.attachTo ){
 					handleStyles.top = 'auto';
 					handleStyles.right = this.drawerWidth + 'px';
 					handleStyles.bottom = '0';
-					handleStyles.left = 'auto';					
+					// handleStyles.left is dynamic		
 				}
 
 				return handleStyles;
 
+			}
+
+
+			/**
+			 * _getHandleStates
+			 *
+			 * Calculate CSS for handle that will change based on handle state.
+			 */
+			this._getHandleStates = function(){
+
+				var handleStates;
+
+				if( 'vertical' == this.orientation ){
+					handleStates = {
+						collapsed: {
+							top: '0'
+						},
+						expanded: {
+							top: '-' + this.handleHeight + 'px'
+						}
+					};
+				}
+				else if( 'horizontal' == this.orientation && 'left' == this.attachTo ){
+					handleStates = {
+						collapsed: {
+							left: this.drawerWidth - this.handleWidth + 'px'	
+						},
+						expanded: {
+							left: this.drawerWidth + 'px'
+						}
+					};
+				}
+				else if( 'horizontal' == this.orientation && 'right' == this.attachTo ){
+					handleStates = {
+						collapsed: {
+							right: this.drawerWidth - this.handleWidth + 'px'
+						},
+						expanded: {
+							right: this.drawerWidth + 'px'
+						}
+					}
+				}
+
+				return handleStates;
 			}
 
 
@@ -193,7 +237,8 @@ app.directive( 'drawerify', function( $timeout ){
 
 				return {
 					css: openStyles,
-					pageLocation: pageLocation
+					pageLocation: pageLocation,
+					handleState: 'collapsed'
 				};
 			}
 
@@ -222,7 +267,8 @@ app.directive( 'drawerify', function( $timeout ){
 
 				return {
 					css: closedStyles,
-					pageLocation: pageLocation
+					pageLocation: pageLocation,
+					handleState: 'expanded'
 				};
 			}
 
@@ -233,16 +279,16 @@ app.directive( 'drawerify', function( $timeout ){
 			 */
 			this._getCustomState = function( stateName ){
 
-				var pageLocation, customStyles;
+				var pageLocation, customStyles, handleState;
 
 				// ISSUE: This early in load, height() is untrustworthy because some
 				// elements haven't rendered yet.
 				var selector = this.customStates[stateName];
 				var $el = $( selector );
-				var position = $el.position().top;
-				var height = $el.outerHeight();
-				var totalHeight = position + height + 10; // Some padding
-				var heightDifference = this.drawerHeight - totalHeight;
+				var elPosition = $el.position().top;
+				var elHeight = $el.outerHeight();
+				var elTotalHeight = elPosition + elHeight + 10; // Some padding
+				var heightDifference = this.drawerHeight - elTotalHeight;
 
 				pageLocation = this.containerBottom - totalHeight;
 
@@ -250,9 +296,12 @@ app.directive( 'drawerify', function( $timeout ){
 					bottom: '-' + heightDifference + 'px'
 				}
 
+				handleState = heightDifference < this.handleHeight ? 'collapsed' : 'expanded';
+
 				return {
 					css: customStyles,
-					pageLocation: pageLocation
+					pageLocation: pageLocation,
+					handleState: handleState
 				};
 			}
 
@@ -395,7 +444,7 @@ app.directive( 'drawerify', function( $timeout ){
 				this.drawer.css( this._getDrawerStaticStyles() );
 				this.handle.css( this._getHandleStaticStyles() );
 
-				// Define how positions will change based on state
+				// Define how drawer position will change based on state
 				this.states = {
 					open: this._getOpenState(),
 					closed: this._getClosedState()
@@ -405,6 +454,9 @@ app.directive( 'drawerify', function( $timeout ){
 						this.states[ stateName ] = this._getCustomState( stateName );
 					}
 				}
+
+				// Define how handle position will change based on handleState
+				this.handleStates = this._getHandleStates();
 
 				// Go to initial state
 				this.to( this.startingState );
@@ -420,9 +472,9 @@ app.directive( 'drawerify', function( $timeout ){
 			 * Transition from one state to another.
 			 */
 			this.to = function( state, transition ){
-
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
 				this.drawer.animate( this.states[ state ].css, transition );
+				this.handle.animate( this.handleStates[ this.states[ state ].handleState ] );
 				this.activeState = state;
 			}
 

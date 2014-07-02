@@ -321,10 +321,10 @@ color:#222;
 .leaflet-bar a.leaflet-control-zoom-out:before { font-size: 16px; margin-top: -8px; text-indent: 0; }
 
 /** Drawerify styles */
-.drawerify-handle { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; position: absolute; display: block; width: 70px; height: 70px; background-color: rgba(237, 237, 237, 0.4); }
+.drawerify-handle { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: background-color 100ms ease; -moz-transition: background-color 100ms ease; -o-transition: background-color 100ms ease; position: absolute; display: block; width: 70px; height: 70px; background-color: rgba(237, 237, 237, 0.4); }
 .drawerify-handle:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e817"; left: 0; }
+.drawerify-handle.drawerify-collapsed { background-color: transparent; }
 .drawerify-handle:before { font-size: 30px; margin-top: -15px; }
-.drawerify-horizontal .drawerify-handle:before { -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg); transform: rotate(90deg); }
-.drawerify-handle.disabled { display: none; }
+.drawerify-horizontal .drawerify-handle:before { -webkit-transition: all 300ms ease; -moz-transition: all 300ms ease; -o-transition: all 300ms ease; -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -o-transform: rotate(90deg); -ms-transform: rotate(90deg); transform: rotate(90deg); }
 
 .drawerify-content { position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; }
