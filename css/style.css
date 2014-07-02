@@ -1,5 +1,5 @@
 /** Media queries, vendor prefixes, and base styles for frequently used elements. */
-.transparentized { -webkit-transition: opacity 100ms ease; -moz-transition: opacity 100ms ease; -o-transition: opacity 100ms ease; opacity: 0 !important; }
+.transparentized { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; opacity: 0 !important; }
 
 /** Site and reusable element styles. */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }

@@ -1016,7 +1016,7 @@ app.directive( 'drawerify', function( $timeout ){
 				var elTotalHeight = elPosition + elHeight + 10; // Some padding
 				var heightDifference = this.drawerHeight - elTotalHeight;
 
-				pageLocation = this.containerBottom - totalHeight;
+				pageLocation = this.containerBottom - elTotalHeight;
 
 				customStyles = {
 					bottom: '-' + heightDifference + 'px'
@@ -1200,7 +1200,7 @@ app.directive( 'drawerify', function( $timeout ){
 			this.to = function( state, transition ){
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
 				this.drawer.animate( this.states[ state ].css, transition );
-				this.handle.animate( this.handleStates[ this.states[ state ].handleState ] );
+				this.handle.animate( this.handleStates[ this.states[ state ].handleState ], 100 );
 				this.activeState = state;
 			}
 
@@ -1270,6 +1270,8 @@ app.directive( 'drawerify', function( $timeout ){
 					});
 				}
 
+				e.preventDefault();
+
 			});
 
 			/**
@@ -1279,10 +1281,6 @@ app.directive( 'drawerify', function( $timeout ){
 				scope.drawerify.init();
 			});
 
-
-			$('.object-title').on('click', function(){
-				console.log( scope.drawerify.activeState );
-			});
 		}
 	}
 });
