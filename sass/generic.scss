@@ -265,6 +265,20 @@ body{
     height:80px;
     margin-top:-40px;
     border:1px solid #222;
+
+    &:before{
+      margin-top:-24px;
+    }
+
+    &:after{
+      position:relative;
+      display:block;
+      top:50%;
+      width:80%;
+      margin:5px auto 0;
+      text-align:center;
+      line-height:12px;
+    }
   }
 
 }
