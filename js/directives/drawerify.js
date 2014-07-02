@@ -10,7 +10,7 @@ app.directive( 'drawerify', function( $timeout ){
 		replace: true,
 		template: "<div class='drawerify-drawer' ng-class=\"{'drawerify-horizontal':drawerify.orientation == 'horizontal', 'drawerify-vertical':drawerify.orientation == 'vertical', 'drawerify-full':drawerify.fullWidth, 'drawerify-open': drawerify.activeState == 'open', 'drawerify-closed':drawerify.activeState == 'closed' }\">" +
 				"<div class='drawerify-content' ng-transclude></div>" +
-				"<a class='drawerify-handle' ng-class=\"{'drawerify-collapsed':drawerify.states[ drawerify.activeState ].handleState == 'collapsed' } \"></a>" +
+				"<a class='drawerify-handle' ng-class=\"{'drawerify-collapsed':drawerify.collapseHandle && drawerify.states[ drawerify.activeState ].handleState == 'collapsed' } \"></a>" +
 			"</div>",
 		controller: function( $scope, $element, $attrs ){
 
@@ -424,6 +424,7 @@ app.directive( 'drawerify', function( $timeout ){
 				this.startingState = props.startingState || 'open';
 				this.maxWidth = props.maxWidth || -1;
 				this.customStates = props.customStates || null;
+				this.collapseHandle = props.collapseHandle || false;
 
 				this.container = this.drawer.offsetParent();
 				this.containerWidth = this.container.width();
@@ -474,7 +475,12 @@ app.directive( 'drawerify', function( $timeout ){
 			this.to = function( state, transition ){
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
 				this.drawer.animate( this.states[ state ].css, transition );
-				this.handle.animate( this.handleStates[ this.states[ state ].handleState ], 100 );
+
+				if( this.collapseHandle ){
+					this.handle.animate( this.handleStates[ this.states[ state ].handleState ], 100 );
+				} else {
+					this.handle.animate( this.handleStates[ 'expanded' ], 100 );
+				}
 				this.activeState = state;
 			}
 
