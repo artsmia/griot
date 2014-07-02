@@ -3,11 +3,16 @@
  */
 .drawerify-handle{
   @include icon( '\e817' );
+  @include transition( background-color 100ms ease );
   position:absolute;
   display:block;
   width:70px;
   height:70px;
   background-color:rgba(237,237,237,0.4);
+
+  &.drawerify-collapsed{
+    background-color:transparent;
+  }
 
   &:before{
     font-size:30px;
@@ -15,12 +20,10 @@
   }
 
   .drawerify-horizontal &:before{
+    @include transition( all 300ms ease );
     @include transform( rotate( 90deg ) );
   }
 
-  &.disabled{
-  	display:none;
-  }
 }
 
 .drawerify-content{
