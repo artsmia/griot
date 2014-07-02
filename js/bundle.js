@@ -999,11 +999,13 @@ app.directive( 'drawerify', function( $timeout ){
 			}
 
 			/**
-			 * _calculateCustomStateStyles
+			 * _getCustomState
 			 *
 			 * Calculate CSS for CUSTOM drawer states.
 			 */
-			this._getCustomState = function( stateName ){
+			this._getCustomState = function( stateName, initial ){
+
+				var initial = typeof initial !== 'undefined' ? initial : true;
 
 				var pageLocation, customStyles, handleState;
 
@@ -1022,7 +1024,19 @@ app.directive( 'drawerify', function( $timeout ){
 					bottom: '-' + heightDifference + 'px'
 				}
 
-				handleState = heightDifference < this.handleHeight ? 'collapsed' : 'expanded';
+				handleState = elTotalHeight < this.handleHeight ? 'expanded' : 'collapsed';
+
+				if( initial ){
+					$scope.$watch( function(){
+						// Merely a dumb way to watch both properties at once
+						return $el.height() + $el.position().top; 
+					}, function(){
+						$scope.drawerify.states[ stateName ] = $scope.drawerify._getCustomState( stateName, false );
+						if( $scope.drawerify.activeState == stateName ){
+							$scope.drawerify.to( stateName );
+						}
+					});
+				}
 
 				return {
 					css: customStyles,
