@@ -812,6 +812,7 @@ app.directive( 'drawerify', function(){
 
 				var drawerStyles = {
 					// Show drawer, which is set to visibility:hidden in CSS to avoid FOUC
+					position: 'absolute',
 					visibility: 'visible',
 					width: this.drawerWidth + 'px',
 					height: this.drawerHeight + 'px',
