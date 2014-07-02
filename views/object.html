@@ -10,7 +10,11 @@
   </div>
 
   <!-- Content -->
-  <div class='object-content-container' drawerify="{ 400:{ orientation:'vertical', maxWidth:400, attachTo:'right', customStates:{ 'title':'.object-title' }, startingState:'title' }, 1023:{ orientation:'horizontal', maxWidth:400, attachTo:'left', startingState:'open' } }">
+  <div class='object-content-container' drawerify="{ 
+    320:{ orientation:'vertical', maxWidth:400, attachTo:'right', customStates:{ 'title':'.object-title' }, startingState:'title', collapseHandle:true }, 
+    1023:{ orientation:'horizontal', maxWidth:400, attachTo:'left', startingState:'open', collapseHandle:false },
+    default:'disabled'
+  }">
 
     <p class='glance' transparentize=".object-content-container">Hold to glance</p>
 

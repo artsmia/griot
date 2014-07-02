@@ -283,7 +283,7 @@ color:#222;
 /** Content */
 .story-content-container { position: absolute; top: 0; right: 0; width: 33%; height: 100%; background-color: #ededed; padding: 15px; }
 
-.story-content { overflow-x: visible; overflow-y: auto; }
+.story-content { position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow-x: visible; overflow-y: auto; }
 
 .story-content .caption { padding: 2em; }
 
@@ -321,7 +321,7 @@ color:#222;
 .leaflet-bar a.leaflet-control-zoom-out:before { font-size: 16px; margin-top: -8px; text-indent: 0; }
 
 /** Drawerify styles */
-.drawerify-handle { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: background-color 100ms ease; -moz-transition: background-color 100ms ease; -o-transition: background-color 100ms ease; position: absolute; display: block; width: 70px; height: 70px; background-color: rgba(237, 237, 237, 0.4); }
+.drawerify-handle { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-transition: background-color 100ms ease; -moz-transition: background-color 100ms ease; -o-transition: background-color 100ms ease; position: absolute; display: block; width: 70px; height: 70px; background-color: rgba(237, 237, 237, 0.6); }
 .drawerify-handle:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: "\e817"; left: 0; }
 .drawerify-handle.drawerify-collapsed { background-color: transparent; }
 .drawerify-handle:before { font-size: 30px; margin-top: -15px; }

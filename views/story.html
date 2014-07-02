@@ -30,8 +30,9 @@
       </div>
 
       <div class='story-content-container' drawerify="{
-        320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open' },
-        1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open' } 
+        320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open', collapseHandle:true },
+        1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open', collapseHandle:false },
+        default:'disabled'
       }">
 
         <p class='glance' transparentize=".story-content-container">Hold to glance</p>
