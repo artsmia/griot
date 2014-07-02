@@ -20,7 +20,6 @@
   }
 
   .drawerify-horizontal &:before{
-    @include transition( all 300ms ease );
     @include transform( rotate( 90deg ) );
   }
 
