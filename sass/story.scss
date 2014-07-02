@@ -30,16 +30,6 @@
   }
 }
 
-.story-home-link {
-  @extend .home-icon;
-  position:absolute;
-  display:block;
-  top:5px;
-  left:5px;
-  z-index:1;
-}
-
-
 /**
  * Slider structure 
  */
@@ -162,8 +152,8 @@
   right:0;
   width:33%;
   height:100%;
+  padding:25px;
   background-color:#ededed;
-  padding:15px;
 }
 .story-content{
   position:absolute;
@@ -174,9 +164,14 @@
   overflow-x:visible;
   overflow-y:auto;
 }
-
+.story-home-link {
+  @extend .home-icon;
+  position:relative;
+  display:block;
+  margin:15px 25px 15px;
+}
 .story-content .caption {
-  padding:2em;
+  margin:0 25px 15px;
 }
 
 .story-content .caption p{
@@ -192,11 +187,10 @@
 
 .story-content aside {
   @include meta;
-  padding:0 2em 2em;
-  margin:0;
+  margin:0 25px 25px;
 
   @media #{$medium} {
-    margin:0 60px 0 0;
+    margin:0 60px 25px 25px;
   }
 }
 
