@@ -734,7 +734,7 @@ app.directive( 'drawerify', function(){
 		restrict: 'A',
 		transclude: true,
 		replace: true,
-		template: "<div class='drawerify-drawer'><a class='drawerify-handle'></a><div class='drawerify-content' ng-transclude></div></div>",
+		template: "<div class='drawerify-drawer'><a class='drawerify-handle' ng-class=\"{'horizontal':drawerify.orientation == 'horizontal', 'vertical':drawerify.orientation == 'vertical'}\"></a><div class='drawerify-content' ng-transclude></div></div>",
 		controller: function( $scope, $element, $attrs ){
 
 			$scope.drawerify = this;
@@ -742,17 +742,6 @@ app.directive( 'drawerify', function(){
 			/************************************************************************
 			 INTERNAL UTILITIES
 			 ************************************************************************/
-
-			/**
-			 * _setElements
-			 *
-			 * Store jQuery elements of drawer and handle in model.
-			 */
-			this._setElements = function(){
-				this.drawer = $( $element[0] );
-				this.handle = this.drawer.children( '.drawerify-handle' );
-			}
-
 
 			/**
 			 * chooseBreakpoint
@@ -763,30 +752,28 @@ app.directive( 'drawerify', function(){
 			 */
 			this._chooseBreakpoint = function(){
 
-				var props = null;
-				var currentBp = 100000;
-				var containerWidth = window.outerWidth;
+				// Arbitrarily huge number so we start wider than any actual screen
+				var currentBpInt = 10000;
 
-				for( var bp in this.breakpoints ){
-					var bpInt = parseInt( bp );
-					if( bpInt >= containerWidth && bpInt < currentBp ){
-						currentBp = bpInt;
-						props = this.breakpoints[bp];
+				var windowWidth = window.outerWidth;
+				var breakpoint = 'default';
+
+				for( var userBreakpoint in this.breakpoints ){
+					var bpInt = parseInt( userBreakpoint );
+					if( bpInt >= windowWidth && bpInt < currentBpInt ){
+						currentBpInt = bpInt;
+						breakpoint = userBreakpoint;
 					}
 				}
 
-				this.orientation = props.orientation || 'vertical';
-				this.attachTo = props.attachTo || 'right';
-				this.startingState = this.state = props.startingState || 'open';
-				this.maxWidth = props.maxWidth || -1;
-				this.customStates = props.customStates || null;
+				return breakpoint;
 			}
 
 
 			/**
-			 * calculateDrawerWidth
+			 * getDrawerWidth
 			 */
-			this._calculateDrawerWidth = function(){
+			this._getDrawerWidth = function(){
 
 				// If maxWidth is wider than container, use container width
 				var widthLimit = Math.min( this.containerWidth, this.maxWidth );
@@ -797,14 +784,14 @@ app.directive( 'drawerify', function(){
 					widthLimit = this.containerWidth - this.handleWidth - 10;
 				}
 
-				this.drawerWidth = widthLimit;
+				return widthLimit;
 			}
 
 
 			/**
-			 * calculateDrawerHeight
+			 * getDrawerHeight
 			 */
-			this._calculateDrawerHeight = function(){
+			this._getDrawerHeight = function(){
 
 				var heightLimit = this.containerHeight;
 
@@ -814,16 +801,16 @@ app.directive( 'drawerify', function(){
 					heightLimit = this.containerHeight - this.handleHeight - 10;
 				}
 
-				this.drawerHeight = heightLimit;
+				return heightLimit;
 			}
 
 
 			/**
-			 * _drawerStaticStyles
+			 * _getDrawerStaticStyles
 			 *
 			 * Calculate CSS for drawer that won't change with state.
 			 */
-			this._drawerStaticStyles = function(){
+			this._getDrawerStaticStyles = function(){
 
 				var drawerStyles = {
 					// Show drawer, which is set to visibility:hidden in CSS to avoid FOUC
@@ -860,16 +847,16 @@ app.directive( 'drawerify', function(){
 					drawerStyles.left = 'auto';
 				}
 
-				this.drawer.css( drawerStyles );
+				return drawerStyles;
 
 			}
 
 			/**
-			 * _handleStaticStyles
+			 * _getHandleStaticStyles
 			 *
 			 * Calculate CSS for handle that won't change with state.
 			 */
-			this._handleStaticStyles = function(){
+			this._getHandleStaticStyles = function(){
 
 				var handleStyles = { display: 'block' };
 
@@ -898,32 +885,17 @@ app.directive( 'drawerify', function(){
 					handleStyles.left = 'auto';					
 				}
 
-				this.handle.css( handleStyles );
+				return handleStyles;
 
 			}
 
 
 			/**
-			 * _resetStyles
-			 *
-			 * Reset all style overrides.
-			 */
-			 /*
-			this._resetStyles = function(){
-				var controlledStyles = [ 'position', 'top', 'right', 'bottom', 'left', 'display', 'with', 'height' ];
-				for( var i=0; i < controlledStyles.length; i++ ){
-					this.drawer.css( controlledStyles[i], '' );
-				} 
-			}
-			*/
-
-
-			/**
-			 * _calculateOpenStyles
+			 * _getOpenState
 			 *
 			 * Calculate values for OPEN drawer state.
 			 */
-			this._calculateOpenStyles = function(){
+			this._getOpenState = function(){
 
 				var pageLocation, openStyles = {};
 
@@ -941,18 +913,19 @@ app.directive( 'drawerify', function(){
 					openStyles.right = '0';
 				}
 
-				this.states.open = {
+				return {
 					css: openStyles,
 					pageLocation: pageLocation
 				};
 			}
 
+
 			/**
-			 * _calculateClosedStyles
+			 * _getClosedState
 			 *
 			 * Calculate CSS for CLOSED drawer state.
 			 */
-			this._calculateClosedStyles = function(){
+			this._getClosedState = function(){
 
 				var pageLocation, closedStyles = {};
 
@@ -969,7 +942,7 @@ app.directive( 'drawerify', function(){
 					closedStyles.right = '-' + this.drawerWidth + 'px';
 				}
 
-				this.states.closed = {
+				return {
 					css: closedStyles,
 					pageLocation: pageLocation
 				};
@@ -980,65 +953,58 @@ app.directive( 'drawerify', function(){
 			 *
 			 * Calculate CSS for CUSTOM drawer states.
 			 */
-			this._calculateCustomStateStyles = function(){
+			this._getCustomState = function( stateName ){
 
-				// Only vertical layouts use custom states.
-				if( ! 'vertical' == this.orientation ){
-					return;
+				var pageLocation, customStyles;
+
+				// ISSUE: This early in load, height() is untrustworthy because some
+				// elements haven't rendered yet.
+				var selector = this.customStates[stateName];
+				var $el = $( selector );
+				var position = $el.position().top;
+				var height = $el.outerHeight();
+				var totalHeight = position + height + 10; // Some padding
+				var heightDifference = this.drawerHeight - totalHeight;
+
+				pageLocation = this.containerBottom - totalHeight;
+
+				customStyles = {
+					bottom: '-' + heightDifference + 'px'
 				}
 
-
-				for( customState in this.customStates ){
-
-					var pageLocation, customStyles;
-
-					// ISSUE: This early in load, height() is untrustworthy because some
-					// elements haven't rendered yet.
-					var selector = this.customStates[customState];
-					var $el = $( selector );
-					var position = $el.position().top;
-					var height = $el.outerHeight();
-					var totalHeight = position + height + 10; // Some padding
-					var heightDifference = this.drawerHeight - totalHeight;
-
-					pageLocation = this.containerBottom - totalHeight;
-
-					customStyles = {
-						bottom: '-' + heightDifference + 'px'
-					}
-
-					this.states[ customState ] = {
-						css: customStyles,
-						pageLocation: pageLocation
-					};
-				}
+				return {
+					css: customStyles,
+					pageLocation: pageLocation
+				};
 			}
 
 			/**
-			 * _calculateDragLimits
+			 * _getDragLimits
 			 *
-			 * Returns an array representing min and max pageX/pageY touchmove vals.
+			 * Returns an object representing min and max pageX/pageY values,
+			 * depending on orientation and attachment side.
 			 */
-			this._calculateDragLimits = function(){
+			this._getDragLimits = function(){
 
-				this.dragLimits = {};
+				var limits = {};
 
 				// NOTE: We use drawerHeight and drawerWidth here because they factor
 				// in the size of the handle.
 
 				if( 'vertical' == this.orientation ){
-					this.minPageY = this.containerBottom - this.drawerHeight;
-					this.maxPageY = this.containerBottom;
+					limits.minPageY = this.containerBottom - this.drawerHeight;
+					limits.maxPageY = this.containerBottom;
 				}
 				else if( 'horizontal' == this.orientation && 'left' == this.attachTo ){
-					this.minPageX = this.containerLeft;
-					this.maxPageX = this.containerLeft + this.drawerWidth;
+					limits.minPageX = this.containerLeft;
+					limits.maxPageX = this.containerLeft + this.drawerWidth;
 				}
 				else if( 'horizontal' == this.orientation && 'right' == this.attachTo ){
-					this.minPageX = this.containerRight - this.drawerWidth;
-					this.maxPageX = this.containerRight;
+					limits.minPageX = this.containerRight - this.drawerWidth;
+					limits.maxPageX = this.containerRight;
 				}
 
+				return limits;
 			}
 
 			/**
@@ -1055,7 +1021,7 @@ app.directive( 'drawerify', function(){
 
 				if( 'vertical' == this.orientation ){
 
-					if( touch.pageY < this.minPageY || touch.pageY > this.maxPageY ){
+					if( touch.pageY < this.limits.minPageY || touch.pageY > this.limits.maxPageY ){
 						return;
 					}
 
@@ -1064,7 +1030,7 @@ app.directive( 'drawerify', function(){
 				}
 				else if( 'horizontal' == this.orientation ){
 
-					if( touch.pageX < this.minPageX || touch.pageX > this.maxPageX ){
+					if( touch.pageX < this.limits.minPageX || touch.pageX > this.limits.maxPageX ){
 						return;
 					}
 
@@ -1108,6 +1074,68 @@ app.directive( 'drawerify', function(){
 			 ************************************************************************/
 
 			/**
+			 * init
+			 *
+			 * Initialize drawer.
+			 */
+			this.init = function(){
+				var props;
+
+				this.drawer = $( $element[0] );
+				this.handle = this.drawer.children( '.drawerify-handle' );
+				
+				this.breakpoints = $scope.$eval( $attrs.drawerify );
+				this.activeBreakpoint = this._chooseBreakpoint();
+				props = this.breakpoints[ this.activeBreakpoint ] || 'disabled';
+				if( 'disabled' == props ){
+					this.disable();
+					return;
+				}
+
+				this.orientation = props.orientation || 'vertical';
+				this.attachTo = props.attachTo || 'right';
+				this.startingState = this.state = props.startingState || 'open';
+				this.maxWidth = props.maxWidth || -1;
+				this.customStates = props.customStates || null;
+
+				this.container = this.drawer.offsetParent();
+				this.containerWidth = this.container.width();
+				this.containerHeight = this.container.height();
+				this.containerTop = this.container.offset().top;
+				this.containerBottom = this.containerTop + this.containerHeight;
+				this.containerLeft = this.container.offset().left;
+				this.containerRight = this.containerLeft + this.containerWidth;
+				this.defaultSpeed = 300;
+				this.handleWidth = 70;
+				this.handleHeight = 70;
+				this.drawerWidth = this._getDrawerWidth();
+				this.drawerHeight = this._getDrawerHeight();
+				this.limits = this._getDragLimits();
+
+				// Define element positions
+				this.drawer.css( this._getDrawerStaticStyles() );
+				this.handle.css( this._getHandleStaticStyles() );
+
+				// Define how positions will change based on state
+				this.states = {
+					open: this._getOpenState(),
+					closed: this._getClosedState()
+				};
+				if( 'vertical' == this.orientation ){
+					for( stateName in this.customStates ){
+						this.states[ stateName ] = this._getCustomState( stateName );
+					}
+				}
+
+				// Go to initial state
+				this.to( this.startingState );
+
+				$scope.$broadcast( 'drawerInitialized', this.drawer );
+				$scope.$emit( 'drawerInitialized', this.drawer );
+
+			}
+
+			/**
 			 * to
 			 *
 			 * Transition from one state to another.
@@ -1139,37 +1167,6 @@ app.directive( 'drawerify', function(){
 
 
 			/**
-			 * init
-			 *
-			 * Initialize drawer.
-			 */
-			this.init = function(){
-				this._setElements();
-				this.breakpoints = $scope.$eval($attrs.drawerify);
-				this.container = this.drawer.offsetParent();
-				this.containerWidth = this.container.width();
-				this.containerHeight = this.container.height();
-				this.containerTop = this.container.offset().top;
-				this.containerBottom = this.containerTop + this.containerHeight;
-				this.containerLeft = this.container.offset().left;
-				this.containerRight = this.containerLeft + this.containerWidth;
-				this.defaultSpeed = 300;
-				this.handleWidth = 70;
-				this.handleHeight = 70;
-				this.states = {};
-				this._chooseBreakpoint();
-				this._calculateDrawerWidth();
-				this._calculateDrawerHeight();
-				this._drawerStaticStyles();
-				this._handleStaticStyles();
-				this._calculateOpenStyles();
-				this._calculateClosedStyles();
-				this._calculateCustomStateStyles();
-				this._calculateDragLimits();
-				this.to( this.startingState, 0 );
-			}
-
-			/**
 			 * disable
 			 *
 			 * Turn off drawerify and reset controlled elements to original CSS.
@@ -1181,16 +1178,6 @@ app.directive( 'drawerify', function(){
 					$scope.drawerify.drawer.css( property, '' );
 				});
 			}
-
-
-			/*
-			$scope.$watch( function(){
-				return $('.object-title').height();
-			}, function( newVal, oldVal ){
-				$scope.drawerify._setupDrawerStates();
-				$scope.drawerify.to( 'title', 500 );
-			});
-			*/
 
 		},
 		link: function( scope, elem, attrs ){
