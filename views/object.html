@@ -5,9 +5,7 @@
     <flatmap image="{{id}}">
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
-        <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)">
-          <!-- <img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg"> -->
-        </a>
+        <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
       </div>
     </flatmap>
   </div>
@@ -64,9 +62,7 @@
 	      </ol>
         <div ng-if="notes.length > 1" class="more-views">
           <h5 class='more-title' ng-show="relatedStories">More Views</h5>
-          <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" ng-repeat="view in notes" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)">
-            <!-- <img ng-src="//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg" style="width: {{(100/notes.length)-1}}%;"> -->
-          </a>
+          <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" ng-repeat="view in notes" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
         </div>
 	    </div>
 

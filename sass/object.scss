@@ -453,6 +453,8 @@
 .object-zoomer .flatmap > div:first-child {
   z-index: 100;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 .object-zoomer .flatmap .view {
   margin-left: -100em;
@@ -467,15 +469,16 @@
 
 // Transition the leaflet pane away
 .object-zoomer .flatmap .leaflet-map-pane {
-  @include transition(-webkit-transform 250ms ease-out);
+  @include transition(-webkit-transform 125ms ease-out);
 }
 .showAllViews .object-zoomer .flatmap .leaflet-map-pane {
-  -webkit-transform: scale(0.25) translateX(-1000px) !important;
+  -webkit-transform: scale(0.25) translateX(-1234px) !important;
 }
 
 .more-views a, a.view {
   height: 8em;
-  width: 33.3%;
+  width: 32.8%;
+  margin: 0.5% 0.5% 0 0;
   background-size: cover;
   background-position: 50% 15%;
   display: block;
@@ -483,10 +486,15 @@
   // margin-bottom: 1px;
 
   &.open, &:hover {
-    border-bottom: 1px solid gold;
-    margin-bottom: -1px;
+    border: 5px solid rgba(255, 255, 255, 0.6);
   }
 }
 .object-zoomer .flatmap a.view {
   height: 17em;
+}
+.leaflet-control-container *{
+	@include transition(opacity 125ms ease-out);
+}
+.showAllViews .object-zoomer .leaflet-control-container .leaflet-right {
+  opacity: 0;
 }

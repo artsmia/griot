@@ -249,20 +249,24 @@ html, body { background-color: #ededed; }
 
 .noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
 
-.object-zoomer .flatmap > div:first-child { z-index: 100; width: 100%; }
+.object-zoomer .flatmap > div:first-child { z-index: 100; width: 100%; margin: 0; padding: 0; }
 
 .object-zoomer .flatmap .view { margin-left: -100em; -webkit-transition: margin 125ms ease-out; -moz-transition: margin 125ms ease-out; -o-transition: margin 125ms ease-out; }
 
 .showAllViews .object-zoomer .flatmap .view { display: inline; min-height: 3em; margin-left: 0; -webkit-transition: margin 125ms ease; -moz-transition: margin 125ms ease; -o-transition: margin 125ms ease; }
 
-.object-zoomer .flatmap .leaflet-map-pane { -webkit-transition: -webkit-transform 250ms ease-out; -moz-transition: -webkit-transform 250ms ease-out; -o-transition: -webkit-transform 250ms ease-out; }
+.object-zoomer .flatmap .leaflet-map-pane { -webkit-transition: -webkit-transform 125ms ease-out; -moz-transition: -webkit-transform 125ms ease-out; -o-transition: -webkit-transform 125ms ease-out; }
 
-.showAllViews .object-zoomer .flatmap .leaflet-map-pane { -webkit-transform: scale(0.25) translateX(-1000px) !important; }
+.showAllViews .object-zoomer .flatmap .leaflet-map-pane { -webkit-transform: scale(0.25) translateX(-1234px) !important; }
 
-.more-views a, a.view { height: 8em; width: 33.3%; background-size: cover; background-position: 50% 15%; display: block; float: left; }
-.more-views a.open, .more-views a:hover, a.view.open, a.view:hover { border-bottom: 1px solid gold; margin-bottom: -1px; }
+.more-views a, a.view { height: 8em; width: 32.8%; margin: 0.5% 0.5% 0 0; background-size: cover; background-position: 50% 15%; display: block; float: left; }
+.more-views a.open, .more-views a:hover, a.view.open, a.view:hover { border: 5px solid rgba(255, 255, 255, 0.6); }
 
 .object-zoomer .flatmap a.view { height: 17em; }
+
+.leaflet-control-container * { -webkit-transition: opacity 125ms ease-out; -moz-transition: opacity 125ms ease-out; -o-transition: opacity 125ms ease-out; }
+
+.showAllViews .object-zoomer .leaflet-control-container .leaflet-right { opacity: 0; }
 
 /** Story template styles. */
 /** Header */
