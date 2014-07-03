@@ -228,6 +228,12 @@ body{
   }
 }
 
+.home-icon, .minimize-icon, .maximize-icon, .meta-icon {
+  &:hover, &:active {
+    border: 2px solid #222;
+  }
+}
+
 /**
  * Navigation
  */
