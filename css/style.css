@@ -1,5 +1,7 @@
 /** Media queries, vendor prefixes, and base styles for frequently used elements. */
-.transparentized { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; opacity: 0 !important; }
+.transparentized { -webkit-transition: opacity 300ms ease-out; -moz-transition: opacity 300ms ease-out; -o-transition: opacity 300ms ease-out; opacity: 0 !important; }
+
+.detransparentized { -webkit-transition: opacity 150ms ease-in; -moz-transition: opacity 150ms ease-in; -o-transition: opacity 150ms ease-in; }
 
 /** Site and reusable element styles. */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }

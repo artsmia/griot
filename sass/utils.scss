@@ -84,6 +84,9 @@ $medium:'screen and (min-width:1024px)';
   text-overflow: ellipsis;
 }
 .transparentized{
-  @include transition( opacity 300ms ease );
+  @include transition( opacity 300ms ease-out );
   opacity: 0 !important;
+}
+.detransparentized {
+  @include transition( opacity 150ms ease-in );
 }

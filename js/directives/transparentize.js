@@ -2,7 +2,7 @@
  * Turn a parent element transparent on touchstart.
  */
 
-app.directive( 'transparentize', function(){
+app.directive( 'transparentize', function($timeout){
 
 	return function( scope, elem, attrs ) {
 
@@ -13,7 +13,11 @@ app.directive( 'transparentize', function(){
 		});
 
 		elem.on( 'touchend', function(e){
+			$target.addClass('detransparentized');
 			$target.removeClass('transparentized');
+			$timeout(function() {
+			  $target.removeClass('detransparentized');
+			}, 300)
 		});
 
 	}
