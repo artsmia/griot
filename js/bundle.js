@@ -213,6 +213,7 @@ app.constant('envConfig', {
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
 
+  miaEmailSharingActive: true,
   emailServer: 'http://10.1.8.115:33445/',
 
   // Adapters - set to false to use GriotWP for everything.
@@ -456,13 +457,14 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email',
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config) {
 
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
     $scope.contentMinimized = window.outerWidth < 1024;
+    $scope.enableSharing = config.miaEmailSharingActive
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
