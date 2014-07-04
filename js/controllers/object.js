@@ -41,7 +41,12 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         if($scope.mapLoaded) loadDetails()
 
         // Open the More tab when returning from a story via the 'Back' button
-        $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
+        if($rootScope.nextView) {
+          $scope.activeSection = $rootScope.nextView
+          $rootScope.nextView = undefined
+          // make sure the drawer is open
+          angular.element($('.object-content-container')).scope().drawerify.to('open', 0)
+        }
         $scope.$$phase || $scope.$apply()
 
       }
