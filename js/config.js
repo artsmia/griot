@@ -16,6 +16,9 @@ app.constant('envConfig', {
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
 
+  miaEmailSharingActive: true,
+  emailServer: 'http://10.1.8.115:33445/',
+
   // Adapters - set to false to use GriotWP for everything.
   miaMediaMetaActive: true,
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',

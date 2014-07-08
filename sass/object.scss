@@ -5,79 +5,40 @@
 /**
  * Content - "Above the Fold" (Controls and Meta)
  */
-.object-content{
-	@include transition( left 125ms ease );
+.object-content-container{
 	position:absolute;
+	top:0;
+	left:0;
+	width:33%;
+	height:100%;
+}
+.object-content{
+	position:absolute;
+	top:0;
 	right:0;
 	bottom:0;
 	left:0;
-	max-height:67%;
+	margin:0 auto;
+	background-color:#ededed;
 	padding:15px;
 	overflow-x:hidden;
 	overflow-y:auto;
-	background: -moz-linear-gradient(top,  rgba(237,237,237,0) 0%, rgba(237,237,237,0.9) 25%, rgba(237,237,237,0.9) 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(237,237,237,0)), color-stop(25%,rgba(237,237,237,0.9)), color-stop(100%,rgba(237,237,237,0.9)));
-	background: -webkit-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: -o-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: -ms-linear-gradient(top,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	background: linear-gradient(to bottom,  rgba(237,237,237,0) 0%,rgba(237,237,237,0.9) 25%,rgba(237,237,237,0.9) 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ededed', endColorstr='#e6ededed',GradientType=0 );
-	z-index:2;
-
-	.contentMinimized &{
-		padding:0 15px 15px;
-	}
-
-	@media #{$medium} {
-		top:0;
-		right:auto;
-		bottom:0;
-		left:0;
-		width:33%;
-		max-height:none;
-
-		.contentMinimized &{
-			padding:15px;
-			left:-33%;
-			overflow:visible;
-		}
-	}
 }
+
 .object-menu {
 	display:block;
 	height:40px;
 	margin:0;
 	padding:0;
 }
-.object-home-link {
-	@extend .home-icon;
+.object-menu > a {
   position:relative;
   display:block;
   float:left;
- 	margin:0 10px 0 0;
+ 	margin:0 5px 0 0;
 }
-.object-minimize-content {
-	@extend .minimize-icon;
-	position:relative;
-	display:block;
-	float:left;
-	margin:0 10px 0 0;
-}
-.object-maximize-content {
-	@include transition( all 150ms ease );
-	@extend .maximize-icon;
-	position:absolute;
-	top:15px;
-	left: -100px;
-	width:40px;
-	height:40px;
-	z-index:2;
-
-	@media #{$medium} {
-		.contentMinimized & {
-			left: 15px;
-		}
-	}
+.object-home-link {
+	@extend .home-icon;
 }
 .contentMinimized .object-maximize-content {
   background-color: rgba(22, 22, 22, .55);
@@ -85,11 +46,13 @@
 
 .object-menu .toggle-meta {
 	@extend .meta-icon;
-	position:relative;
-	display:block;
-	float:left;
-  margin:0 10px 0 0;
 }
+.object-menu .email {
+  @extend .meta-icon;
+  @include icon( '\e818' );
+  font-size: 21px;
+}
+
 .object-title{
 	margin:5px 0 0;
 }
@@ -127,16 +90,6 @@
  */
 .object-nav {
 	margin:15px 0 0;
-
-	.contentMinimized &{
-		display:none;
-	}
-
-	@media #{$medium} {
-		.contentMinimized &{
-			display:block;
-		}
-	}
 }
 .object-nav a {
 	display:block;
@@ -184,16 +137,6 @@
 .object-stories{
 	margin:0;
 	padding:0;
-
-	.contentMinimized &{
-		display:none;
-	}
-
-	@media #{$medium} {
-		.contentMinimized &{
-			display:block;
-		}
-	}
 }
 
 
@@ -363,7 +306,8 @@
   transition:all 250ms linear;
   text-decoration: none;
 
-  @media #{$large} {
+  // TODO: Target non-touch devices
+  @media screen and (min-width:1025px) {
 	  &:hover {
 	  	color:#ededed;
 	  	background-color:#222;
@@ -376,30 +320,18 @@
  * Zoomer
  */
 .object-zoomer {
-	@include transition( bottom 125ms ease, left 125ms ease );
 	@include box-shadow( 0px 3px 5px rgba(0,0,0,0.23) );
+	@include transition( opacity 125ms ease );
 	position:absolute;
 	top:0;
 	right:0;
-	bottom:67%;
+	bottom:0;
 	left:0;
 	background-color:#ccc;
 	text-align:center;
-	z-index:2;
 	
-	.contentMinimized &{
-		bottom:0;
-	}
-
 	@media #{$medium} {
-		top:0;
-		right:0;
-		bottom:0;
 		left:33%;
-
-		.contentMinimized &{
-			left:0;
-		}
 	}
 }
 
@@ -447,4 +379,70 @@
   height:36px;
   margin: -18px 0 0 -18px;
   line-height:34px;
+}
+
+// Toggle 'show all views' control
+.object-zoomer .flatmap > div:first-child {
+  z-index: 100;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.object-zoomer .flatmap .view {
+  margin-left: -100em;
+	@include transition(margin 125ms ease-out);
+}
+.showAllViews .object-zoomer .flatmap .view {
+  display: inline;
+  min-height: 3em;
+  margin-left: 0;
+	@include transition(margin 125ms ease);
+}
+
+// Transition the leaflet pane away
+.object-zoomer .flatmap .leaflet-map-pane {
+  @include transition(-webkit-transform 125ms ease-out);
+}
+.showAllViews .object-zoomer .flatmap .leaflet-map-pane {
+  -webkit-transform: scale(0.25) translateX(-1234px) !important;
+}
+
+.more-views a, a.view {
+  height: 8em;
+  width: 32.8%;
+  margin: 0.5% 0.5% 0 0;
+  background-size: cover;
+  background-position: 50% 15%;
+  display: block;
+  float: left;
+  // margin-bottom: 1px;
+
+  &.open, &:hover {
+    border: 5px solid rgba(255, 255, 255, 0.6);
+  }
+}
+.object-zoomer .flatmap a.view {
+  height: 17em;
+}
+.leaflet-control-container *{
+	@include transition(opacity 125ms ease-out);
+}
+.showAllViews .object-zoomer .leaflet-control-container .leaflet-right {
+  opacity: 0;
+}
+
+// Email share form
+#share.email form {
+  margin-top: -0.5em;
+  max-width: 0;
+  opacity: 0;
+  margin-left: 2.5em;
+  -webkit-transition: all 125ms ease-out;
+}
+
+#share.email.open form {
+  position: relative;
+  z-index: 2;
+  max-width: 33em;
+  opacity: 1;
 }

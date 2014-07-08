@@ -1,68 +1,82 @@
-<article id='object' ng-class='{contentMinimized: contentMinimized}'>
+<article id='object' ng-class='{showAllViews: showViews}'>
 
   <!-- Zoomer -->
-  <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations'}">
+  <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations' }">
     <flatmap image="{{id}}">
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
+        <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
       </div>
     </flatmap>
   </div>
 
   <!-- Content -->
-  <div class='object-content' ng-class='{scrollable: ! contentMinimized}'>
+  <div class='object-content-container' drawerify="{ 
+    320:{ orientation:'vertical', maxWidth:400, attachTo:'right', customStates:{ 'title':'.object-title' }, startingState:'title', collapseHandle:true }, 
+    1023:{ orientation:'horizontal', maxWidth:400, attachTo:'left', startingState:'open', collapseHandle:false },
+    default:'disabled'
+  }">
 
-    <menu class='object-menu'>
-      <a class='object-home-link' href='#'></a>
-      <a class='object-minimize-content' ng-click='toggleMinimizeContent()'></a>
-      <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 !== null || wp.meta2 !== null || wp.meta3 !== null'></a>
-    </menu>
+    <p class='glance' transparentize=".object-content-container">Hold to glance</p>
 
-	  <h1 class='object-title' ng-bind-template="{{wp.title}}"></h1>
+    <div class='object-content scrollable'>
+ 
+      <menu class='object-menu'>
+        <a class='object-home-link' href='#'></a>
+        <a class='toggle-meta' ng-class='{open: showExtendedTombstone}' ng-click='toggleExtendedTombstone()' ng-if='wp.meta1 !== null || wp.meta2 !== null || wp.meta3 !== null'></a>
+        <a id="share" ng-if="enableSharing" class='email' share ng-click='toggleEmail($event)' ng-class="{open: showEmail}"></a>
+      </menu>
 
-	  <div class='object-tombstone' ng-class='{extended: showExtendedTombstone}'>
-		  <h5 class='meta1'>{{wp.meta1}}</h5>
-		  <h6 class='meta2'>{{wp.meta2}}</h6>
-	    <h6 class='meta3' ng-bind-html="wp.meta3"></h6>
-	  </div>
+  	  <h1 class='object-title' ng-bind-template="{{wp.title}}"></h1>
 
-    <nav class='object-nav clearfix'>
-      <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
-      <a ng-class="{selected: activeSection == 'annotations', disabled: !viewEnabled('annotations', true)}" ng-click="toggleView('annotations')">Details</a>
-      <a ng-class="{selected: activeSection == 'more', disabled: !viewEnabled('more', true)}" ng-click="toggleView('more')">More</a>
-    </nav>
+  	  <div class='object-tombstone' ng-class='{extended: showExtendedTombstone}'>
+  		  <h5 class='meta1'>{{wp.meta1}}</h5>
+  		  <h6 class='meta2'>{{wp.meta2}}</h6>
+  	    <h6 class='meta3' ng-bind-html="wp.meta3"></h6>
+  	  </div>
 
-    <div class='object-stories'>
+      <nav class='object-nav clearfix'>
+        <a ng-class="{selected: activeSection == 'about'}" ng-click="toggleView('about')">About</a>
+        <a ng-class="{selected: activeSection == 'annotations', disabled: !viewEnabled('annotations', true)}" ng-click="toggleView('annotations')">Details</a>
+        <a ng-class="{selected: activeSection == 'more', disabled: !viewEnabled('more', true)}" ng-click="toggleView('more')">More</a>
+      </nav>
 
-    	<!-- Where is scope.meta defined? Is this vestigial? --> 
-	    <p class='object-about' ng-if="activeSection == 'about'" ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
+      <div class='object-stories'>
 
-	    <ol class='object-details' ng-class="{active: activeSection == 'annotations'}" ng-if="activeSection == 'annotations'">
-        <li ng-repeat="note in allNotes" ng-class="{active: note.active}" class="annotation">
+      	<!-- Where is scope.meta defined? Is this vestigial? --> 
+  	    <p class='object-about' ng-if="activeSection == 'about'" ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
 
-          <h3 class='annotation-title' ng-click="activateNote(note, note.view)"><span class='annotation-index'>{{note.index}}</span>{{note.title || 'Annotation'}}</h3>
-          <div class='annotation-content' ng-bind-html="note.trustedDescription"></div>
+  	    <ol class='object-details' ng-class="{active: activeSection == 'annotations'}" ng-if="activeSection == 'annotations'">
+          <li ng-repeat="note in allNotes" ng-class="{active: note.active}" class="annotation">
 
-          <div class='annotation-attachments' ng-if="note.attachments.length">
+            <h3 class='annotation-title' ng-click="activateNote(note, note.view)"><span class='annotation-index'>{{note.index}}</span>{{note.title || 'Annotation'}}</h3>
+            <div class='annotation-content' ng-bind-html="note.trustedDescription"></div>
 
-            <p>Tap to expand</p>
-            <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("{{attachment.thumbnail}}")'></div>
+            <div class='annotation-attachments' ng-if="note.attachments.length">
 
-          </div>
-	      </li>
-	    </ol>
+              <p>Tap to expand</p>
+              <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("{{attachment.thumbnail}}")'></div>
 
-	    <div class='object-more' ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
-	      <h5 class='more-title' ng-show="relatedStories">Interactive Features</h5>
-	      <ol class='object-related'>
-	        <li ng-repeat="story in relatedStories">
-            <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>
-	        </li>
-	      </ol>
-	    </div>
+            </div>
+  	      </li>
+  	    </ol>
 
-	  </div>
+  	    <div class='object-more' ng-if="activeSection == 'more'" ng-class="{active: activeSection == 'more'}">
+  	      <h5 class='more-title' ng-show="relatedStories">Interactive Features</h5>
+  	      <ol class='object-related'>
+  	        <li ng-repeat="story in relatedStories">
+              <a ng-href="#/stories/{{story.id}}" ng-bind="story.title"></a>
+  	        </li>
+  	      </ol>
+            <div ng-if="notes.length > 1" class="more-views">
+              <h5 class='more-title' ng-show="relatedStories">More Views</h5>
+              <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" ng-repeat="view in notes" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
+            </div>
+  	    </div>
 
+  	  </div>
+
+    </div>
   </div>
 
 	<!-- Fullscreen attachments -->

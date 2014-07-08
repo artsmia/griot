@@ -1,14 +1,15 @@
 /**
  * Controller for object template.
  */
- 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta ) {
+
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config) {
 
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
     $scope.contentMinimized = window.outerWidth < 1024;
+    $scope.enableSharing = config.miaEmailSharingActive
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -40,7 +41,12 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         if($scope.mapLoaded) loadDetails()
 
         // Open the More tab when returning from a story via the 'Back' button
-        $rootScope.nextView && ($scope.activeSection = $rootScope.nextView) && ($rootScope.nextView = undefined)
+        if($rootScope.nextView) {
+          $scope.activeSection = $rootScope.nextView
+          $rootScope.nextView = undefined
+          // make sure the drawer is open
+          angular.element($('.object-content-container')).scope().drawerify.to('open', 0)
+        }
         $scope.$$phase || $scope.$apply()
 
       }
@@ -132,6 +138,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
     }
@@ -148,7 +155,8 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.showViews = false
       $scope.activeView = view
       $scope.deactivateAllNotes()
-      $scope.$broadcast('changeView', view)
+
+      $scope.flatmapScope.$broadcast('changeView', view)
     }
     $scope.activateViewAndShowFirstAnnotation = function(view) {
       $scope.activateView(view)
@@ -168,7 +176,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
     $scope.toggleMinimizeContent = function() {
       $scope.contentMinimized = !$scope.contentMinimized;
-      setTimeout( Zoomer.windowResized, 125);
+      //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
   }
 ])

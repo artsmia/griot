@@ -2,11 +2,9 @@
 
   <h1 class='story-title' ng-bind="story.title"></h1>
 
-  <a class='story-home-link' href='#'></a>
-
   <div class='pages-wrap' ng-style="{left: '-' + (activePage * 100) + '%'}">
     
-    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen, contentMinimized:page.contentMinimized}">
+    <section ng-repeat="page in story.pages" class="page page-{{page.type}}" ng-class="{tall: imageAspectRatio <= 1 && page.type == 'image', wide: imageAspectRatio > 1, full: !page.storyCaptionOpen }">
 
       <div class='story-illustration story-type-{{page.type}}' ng-class="{collapsed: page.storyCaptionOpen }">
 
@@ -31,18 +29,23 @@
 
       </div>
 
-      <div class='story-content' ng-if="page.text" ng-class="{ scrollable: ! page.contentMinimized }">
+      <div class='story-content-container' drawerify="{
+        320:{ orientation:'vertical', maxWidth:400, attachTo:'right', startingState:'open', collapseHandle:true },
+        1023:{ orientation:'horizontal', maxWidth:400, attachTo:'right', startingState:'open', collapseHandle:false },
+        default:'disabled'
+      }">
 
-        <div ng-bind-html="page.trustedText" class='caption'></div>
-        <aside ng-if="page.meta" ng-bind-html="page.meta"></aside>
-        <aside ng-if="page.metaB" ng-bind-html="page.metaB"></aside>
+        <p class='glance' transparentize=".story-content-container">Hold to glance</p>
+
+        <div class='story-content scrollable'>
+          <a class='story-home-link' href='#'></a>
+          <div ng-bind-html="page.trustedText" class='caption'></div>
+          <aside ng-if="page.meta" ng-bind-html="page.meta"></aside>
+          <aside ng-if="page.metaB" ng-bind-html="page.metaB"></aside>
+        </div>
 
       </div>
       
-      <menu class='story-menu'>
-        <a class='toggle-content' ng-if="page.text" ng-click="page.toggleMinimizeContent()"></a>
-      </menu>
-
     </section>
 
   </div>
@@ -53,6 +56,7 @@
     <a class='story-prev-page' ng-click="updateActivePage(activePage - 1)" ng-hide="activePage == 0"></a>
     <a class='story-return nav-button-right' ng-click="backToObject()" ng-show="activePage == (story.pages.length - 1) && story.pages.length > 1"></a>
     <a class='story-next-page' ng-click="updateActivePage(activePage + 1)" ng-hide="activePage == (story.pages.length - 1)"></a>
+    <p class='story-nav-pager'>Page {{activePage + 1}} of {{story.pages.length}}</p>
   </nav>
 
 </article>

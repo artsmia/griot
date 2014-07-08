@@ -6,32 +6,29 @@
  * Header
  */
 .story-title{
+  @include truncate;
+  @include box-shadow( 0 5px 5px rgba(0,0,0,0.13) );
   position:absolute;
   display:block;
   top:0;
   left:0;
-  height:50px;
+  height:40px;
   width:100%;
   margin:0;
   background-color:#222;
   text-align:center;
-  font-size:1.3em;
+  font-size:1.1em;
   color:#fff;
   font-weight:600;
-  line-height:50px; 
+  line-height:40px; 
   padding:0 45px;
   overflow:hidden;
-}
+  z-index:2;
 
-.story-home-link {
-  @extend .home-icon;
-  position:absolute;
-  display:block;
-  top:5px;
-  left:5px;
-  z-index:1;
+  @media #{$medium}{
+    font-size:1.3em;
+  }
 }
-
 
 /**
  * Slider structure 
@@ -42,7 +39,7 @@
   right:0;
   bottom:0;
   left:0;
-  padding:50px 0 0 0;
+  padding:40px 0;
   overflow:hidden;
   background: #ffffff;
   background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #e5e5e5 100%);
@@ -83,7 +80,7 @@
   position:absolute;
   top:0;
   right:0;
-  bottom:67%;
+  bottom:0;
   left:0;
   z-index:1;
   background-color:#ddd;
@@ -149,41 +146,32 @@
 /**
  * Content
  */
-.story-content {
-  @include transition( right 100ms ease, bottom 100ms ease );
+.story-content-container{
   position:absolute;
+  top:0;
+  right:0;
+  width:33%;
+  height:100%;
+  padding:25px;
+  background-color:#ededed;
+}
+.story-content{
+  position:absolute;
+  top:0;
   right:0;
   bottom:0;
   left:0;
-  width:100%;
-  height:67%;
-  margin-top:0;
-  padding-bottom:45px;
-  overflow-y:scroll;
-  background-color:#ededed;
-  z-index:0;
-
-  .contentMinimized &{
-    bottom:-100%;
-  }
-
-  @media #{$medium}{
-    right:0;
-    bottom:0;
-    left:auto;
-    width:33%;
-    height:100%;
-
-    .contentMinimized &{
-      right:-33%;
-      bottom:0;
-    }
-
-  }
+  overflow-x:visible;
+  overflow-y:auto;
 }
-
+.story-home-link {
+  @extend .home-icon;
+  position:relative;
+  display:block;
+  margin:15px 25px 15px;
+}
 .story-content .caption {
-  padding:2em;
+  margin:0 25px 15px;
 }
 
 .story-content .caption p{
@@ -199,11 +187,10 @@
 
 .story-content aside {
   @include meta;
-  padding:0 2em 2em;
-  margin:0;
+  margin:0 25px 25px;
 
   @media #{$medium} {
-    margin:0 60px 0 0;
+    margin:0 60px 25px 25px;
   }
 }
 
@@ -254,6 +241,26 @@
     right:8px;
   }
 
+}
+
+.story-nav {
+  @include box-shadow( 0 -5px 5px rgba(0,0,0,0.13) );
+  position:fixed;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:40px;
+  z-index:3;
+  background-color:#222;
+}
+.story-nav-pager{
+  text-align:center;
+  font-size:0.8em;
+  text-transform:uppercase;
+  color:#fff;
+  line-height:40px;
+  vertical-align:middle;
+  margin:0;
 }
 
 .story-return{
