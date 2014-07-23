@@ -1046,15 +1046,12 @@ app.directive( 'drawerify', function( $timeout ){
 						// Merely a dumb way to watch both properties at once
 						return $el.height() + $el.position().top; 
 					}, function(){
-						console.log( 'watch reports ' + stateName + ' changed; updating state definition' );
 						$scope.drawerify.states[ stateName ] = $scope.drawerify._getCustomState( stateName, false );
-						console.log( 'and calling this.to' );
 						if( $scope.drawerify.activeState == stateName ){
 							$scope.drawerify.to( stateName );
 						}
 					});
 					$scope.$on( 'drawerTouched', function(){
-						console.log( 'drawer touched; cancelling watch for ' + stateName );
 						cancel();
 					});
 				}
@@ -1216,7 +1213,7 @@ app.directive( 'drawerify', function( $timeout ){
 				this.handleStates = this._getHandleStates();
 
 				// Go to initial state
-				this.to( this.startingState );
+				this.to( this.startingState, 0 );
 
 				$scope.$broadcast( 'drawerInitialized', this.drawer );
 				$scope.$emit( 'drawerInitialized', this.drawer );
@@ -1233,8 +1230,6 @@ app.directive( 'drawerify', function( $timeout ){
 			this.recalculateCustomStates = function(){
 				if( 'vertical' == this.orientation ){
 
-					console.log( 'recalculating custom states' );
-
 					for( stateName in this.customStates ){
 						this.states[ stateName ] = this._getCustomState( stateName );
 					}
@@ -1249,8 +1244,6 @@ app.directive( 'drawerify', function( $timeout ){
 			 * Transition from one state to another.
 			 */
 			this.to = function( state, transition ){
-
-				console.log( 'in this.to' );
 
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
 
@@ -1275,8 +1268,6 @@ app.directive( 'drawerify', function( $timeout ){
 
 				var distanceToClosestState = null;
 
-				console.log( 'in this.toNearestState; finding nearest state' );
-
 				for( var state in this.states ){
 					var distance = Math.abs( position - this.states[state].pageLocation );
 					if( ! distanceToClosestState || distance < distanceToClosestState ){
@@ -1284,8 +1275,6 @@ app.directive( 'drawerify', function( $timeout ){
 						distanceToClosestState = distance;
 					}
 				}
-
-				console.log( 'calling this.to' );
 
 				this.to( closestState );
 

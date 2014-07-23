@@ -474,7 +474,7 @@ app.directive( 'drawerify', function( $timeout ){
 				this.handleStates = this._getHandleStates();
 
 				// Go to initial state
-				this.to( this.startingState );
+				this.to( this.startingState, 0 );
 
 				$scope.$broadcast( 'drawerInitialized', this.drawer );
 				$scope.$emit( 'drawerInitialized', this.drawer );
