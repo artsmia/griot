@@ -459,14 +459,15 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig',
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig', '$timeout', 
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config, $timeout) {
 
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
     $scope.contentMinimized = window.outerWidth < 1024;
     $scope.enableSharing = config.miaEmailSharingActive
+    $scope.translucent = false;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -595,9 +596,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      $scope.translucent = true;
       $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
+      $timeout( function(){
+        $scope.translucent = false;
+      }, 1000 );
     }
 
     $scope.deactivateAllNotes = function() {
@@ -705,6 +710,21 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
           if( keyB ) {
             page.metaB = mediaMeta.get( keyB ) || page.metaB;
           }
+        }
+
+        // Glance Text
+        switch( page.type ){
+          case 'video':
+            page.glanceText = 'Tap to play video';
+            break;
+          case 'image':
+            page.glanceText = 'Press to view image';
+            break;
+          case 'comparison':
+            page.glanceText = 'Press to view images';
+            break;
+          default:
+            page.glanceText = 'Press to view';
         }
 
       });
@@ -1662,22 +1682,52 @@ app.directive('share', function(email) {
 
 app.directive( 'transparentize', function($timeout){
 
-	return function( scope, elem, attrs ) {
+	return {
+		restrict:'A',
+		require:'^?drawerify',
+		link: function( scope, elem, attrs, drawerify ) {
 
-		var $target = jQuery( attrs.transparentize );
+			var $target = jQuery( attrs.transparentize );
 
-		elem.on( 'touchstart', function(){
-			$target.addClass('transparentized');
-		});
+			elem.on( 'touchstart', function(){
+				if( attrs.hasOwnProperty( 'transparentizeAction' ) ){
+					switch( attrs.transparentizeAction ){
+						
+						case 'playVideo':
+							// Close drawer in case we're not on a device that automatically
+							// full-screens the video
+							if( drawerify ){
+								drawerify.to('closed');
+								$timeout( function(){
+									var $video = $('video[src="' + scope.page.video + '"]');
+									$video[0].play();
+								}, 150 );
+							}
+							else {
+								var $video = $('video[src="' + scope.page.video + '"]');
+								$video[0].play();
+							}
+							break;
+							
 
-		elem.on( 'touchend', function(e){
-			$target.addClass('detransparentized');
-			$target.removeClass('transparentized');
-			$timeout(function() {
-			  $target.removeClass('detransparentized');
-			}, 300)
-		});
+						default:
+							$target.addClass('transparentized');
+					}
+				} 
+				else {
+					$target.addClass('transparentized');
+				}
+			});
 
+			elem.on( 'touchend', function(e){
+				$target.addClass('detransparentized');
+				$target.removeClass('transparentized');
+				$timeout(function() {
+				  $target.removeClass('detransparentized');
+				}, 300)
+			});
+
+		}
 	}
 
 });

@@ -35,7 +35,9 @@
         default:'disabled'
       }">
 
-        <p class='glance' transparentize=".story-content-container">Hold to glance</p>
+        <div class='glance' transparentize=".story-content-container" transparentize-action="{{page.type === 'video' ? 'playVideo' : ''}}">
+          <p>{{page.glanceText}}</p>
+        </div>
 
         <div class='story-content scrollable'>
           <a class='story-home-link' href='#'></a>

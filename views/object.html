@@ -17,9 +17,11 @@
     default:'disabled'
   }">
 
-    <p class='glance' transparentize=".object-content-container">Hold to glance</p>
+    <div class='glance' transparentize=".object-content-container" ng-class="{translucent: translucent}">
+      <p>Press to view object</p>
+    </div>
 
-    <div class='object-content scrollable'>
+    <div class='object-content scrollable' ng-class="{translucent: translucent}">
  
       <menu class='object-menu'>
         <a class='object-home-link' href='#'></a>

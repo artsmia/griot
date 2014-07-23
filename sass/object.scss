@@ -13,6 +13,7 @@
 	height:100%;
 }
 .object-content{
+	@include transition( opacity 500ms ease );
 	position:absolute;
 	top:0;
 	right:0;
@@ -23,6 +24,11 @@
 	padding:15px;
 	overflow-x:hidden;
 	overflow-y:auto;
+
+	&.translucent{
+		opacity:0;
+	}
+
 }
 
 .object-menu {

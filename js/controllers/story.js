@@ -64,6 +64,21 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
           }
         }
 
+        // Glance Text
+        switch( page.type ){
+          case 'video':
+            page.glanceText = 'Tap to play video';
+            break;
+          case 'image':
+            page.glanceText = 'Press to view image';
+            break;
+          case 'comparison':
+            page.glanceText = 'Press to view images';
+            break;
+          default:
+            page.glanceText = 'Press to view';
+        }
+
       });
 
       segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})

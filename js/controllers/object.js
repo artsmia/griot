@@ -2,14 +2,15 @@
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig',
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig', '$timeout', 
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config, $timeout) {
 
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
     $scope.contentMinimized = window.outerWidth < 1024;
     $scope.enableSharing = config.miaEmailSharingActive
+    $scope.translucent = false;
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
@@ -138,9 +139,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      $scope.translucent = true;
       $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
+      $timeout( function(){
+        $scope.translucent = false;
+      }, 1000 );
     }
 
     $scope.deactivateAllNotes = function() {
