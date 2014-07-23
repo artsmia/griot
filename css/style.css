@@ -183,12 +183,13 @@ color:#222;
 
 .object-title { margin: 5px 0 0; }
 
-.meta1 { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; max-height: 0; margin: 0; overflow: hidden; }
+.meta1 { max-height: 0; margin: 0; overflow: hidden; }
 .extended .meta1 { max-height: 200px; }
-@media screen and (min-width: 1024px) { .meta1 { max-height: none; } }
+@media screen and (min-width: 1024px) { .meta1 { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; max-height: none; } }
 
-.meta2, .meta3 { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; margin: 0; font-size: 0.9em; font-weight: normal; max-height: 0; overflow: hidden; }
+.meta2, .meta3 { margin: 0; font-size: 0.9em; font-weight: normal; max-height: 0; overflow: hidden; }
 .extended .meta2, .extended .meta3 { max-height: 200px; }
+@media screen and (min-width: 1024px) { .meta2, .meta3 { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; } }
 
 /** Navbar */
 .object-nav { margin: 15px 0 0; }

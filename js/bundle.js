@@ -193,9 +193,10 @@ require('./directives/vcenter')
 require('./directives/ngPoster')
 require('./directives/transparentize')
 require('./directives/drawerify')
+require('./directives/recalculateDrawerStates')
 require('./directives/share')
 
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/ngPoster":11,"./directives/note":12,"./directives/share":13,"./directives/transparentize":14,"./directives/vcenter":15,"./factories":16,"./routes":17}],3:[function(require,module,exports){
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/ngPoster":11,"./directives/note":12,"./directives/recalculateDrawerStates":13,"./directives/share":14,"./directives/transparentize":15,"./directives/vcenter":16,"./factories":17,"./routes":18}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -627,6 +628,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
     $scope.toggleExtendedTombstone = function(event) {
       $scope.showExtendedTombstone = !$scope.showExtendedTombstone
+      $scope.$broadcast( 'recalculateCustomDrawerStates' );
       if(event) event.stopPropagation()
     }
 
@@ -750,6 +752,8 @@ app.directive( 'drawerify', function( $timeout ){
 				"<a class='drawerify-handle' ng-class=\"{'drawerify-collapsed':drawerify.collapseHandle && drawerify.states[ drawerify.activeState ].handleState == 'collapsed' } \"></a>" +
 			"</div>",
 		controller: function( $scope, $element, $attrs ){
+
+			var _this = this;
 
 			$scope.drawerify = this;
 
@@ -1016,7 +1020,7 @@ app.directive( 'drawerify', function( $timeout ){
 			 */
 			this._getCustomState = function( stateName, initial ){
 
-				var initial = typeof initial !== 'undefined' ? initial : true;
+				var initial = typeof initial !== 'undefined' ? initial : false;
 
 				var pageLocation, customStyles, handleState;
 
@@ -1038,14 +1042,20 @@ app.directive( 'drawerify', function( $timeout ){
 				handleState = elTotalHeight < this.handleHeight ? 'expanded' : 'collapsed';
 
 				if( initial ){
-					$scope.$watch( function(){
+					var cancel = $scope.$watch( function(){
 						// Merely a dumb way to watch both properties at once
 						return $el.height() + $el.position().top; 
 					}, function(){
+						console.log( 'watch reports ' + stateName + ' changed; updating state definition' );
 						$scope.drawerify.states[ stateName ] = $scope.drawerify._getCustomState( stateName, false );
+						console.log( 'and calling this.to' );
 						if( $scope.drawerify.activeState == stateName ){
 							$scope.drawerify.to( stateName );
 						}
+					});
+					$scope.$on( 'drawerTouched', function(){
+						console.log( 'drawer touched; cancelling watch for ' + stateName );
+						cancel();
 					});
 				}
 
@@ -1134,18 +1144,12 @@ app.directive( 'drawerify', function( $timeout ){
 
 				var closestStateDistance = null;
 				var key = this.orientation == 'vertical' ? 'pageY' : 'pageX';
+				var position = touch[key];
 
-				for( var state in this.states ){
-					var distance = Math.abs( touch[key] - this.states[state].pageLocation );
-					if( ! closestStateDistance || distance < closestStateDistance ){
-						closestStateDistance = distance;
-						closestState = state;
-					}
-				}
-
-				this.to( closestState );
+				this.toNearestState( position );
 
 			}
+
 
 			/************************************************************************
 			 CALLABLE FUNCTIONS
@@ -1157,6 +1161,7 @@ app.directive( 'drawerify', function( $timeout ){
 			 * Initialize drawer.
 			 */
 			this.init = function(){
+
 				var props;
 
 				this.drawer = $( $element[0] );
@@ -1203,7 +1208,7 @@ app.directive( 'drawerify', function( $timeout ){
 				};
 				if( 'vertical' == this.orientation ){
 					for( stateName in this.customStates ){
-						this.states[ stateName ] = this._getCustomState( stateName );
+						this.states[ stateName ] = this._getCustomState( stateName, true );
 					}
 				}
 
@@ -1218,13 +1223,37 @@ app.directive( 'drawerify', function( $timeout ){
 
 			}
 
+
+			/**
+			 * recalculateCustomStates
+			 *
+			 * Recalculate the positions of custom states. This is useful if an
+			 * element that is used to define a custom state appears or changes size.
+			 */
+			this.recalculateCustomStates = function(){
+				if( 'vertical' == this.orientation ){
+
+					console.log( 'recalculating custom states' );
+
+					for( stateName in this.customStates ){
+						this.states[ stateName ] = this._getCustomState( stateName );
+					}
+
+				}
+			}
+
+
 			/**
 			 * to
 			 *
 			 * Transition from one state to another.
 			 */
 			this.to = function( state, transition ){
+
+				console.log( 'in this.to' );
+
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
+
 				this.drawer.animate( this.states[ state ].css, transition );
 
 				if( this.collapseHandle ){
@@ -1233,6 +1262,33 @@ app.directive( 'drawerify', function( $timeout ){
 					this.handle.animate( this.handleStates[ 'expanded' ], 100 );
 				}
 				this.activeState = state;
+			}
+
+
+			/**
+			 * toNearestState
+			 *
+			 * Go to state nearest to the current location of the drawer. Useful for
+			 * resetting the drawer after the DOM changes.
+			 */
+			this.toNearestState = function( position ){
+
+				var distanceToClosestState = null;
+
+				console.log( 'in this.toNearestState; finding nearest state' );
+
+				for( var state in this.states ){
+					var distance = Math.abs( position - this.states[state].pageLocation );
+					if( ! distanceToClosestState || distance < distanceToClosestState ){
+						closestState = state;
+						distanceToClosestState = distance;
+					}
+				}
+
+				console.log( 'calling this.to' );
+
+				this.to( closestState );
+
 			}
 
 
@@ -1266,10 +1322,18 @@ app.directive( 'drawerify', function( $timeout ){
 				});
 			}
 
+
 		},
 		link: function( scope, elem, attrs ){
 
 			scope.drawerify.init();
+
+			/**
+			 * Touchstart listener
+			 */
+			scope.drawerify.container.on( 'touchstart', function(){
+				scope.$broadcast('drawerTouched');
+			});
 
 			/**
 			 * Touchmove listener
@@ -1554,6 +1618,25 @@ app.directive('note', function(segmentio) {
 
 
 },{}],13:[function(require,module,exports){
+app.directive( 'recalculateDrawerStates', function( $timeout ){
+	return {
+		restrict: 'A',
+		require: '^drawerify',
+		link: function( scope, elem, attrs, drawerify ){
+			elem.on( 'touchend', function(){
+				if( 'vertical' === drawerify.orientation ){
+					$timeout( function(){
+						drawerify.recalculateCustomStates();
+						if( 'open' !== drawerify.activeState ){
+							drawerify.to('info');
+						}
+					}, 50 );
+				}
+			});
+		}
+	}
+});
+},{}],14:[function(require,module,exports){
 app.directive('share', function(email) {
   var template = '<form name="share" ng-submit="sendEmail()">' +
     '<input id="shareEmail" type="email" ng-model="email" required></input>' +
@@ -1583,7 +1666,7 @@ app.directive('share', function(email) {
   }
 })
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1610,7 +1693,7 @@ app.directive( 'transparentize', function($timeout){
 
 });
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -1650,7 +1733,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1683,7 +1766,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * Application routing
  */

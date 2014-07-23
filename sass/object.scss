@@ -57,7 +57,6 @@
 	margin:5px 0 0;
 }
 .meta1{
-	@include transition( max-height 125ms ease );
 	max-height:0;
 	margin:0;
 	overflow:hidden;
@@ -67,12 +66,12 @@
 	}
 
 	@media #{$medium} {
+		@include transition( max-height 125ms ease );
 		max-height:none;
 	}
 }
 .meta2,
 .meta3{
-	@include transition( max-height 125ms ease );
 	margin:0;
 	font-size:0.9em;
 	font-weight:normal;
@@ -81,6 +80,10 @@
 
 	.extended & {
 		max-height:200px;
+	}
+
+	@media #{$medium} {
+		@include transition( max-height 125ms ease );
 	}
 }
 

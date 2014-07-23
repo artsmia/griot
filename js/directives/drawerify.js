@@ -14,6 +14,8 @@ app.directive( 'drawerify', function( $timeout ){
 			"</div>",
 		controller: function( $scope, $element, $attrs ){
 
+			var _this = this;
+
 			$scope.drawerify = this;
 
 			/************************************************************************
@@ -279,7 +281,7 @@ app.directive( 'drawerify', function( $timeout ){
 			 */
 			this._getCustomState = function( stateName, initial ){
 
-				var initial = typeof initial !== 'undefined' ? initial : true;
+				var initial = typeof initial !== 'undefined' ? initial : false;
 
 				var pageLocation, customStyles, handleState;
 
@@ -301,7 +303,7 @@ app.directive( 'drawerify', function( $timeout ){
 				handleState = elTotalHeight < this.handleHeight ? 'expanded' : 'collapsed';
 
 				if( initial ){
-					$scope.$watch( function(){
+					var cancel = $scope.$watch( function(){
 						// Merely a dumb way to watch both properties at once
 						return $el.height() + $el.position().top; 
 					}, function(){
@@ -309,6 +311,9 @@ app.directive( 'drawerify', function( $timeout ){
 						if( $scope.drawerify.activeState == stateName ){
 							$scope.drawerify.to( stateName );
 						}
+					});
+					$scope.$on( 'drawerTouched', function(){
+						cancel();
 					});
 				}
 
@@ -397,18 +402,12 @@ app.directive( 'drawerify', function( $timeout ){
 
 				var closestStateDistance = null;
 				var key = this.orientation == 'vertical' ? 'pageY' : 'pageX';
+				var position = touch[key];
 
-				for( var state in this.states ){
-					var distance = Math.abs( touch[key] - this.states[state].pageLocation );
-					if( ! closestStateDistance || distance < closestStateDistance ){
-						closestStateDistance = distance;
-						closestState = state;
-					}
-				}
-
-				this.to( closestState );
+				this.toNearestState( position );
 
 			}
+
 
 			/************************************************************************
 			 CALLABLE FUNCTIONS
@@ -420,6 +419,7 @@ app.directive( 'drawerify', function( $timeout ){
 			 * Initialize drawer.
 			 */
 			this.init = function(){
+
 				var props;
 
 				this.drawer = $( $element[0] );
@@ -466,7 +466,7 @@ app.directive( 'drawerify', function( $timeout ){
 				};
 				if( 'vertical' == this.orientation ){
 					for( stateName in this.customStates ){
-						this.states[ stateName ] = this._getCustomState( stateName );
+						this.states[ stateName ] = this._getCustomState( stateName, true );
 					}
 				}
 
@@ -481,13 +481,33 @@ app.directive( 'drawerify', function( $timeout ){
 
 			}
 
+
+			/**
+			 * recalculateCustomStates
+			 *
+			 * Recalculate the positions of custom states. This is useful if an
+			 * element that is used to define a custom state appears or changes size.
+			 */
+			this.recalculateCustomStates = function(){
+				if( 'vertical' == this.orientation ){
+
+					for( stateName in this.customStates ){
+						this.states[ stateName ] = this._getCustomState( stateName );
+					}
+
+				}
+			}
+
+
 			/**
 			 * to
 			 *
 			 * Transition from one state to another.
 			 */
 			this.to = function( state, transition ){
+
    			var transition = typeof transition !== 'undefined' ? transition : this.defaultSpeed;
+
 				this.drawer.animate( this.states[ state ].css, transition );
 
 				if( this.collapseHandle ){
@@ -496,6 +516,29 @@ app.directive( 'drawerify', function( $timeout ){
 					this.handle.animate( this.handleStates[ 'expanded' ], 100 );
 				}
 				this.activeState = state;
+			}
+
+
+			/**
+			 * toNearestState
+			 *
+			 * Go to state nearest to the current location of the drawer. Useful for
+			 * resetting the drawer after the DOM changes.
+			 */
+			this.toNearestState = function( position ){
+
+				var distanceToClosestState = null;
+
+				for( var state in this.states ){
+					var distance = Math.abs( position - this.states[state].pageLocation );
+					if( ! distanceToClosestState || distance < distanceToClosestState ){
+						closestState = state;
+						distanceToClosestState = distance;
+					}
+				}
+
+				this.to( closestState );
+
 			}
 
 
@@ -529,10 +572,18 @@ app.directive( 'drawerify', function( $timeout ){
 				});
 			}
 
+
 		},
 		link: function( scope, elem, attrs ){
 
 			scope.drawerify.init();
+
+			/**
+			 * Touchstart listener
+			 */
+			scope.drawerify.container.on( 'touchstart', function(){
+				scope.$broadcast('drawerTouched');
+			});
 
 			/**
 			 * Touchmove listener
