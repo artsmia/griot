@@ -13,7 +13,7 @@ app.directive('share', function(email) {
       var emailI = scope.el.find('input')[0]
 
       scope.toggleEmail = function(e) {
-        if((e.toElement || e.currentTarget).nodeName == 'A') scope.showEmail = !scope.showEmail
+        if((e.toElement || e.target).nodeName == 'A') scope.showEmail = !scope.showEmail
         emailI.focus()
       }
 
