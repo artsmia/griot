@@ -424,6 +424,7 @@ app.directive( 'drawerify', function( $timeout ){
 
 				this.drawer = $( $element[0] );
 				this.handle = this.drawer.children( '.drawerify-handle' );
+				this.container = this.drawer.offsetParent();
 				
 				this.breakpoints = $scope.$eval( $attrs.drawerify );
 				this.activeBreakpoint = this._chooseBreakpoint();
@@ -440,7 +441,6 @@ app.directive( 'drawerify', function( $timeout ){
 				this.customStates = props.customStates || null;
 				this.collapseHandle = props.collapseHandle || false;
 
-				this.container = this.drawer.offsetParent();
 				this.containerWidth = this.container.width();
 				this.containerHeight = this.container.height();
 				this.containerTop = this.container.offset().top;
