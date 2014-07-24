@@ -104,7 +104,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           $scope.activateNote(firstNote, $scope.notes[0])
         } else if($scope.flatmapScope.lastActiveNote) {
           // If there's an active annotation, center the map over it.
-          $scope.glanceText = $sce.trustAsHtml( "Press to view <span class='annotation-index'>" + $scope.flatmapScope.lastActiveNote.index + "</span>" );
+          $scope.glanceText = $sce.trustAsHtml( "Press to view detail <span class='annotation-index'>" + $scope.flatmapScope.lastActiveNote.index + "</span>" );
           if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
             $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.geoJSON.geometry)
           }
@@ -148,7 +148,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
-      $scope.glanceText = $sce.trustAsHtml( "Press to view <span class='annotation-index'>" + note.index + "</span>" );
+      $scope.glanceText = $sce.trustAsHtml( "Press to view detail <span class='annotation-index'>" + note.index + "</span>" );
       /*
       $timeout( function(){
         $scope.translucent = false;
