@@ -533,6 +533,7 @@ body{
   }
 
   p{
+    @include no-select;
     margin:10px;
     border-radius:10px;
     line-height:60px;
