@@ -179,6 +179,12 @@
 	text-align:center;
 	line-height:26px;
 	font-size:1.125rem;
+
+	.glance &{
+		position:relative;
+		display:inline-block;
+		margin:0;
+	}
 }
 .annotation-content{
 	@include transition( max-height 125ms ease );

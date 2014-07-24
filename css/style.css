@@ -214,6 +214,7 @@ color:#222;
 .annotation-title { margin: 0 0 0 40px; cursor: pointer; }
 
 .annotation-index { position: absolute; display: block; top: 0; left: 0; width: 30px; height: 30px; margin-right: 10px; color: #fff; background-color: #222; border-radius: 1000px; border: 2px solid #fff; text-align: center; line-height: 26px; font-size: 1.125rem; }
+.glance .annotation-index { position: relative; display: inline-block; margin: 0; }
 
 .annotation-content { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; max-height: 0; overflow: hidden; }
 .annotation.active .annotation-content { max-height: 500px; }

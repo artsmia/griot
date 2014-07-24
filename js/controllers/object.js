@@ -104,10 +104,13 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
           $scope.activateNote(firstNote, $scope.notes[0])
         } else if($scope.flatmapScope.lastActiveNote) {
           // If there's an active annotation, center the map over it.
+          $scope.glanceText = $sce.trustAsHtml( "Press to view <span class='annotation-index'>" + $scope.flatmapScope.lastActiveNote.index + "</span>" );
           if(!$scope.flatmapScope.zoom.map.getBounds().contains($scope.flatmapScope.jsonLayer.getBounds())) {
             $scope.$broadcast('changeGeometry', $scope.flatmapScope.lastActiveNote.geoJSON.geometry)
           }
         }
+      } else {
+        $scope.glanceText = $sce.trustAsHtml( "Press to view object" );
       }
       $scope.activeSection = nextView
     }
@@ -139,13 +142,18 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
 
     $scope.activateNote = function(note, view) {
+      /*
       $scope.translucent = true;
+      */
       $scope.showViews = false
       $scope.activeView = view
       note.active = !note.active
+      $scope.glanceText = $sce.trustAsHtml( "Press to view <span class='annotation-index'>" + note.index + "</span>" );
+      /*
       $timeout( function(){
         $scope.translucent = false;
       }, 1000 );
+      */
     }
 
     $scope.deactivateAllNotes = function() {
@@ -184,6 +192,8 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.contentMinimized = !$scope.contentMinimized;
       //setTimeout( Zoomer.windowResized, 125); // Zoomer now stays put behind content
     }
+
+    $scope.glanceText = $sce.trustAsHtml( "Press to view object" );
   }
 ])
 
