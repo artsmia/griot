@@ -413,6 +413,14 @@
   margin-left: 0;
 	@include transition(margin 125ms ease);
 }
+.object-zoomer aside {
+  display: none;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.showAllViews aside {
+  display: block !important;
+}
 
 // Transition the leaflet pane away
 .object-zoomer .flatmap .leaflet-map-pane {

@@ -3,6 +3,7 @@
   <!-- Zoomer -->
   <div class='object-zoomer' ng-class="{annotations: activeSection == 'annotations' }">
     <flatmap image="{{id}}">
+      <aside>Tap to change views</aside>
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
         <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>

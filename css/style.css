@@ -270,6 +270,10 @@ color:#222;
 
 .showAllViews .object-zoomer .flatmap .view { display: inline; min-height: 3em; margin-left: 0; -webkit-transition: margin 125ms ease; -moz-transition: margin 125ms ease; -o-transition: margin 125ms ease; }
 
+.object-zoomer aside { display: none; font-size: 1.25em; font-weight: bold; }
+
+.showAllViews aside { display: block !important; }
+
 .object-zoomer .flatmap .leaflet-map-pane { -webkit-transition: -webkit-transform 125ms ease-out; -moz-transition: -webkit-transform 125ms ease-out; -o-transition: -webkit-transform 125ms ease-out; }
 
 .showAllViews .object-zoomer .flatmap .leaflet-map-pane { -webkit-transform: scale(0.25) translateX(-1234px) !important; }
