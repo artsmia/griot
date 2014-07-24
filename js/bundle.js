@@ -346,7 +346,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
 
       var initIsotope = function() {
 
-        if( window.innerHeight > window.innerWidth ) {
+        if( window.innerHeight < 1024 ) {
           return;
         }
 
