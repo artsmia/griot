@@ -17,7 +17,7 @@ app.constant('envConfig', {
   cdn: 'http://cdn.dx.artsmia.org/',
 
   miaEmailSharingActive: true,
-  emailServer: 'http://10.1.8.115:33445/',
+  emailServer: 'http://dx.artsmia.org:33445/',
 
   // Adapters - set to false to use GriotWP for everything.
   miaMediaMetaActive: true,
