@@ -11,7 +11,7 @@ app.directive( 'transparentize', function($timeout){
 
 			var $target = jQuery( attrs.transparentize );
 
-			elem.on( 'touchstart', function(){
+			elem.on( 'touchstart mousedown', function(){
 				if( attrs.hasOwnProperty( 'transparentizeAction' ) ){
 					switch( attrs.transparentizeAction ){
 						
@@ -41,7 +41,7 @@ app.directive( 'transparentize', function($timeout){
 				}
 			});
 
-			elem.on( 'touchend', function(e){
+			elem.on( 'touchend mouseup', function(e){
 				$target.addClass('detransparentized');
 				$target.removeClass('transparentized');
 				$timeout(function() {

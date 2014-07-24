@@ -581,7 +581,7 @@ app.directive( 'drawerify', function( $timeout ){
 			/**
 			 * Touchstart listener
 			 */
-			scope.drawerify.container.on( 'touchstart', function(){
+			scope.drawerify.container.on( 'touchstart mousedown', function(){
 				scope.$broadcast('drawerTouched');
 			});
 
@@ -598,7 +598,15 @@ app.directive( 'drawerify', function( $timeout ){
 			/**
 			 * Touchend listener
 			 */
-			scope.drawerify.handle.on( 'touchend', function(e){
+			scope.drawerify.handle.on( 'touchend mouseup', function(e){
+
+				// Get mouse events out of the way
+				if( e.originalEvent instanceof MouseEvent ){
+					scope.$apply( function(){
+						scope.drawerify.toggle();
+					});
+					return;
+				}
 
 				var touch = e.originalEvent.changedTouches[0];
 
