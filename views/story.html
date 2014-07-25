@@ -21,7 +21,7 @@
 
         <!-- Video -->
         <div class='story-video vcenter' ng-if="page.type == 'video'">
-          <video controls ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" width="800" height="800" on-play ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
+          <video controls video-handler ng-src="{{page.trustedVideo}}" ng-poster="{{page.poster}}" ng-class="{playing: page.playingNow}" x-webkit-airplay="deny"></video>
         </div>
 
         <!-- Iframe -->

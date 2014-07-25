@@ -195,8 +195,9 @@ require('./directives/transparentize')
 require('./directives/drawerify')
 require('./directives/recalculateDrawerStates')
 require('./directives/share')
+require('./directives/videoHandler')
 
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/ngPoster":11,"./directives/note":12,"./directives/recalculateDrawerStates":13,"./directives/share":14,"./directives/transparentize":15,"./directives/vcenter":16,"./factories":17,"./routes":18}],3:[function(require,module,exports){
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/ngPoster":11,"./directives/note":12,"./directives/recalculateDrawerStates":13,"./directives/share":14,"./directives/transparentize":15,"./directives/vcenter":16,"./directives/videoHandler":17,"./factories":18,"./routes":19}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -1792,6 +1793,44 @@ app.directive( 'vcenter', function(){
 });
 },{}],17:[function(require,module,exports){
 /**
+ * Turn a parent element transparent on touchstart.
+ */
+
+app.directive( 'videoHandler', function(){
+
+	return function( scope, elem, attrs ){
+
+		var aspect = $(elem).innerHeight() / $(elem).innerWidth();
+
+		var resize = function(){
+
+			var containerWidth = $(elem).closest('.story-video').innerWidth();
+
+			if( window.outerWidth > 1023 ){
+				containerWidth -= 140;
+			}
+
+			$(elem).css({
+				'width': containerWidth + 'px',
+				'height': Math.round( containerWidth * aspect ) + 'px',
+				'max-width': '800px'
+			});
+
+		}
+
+		resize();
+
+		$(window).on('resize orientationchange', function(){
+			setTimeout( function(){
+				resize();
+			}, 300 );
+		});
+
+	}
+
+});
+},{}],18:[function(require,module,exports){
+/**
  * Retrieve external data.
  */
 
@@ -1823,7 +1862,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Application routing
  */
