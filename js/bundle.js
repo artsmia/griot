@@ -1170,6 +1170,13 @@ app.directive( 'drawerify', function( $timeout ){
 
 				this.isMoving = false;
 
+				console.log( this.touchstart );
+				console.log( this.touchend );
+				if( Math.abs( this.touchstart - this.touchend ) < 50 ){
+					this.toggle();
+					return;
+				}
+
 				var closestStateDistance = null;
 				var key = this.orientation == 'vertical' ? 'pageY' : 'pageX';
 				var position = touch[key];
@@ -1349,15 +1356,28 @@ app.directive( 'drawerify', function( $timeout ){
 			scope.drawerify.init();
 
 			/**
-			 * Touchstart listener
+			 * Broadcast first interaction with drawer -- used to stop watching
+			 * element sizes
 			 */
 			scope.drawerify.container.on( 'touchstart mousedown', function(){
 				scope.$broadcast('drawerTouched');
 			});
 
 			/**
-			 * Touchmove listener
+			 * Track drawer movement
 			 */
+			scope.drawerify.handle.on( 'touchstart', function(e){
+
+				var touch = e.originalEvent.targetTouches[0];
+
+				if( 'vertical' === scope.drawerify.orientation ){
+					scope.drawerify.touchstart = touch.pageY;
+				} else {
+					scope.drawerify.touchstart = touch.pageX;
+				}
+
+			});
+
 			scope.drawerify.handle.on( 'touchmove', function(e){
 
 				var touch = e.originalEvent.targetTouches[0];
@@ -1365,9 +1385,6 @@ app.directive( 'drawerify', function( $timeout ){
 
 			});
 
-			/**
-			 * Touchend listener
-			 */
 			scope.drawerify.handle.on( 'touchend mouseup', function(e){
 
 				// Get mouse events out of the way
@@ -1379,6 +1396,12 @@ app.directive( 'drawerify', function( $timeout ){
 				}
 
 				var touch = e.originalEvent.changedTouches[0];
+
+				if( 'vertical' === scope.drawerify.orientation ){
+					scope.drawerify.touchend = touch.pageY;
+				} else {
+					scope.drawerify.touchend = touch.pageX;
+				}
 
 				// Drag
 				if( scope.drawerify.isMoving ){
