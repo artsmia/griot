@@ -163,8 +163,9 @@ app.config(
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function( root, config, mediaMeta, objectMeta, objectThumb ) {
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', '$location', function( root, config, mediaMeta, objectMeta, objectThumb, $location ) {
 	root.cdn = config.cdn;
+	var query = $location.search();
 
 	// If adapters are enabled, retrieve and prepare alternate data
 	if( config.miaMediaMetaActive ) {
@@ -176,6 +177,21 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 	if( config.miaThumbnailActive ) {
 		objectThumb.init( config.miaThumbnailSrc );
 	}
+
+	// root.hosted
+	// Directs app to refresh hints after a minute of inactivity.
+	root.hosted = query.hasOwnProperty( 'hosted' ) && query.hosted === 'true';
+
+	// root.touch
+	// Forces app to assume browser has touch events enabled.
+	root.touch = query.hasOwnProperty( 'touch' ) && query.touch === 'true';
+
+	// If root.touch is false, detect touchability by listening for event.
+	window.addEventListener('touchstart', function setRootTouch() {
+    root.touch = true;
+    window.removeEventListener('touchstart', setRootTouch);
+	}, false);
+
 }])
 
 require('./factories')
@@ -307,6 +323,9 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
  
 app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce',
   function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce) {
+
+    console.log( $rootScope.touch );
+    
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
     notes().then(function(data) {
