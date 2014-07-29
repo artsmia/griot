@@ -2,7 +2,7 @@
  * Creates a zoomable image element.
  */
 
-app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
+app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
   return {
     restrict: 'E',
     scope: {
@@ -11,8 +11,8 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div></div>',
-    controller: function($scope) {
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><img hint class="hint-scale" src="img/scale.png" ng-class="{ visible: $root.showHints }" /></div>',
+    controller: function($scope, $element, $attrs ) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
       scope.zoomed = $rootScope.zoomed
@@ -55,6 +55,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
           scope.$emit('viewChanged')
           scope.$parent.mapLoaded = true
           var watchForZoom = scope.zoom.map.on('zoomstart', function() {
+            scope.$emit('zoom');
             (scope.$$phase || $rootScope.$$phase) || scope.$apply(function() { $rootScope.zoomed = scope.zoomed = true })
             scope.zoom.map.off(watchForZoom)
           })

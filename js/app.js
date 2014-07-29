@@ -9,14 +9,17 @@ window.app = angular.module('griot', ['ngRoute', 'ngTouch', 'segmentio']);
 
 require('./routes')
 
+require('./services/hintManager')
+
 require('./config')
+
 app.config(
   ['$httpProvider', function($httpProvider) {
     return delete $httpProvider.defaults.headers.common['X-Requested-With'];
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', '$location', function( root, config, mediaMeta, objectMeta, objectThumb, $location ) {
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', '$location', 'hintManager', function( root, config, mediaMeta, objectMeta, objectThumb, $location, hintManager ) {
 	root.cdn = config.cdn;
 	var query = $location.search();
 
@@ -31,19 +34,7 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 		objectThumb.init( config.miaThumbnailSrc );
 	}
 
-	// root.hosted
-	// Directs app to refresh hints after a minute of inactivity.
-	root.hosted = query.hasOwnProperty( 'hosted' ) && query.hosted === 'true';
-
-	// root.touch
-	// Forces app to assume browser has touch events enabled.
-	root.touch = query.hasOwnProperty( 'touch' ) && query.touch === 'true';
-
-	// If root.touch is false, detect touchability by listening for event.
-	window.addEventListener('touchstart', function setRootTouch() {
-    root.touch = true;
-    window.removeEventListener('touchstart', setRootTouch);
-	}, false);
+	hintManager.init();
 
 }])
 
@@ -65,3 +56,4 @@ require('./directives/drawerify')
 require('./directives/recalculateDrawerStates')
 require('./directives/share')
 require('./directives/videoHandler')
+require('./directives/hint')

@@ -156,14 +156,17 @@ window.app = angular.module('griot', ['ngRoute', 'ngTouch', 'segmentio']);
 
 require('./routes')
 
+require('./services/hintManager')
+
 require('./config')
+
 app.config(
   ['$httpProvider', function($httpProvider) {
     return delete $httpProvider.defaults.headers.common['X-Requested-With'];
   }]
 )
 
-app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', '$location', function( root, config, mediaMeta, objectMeta, objectThumb, $location ) {
+app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', '$location', 'hintManager', function( root, config, mediaMeta, objectMeta, objectThumb, $location, hintManager ) {
 	root.cdn = config.cdn;
 	var query = $location.search();
 
@@ -178,19 +181,7 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 		objectThumb.init( config.miaThumbnailSrc );
 	}
 
-	// root.hosted
-	// Directs app to refresh hints after a minute of inactivity.
-	root.hosted = query.hasOwnProperty( 'hosted' ) && query.hosted === 'true';
-
-	// root.touch
-	// Forces app to assume browser has touch events enabled.
-	root.touch = query.hasOwnProperty( 'touch' ) && query.touch === 'true';
-
-	// If root.touch is false, detect touchability by listening for event.
-	window.addEventListener('touchstart', function setRootTouch() {
-    root.touch = true;
-    window.removeEventListener('touchstart', setRootTouch);
-	}, false);
+	hintManager.init();
 
 }])
 
@@ -212,8 +203,9 @@ require('./directives/drawerify')
 require('./directives/recalculateDrawerStates')
 require('./directives/share')
 require('./directives/videoHandler')
+require('./directives/hint')
 
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/ngPoster":11,"./directives/note":12,"./directives/recalculateDrawerStates":13,"./directives/share":14,"./directives/transparentize":15,"./directives/vcenter":16,"./directives/videoHandler":17,"./factories":18,"./routes":19}],3:[function(require,module,exports){
+},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/hint":11,"./directives/ngPoster":12,"./directives/note":13,"./directives/recalculateDrawerStates":14,"./directives/share":15,"./directives/transparentize":16,"./directives/vcenter":17,"./directives/videoHandler":18,"./factories":19,"./routes":20,"./services/hintManager":21}],3:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -323,8 +315,6 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
  
 app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce',
   function($scope, $routeParams, notes, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce) {
-
-    console.log( $rootScope.touch );
     
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
@@ -1454,7 +1444,7 @@ app.directive( 'drawerify', function( $timeout ){
  * Creates a zoomable image element.
  */
 
-app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
+app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
   return {
     restrict: 'E',
     scope: {
@@ -1463,8 +1453,8 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
     },
     replace: true,
     transclude: true,
-    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div></div>',
-    controller: function($scope) {
+    template: '<div id="{{container}}" class="flatmap" ng-class="{zoomed: zoomed}"><div ng-transclude></div><img hint class="hint-scale" src="img/scale.png" ng-class="{ visible: $root.showHints }" /></div>',
+    controller: function($scope, $element, $attrs ) {
       var scope = $scope
       scope.$parent.flatmapScope = scope
       scope.zoomed = $rootScope.zoomed
@@ -1507,6 +1497,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
           scope.$emit('viewChanged')
           scope.$parent.mapLoaded = true
           var watchForZoom = scope.zoom.map.on('zoomstart', function() {
+            scope.$emit('zoom');
             (scope.$$phase || $rootScope.$$phase) || scope.$apply(function() { $rootScope.zoomed = scope.zoomed = true })
             scope.zoom.map.off(watchForZoom)
           })
@@ -1572,6 +1563,12 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
 
 
 },{}],11:[function(require,module,exports){
+app.directive( 'hint', function( $rootScope ) {
+	return function( scope, elem, attrs ) {
+		$rootScope.hintSeen = true;
+	}
+});
+},{}],12:[function(require,module,exports){
 app.directive('ngPoster', function() {
   return {
     priority: 99, // it needs to run after the attributes are interpolated
@@ -1585,7 +1582,7 @@ app.directive('ngPoster', function() {
 }) // https://github.com/angular/angular.js/blob/v1.2.0/src/ng/directive/booleanAttrs.js#L86
 
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 /**
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
@@ -1687,7 +1684,7 @@ app.directive('note', function(segmentio) {
 })
 
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 app.directive( 'recalculateDrawerStates', function( $timeout ){
 	return {
 		restrict: 'A',
@@ -1706,7 +1703,7 @@ app.directive( 'recalculateDrawerStates', function( $timeout ){
 		}
 	}
 });
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 app.directive('share', function(email) {
   var template = '<form name="share" ng-submit="sendEmail()">' +
     '<input id="shareEmail" type="email" ng-model="email" required></input>' +
@@ -1736,7 +1733,7 @@ app.directive('share', function(email) {
   }
 })
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1793,7 +1790,7 @@ app.directive( 'transparentize', function($timeout){
 
 });
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -1833,7 +1830,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1871,7 +1868,7 @@ app.directive( 'videoHandler', function(){
 	}
 
 });
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1904,7 +1901,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Application routing
  */
@@ -1931,4 +1928,79 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 
+},{}],21:[function(require,module,exports){
+app.service( 'hintManager', function( $location, $timeout, $rootScope ) {
+
+	var _this = this;
+
+	// Wait this number of seconds after last touch before displaying hints again
+	this.delay = 60;
+
+	// Has a hint been seen by the user yet?
+	$rootScope.hintSeen = false;
+
+	this.init = function(){
+
+		// Start with hints off
+		$rootScope.showHints = false;
+
+		// Has the user seen a hint yet?
+		$rootScope.hintSeen = false;
+
+	  var query = $location.search();
+
+		// Directs app to refresh hints after a minute of inactivity.
+		$rootScope.hosted = query.hasOwnProperty( 'hosted' ) && query.hosted === 'true';
+
+		// Forces app to assume browser has touch events enabled.
+		if( query.hasOwnProperty( 'touch' ) && query.touch === 'true' ){
+			this.setTouch();
+		} else {
+			$rootScope.touch = false;
+		}
+
+		// If we aren't explicitly told that this screen is touchable, listen for
+		// a touch event and activate hints if one is heard.
+		if( ! $rootScope.touch ){
+			$(window).on( 'touchstart', _this.setTouch );
+		}
+	}
+
+	// Sets touch to true, and removes the listener on window if applicable
+	this.setTouch = function(){
+		$timeout( function(){
+			$rootScope.touch = true;
+			$rootScope.showHints = true;
+			$(window).off( 'touchstart', _this.setTouch );
+			if( $rootScope.hosted ){
+				$(window).on( 'touchend', function(){
+					_this.resetTimer( _this.delay );	
+				});
+			}
+		});
+	}
+
+	this.resetTimer = function( delay ){
+
+		// Clear timer if it exists
+		if( _this.hasOwnProperty( 'hintTimer' ) ){
+			$timeout.cancel( _this.hintTimer );
+		}
+		// Set new timer
+		_this.hintTimer = $timeout( function(){
+			if( $rootScope.touch ){
+				$rootScope.showHints = true;
+			}
+		}, delay * 1000 );
+	}
+
+	$rootScope.$on( 'zoom', function(){
+		if( $rootScope.hintSeen ){
+			$timeout( function(){
+				$rootScope.showHints = false;
+			});
+		}
+	});
+
+});
 },{}]},{},[2])
