@@ -2,6 +2,8 @@
  * Object template styles.
  */
 
+$sidebarWidth: 23rem;
+
 /**
  * Content - "Above the Fold" (Controls and Meta)
  */
@@ -9,7 +11,7 @@
 	position:absolute;
 	top:0;
 	left:0;
-	width:33%;
+	width: $sidebarWidth;
 	height:100%;
 }
 .object-content{
@@ -344,9 +346,9 @@
 	left:0;
 	background-color:#ccc;
 	text-align:center;
-	
+
 	@media #{$medium} {
-		left:33%;
+		left: $sidebarWidth;
 	}
 }
 

@@ -170,7 +170,7 @@ color:#222;
 
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
-.object-content-container { position: absolute; top: 0; left: 0; width: 33%; height: 100%; }
+.object-content-container { position: absolute; top: 0; left: 0; width: 23rem; height: 100%; }
 
 .object-content { -webkit-transition: opacity 500ms ease; -moz-transition: opacity 500ms ease; -o-transition: opacity 500ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; margin: 0 auto; background-color: #ededed; padding: 15px; overflow-x: hidden; overflow-y: auto; }
 .object-content.translucent { opacity: 0; }
@@ -252,7 +252,7 @@ color:#222;
 
 /** Zoomer */
 .object-zoomer { -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -webkit-transition: opacity 125ms ease; -moz-transition: opacity 125ms ease; -o-transition: opacity 125ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: #ccc; text-align: center; }
-@media screen and (min-width: 1024px) { .object-zoomer { left: 33%; } }
+@media screen and (min-width: 1024px) { .object-zoomer { left: 23rem; } }
 
 /* Zoomer - Markers */
 .leaflet-overlay-pane, .leaflet-marker-pane { display: none; }
