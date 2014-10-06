@@ -34,7 +34,7 @@ app.directive( 'drawerify', function( $timeout ){
 				// Arbitrarily huge number so we start wider than any actual screen
 				var currentBpInt = 10000;
 
-				var windowWidth = window.outerWidth;
+				var windowWidth = window.innerWidth;
 				var breakpoint = 'default';
 
 				for( var userBreakpoint in this.breakpoints ){
