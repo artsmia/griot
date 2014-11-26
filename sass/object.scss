@@ -201,6 +201,13 @@ $sidebarWidth: 23rem;
 	margin:10px 0 0 0;
 }
 
+.annotation-content ul {
+  margin-top: 10px;
+}
+.annotation-content ul li {
+  list-style-type: disc;
+  margin-left: -1.25em;
+}
 
 /**
  * Content - Details/Annotations - Attachments

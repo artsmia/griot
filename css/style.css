@@ -221,6 +221,10 @@ color:#222;
 
 .annotation-content p { margin: 10px 0 0 0; }
 
+.annotation-content ul { margin-top: 10px; }
+
+.annotation-content ul li { list-style-type: disc; margin-left: -1.25em; }
+
 /** Content - Details/Annotations - Attachments */
 .annotation-attachments { -webkit-transition: max-height 125ms ease; -moz-transition: max-height 125ms ease; -o-transition: max-height 125ms ease; max-height: 0; overflow: hidden; padding: 0; margin: 0; }
 .annotation.active .annotation-attachments { max-height: 500px; }
