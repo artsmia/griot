@@ -139,6 +139,7 @@ app.service( 'miaThumbnailAdapter', function() {
   }
 
   this.get = function( id ) {
+    if(id === undefined) return
     var trimmed_id = id.replace( '.tif', '' );
     return _this.cdn + 'thumbs/tn_' + trimmed_id + '.jpg';
   }
@@ -464,13 +465,13 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     })
   }
 ])
-},{}],7:[function(require,module,exports){
+},{}],"/Users/kjell/tmp/griot/js/controllers/object.js":[function(require,module,exports){
 /**
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig', '$timeout', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config, $timeout) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, miaThumbs, email, config, $timeout) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -532,6 +533,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
+            att.thumbnail = miaThumbs.get(att.image_id)
             if( mediaMeta.isActive ) {
               // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
               att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );

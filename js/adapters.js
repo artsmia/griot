@@ -138,6 +138,7 @@ app.service( 'miaThumbnailAdapter', function() {
   }
 
   this.get = function( id ) {
+    if(id === undefined) return
     var trimmed_id = id.replace( '.tif', '' );
     return _this.cdn + 'thumbs/tn_' + trimmed_id + '.jpg';
   }
