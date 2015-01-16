@@ -5,7 +5,10 @@ sass:
 	sass --watch -t compact sass/all.scss:css/style.css
 
 browserify:
-	browserify js/app.js -o js/bundle.js
+	browserify --full-path=false js/app.js -o js/bundle.js
+
+watchify:
+	watchify --full-path=false js/app.js -o js/bundle.js
 
 cdnify:
 	curl -L http://new.artsmia.org/crashpad/json > fallback/crashpad.json

@@ -145,6 +145,7 @@ app.service( 'miaThumbnailAdapter', function() {
   }
 
 });
+
 },{}],2:[function(require,module,exports){
 /**
  * Set up application and load modules.
@@ -465,7 +466,7 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     })
   }
 ])
-},{}],"/Users/kjell/tmp/griot/js/controllers/object.js":[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * Controller for object template.
  */
