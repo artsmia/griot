@@ -10,17 +10,11 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'notes', 'segmentio', '$ro
     notes().then(function(data) {
       if($rootScope.randomizedAll == undefined) {
         $scope.objects = data.objects
-        $scope.stories = data.stories
         $scope.panels = data.panels
         var all = []
         angular.forEach($scope.objects, function(object) { 
           if( object ) {
             all.push(object);
-          }
-        });
-        angular.forEach($scope.stories, function(story) { 
-          if( story ){
-            all.push(story);
           }
         });
         angular.forEach($scope.panels, function(panel) {

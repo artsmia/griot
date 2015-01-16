@@ -5,12 +5,6 @@
         <img class='cover-item-image' ng-src="{{thing.thumbnail}}">
         <h2 class='cover-item-title' ng-bind="thing.title"></h2>
       </a>
-      <a ng-href="#/stories/{{thing.id}}" ng-if="thing.recordType != 'object' && thing.recordType != 'panel'">
-        <div class='cover-item-poster' style="background-image: url({{thing.thumbnail}})"></div>
-        <div class='cover-item-caption vcenter'>
-          <h2 class='cover-item-title' ng-bind="thing.title"></h2>
-        </div>
-      </a>
       <div ng-if="thing.recordType == 'panel'" class='cover-panel-wrap vcenter'>
         <h2 class='cover-item-title' ng-bind="thing.title"></h2>
         <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
