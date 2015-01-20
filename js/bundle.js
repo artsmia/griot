@@ -503,10 +503,10 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
   
       // Replace object metadata if using adapter
       if( objectMetaAdapter.isActive ) {
-        $scope.wp.meta1 = objectMeta.meta1 || $scope.wp.meta1;
-        $scope.wp.meta2 = objectMeta.meta2 || $scope.wp.meta2;
-        $scope.wp.meta3 = objectMeta.meta3 || $scope.wp.meta3;
-        $scope.wp.location = objectMeta.location || $scope.wp.location;
+        $scope.wp.meta1 = $scope.wp.meta1 || objectMeta.meta1;
+        $scope.wp.meta2 = $scope.wp.meta2 || objectMeta.meta2;
+        $scope.wp.meta3 = $scope.wp.meta3 || objectMeta.meta3;
+        $scope.wp.location = objectMeta.location;
       }
       
       $scope.relatedStories = []
