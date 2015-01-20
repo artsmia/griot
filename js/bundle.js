@@ -127,6 +127,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     // Special editions for goldweights
     groupings.gw_title = $sce.trustAsHtml( json.title );
     groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
+    groupings.location = $sce.trustAsHtml(json.room.replace('G', ''))
 
     this.metaHash[id] = groupings;
     return groupings
@@ -506,6 +507,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
         $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
         $scope.wp.meta2 = objectMeta.get( $scope.id, 'meta2' ) || $scope.wp.meta2;
         $scope.wp.meta3 = objectMeta.get( $scope.id, 'meta3' ) || $scope.wp.meta3;
+        $scope.wp.location = objectMeta.get($scope.id, 'location') || $scope.wp.location;
       }
       
       $scope.relatedStories = []

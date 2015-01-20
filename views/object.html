@@ -36,6 +36,7 @@
   		  <h5 class='meta1'>{{wp.meta1}}</h5>
   		  <h6 class='meta2'>{{wp.meta2}}</h6>
   	    <h6 class='meta3' ng-bind-html="wp.meta3"></h6>
+        <aside class='galleryLocation'>Gallery {{wp.location}}</aside>
   	  </div>
 
       <nav class='object-nav clearfix'>
@@ -47,7 +48,11 @@
       <div class='object-stories'>
 
       	<!-- Where is scope.meta defined? Is this vestigial? --> 
-  	    <p class='object-about' ng-if="activeSection == 'about'" ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
+        <div class='object-about' ng-if="activeSection == 'about'">
+          <p ng-bind-html="wp.trustedDescription || meta.trustedDescription"></p>
+          <img ng-src="http://artsmia.github.io/map/galleries/{{wp.location}}.png">
+          <p>Located in gallery {{wp.location}}</p>
+        </div>
 
   	    <ol class='object-details' ng-class="{active: activeSection == 'annotations'}" ng-if="activeSection == 'annotations'">
           <li ng-repeat="note in allNotes" ng-class="{active: note.active}" class="annotation">

@@ -126,6 +126,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     // Special editions for goldweights
     groupings.gw_title = $sce.trustAsHtml( json.title );
     groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
+    groupings.location = $sce.trustAsHtml(json.room.replace('G', ''))
 
     this.metaHash[id] = groupings;
     return groupings
