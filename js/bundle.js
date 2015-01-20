@@ -233,7 +233,7 @@ require('./directives/hint')
 app.constant('envConfig', {
 
   // Location of tile server; used in flatmap directive
-  tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
+  tilesaw: '//tiles.dx.artsmia.org/',
   tileUrlSubdomain: function(tileUrl) {
     return tileUrl.replace('http://0.', 'http://{s}.')
   },
