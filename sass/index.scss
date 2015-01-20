@@ -144,3 +144,12 @@
   vertical-align:middle;
   background-color:#ddd;
 }
+
+.cover-instructions * {
+  display: inline;
+  font-size: 100%;
+}
+
+.cover-instructions p {
+  display: none;
+}
