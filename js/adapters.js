@@ -60,60 +60,75 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
   this.metaHash = {};  
 
   this.get = function( id, grouping ) {
+    var id = parseInt(id)
     try{
-      return _this.metaHash[ id ][ grouping ];
+      if (_this.metaHash[id] !== undefined) {
+        return _this.metaHash[ id ][ grouping ]
+      } else {
+        this.getFromAPI(id, grouping)
+      }
     } catch(e) {
+      console.log('error in objectMeta.get', e)
       return null;
     }
   }
 
-  this.build = function( src ) {
+  this.getFromAPI = function(id, grouping) {
+    var apiURL = "http://caption-search.dx.artsmia.org/id/"+id
+    return $http.get(apiURL, {cache: true}).success(function(result) {
+      _this.addObjectToMetaHash(result.id.split('/').reverse()[0], result)
+      if(grouping) return _this.metaHash[id][grouping]
+    })
+  }
 
+  this.build = function( src ) {
     $http.get( src, { cache: true } ).success( function( result ) {
 
       _this.isActive = true;
 
       for( var id in result ) {
-
-        var groupings = {}, 
-            artist, 
-            culture, 
-            country, 
-            dated, 
-            medium, 
-            dimension, 
-            creditline, 
-            accession_number, 
-            trustedDescription;
-
         // Skip ID listing
         if( 'ids' === id ) {
           continue;
         }
 
-        artist = result[id].artist || 'Artist unknown';
-        culture = result[id].culture || '';
-        country = result[id].country || '';
-        dated = result[id].dated || '';
-        medium = result[id].medium || '';
-        dimension = result[id].dimension || '';
-        creditline = result[id].creditline || '';
-        accession_number = result[id].accession_number || '';
-        trustedDescription = $sce.trustAsHtml( result[id].description );
-
-        groupings.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
-        groupings.meta2 = dated;
-        groupings.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
-
-        // Special editions for goldweights
-        groupings.gw_title = $sce.trustAsHtml( result[id].title );
-        groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
-
-        _this.metaHash[id] = groupings;
-
+        _this.addObjectToMetaHash(id, result[id])
       }
-
     });
+  }
+
+  this.addObjectToMetaHash = function(id, json) {
+    var groupings = {}, 
+        artist, 
+        culture, 
+        country, 
+        dated, 
+        medium, 
+        dimension, 
+        creditline, 
+        accession_number, 
+        trustedDescription;
+
+    artist = json.artist || 'Artist unknown';
+    culture = json.culture || '';
+    country = json.country || '';
+    dated = json.dated || '';
+    medium = json.medium || '';
+    dimension = json.dimension || '';
+    creditline = json.creditline || '';
+    accession_number = json.accession_number || '';
+    trustedDescription = $sce.trustAsHtml( json.description );
+
+    groupings.meta1 = artist + ', ' + ( culture && culture + ', ' ) + country;
+    groupings.meta2 = dated;
+    groupings.meta3 = $sce.trustAsHtml( ( medium && medium + "<br />" ) + ( dimension && dimension + "<br />" ) + ( creditline && creditline + "<br />" ) + accession_number );
+
+    // Special editions for goldweights
+    groupings.gw_title = $sce.trustAsHtml( json.title );
+    groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
+
+    this.metaHash[id] = groupings;
+    return groupings
   }
 
 });
