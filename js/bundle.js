@@ -1500,6 +1500,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
       }
 
       var loadImage = function(image) {
+        if(image === 'undefined' || image === '') return
         scope.viewChanging = true
         scope.image = image
         removeJsonLayer(); scope.jsonLayer = null
