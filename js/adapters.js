@@ -63,9 +63,10 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     var id = parseInt(id)
     try{
       if (_this.metaHash[id] !== undefined) {
-        return _this.metaHash[ id ][ grouping ]
+        var hash = _this.metaHash[ id ]
+        return grouping ? hash[ grouping ] : hash
       } else {
-        this.getFromAPI(id, grouping)
+        return this.getFromAPI(id, grouping)
       }
     } catch(e) {
       console.log('error in objectMeta.get', e)
@@ -75,9 +76,10 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
   this.getFromAPI = function(id, grouping) {
     var apiURL = "http://caption-search.dx.artsmia.org/id/"+id
-    return $http.get(apiURL, {cache: true}).success(function(result) {
-      _this.addObjectToMetaHash(result.id.split('/').reverse()[0], result)
-      if(grouping) return _this.metaHash[id][grouping]
+    return $http.get(apiURL, {cache: true}).then(function(result) {
+      var data = result.data
+      _this.addObjectToMetaHash(data.id.split('/').reverse()[0], data)
+      return _this.get(id, grouping)
     })
   }
 
@@ -126,7 +128,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     // Special editions for goldweights
     groupings.gw_title = $sce.trustAsHtml( json.title );
     groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
-    groupings.location = $sce.trustAsHtml(json.room.replace('G', ''))
+    groupings.location = json.room.replace('G', '')
 
     this.metaHash[id] = groupings;
     return groupings

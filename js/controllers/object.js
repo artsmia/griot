@@ -2,8 +2,8 @@
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, miaThumbs, email, config, $timeout) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMetaAdapter, miaThumbs, email, config, $timeout, objectMeta) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -21,11 +21,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
   
       // Replace object metadata if using adapter
-      if( objectMeta.isActive ) {
-        $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
-        $scope.wp.meta2 = objectMeta.get( $scope.id, 'meta2' ) || $scope.wp.meta2;
-        $scope.wp.meta3 = objectMeta.get( $scope.id, 'meta3' ) || $scope.wp.meta3;
-        $scope.wp.location = objectMeta.get($scope.id, 'location') || $scope.wp.location;
+      if( objectMetaAdapter.isActive ) {
+        $scope.wp.meta1 = objectMeta.meta1 || $scope.wp.meta1;
+        $scope.wp.meta2 = objectMeta.meta2 || $scope.wp.meta2;
+        $scope.wp.meta3 = objectMeta.meta3 || $scope.wp.meta3;
+        $scope.wp.location = objectMeta.location || $scope.wp.location;
       }
       
       $scope.relatedStories = []

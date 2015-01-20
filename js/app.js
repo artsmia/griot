@@ -29,9 +29,6 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 	}
 	if( config.miaObjectMetaActive ) {
 		objectMeta.build( config.miaObjectMetaSrc );
-    // pre-cache metadata for an object page
-    var objectRouteMatch = $location.$$url.match(/\/o\/(\d+)/)
-    if(objectRouteMatch) objectMeta.get(objectRouteMatch[1])
 	}
 	if( config.miaThumbnailActive ) {
 		objectThumb.init( config.miaThumbnailSrc );

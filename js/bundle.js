@@ -64,9 +64,10 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     var id = parseInt(id)
     try{
       if (_this.metaHash[id] !== undefined) {
-        return _this.metaHash[ id ][ grouping ]
+        var hash = _this.metaHash[ id ]
+        return grouping ? hash[ grouping ] : hash
       } else {
-        this.getFromAPI(id, grouping)
+        return this.getFromAPI(id, grouping)
       }
     } catch(e) {
       console.log('error in objectMeta.get', e)
@@ -76,9 +77,10 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
 
   this.getFromAPI = function(id, grouping) {
     var apiURL = "http://caption-search.dx.artsmia.org/id/"+id
-    return $http.get(apiURL, {cache: true}).success(function(result) {
-      _this.addObjectToMetaHash(result.id.split('/').reverse()[0], result)
-      if(grouping) return _this.metaHash[id][grouping]
+    return $http.get(apiURL, {cache: true}).then(function(result) {
+      var data = result.data
+      _this.addObjectToMetaHash(data.id.split('/').reverse()[0], data)
+      return _this.get(id, grouping)
     })
   }
 
@@ -127,7 +129,7 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
     // Special editions for goldweights
     groupings.gw_title = $sce.trustAsHtml( json.title );
     groupings.gw_meta2 = $sce.trustAsHtml( ( creditline && creditline + "<br />" ) + accession_number );
-    groupings.location = $sce.trustAsHtml(json.room.replace('G', ''))
+    groupings.location = json.room.replace('G', '')
 
     this.metaHash[id] = groupings;
     return groupings
@@ -194,9 +196,6 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 	}
 	if( config.miaObjectMetaActive ) {
 		objectMeta.build( config.miaObjectMetaSrc );
-    // pre-cache metadata for an object page
-    var objectRouteMatch = $location.$$url.match(/\/o\/(\d+)/)
-    if(objectRouteMatch) objectMeta.get(objectRouteMatch[1])
 	}
 	if( config.miaThumbnailActive ) {
 		objectThumb.init( config.miaThumbnailSrc );
@@ -484,8 +483,8 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, miaThumbs, email, config, $timeout) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMetaAdapter, miaThumbs, email, config, $timeout, objectMeta) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -503,11 +502,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
       $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
   
       // Replace object metadata if using adapter
-      if( objectMeta.isActive ) {
-        $scope.wp.meta1 = objectMeta.get( $scope.id, 'meta1' ) || $scope.wp.meta1;
-        $scope.wp.meta2 = objectMeta.get( $scope.id, 'meta2' ) || $scope.wp.meta2;
-        $scope.wp.meta3 = objectMeta.get( $scope.id, 'meta3' ) || $scope.wp.meta3;
-        $scope.wp.location = objectMeta.get($scope.id, 'location') || $scope.wp.location;
+      if( objectMetaAdapter.isActive ) {
+        $scope.wp.meta1 = objectMeta.meta1 || $scope.wp.meta1;
+        $scope.wp.meta2 = objectMeta.meta2 || $scope.wp.meta2;
+        $scope.wp.meta3 = objectMeta.meta3 || $scope.wp.meta3;
+        $scope.wp.location = objectMeta.location || $scope.wp.location;
       }
       
       $scope.relatedStories = []
@@ -1932,7 +1931,12 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'mainCtrl'
   }).when('/o/:id', {
     templateUrl: 'views/object.html',
-    controller: 'ObjectCtrl'
+    controller: 'ObjectCtrl',
+    resolve: {
+      resolvedObjectMeta: function(miaObjectMetaAdapter, $route) {
+        return miaObjectMetaAdapter.get($route.current.params.id)
+      }
+    }
   }).when('/a/:id', {
     templateUrl: 'views/annotations.html',
     controller: 'notesCtrl'
