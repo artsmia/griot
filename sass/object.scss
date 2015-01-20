@@ -503,3 +503,16 @@ $sidebarWidth: 23rem;
 		opacity:1;
 	}
 }
+
+.object-about .galleryLocation {
+  text-align: center;
+  border-top: 1px solid #ccc;
+  margin-top: -0.5em;
+  padding-top: 0.75em;
+}
+.galleryLocation img {
+  border: 1px solid #ccc;
+}
+.galleryLocation img + p {
+  margin-top: 0.25em;
+}
