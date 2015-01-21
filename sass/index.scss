@@ -153,3 +153,13 @@
 .cover-instructions p {
   display: none;
 }
+
+.clusters img {
+  max-width: 30%;
+}
+
+.clusters li {
+  display: inline;
+  list-style: none;
+  -webkit-columns: 3;
+}
