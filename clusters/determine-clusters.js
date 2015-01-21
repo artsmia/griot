@@ -22,4 +22,41 @@ groups.floor1 = objects.filter(function(o) { return o.room.match(/^G1/) }).map(i
 groups.floor2 = objects.filter(function(o) { return o.room.match(/^G2/) }).map(id)
 groups.floor3 = objects.filter(function(o) { return o.room.match(/^G3/) }).map(id)
 
-console.log(JSON.stringify(groups))
+// I want to group them according to the closest gallery-located iPads
+// `locations`
+
+function galleryDistance(a, b) {
+  if(a == 'Not on View' || b == 'Not on View') return 1000
+  a = parseInt(a.replace('G', ''))
+  b = parseInt(b.replace('G', ''))
+  return Math.abs(a-b);
+}
+
+function findClusters(object, threshold) {
+  var objectLocation = object.room
+  // How far is it to the existing clusters?
+  var clusterDistances = locations.map(function(clusterLocation) {
+    return galleryDistance(objectLocation, clusterLocation)
+  })
+  return clusterDistances.map(function(d, i) {
+    if(d <= threshold) return locations[i]
+  }).filter(function(cluster) { return cluster })
+}
+
+var clusters = locations.reduce(function(clusters, location) {
+  clusters[location] = []
+  return clusters
+}, {})
+
+// find the 'nearest' clusters for each object
+objects.map(function(o) {
+  findClusters(o, 25).map(function(cluster) {
+    clusters[cluster].push(o.id)
+  })
+})
+
+// TODO: sort objects in clusters by lowest distance
+
+clusters.offView = groups.offView
+
+console.log(JSON.stringify(clusters))
