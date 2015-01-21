@@ -5,7 +5,8 @@
 app.config(['$routeProvider', function($routeProvider) {
   return $routeProvider.when('/', {
     templateUrl: 'views/index.html',
-    controller: 'mainCtrl'
+    controller: 'mainCtrl',
+    resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
     templateUrl: 'views/object.html',
     controller: 'ObjectCtrl',
