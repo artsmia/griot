@@ -262,14 +262,20 @@ app.constant('envConfig', {
 });
 
 },{}],5:[function(require,module,exports){
-app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope',
-  function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope) {
+app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
+  function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     $scope.clusters = require('../../clusters/clusters.json')
     var data = $scope.data = notes
 
-    $scope.cluster = $scope.clusters[$routeParams.cluster].map(function(objectId) {
-      return data.objects[objectId]
-    })
+    var clusterObjects = $scope.clusters[$routeParams.cluster]
+    if(clusterObjects) {
+      $scope.things = clusterObjects.map(function(objectId) {
+        return data.objects[objectId]
+      })
+      $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
+    } else { // not a valid cluster
+      $location.path('/')
+    }
 
     imagesLoaded(document.querySelector('#cover'), function() {
       $timeout(initIsotope, 350)
@@ -353,9 +359,10 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
  * Controller for cover page (index template).
  */
 
-app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope',
-  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
+  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var data = $scope.data = notes
+    if($rootScope.defaultCluster) return $location.path('/clusters/'+$rootScope.defaultCluster)
 
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter

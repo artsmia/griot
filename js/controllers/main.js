@@ -2,9 +2,10 @@
  * Controller for cover page (index template).
  */
 
-app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope',
-  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
+  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var data = $scope.data = notes
+    if($rootScope.defaultCluster) return $location.path('/clusters/'+$rootScope.defaultCluster)
 
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
