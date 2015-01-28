@@ -1,4 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+module.exports={"G200":["5788","116725","108860","60728","4379","1380"],"G219":["12111","3520","5788","116725","108860","60728","4379","1380"],"G223":["12111","3520","5788","116725","108860","60728","4379","1380"],"G230":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893","3520","116725","108860","60728","4379","1380"],"G258":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893"],"G260":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893"],"G261":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893"],"G321":["113136","91467","113926","537","1978","4418","278","1348","1727","1748","8023","1629","43877"],"G340":["113136","12092","1218","1978","10436","278","119599","115352","109112","43877"],"G350":["113136","12092","107241","1721","2606","1218","10436","278","1270","1355","115836","1411","1244","119599","115352","109112"],"G363":["12092","107241","116294","1721","2606","1218","10436","278","1270","1355","115836","1411","1244","119599","115352","98653","109112"],"G374":["12092","107241","116294","1721","2606","1218","10436","1270","1355","115836","1411","1244","119599","115352","98653","109112"],"G375":["12092","107241","116294","1721","2606","1218","10436","1270","1355","115836","1411","1244","119599","115352","98653","109112"],"G379":["12092","107241","116294","1721","2606","1218","10436","1270","1355","115836","1411","1244","119599","115352","98653","109112"],"G236":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893","3520","116725","108860","60728","4379","1380"],"G250":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893","3520"],"G254":["45269","4866","1312","108767","111099","97","111879","1854","12111","1937","3778","115514","115320","1358","111088","114833","111893","3520"],"offView":["376","105014","117153","7505","4324","114429","118304","4829","22412","2210","529","109122","1226","113568","1637","116116","114514"]}
+
+},{}],2:[function(require,module,exports){
 /**
  * Adapters (MIA-specific)
  *
@@ -164,7 +167,7 @@ app.service( 'miaThumbnailAdapter', function() {
 
 });
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * Set up application and load modules.
  */
@@ -212,6 +215,7 @@ require('./controllers/object')
 require('./controllers/story')
 require('./controllers/notes')
 require('./controllers/main')
+require('./controllers/clusters')
 require('./controllers/goldweights')
 
 require('./directives/flatmap')
@@ -225,7 +229,7 @@ require('./directives/share')
 require('./directives/videoHandler')
 require('./directives/hint')
 
-},{"./adapters":1,"./config":3,"./controllers/goldweights":4,"./controllers/main":5,"./controllers/notes":6,"./controllers/object":7,"./controllers/story":8,"./directives/drawerify":9,"./directives/flatmap":10,"./directives/hint":11,"./directives/ngPoster":12,"./directives/note":13,"./directives/recalculateDrawerStates":14,"./directives/share":15,"./directives/transparentize":16,"./directives/vcenter":17,"./directives/videoHandler":18,"./factories":19,"./routes":20,"./services/hintManager":21}],3:[function(require,module,exports){
+},{"./adapters":2,"./config":4,"./controllers/clusters":5,"./controllers/goldweights":6,"./controllers/main":7,"./controllers/notes":8,"./controllers/object":9,"./controllers/story":10,"./directives/drawerify":11,"./directives/flatmap":12,"./directives/hint":13,"./directives/ngPoster":14,"./directives/note":15,"./directives/recalculateDrawerStates":16,"./directives/share":17,"./directives/transparentize":18,"./directives/vcenter":19,"./directives/videoHandler":20,"./factories":21,"./routes":22,"./services/hintManager":23}],4:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -257,7 +261,15 @@ app.constant('envConfig', {
 
 });
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
+app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes',
+  function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes) {
+    $scope.clusters = require('../../clusters/clusters.json')
+    var data = $scope.data = notes
+  }
+])
+
+},{"../../clusters/clusters.json":1}],6:[function(require,module,exports){
 app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
@@ -328,15 +340,15 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
   }
 
 }])
-},{}],5:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * Controller for cover page (index template).
  */
 
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes) {
-    var data = notes
-    
+    var data = $scope.data = notes
+
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
 
@@ -464,7 +476,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
   }
 ])
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * Controller for notes template.
  */
@@ -478,7 +490,7 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     })
   }
 ])
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Controller for object template.
  */
@@ -681,7 +693,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 ])
 
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Controller for story template.
  */
@@ -792,7 +804,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     }
   }
 ])
-},{}],9:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Drawerify directive
  * 
@@ -1455,7 +1467,7 @@ app.directive( 'drawerify', function( $timeout ){
 		}
 	}
 });
-},{}],10:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Creates a zoomable image element.
  */
@@ -1579,13 +1591,13 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
 })
 
 
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 app.directive( 'hint', function( $rootScope ) {
 	return function( scope, elem, attrs ) {
 		$rootScope.hintSeen = true;
 	}
 });
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 app.directive('ngPoster', function() {
   return {
     priority: 99, // it needs to run after the attributes are interpolated
@@ -1599,7 +1611,7 @@ app.directive('ngPoster', function() {
 }) // https://github.com/angular/angular.js/blob/v1.2.0/src/ng/directive/booleanAttrs.js#L86
 
 
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 /**
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
@@ -1703,7 +1715,7 @@ app.directive('note', function(segmentio, $sce) {
 })
 
 
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 app.directive( 'recalculateDrawerStates', function( $timeout ){
 	return {
 		restrict: 'A',
@@ -1722,7 +1734,7 @@ app.directive( 'recalculateDrawerStates', function( $timeout ){
 		}
 	}
 });
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 app.directive('share', function(email) {
   var template = '<form name="share" ng-submit="sendEmail()">' +
     '<input id="shareEmail" type="email" ng-model="email" required></input>' +
@@ -1752,7 +1764,7 @@ app.directive('share', function(email) {
   }
 })
 
-},{}],16:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1809,7 +1821,7 @@ app.directive( 'transparentize', function($timeout){
 
 });
 
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -1849,7 +1861,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],18:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -1887,7 +1899,7 @@ app.directive( 'videoHandler', function(){
 	}
 
 });
-},{}],19:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -1920,7 +1932,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
   }
 }])
 
-},{}],20:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 /**
  * Application routing
  */
@@ -1929,6 +1941,10 @@ app.config(['$routeProvider', function($routeProvider) {
   return $routeProvider.when('/', {
     templateUrl: 'views/index.html',
     controller: 'mainCtrl',
+    resolve: { resolvedNotes: function(notes) { return notes() } }
+  }).when('/clusters/:cluster', {
+    templateUrl: 'views/clusters.html',
+    controller: 'clustersCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
     templateUrl: 'views/object.html',
@@ -1953,7 +1969,7 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 
-},{}],21:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 app.service( 'hintManager', function( $location, $timeout, $rootScope ) {
 
 	var _this = this;
@@ -2028,4 +2044,4 @@ app.service( 'hintManager', function( $location, $timeout, $rootScope ) {
 	});
 
 });
-},{}]},{},[2]);
+},{}]},{},[3]);

@@ -7,6 +7,10 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/index.html',
     controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
+  }).when('/clusters/:cluster', {
+    templateUrl: 'views/clusters.html',
+    controller: 'clustersCtrl',
+    resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
     templateUrl: 'views/object.html',
     controller: 'ObjectCtrl',

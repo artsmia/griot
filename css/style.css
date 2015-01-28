@@ -7,10 +7,10 @@
 /** Site and reusable element styles. */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-html, body { position: fixed; width: 100%; height: 100%; margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLegibility; -moz-font-feature-settings: "kern=0"; -webkit-font-feature-settings: "kern" 0; -o-font-feature-settings: "kern" 0; -ms-font-feature-settings: "kern" 0; font-feature-settings: "kern" 0; -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */ }
+html, body { margin: 0; padding: 0; font-size: 100%; text-rendering: optimizeLegibility; -moz-font-feature-settings: "kern=0"; -webkit-font-feature-settings: "kern" 0; -o-font-feature-settings: "kern" 0; -ms-font-feature-settings: "kern" 0; font-feature-settings: "kern" 0; -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */ }
 
 /* Container styles */
-.container { -webkit-transition: opacity 150ms ease; -moz-transition: opacity 150ms ease; -o-transition: opacity 150ms ease; position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; }
+.container { -webkit-transition: opacity 150ms ease; -moz-transition: opacity 150ms ease; -o-transition: opacity 150ms ease; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
 /* Fluid images */
 img, object { max-width: 100%; outline: 0; border: 0; margin: 0; padding: 0; }
@@ -172,6 +172,10 @@ color:#222;
 .cover-instructions * { display: inline; font-size: 100%; }
 
 .cover-instructions p { display: none; }
+
+.clusters img { max-width: 30%; }
+
+.clusters li { display: inline; list-style: none; -webkit-columns: 3; }
 
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */

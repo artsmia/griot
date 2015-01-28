@@ -4,13 +4,11 @@
 
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes) {
-    $scope.clusters = require('../../clusters/clusters.json')
     var data = $scope.data = notes
-    
+
     $rootScope.nextView = undefined
     $scope.orderByFilter = orderByFilter
 
-    if(false) {
     if($rootScope.randomizedAll == undefined) {
       $scope.objects = data.objects
       $scope.panels = data.panels
@@ -111,7 +109,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     $scope.random = function() {
       return 0.5 - Math.random()
-    }
     }
 
     if(!$rootScope.identifier) {

@@ -1,0 +1,15 @@
+<ul>
+  <li ng-repeat="(name, objects) in clusters">{{name}}</li>
+</ul>
+
+<section class="clusters">
+  <div ng-repeat="(name, objects) in clusters" id="{{name}}">
+    <h2>{{name}}</h2>
+    <ul>
+      <li ng-repeat="objectId in objects" ng-init="object=data.objects[objectId]">
+        <a href="#/o/{{object.id}}"><img ng-src="{{object.thumbnail}}"></a>
+      </li>
+    </ul>
+  </div>
+</section>
+

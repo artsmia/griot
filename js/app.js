@@ -45,6 +45,7 @@ require('./controllers/object')
 require('./controllers/story')
 require('./controllers/notes')
 require('./controllers/main')
+require('./controllers/clusters')
 require('./controllers/goldweights')
 
 require('./directives/flatmap')
