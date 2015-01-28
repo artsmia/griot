@@ -2,8 +2,8 @@
  * Controller for cover page (index template).
  */
 
-app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes',
-  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes) {
+app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope',
+  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope) {
     var data = $scope.data = notes
 
     $rootScope.nextView = undefined
@@ -38,73 +38,8 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
       }
     })
 
-    var initIsotope = function() {
-
-      if( window.innerWidth < 1024 ) {
-        return;
-      }
-
-      var cover = document.querySelector('#cover');
-
-      $scope.iso = new Isotope( cover, {
-        itemSelector:'.isotope-item',
-        layoutMode:'masonryHorizontal',
-        masonryHorizontal: {
-          rowHeight: 300,
-          gutter: 10
-        },
-        containerStyle: null,
-        isInitLayout: false
-      });
-
-      var centerCover = function(){
-
-        // Get height of container
-        var availableHeight = $('.cover-wrapper').height();
-
-        // Get number of rows - 300px plus 10px gutter.
-        var rowCount = Math.floor( availableHeight / 310 ) || 1;
-
-        // Get height that will wrap snugly around rows
-        var newHeight = ( rowCount * 310 ) + 1;
-
-        // Get new top for #cover
-        var newTop = ( availableHeight - newHeight) / 2;
-
-        // Update cover height and top margin
-        $('#cover').css({
-          'height': newHeight + 'px',
-          'top': newTop + 'px'
-        });
-
-      }
-
-      $scope.iso.on( 'layoutComplete', function(){
-
-        centerCover();
-
-        $('.cover-item').css({
-          'opacity':1
-        });
-
-        $rootScope.loaded = true;
-
-      });
-
-      $(window).on( 'resize', function(){
-        centerCover();
-      });
-
-      $scope.iso.layout();
-
-    };
-
-    imagesLoaded( document.querySelector('#cover'), function(){
-      $timeout( 
-        function(){
-          initIsotope();
-        }, 350 
-      );
+    imagesLoaded(document.querySelector('#cover'), function() {
+      $timeout(initIsotope, 350)
     });
 
     $scope.random = function() {

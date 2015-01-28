@@ -1,15 +1,19 @@
-<ul>
-  <li ng-repeat="(name, objects) in clusters">{{name}}</li>
-</ul>
+<div class='cover-wrapper scrollable'>
+  <ul id='cover' class='clearfix scrollable'>
+    <li class='isotope-item cover-item' ng-class="{story: thing.recordType != 'object' && thing.recordType != 'panel', object: thing.recordType == 'object', panel: thing.recordType == 'panel', noPoster: !thing.thumbnail, 'panel-big': thing.recordType == 'panel' && thing.size == '2x2', 'panel-portrait': thing.recordType == 'panel' && thing.size == '1x2', 'panel-landscape': thing.recordType == 'panel' && thing.size == '2x1', 'panel-small': thing.recordType == 'panel' && thing.size == '1x1' }" ng-repeat="thing in cluster" ng-hide="!thing.thumbnail && thing.recordType != 'panel'">
+      <a href="#/o/{{thing.id}}" ng-if="thing.recordType == 'object'">
+        <img class='cover-item-image' ng-src="{{thing.thumbnail}}">
+        <h2 class='cover-item-title' ng-bind="thing.title"></h2>
+      </a>
+      <div ng-if="thing.recordType == 'panel'" class='cover-panel-wrap vcenter'>
+        <h2 class='cover-item-title' ng-bind="thing.title"></h2>
+        <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
+      </div>
+    </li>
+  </ul>
+</div>
 
-<section class="clusters">
-  <div ng-repeat="(name, objects) in clusters" id="{{name}}">
-    <h2>{{name}}</h2>
-    <ul>
-      <li ng-repeat="objectId in objects" ng-init="object=data.objects[objectId]">
-        <a href="#/o/{{object.id}}"><img ng-src="{{object.thumbnail}}"></a>
-      </li>
-    </ul>
-  </div>
-</section>
-
+<aside class="cover-instructions">
+  <h1>ArtStories: Spotlight on the collection</h1>
+  <p>Slide to browse, tap to view</p>
+</aside>
