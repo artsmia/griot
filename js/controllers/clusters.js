@@ -3,12 +3,15 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
     $scope.clusters = require('../../clusters/clusters.json')
     var data = $scope.data = notes
 
-    var clusterObjects = $scope.clusters[$routeParams.cluster]
-    if(clusterObjects) {
-      $scope.things = clusterObjects.map(function(objectId) {
+    var clusterObjectIds = $scope.clusters[$routeParams.cluster]
+    if(clusterObjectIds) {
+      $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
+      $scope.gallery = $scope.cluster.replace('G', '')
+      $scope.showingCluster = true
+      $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
         return data.objects[objectId]
       })
-      $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
+      $scope.things = angular.copy($scope.clusterObjects)
     } else { // not a valid cluster
       $location.path('/')
     }
@@ -16,5 +19,24 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
     imagesLoaded(document.querySelector('#cover'), function() {
       $timeout(initIsotope, 350)
     });
+
+    $scope.toggleSeeAll = function() {
+      $scope.loading = true
+      if($scope.showingCluster) { // add all other objects
+        angular.forEach(data.objects, function(o) {
+          ($scope.things.indexOf(o) > -1) || $scope.things.push(o)
+        })
+      } else {
+        $scope.things = $scope.clusterObjects
+      }
+
+      $timeout(function() {
+        imagesLoaded(document.querySelector('#cover'), function() {
+          $timeout(initIsotope, 350)
+          $scope.loading = false
+          $scope.showingCluster = !$scope.showingCluster
+        })
+      }, 0)
+    }
   }
 ])

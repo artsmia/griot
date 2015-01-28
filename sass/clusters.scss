@@ -1,0 +1,16 @@
+li.cluster {
+  border: 1px solid #999;
+  text-align: center;
+  padding: 0.25em;
+  cursor: pointer;
+}
+li.cluster p {
+  margin: 0.25em 0;
+}
+li.cluster img {
+  width: 100%;
+}
+
+.cluster.loading {
+  @extend %loadingAnimation;
+}
