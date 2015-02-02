@@ -267,7 +267,8 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
     $scope.clusters = require('../../clusters/clusters.json')
     var data = $scope.data = notes
 
-    var clusterObjectIds = $scope.clusters[$routeParams.cluster]
+    var cluster = $routeParams.cluster
+    var clusterObjectIds = $scope.clusters['G'+cluster.replace(/^g(\d+)/i, '$1')]
     if(clusterObjectIds) {
       $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
       $scope.gallery = $scope.cluster.replace('G', '')
