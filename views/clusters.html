@@ -10,8 +10,8 @@
         <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
       </div>
     </li>
-    <li class="cluster galleryLocation isotope-item cover-item" ng-class="{loading: loading}">
-      <a ng-click="toggleSeeAll()"><div ng-if="showingCluster">
+    <li class="cluster galleryLocation isotope-item cover-item" ng-class="{loading: loading}" ng-click="toggleSeeAll()">
+      <div ng-if="showingCluster">
         <p>Showing objects near <strong>Gallery {{gallery}}</strong></p>
         <img ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
         <p>See all ArtStories</a></p>
@@ -19,7 +19,7 @@
       <div ng-if="!showingCluster">
         <p>Showing all ArtStories</p>
         <p>Show just those nearby</p>
-      </div></a>
+      </div>
     </li>
   </ul>
 </div>
