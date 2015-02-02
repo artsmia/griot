@@ -14,7 +14,7 @@
  * Grabs media metadata from an external source and provides a method for
  * retrieving that metadata by ID.
  */
-app.service( 'miaMediaMetaAdapter', function( $http, $sce ) {
+app.service( 'miaMediaMetaAdapter', function( $http, $sce, envConfig ) {
 
   var _this = this;
 
@@ -51,11 +51,10 @@ app.service( 'miaMediaMetaAdapter', function( $http, $sce ) {
  * retrieving metadata reformatted into a particular grouping, i.e. to match
  * the groups in GriotWP.
  */
-app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
-
+app.service( 'miaObjectMetaAdapter', function( $http, $sce, envConfig ) {
   var _this = this;
 
-  this.isActive = false;
+  this.isActive = envConfig.miaObjectMetaActive;
 
   this.metaHash = {};  
 
@@ -75,28 +74,12 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce ) {
   }
 
   this.getFromAPI = function(id, grouping) {
-    var apiURL = "http://caption-search.dx.artsmia.org/id/"+id
+    var apiURL = envConfig.miaObjectMetaSrc+id
     return $http.get(apiURL, {cache: true}).then(function(result) {
       var data = result.data
       _this.addObjectToMetaHash(data.id.split('/').reverse()[0], data)
       return _this.get(id, grouping)
     })
-  }
-
-  this.build = function( src ) {
-    $http.get( src, { cache: true } ).success( function( result ) {
-
-      _this.isActive = true;
-
-      for( var id in result ) {
-        // Skip ID listing
-        if( 'ids' === id ) {
-          continue;
-        }
-
-        _this.addObjectToMetaHash(id, result[id])
-      }
-    });
   }
 
   this.addObjectToMetaHash = function(id, json) {

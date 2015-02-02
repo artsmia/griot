@@ -23,7 +23,7 @@ app.constant('envConfig', {
   miaMediaMetaActive: true,
   miaMediaMetaSrc: 'http://cdn.dx.artsmia.org/credits.json',
   miaObjectMetaActive: true,
-  miaObjectMetaSrc: 'mia_object_meta.json',
+  miaObjectMetaSrc: "http://caption-search.dx.artsmia.org/id/",
   miaThumbnailActive: true,
   miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
 

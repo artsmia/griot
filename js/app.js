@@ -27,9 +27,6 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 	if( config.miaMediaMetaActive ) {
 		mediaMeta.build( config.miaMediaMetaSrc );
 	}
-	if( config.miaObjectMetaActive ) {
-		objectMeta.build( config.miaObjectMetaSrc );
-	}
 	if( config.miaThumbnailActive ) {
 		objectThumb.init( config.miaThumbnailSrc );
 	}
