@@ -31,7 +31,8 @@ app.run(['$rootScope', 'envConfig', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter
 		objectThumb.init( config.miaThumbnailSrc );
 	}
 
-	hintManager.init();
+	// hintManager.init();
+	// Temporarily disable 'pinch to zoom' hints.
 
 }])
 
