@@ -4,7 +4,7 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
     var data = $scope.data = notes
 
     var cluster = $routeParams.cluster
-    var clusterObjectIds = $scope.clusters['G'+cluster.replace(/^g(\d+)/i, '$1')]
+    var clusterObjectIds = $scope.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
     if(clusterObjectIds) {
       $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
       $scope.gallery = $scope.cluster.replace('G', '')
