@@ -30,7 +30,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
     }
 
     angular.forEach( $scope.panels, function(panel) {
-      panel.trustedContent = $sce.trustAsHtml( panel.content );
       if( panel && panel.position == 'start' ) {
         $scope.all.unshift( panel );
       }

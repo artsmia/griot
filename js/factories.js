@@ -10,12 +10,15 @@ app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
 }])
 
 // Application content
-app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', function($http, config, thumbs) {
+app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', '$sce', function($http, config, thumbs, $sce) {
   window.miaThumbnailAdapter = thumbs // TODO: why isn't this injected below? I can't access inside either of the next functions on L15 and 16
   return function() {
     return $http.get(config.crashpad, {cache: true}).then(function(result) {
       angular.forEach(result.data.objects, function(o) {
         o.thumbnail = miaThumbnailAdapter.get(o.views[0].image)
+      })
+      angular.forEach(result.data.panels, function(panel) {
+        panel.trustedContent = $sce.trustAsHtml(panel.content)
       })
       return result.data;
     })

@@ -272,6 +272,9 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
         angular.forEach(data.objects, function(o) {
           ($scope.things.indexOf(o) > -1) || $scope.things.push(o)
         })
+        angular.forEach(data.panels, function(p) {
+          if($scope.things.indexOf(p) == -1 && p.position == 'end') $scope.things.push(p)
+        })
       } else {
         $scope.things = $scope.clusterObjects
       }
@@ -391,7 +394,6 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
     }
 
     angular.forEach( $scope.panels, function(panel) {
-      panel.trustedContent = $sce.trustAsHtml( panel.content );
       if( panel && panel.position == 'start' ) {
         $scope.all.unshift( panel );
       }
@@ -1866,12 +1868,15 @@ app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
 }])
 
 // Application content
-app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', function($http, config, thumbs) {
+app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', '$sce', function($http, config, thumbs, $sce) {
   window.miaThumbnailAdapter = thumbs // TODO: why isn't this injected below? I can't access inside either of the next functions on L15 and 16
   return function() {
     return $http.get(config.crashpad, {cache: true}).then(function(result) {
       angular.forEach(result.data.objects, function(o) {
         o.thumbnail = miaThumbnailAdapter.get(o.views[0].image)
+      })
+      angular.forEach(result.data.panels, function(panel) {
+        panel.trustedContent = $sce.trustAsHtml(panel.content)
       })
       return result.data;
     })

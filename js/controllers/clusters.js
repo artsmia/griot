@@ -27,6 +27,9 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
         angular.forEach(data.objects, function(o) {
           ($scope.things.indexOf(o) > -1) || $scope.things.push(o)
         })
+        angular.forEach(data.panels, function(p) {
+          if($scope.things.indexOf(p) == -1 && p.position == 'end') $scope.things.push(p)
+        })
       } else {
         $scope.things = $scope.clusterObjects
       }
