@@ -2,9 +2,8 @@
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'resolvedNotes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
   function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMetaAdapter, miaThumbs, email, config, $timeout, objectMeta) {
-
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
@@ -14,46 +13,47 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
-    notes().then(function(_wp) {
-      $scope.wp = _wp.objects[$scope.id]
-      segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
-      
-      $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
-  
-      // Replace object metadata if using adapter
-      if( objectMetaAdapter.isActive ) {
-        $scope.wp.meta1 = $scope.wp.meta1 || objectMeta.meta1;
-        $scope.wp.meta2 = $scope.wp.meta2 || objectMeta.meta2;
-        $scope.wp.meta3 = $scope.wp.meta3 || objectMeta.meta3;
-        $scope.wp.location = objectMeta.location;
-      }
-      
-      $scope.relatedStories = []
-      angular.forEach($scope.wp.relatedStories, function(story_id){
-        if( _wp.stories[story_id] ) { 
-          $scope.relatedStories.push({
-            'id':story_id,
-            'title':_wp.stories[story_id].title
-          })
-        }
-      })
-      if($scope.wp) {
-        $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
-        $scope.$on('viewChanged', loadDetails)
-        if($scope.mapLoaded) loadDetails()
+    
+    _wp = notes
+    $scope.wp = _wp.objects[$scope.id]
+    segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
+    
+    $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
 
-        // Open the More tab when returning from a story via the 'Back' button
-        if($rootScope.nextView) {
-          $scope.activeSection = $rootScope.nextView
-          $rootScope.nextView = undefined
-          // make sure the drawer is open
-          angular.element($('.object-content-container')).scope().drawerify.to('open', 0)
-        }
-        $scope.$$phase || $scope.$apply()
-
+    // Replace object metadata if using adapter
+    if( objectMetaAdapter.isActive ) {
+      $scope.wp.meta1 = $scope.wp.meta1 || objectMeta.meta1;
+      $scope.wp.meta2 = $scope.wp.meta2 || objectMeta.meta2;
+      $scope.wp.meta3 = $scope.wp.meta3 || objectMeta.meta3;
+      $scope.wp.location = objectMeta.location;
+    }
+    
+    $scope.relatedStories = []
+    angular.forEach($scope.wp.relatedStories, function(story_id){
+      if( _wp.stories[story_id] ) { 
+        $scope.relatedStories.push({
+          'id':story_id,
+          'title':_wp.stories[story_id].title
+        })
       }
     })
-    
+    if($scope.wp) {
+      $scope.mainImage = $scope.wp.views[0].image
+      $scope.wp.trustedDescription = $sce.trustAsHtml($scope.wp.description)
+      $scope.$on('viewChanged', loadDetails)
+      $scope.$watch('mapLoaded', function(v) { v && loadDetails() }) // TODO: once details load, cancel this watch
+
+      // Open the More tab when returning from a story via the 'Back' button
+      if($rootScope.nextView) {
+        $scope.activeSection = $rootScope.nextView
+        $rootScope.nextView = undefined
+        // make sure the drawer is open
+        angular.element($('.object-content-container')).scope().drawerify.to('open', 0)
+      }
+      $scope.$$phase || $scope.$apply()
+
+    }
+  
     var loadDetails = function() {
       $scope.notes = $scope.wp.views;
       $scope.allNotes = [];

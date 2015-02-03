@@ -15,6 +15,7 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/object.html',
     controller: 'ObjectCtrl',
     resolve: {
+      resolvedNotes: function(notes) { return notes() },
       resolvedObjectMeta: function(miaObjectMetaAdapter, $route) {
         return miaObjectMetaAdapter.get($route.current.params.id)
       }

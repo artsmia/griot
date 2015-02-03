@@ -10,11 +10,13 @@ app.factory('tilesaw', ['$http', 'envConfig', function($http, config) {
 }])
 
 // Application content
-app.factory('notes', ['$http', 'envConfig', function($http, config) {
+app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', function($http, config, thumbs) {
+  window.miaThumbnailAdapter = thumbs // TODO: why isn't this injected below? I can't access inside either of the next functions on L15 and 16
   return function() {
-    // TODO: how do we want to cache/bundle the JSON? WP is slow
-    // also cache it within ng so we aren't requesting/parsing it on each request
     return $http.get(config.crashpad, {cache: true}).then(function(result) {
+      angular.forEach(result.data.objects, function(o) {
+        o.thumbnail = miaThumbnailAdapter.get(o.views[0].image)
+      })
       return result.data;
     })
   }
