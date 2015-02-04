@@ -5,38 +5,67 @@
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var data = $scope.data = notes
-    if($rootScope.defaultCluster) return $location.path('/clusters/'+$rootScope.defaultCluster)
 
-    $rootScope.nextView = undefined
-    $scope.orderByFilter = orderByFilter
-
-    if($rootScope.randomizedAll == undefined) {
-      $scope.objects = data.objects
-      $scope.panels = data.panels
-      var all = []
-      angular.forEach($scope.objects, function(object) { 
-        if( object ) {
-          all.push(object);
-        }
-      });
-      angular.forEach($scope.panels, function(panel) {
-        if( panel && panel.position == 'random' ) {
-          all.push(panel);
-        }
+    var cluster = $routeParams.cluster || 'highlights'
+    var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
+    if(clusterObjectIds) {
+      $scope.cluster = $rootScope.defaultCluster = cluster
+      $scope.gallery = $scope.cluster.replace('G', '') // TODO: clusters aren't necessarily galleries anymore
+      $scope.showingCluster = true
+      $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
+        var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
+        if(isStory) return data.stories[isStory[1]]
+        return data.objects[objectId]
       })
-      $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
-    } else {
-      $scope.all = $rootScope.randomizedAll
+
+      // Once we have a set of randomized things for the index screen, save
+      // them so they'r edisplayed consistently.
+      if($rootScope.randomizedAll) {
+        $scope.all = $scope.randomClusterObjects = $rootScope.randomizedAll
+      } else {
+        var startPanels = addPanelsToClusterObjects()
+        $scope.randomClusterObjects = orderByFilter($scope.clusterObjects, function() { return 0.5 - Math.random() })
+        startPanels.map(function(p) { $scope.randomClusterObjects.unshift(p) })
+        $rootScope.randomizedAll = $scope.all = angular.copy($scope.randomClusterObjects)
+      }
+    } else { // not a valid cluster
+      $location.path('/')
     }
 
-    angular.forEach( $scope.panels, function(panel) {
-      if( panel && panel.position == 'start' ) {
-        $scope.all.unshift( panel );
+    $scope.toggleSeeAll = function() {
+      $scope.loading = true
+      if($scope.showingCluster) { // add all other objects
+        angular.forEach(data.objects, function(o) {
+          ($scope.all.indexOf(o) > -1) || $scope.all.push(o)
+        })
+        angular.forEach(data.panels, function(p) {
+          if($scope.all.indexOf(p) == -1 && p.position == 'end') $scope.all.push(p)
+        })
+      } else {
+        $scope.all = angular.copy($scope.randomClusterObjects)
       }
-      else if( panel && panel.position == 'end' ) {
-        $scope.all.push( panel );
-      }
-    })
+
+      $timeout(function() {
+        imagesLoaded(document.querySelector('#cover'), function() {
+          $timeout(initIsotope, 350)
+          $scope.loading = false
+          $scope.showingCluster = !$scope.showingCluster
+        })
+      }, 0)
+    }
+
+    // Add the panels that should be randomized to `clusterObjects` and
+    // return the panels that need to be at the beginning so they can be
+    // `unshifted` after randomization happens
+    function addPanelsToClusterObjects() {
+      var panels = []
+      angular.forEach(data.panels, function(p) { panels.push(p) })
+      panels.filter(function(p) { return p.position == 'random' })
+        .map(function(p) { $scope.clusterObjects.push(p) })
+      return panels.filter(function(p) { return p.position == 'start' })
+    }
+
+    $rootScope.nextView = undefined
 
     imagesLoaded(document.querySelector('#cover'), function() {
       $timeout(initIsotope, 350)

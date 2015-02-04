@@ -7,9 +7,9 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/index.html',
     controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
-  }).when('/clusters/:cluster', {
+  }).when('/clusters/:cluster', { // TODO: can I de-dupe this in angular? `when('/', '/clusters…')`
     templateUrl: 'views/index.html',
-    controller: 'clustersCtrl',
+    controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
     templateUrl: 'views/object.html',

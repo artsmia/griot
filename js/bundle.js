@@ -547,7 +547,6 @@ require('./controllers/object')
 require('./controllers/story')
 require('./controllers/notes')
 require('./controllers/main')
-require('./controllers/clusters')
 require('./controllers/goldweights')
 
 require('./directives/flatmap')
@@ -561,7 +560,7 @@ require('./directives/share')
 require('./directives/videoHandler')
 require('./directives/hint')
 
-},{"./adapters":2,"./config":4,"./controllers/clusters":5,"./controllers/goldweights":6,"./controllers/main":7,"./controllers/notes":8,"./controllers/object":9,"./controllers/story":10,"./directives/drawerify":11,"./directives/flatmap":12,"./directives/hint":13,"./directives/ngPoster":14,"./directives/note":15,"./directives/recalculateDrawerStates":16,"./directives/share":17,"./directives/transparentize":18,"./directives/vcenter":19,"./directives/videoHandler":20,"./factories":21,"./routes":22,"./services/hintManager":23}],4:[function(require,module,exports){
+},{"./adapters":2,"./config":4,"./controllers/goldweights":5,"./controllers/main":6,"./controllers/notes":7,"./controllers/object":8,"./controllers/story":9,"./directives/drawerify":10,"./directives/flatmap":11,"./directives/hint":12,"./directives/ngPoster":13,"./directives/note":14,"./directives/recalculateDrawerStates":15,"./directives/share":16,"./directives/transparentize":17,"./directives/vcenter":18,"./directives/videoHandler":19,"./factories":20,"./routes":21,"./services/hintManager":22}],4:[function(require,module,exports){
 /**
  * Configure application.
  */
@@ -594,57 +593,6 @@ app.constant('envConfig', {
 });
 
 },{}],5:[function(require,module,exports){
-app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
-  function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
-    var data = $scope.data = notes
-    $scope.clusters = data.clusters
-
-    var cluster = $routeParams.cluster
-    var clusterObjectIds = $scope.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
-    if(clusterObjectIds) {
-      $scope.cluster = $rootScope.defaultCluster = $routeParams.cluster
-      $scope.gallery = $scope.cluster.replace('G', '')
-      $scope.showingCluster = true
-      $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
-        var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
-        if(isStory) return data.stories[isStory[1]]
-        return data.objects[objectId]
-      })
-      $scope.randomClusterObjects = orderByFilter($scope.clusterObjects, function() { return 0.5 - Math.random() })
-      $scope.all = angular.copy($scope.randomClusterObjects)
-    } else { // not a valid cluster
-      $location.path('/')
-    }
-
-    imagesLoaded(document.querySelector('#cover'), function() {
-      $timeout(initIsotope, 350)
-    });
-
-    $scope.toggleSeeAll = function() {
-      $scope.loading = true
-      if($scope.showingCluster) { // add all other objects
-        angular.forEach(data.objects, function(o) {
-          ($scope.all.indexOf(o) > -1) || $scope.all.push(o)
-        })
-        angular.forEach(data.panels, function(p) {
-          if($scope.all.indexOf(p) == -1 && p.position == 'end') $scope.all.push(p)
-        })
-      } else {
-        $scope.all = angular.copy($scope.randomClusterObjects)
-      }
-
-      $timeout(function() {
-        imagesLoaded(document.querySelector('#cover'), function() {
-          $timeout(initIsotope, 350)
-          $scope.loading = false
-          $scope.showingCluster = !$scope.showingCluster
-        })
-      }, 0)
-    }
-  }
-])
-
-},{}],6:[function(require,module,exports){
 app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
@@ -715,7 +663,7 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
   }
 
 }])
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /**
  * Controller for cover page (index template).
  */
@@ -723,38 +671,67 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var data = $scope.data = notes
-    if($rootScope.defaultCluster) return $location.path('/clusters/'+$rootScope.defaultCluster)
 
-    $rootScope.nextView = undefined
-    $scope.orderByFilter = orderByFilter
-
-    if($rootScope.randomizedAll == undefined) {
-      $scope.objects = data.objects
-      $scope.panels = data.panels
-      var all = []
-      angular.forEach($scope.objects, function(object) { 
-        if( object ) {
-          all.push(object);
-        }
-      });
-      angular.forEach($scope.panels, function(panel) {
-        if( panel && panel.position == 'random' ) {
-          all.push(panel);
-        }
+    var cluster = $routeParams.cluster || 'highlights'
+    var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
+    if(clusterObjectIds) {
+      $scope.cluster = $rootScope.defaultCluster = cluster
+      $scope.gallery = $scope.cluster.replace('G', '') // TODO: clusters aren't necessarily galleries anymore
+      $scope.showingCluster = true
+      $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
+        var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
+        if(isStory) return data.stories[isStory[1]]
+        return data.objects[objectId]
       })
-      $scope.all = $rootScope.randomizedAll = $scope.orderByFilter(all, $scope.random)
-    } else {
-      $scope.all = $rootScope.randomizedAll
+
+      // Once we have a set of randomized things for the index screen, save
+      // them so they'r edisplayed consistently.
+      if($rootScope.randomizedAll) {
+        $scope.all = $scope.randomClusterObjects = $rootScope.randomizedAll
+      } else {
+        var startPanels = addPanelsToClusterObjects()
+        $scope.randomClusterObjects = orderByFilter($scope.clusterObjects, function() { return 0.5 - Math.random() })
+        startPanels.map(function(p) { $scope.randomClusterObjects.unshift(p) })
+        $rootScope.randomizedAll = $scope.all = angular.copy($scope.randomClusterObjects)
+      }
+    } else { // not a valid cluster
+      $location.path('/')
     }
 
-    angular.forEach( $scope.panels, function(panel) {
-      if( panel && panel.position == 'start' ) {
-        $scope.all.unshift( panel );
+    $scope.toggleSeeAll = function() {
+      $scope.loading = true
+      if($scope.showingCluster) { // add all other objects
+        angular.forEach(data.objects, function(o) {
+          ($scope.all.indexOf(o) > -1) || $scope.all.push(o)
+        })
+        angular.forEach(data.panels, function(p) {
+          if($scope.all.indexOf(p) == -1 && p.position == 'end') $scope.all.push(p)
+        })
+      } else {
+        $scope.all = angular.copy($scope.randomClusterObjects)
       }
-      else if( panel && panel.position == 'end' ) {
-        $scope.all.push( panel );
-      }
-    })
+
+      $timeout(function() {
+        imagesLoaded(document.querySelector('#cover'), function() {
+          $timeout(initIsotope, 350)
+          $scope.loading = false
+          $scope.showingCluster = !$scope.showingCluster
+        })
+      }, 0)
+    }
+
+    // Add the panels that should be randomized to `clusterObjects` and
+    // return the panels that need to be at the beginning so they can be
+    // `unshifted` after randomization happens
+    function addPanelsToClusterObjects() {
+      var panels = []
+      angular.forEach(data.panels, function(p) { panels.push(p) })
+      panels.filter(function(p) { return p.position == 'random' })
+        .map(function(p) { $scope.clusterObjects.push(p) })
+      return panels.filter(function(p) { return p.position == 'start' })
+    }
+
+    $rootScope.nextView = undefined
 
     imagesLoaded(document.querySelector('#cover'), function() {
       $timeout(initIsotope, 350)
@@ -786,7 +763,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
   }
 ])
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 /**
  * Controller for notes template.
  */
@@ -800,7 +777,7 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
     })
   }
 ])
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /**
  * Controller for object template.
  */
@@ -1004,7 +981,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
 ])
 
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Controller for story template.
  */
@@ -1115,7 +1092,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     }
   }
 ])
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Drawerify directive
  * 
@@ -1778,7 +1755,7 @@ app.directive( 'drawerify', function( $timeout ){
 		}
 	}
 });
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * Creates a zoomable image element.
  */
@@ -1902,13 +1879,13 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
 })
 
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 app.directive( 'hint', function( $rootScope ) {
 	return function( scope, elem, attrs ) {
 		$rootScope.hintSeen = true;
 	}
 });
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 app.directive('ngPoster', function() {
   return {
     priority: 99, // it needs to run after the attributes are interpolated
@@ -1922,7 +1899,7 @@ app.directive('ngPoster', function() {
 }) // https://github.com/angular/angular.js/blob/v1.2.0/src/ng/directive/booleanAttrs.js#L86
 
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 /**
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
@@ -2026,7 +2003,7 @@ app.directive('note', function(segmentio, $sce) {
 })
 
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 app.directive( 'recalculateDrawerStates', function( $timeout ){
 	return {
 		restrict: 'A',
@@ -2045,7 +2022,7 @@ app.directive( 'recalculateDrawerStates', function( $timeout ){
 		}
 	}
 });
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 app.directive('share', function(email) {
   var template = '<form name="share" ng-submit="sendEmail()">' +
     '<input id="shareEmail" type="email" ng-model="email" required></input>' +
@@ -2075,7 +2052,7 @@ app.directive('share', function(email) {
   }
 })
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -2132,7 +2109,7 @@ app.directive( 'transparentize', function($timeout){
 
 });
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /**
  * Vertically centers an element within a container. Apply 'vcenter' class to 
  * element to be centered and make sure parent is positioned.
@@ -2172,7 +2149,7 @@ app.directive( 'vcenter', function(){
 	}
 
 });
-},{}],20:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 /**
  * Turn a parent element transparent on touchstart.
  */
@@ -2210,7 +2187,7 @@ app.directive( 'videoHandler', function(){
 	}
 
 });
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 /**
  * Retrieve external data.
  */
@@ -2312,7 +2289,7 @@ app.factory('initIsotope', ['$rootScope', function($rootScope) {
   };
 }])
 
-},{"../clusters/clusters.json":1}],22:[function(require,module,exports){
+},{"../clusters/clusters.json":1}],21:[function(require,module,exports){
 /**
  * Application routing
  */
@@ -2322,9 +2299,9 @@ app.config(['$routeProvider', function($routeProvider) {
     templateUrl: 'views/index.html',
     controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
-  }).when('/clusters/:cluster', {
+  }).when('/clusters/:cluster', { // TODO: can I de-dupe this in angular? `when('/', '/clusters…')`
     templateUrl: 'views/index.html',
-    controller: 'clustersCtrl',
+    controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
     templateUrl: 'views/object.html',
@@ -2350,7 +2327,7 @@ app.config(['$routeProvider', function($routeProvider) {
 }])
 
 
-},{}],23:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 app.service( 'hintManager', function( $location, $timeout, $rootScope ) {
 
 	var _this = this;
