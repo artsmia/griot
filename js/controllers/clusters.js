@@ -10,9 +10,11 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
       $scope.gallery = $scope.cluster.replace('G', '')
       $scope.showingCluster = true
       $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
+        var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
+        if(isStory) return data.stories[isStory[1]]
         return data.objects[objectId]
       })
-      $scope.things = angular.copy($scope.clusterObjects)
+      $scope.things = orderByFilter(angular.copy($scope.clusterObjects), function() { return 0.5 - Math.random() })
     } else { // not a valid cluster
       $location.path('/')
     }
