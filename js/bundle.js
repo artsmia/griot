@@ -671,6 +671,7 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var data = $scope.data = notes
+    $rootScope.loaded = false
 
     var cluster = $routeParams.cluster || 'highlights'
     var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
@@ -757,8 +758,13 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     segmentio.track('Landed on the homepage')
 
-    $scope.$on("$destroy", function(){
-      $rootScope.pageXOffset = window.pageXOffset
+    // When returning to the home page from an object page, scroll to
+    // that object.
+    $rootScope.$watch('loaded', function(val) {
+      if(val && $rootScope.lastObjectId) {
+        var lastObjContainer = $('a[href*='+$rootScope.lastObjectId+']').parent()
+        lastObjContainer[0].scrollIntoView()
+      }
     })
   }
 ])
