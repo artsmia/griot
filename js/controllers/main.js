@@ -47,11 +47,9 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
       }
 
       $timeout(function() {
-        imagesLoaded(document.querySelector('#cover'), function() {
-          $timeout(initIsotope, 350)
-          $scope.loading = false
-          $scope.showingCluster = !$scope.showingCluster
-        })
+        $timeout(initIsotope, 0)
+        $scope.loading = false
+        $scope.showingCluster = !$scope.showingCluster
       }, 0)
     }
 
@@ -68,9 +66,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     $rootScope.nextView = undefined
 
-    imagesLoaded(document.querySelector('#cover'), function() {
-      $timeout(initIsotope, 350)
-    });
+    $timeout(initIsotope, 0)
 
     $scope.random = function() {
       return 0.5 - Math.random()
