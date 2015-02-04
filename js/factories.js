@@ -14,6 +14,8 @@ app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', '$sce', funct
   window.miaThumbnailAdapter = thumbs // TODO: why isn't this injected below? I can't access inside either of the next functions on L15 and 16
   return function() {
     return $http.get(config.crashpad, {cache: true}).then(function(result) {
+      result.data.clusters = require('../clusters/clusters.json') // TODO: PS these shouldn't be hardcoded
+
       angular.forEach(result.data.objects, function(o) {
         o.thumbnail = miaThumbnailAdapter.get(o.views[0].image)
       })

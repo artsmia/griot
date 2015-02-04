@@ -1,7 +1,7 @@
 app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
-    $scope.clusters = require('../../clusters/clusters.json')
     var data = $scope.data = notes
+    $scope.clusters = data.clusters
 
     var cluster = $routeParams.cluster
     var clusterObjectIds = $scope.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
