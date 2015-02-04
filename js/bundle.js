@@ -499,8 +499,9 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
       if($rootScope.nextView) {
         $scope.activeSection = $rootScope.nextView
         $rootScope.nextView = undefined
-        // make sure the drawer is open
-        angular.element($('.object-content-container')).scope().drawerify.to('open', 0)
+        // make sure the drawer is open, if we have one
+        var drawer = angular.element($('.object-content-container')).scope().drawerify
+        if(drawer) drawer.to('open', 0)
       }
       $scope.$$phase || $scope.$apply()
 
