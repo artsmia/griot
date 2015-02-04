@@ -8,7 +8,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/clusters/:cluster', {
-    templateUrl: 'views/clusters.html',
+    templateUrl: 'views/index.html',
     controller: 'clustersCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {

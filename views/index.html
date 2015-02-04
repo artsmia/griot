@@ -5,11 +5,29 @@
         <img class='cover-item-image' ng-src="{{thing.thumbnail}}">
         <h2 class='cover-item-title' ng-bind="thing.title"></h2>
       </a>
+      <a ng-href="#/stories/{{thing.id}}" ng-if="thing.recordType != 'object' && thing.recordType != 'panel'">
+        <div class='cover-item-poster' style="background-image: url({{thing.thumbnail}})"></div>
+        <div class='cover-item-caption vcenter'>
+          <h2 class='cover-item-title' ng-bind="thing.title"></h2>
+        </div>
+      </a>
       <div ng-if="thing.recordType == 'panel'" class='cover-panel-wrap vcenter'>
         <h2 class='cover-item-title' ng-bind="thing.title"></h2>
         <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
       </div>
     </li>
+    <li class="cluster galleryLocation isotope-item cover-item" ng-class="{loading: loading}" ng-click="toggleSeeAll()" ng-if="clusterObjects">
+      <div ng-if="showingCluster">
+        <p>Showing objects near <strong>Gallery {{gallery}}</strong></p>
+        <img ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
+        <p>See all ArtStories</a></p>
+      </div>
+      <div ng-if="!showingCluster">
+        <p>Showing all ArtStories</p>
+        <p>Show just those nearby</p>
+      </div>
+    </li>
+  </ul>
   </ul>
 </div>
 

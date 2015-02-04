@@ -259,7 +259,8 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
         if(isStory) return data.stories[isStory[1]]
         return data.objects[objectId]
       })
-      $scope.things = orderByFilter(angular.copy($scope.clusterObjects), function() { return 0.5 - Math.random() })
+      $scope.randomClusterObjects = orderByFilter($scope.clusterObjects, function() { return 0.5 - Math.random() })
+      $scope.all = angular.copy($scope.randomClusterObjects)
     } else { // not a valid cluster
       $location.path('/')
     }
@@ -272,13 +273,13 @@ app.controller('clustersCtrl', ['$scope', '$routeParams', '$rootScope', '$timeou
       $scope.loading = true
       if($scope.showingCluster) { // add all other objects
         angular.forEach(data.objects, function(o) {
-          ($scope.things.indexOf(o) > -1) || $scope.things.push(o)
+          ($scope.all.indexOf(o) > -1) || $scope.all.push(o)
         })
         angular.forEach(data.panels, function(p) {
-          if($scope.things.indexOf(p) == -1 && p.position == 'end') $scope.things.push(p)
+          if($scope.all.indexOf(p) == -1 && p.position == 'end') $scope.all.push(p)
         })
       } else {
-        $scope.things = $scope.clusterObjects
+        $scope.all = angular.copy($scope.randomClusterObjects)
       }
 
       $timeout(function() {
@@ -1968,7 +1969,7 @@ app.config(['$routeProvider', function($routeProvider) {
     controller: 'mainCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/clusters/:cluster', {
-    templateUrl: 'views/clusters.html',
+    templateUrl: 'views/index.html',
     controller: 'clustersCtrl',
     resolve: { resolvedNotes: function(notes) { return notes() } }
   }).when('/o/:id', {
