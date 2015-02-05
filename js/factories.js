@@ -61,7 +61,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
 
 app.factory('initIsotope', ['$rootScope', function($rootScope) {
   return function() {
-    if( window.innerWidth < 1024 ) {
+    if( window.innerWidth < 768 ) {
       return;
     }
 
