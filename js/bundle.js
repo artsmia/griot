@@ -883,7 +883,14 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
       if(!$scope.viewEnabled(nextView)) return
       if(nextView == 'annotations') {
         if(!$scope.notes) $scope.notes = $scope.wp.views
-        var view = $scope.notes && $scope.notes[0], firstNote = view && view.annotations && view.annotations[0]
+        // find the first view with an annotation
+        var i = 0, view = $scope.notes && $scope.notes[i], firstNote
+        while(view.annotations.length == 0) {
+          view = $scope.notes && $scope.notes[i]
+          i++
+        }
+        firstNote = view && view.annotations && view.annotations[0]
+
         if(firstNote && !$scope.flatmapScope.lastActiveNote) {
           $scope.activateNote(firstNote, $scope.notes[0])
         } else if($scope.flatmapScope.lastActiveNote) {
