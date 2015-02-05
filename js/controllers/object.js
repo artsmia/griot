@@ -115,6 +115,10 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
       } else {
         $scope.glanceText = $sce.trustAsHtml( "Press to view object" );
       }
+      // Reset image to the primary when changing back to about
+      if(nextView == 'about' && $scope.flatmapScope && $scope.notes[0].image != $scope.flatmapScope.image) {
+        $scope.activateView($scope.notes[0])
+      }
       $scope.activeSection = nextView
     }
 
