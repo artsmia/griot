@@ -676,6 +676,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
     var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
     if(clusterObjectIds) {
       $scope.cluster = $rootScope.defaultCluster = cluster
+      $scope.isGallery = cluster.match(/^G\d/i)
       $scope.gallery = $scope.cluster.replace('G', '') // TODO: clusters aren't necessarily galleries anymore
       $scope.showingCluster = true
       $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
