@@ -874,8 +874,19 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
 
     $scope.viewEnabled = function(nextView, debug) {
       return (nextView == 'more' && $scope.relatedStories && $scope.relatedStories.length > 0 ||
-        nextView == 'annotations' && $scope.notes && $scope.notes.length > 0 ||
+        nextView == 'annotations' && getFirstDetail() ||
         nextView == 'about')
+    }
+
+    // return the first annotation, falsey if there aren't any
+    function getFirstDetail() {
+      var i = 0, view = $scope.notes && $scope.notes[i], firstDetail
+      while(view && view.annotations.length == 0) {
+        view = $scope.notes && $scope.notes[i]
+        i++
+      }
+      firstDetail = view && view.annotations && view.annotations[0]
+      return firstDetail
     }
 
     $scope.toggleView = function(nextView, dontTrack) {
@@ -884,16 +895,10 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
       if(!$scope.viewEnabled(nextView)) return
       if(nextView == 'annotations') {
         if(!$scope.notes) $scope.notes = $scope.wp.views
-        // find the first view with an annotation
-        var i = 0, view = $scope.notes && $scope.notes[i], firstNote
-        while(view.annotations.length == 0) {
-          view = $scope.notes && $scope.notes[i]
-          i++
-        }
-        firstNote = view && view.annotations && view.annotations[0]
+        var firstDetail = getFirstDetail()
 
-        if(firstNote && !$scope.flatmapScope.lastActiveNote) {
-          $scope.activateNote(firstNote, $scope.notes[0])
+        if(firstDetail && !$scope.flatmapScope.lastActiveNote) {
+          $scope.activateNote(firstDetail, $scope.notes[0])
         } else if($scope.flatmapScope.lastActiveNote) {
           // If there's an active annotation, center the map over it.
           $scope.glanceText = $sce.trustAsHtml( "Press to view detail <span class='annotation-index'>" + $scope.flatmapScope.lastActiveNote.index + "</span>" );
