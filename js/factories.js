@@ -21,6 +21,7 @@ app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', '$sce', '$q',
 
       angular.forEach(result.data.objects, function(o) {
         o.thumbnail = miaThumbnailAdapter.get(o.views[0].image)
+        o.title = o.title.replace('&amp;', '&')
       })
       angular.forEach(result.data.panels, function(panel) {
         panel.trustedContent = $sce.trustAsHtml(panel.content)
