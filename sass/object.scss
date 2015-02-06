@@ -512,6 +512,7 @@ $sidebarWidth: 23rem;
 }
 .galleryLocation img {
   border: 1px solid #ccc;
+  max-width: 279px;
 }
 .galleryLocation img + p {
   margin-top: 0.25em;

@@ -3,12 +3,28 @@ li.cluster {
   text-align: center;
   padding: 0.25em;
   cursor: pointer;
+  height: 100%;
+  min-width: 15em;
+  position: relative;
 }
 li.cluster p {
   margin: 0.25em 0;
 }
 li.cluster img {
-  width: 100%;
+  max-width: 200px;
+}
+
+li.cluster a {
+  padding: 0 0.5em;
+  position: absolute;
+  bottom: 0.5em;
+  left: 5%;
+  width: 90%
+}
+li.cluster:hover a, li.cluster:active a {
+  border: 1px solid #222;
+  color: #ededed;
+  background-color: #222;
 }
 
 .cluster.loading {
