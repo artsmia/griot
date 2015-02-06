@@ -683,7 +683,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
         var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
         if(isStory) return data.stories[isStory[1]]
         return data.objects[objectId]
-      })
+      }).filter(function(o) { return o })
 
       // Once we have a set of randomized things for the index screen, save
       // them so they'r edisplayed consistently.
