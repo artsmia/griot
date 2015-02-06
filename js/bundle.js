@@ -669,10 +669,12 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
 
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
+    if($rootScope.defaultCluster) $location.path('/clusters/'+$rootScope.defaultCluster)
+
     var data = $scope.data = notes
     $rootScope.loaded = false
 
-    var cluster = $routeParams.cluster || 'highlights'
+    var cluster = $rootScope.defaultCluster || $routeParams.cluster || 'highlights'
     var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
     if(clusterObjectIds) {
       $scope.cluster = $rootScope.defaultCluster = cluster
