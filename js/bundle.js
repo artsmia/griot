@@ -2265,6 +2265,7 @@ app.factory('email', ['$http', 'envConfig', function($http, config) {
 app.factory('initIsotope', ['$rootScope', function($rootScope) {
   return function() {
     if( window.innerWidth < 768 ) {
+      $rootScope.loaded = true;
       return;
     }
 
@@ -2312,7 +2313,6 @@ app.factory('initIsotope', ['$rootScope', function($rootScope) {
       });
 
       $rootScope.loaded = true;
-
     });
 
     $(window).on( 'resize', function(){
