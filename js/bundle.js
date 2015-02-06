@@ -2243,7 +2243,7 @@ app.factory('notes', ['$http', 'envConfig', 'miaThumbnailAdapter', '$sce', '$q',
       // TODO: compute this hash of image dimensions automatically, codify it into the image server.
       // then maybe serve up only the needed images?
       var url = "http://cdn.dx.artsmia.org/thumbs/artstories-image-dimensions.json"
-      return $http.get(url).then(function(result) {
+      return $http.get(url, {cache: true}).then(function(result) {
         var allImageDimensions = result.data
         data.objects = angular.forEach(data.objects, function(o, id) {
           var dimensions = allImageDimensions[o.views[0].image]
