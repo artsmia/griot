@@ -16,7 +16,7 @@
 
         <!-- Image -->
         <div class='story-image' ng-if="page.type == 'image'" ng-class="{tall: imageAspectRatio <= 1, wide: imageAspectRatio > 1, full: !page.storyCaptionOpen}">
-          <flatmap image={{page.image}}></flatmap>
+          <flatmap image={{page.image}} ng-if="$index - activePage < 4"></flatmap>
         </div>
 
         <!-- Video -->
