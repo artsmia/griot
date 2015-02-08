@@ -75,12 +75,17 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
         if(c.indexOf(p) == -1 && p.position == 'end') others.push(p)
       })
       
-      return angular.copy(c).concat(others)
+      return angular.copy(c).map(function(o) {
+        // angular.copy and $sce.trust don't work together. this prevents an sce.unsafe
+        if(o.recordType == 'panel') o.trustedContent = $sce.trustAsHtml(o.content)
+        return o
+      }).concat(others)
     }
 
     // Add the panels that should be randomized to `clusterObjects` and
     // return the panels that need to be at the beginning so they can be
     // `unshifted` after randomization happens
+    // TODO: should panels go into the cluster objects or the other objects?
     function addPanelsToClusterObjects() {
       var panels = []
       angular.forEach(data.panels, function(p) { panels.push(p) })
