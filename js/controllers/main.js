@@ -4,7 +4,8 @@
 
 app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
   function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
-    if($rootScope.defaultCluster) $location.path('/clusters/'+$rootScope.defaultCluster)
+    var dc = $rootScope.defaultCluster
+    if(dc && dc !== 'highlights') $location.path('/clusters/'+$rootScope.defaultCluster)
 
     var data = $scope.data = notes
     $rootScope.loaded = false
@@ -14,23 +15,31 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
     if(clusterObjectIds) {
       $scope.cluster = $rootScope.defaultCluster = cluster
       $scope.isGallery = cluster.match(/^G\d/i)
-      $scope.gallery = $scope.cluster.replace('G', '') // TODO: clusters aren't necessarily galleries anymore
-      $scope.showingCluster = true
-      $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
-        var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
-        if(isStory) return data.stories[isStory[1]]
-        return data.objects[objectId]
-      }).filter(function(o) { return o })
-
-      // Once we have a set of randomized things for the index screen, save
-      // them so they'r edisplayed consistently.
-      if($rootScope.randomizedAll) {
-        $scope.all = $scope.randomClusterObjects = $rootScope.randomizedAll
-      } else {
+      $scope.gallery = $scope.cluster.replace('G', '')
+      $rootScope.showingCluster = $scope.showingCluster = 
+        (typeof $rootScope.showingCluster === 'undefined') ? true : $rootScope.showingCluster
+      if(!$rootScope.clusterObjects) {
+        $scope.clusterObjects = clusterObjectIds.map(function(objectId) {
+          var isStory = objectId.match && objectId.match(/stories\/(\d+)/)
+          if(isStory) return data.stories[isStory[1]]
+          return data.objects[objectId]
+        }).filter(function(o) { return o })
         var startPanels = addPanelsToClusterObjects()
-        $scope.randomClusterObjects = orderByFilter($scope.clusterObjects, function() { return 0.5 - Math.random() })
-        startPanels.map(function(p) { $scope.randomClusterObjects.unshift(p) })
-        $rootScope.randomizedAll = $scope.all = angular.copy($scope.randomClusterObjects)
+        $rootScope.clusterObjects = $scope.clusterObjects = orderByFilter($scope.clusterObjects, random)
+        startPanels.map(function(p) { $scope.clusterObjects.unshift(p) })
+
+        $rootScope.allObjects = $scope.allObjects = $rootScope.allObjects = loadAllObjects()
+      } else {
+        $scope.clusterObjects = $rootScope.clusterObjects
+        $scope.allObjects = $rootScope.allObjects
+      }
+      
+      // Once we have a set of randomized things for the index screen, save
+      // them so they're displayed consistently.
+      if($rootScope.showingCluster) {
+        $scope.all = $scope.clusterObjects
+      } else {
+        $scope.all = $scope.allObjects
       }
     } else { // not a valid cluster
       $location.path('/')
@@ -38,22 +47,35 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     $scope.toggleSeeAll = function() {
       $scope.loading = true
-      if($scope.showingCluster) { // add all other objects
-        angular.forEach(data.objects, function(o) {
-          ($scope.all.indexOf(o) > -1) || $scope.all.push(o)
-        })
-        angular.forEach(data.panels, function(p) {
-          if($scope.all.indexOf(p) == -1 && p.position == 'end') $scope.all.push(p)
-        })
+      if(!$scope.showingCluster) { // add all other objects
+        $scope.all = $scope.clusterObjects
       } else {
-        $scope.all = angular.copy($scope.randomClusterObjects)
+        $scope.all = $scope.allObjects
       }
 
       $timeout(function() {
         $timeout(initIsotope, 0)
         $scope.loading = false
-        $scope.showingCluster = !$scope.showingCluster
+        $rootScope.showingCluster = $scope.showingCluster = !$scope.showingCluster
       }, 0)
+    }
+
+    // Maintain the random order of the cluster objects, and add all the others
+    // in random order. Then any 'end' panels.
+    function loadAllObjects() {
+      var c = $scope.clusterObjects
+      var others = []
+
+      angular.forEach(data.objects, function(o) {
+        (c.indexOf(o) > -1) || others.push(o)
+      })
+      others = orderByFilter(others, random)
+
+      angular.forEach(data.panels, function(p) {
+        if(c.indexOf(p) == -1 && p.position == 'end') others.push(p)
+      })
+      
+      return angular.copy(c).concat(others)
     }
 
     // Add the panels that should be randomized to `clusterObjects` and
@@ -71,9 +93,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     $timeout(initIsotope, 0)
 
-    $scope.random = function() {
-      return 0.5 - Math.random()
-    }
+    function random() { return 0.5 - Math.random() }
 
     if(!$rootScope.identifier) {
       var adjs = ["autumn", "hidden", "bitter", "misty", "silent", "empty", "dry",
@@ -96,7 +116,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
     $rootScope.$watch('loaded', function(val) {
       if(val && $rootScope.lastObjectId) {
         var lastObjContainer = $('a[href*='+$rootScope.lastObjectId+']').parent()
-        lastObjContainer[0].scrollIntoView()
+        lastObjContainer && lastObjContainer[0].scrollIntoView()
       }
     })
   }
