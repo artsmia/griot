@@ -412,6 +412,7 @@ Zoomer.scaleNonSquareTile = function (data) {
     data.tile.style.height = (useScale * (inHeight + Zoomer.tilePad)) + 'px';
     data.tile.style.width = (useScale * (inWidth + Zoomer.tilePad)) + 'px';
     
+    if(!map) return
     if (inHeight < map._zoomer.currentMapTileSize) {
         data.tile.style.marginBottom = Math.ceil((map._zoomer.currentMapTileSize - inHeight) + Zoomer.tilePad) + 'px';
     } else {
