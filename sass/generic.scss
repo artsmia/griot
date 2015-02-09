@@ -289,7 +289,6 @@ body{
       line-height:12px;
     }
   }
-
 }
 .nav-button-left {
   left:0;
@@ -378,6 +377,10 @@ body{
     &.nav-button-right {
       border-left:1px solid #222;
     }
+  }
+
+  &:active {
+    color: #eee;
   }
 }
 .fullscreen-icon {

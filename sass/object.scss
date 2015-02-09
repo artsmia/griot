@@ -134,7 +134,7 @@ $sidebarWidth: 23rem;
 	}
 
 	@media #{$medium} {
-		&:hover{
+		&:active{
 			color:#ededed;
 			background-color: #222;
 		}
@@ -165,6 +165,9 @@ $sidebarWidth: 23rem;
 .annotation-title{
 	margin:0 0 0 40px;
 	cursor:pointer;
+}
+.annotation-title:active {
+  text-decoration: underline;
 }
 .annotation-index{
 	position:absolute;
@@ -330,13 +333,16 @@ $sidebarWidth: 23rem;
   transition:all 250ms linear;
   text-decoration: none;
 
-  // TODO: Target non-touch devices
   @media screen and (min-width:1025px) {
 	  &:hover {
 	  	color:#ededed;
 	  	background-color:#222;
 	  }
 	}
+  &:active {
+    color:#ededed;
+    background-color:#222;
+  }
 }
 
 
@@ -398,7 +404,7 @@ $sidebarWidth: 23rem;
   line-height:26px;
   vertical-align:middle;
 }
-.noteMarker:hover span{
+.noteMarker:hover span, .noteMarker:active span {
   width:36px;
   height:36px;
   margin: -18px 0 0 -18px;

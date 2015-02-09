@@ -959,7 +959,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
       setTimeout(Zoomer.windowResized, 125)
     }
 
-    $scope.toggleView(undefined, true)
+    $scope.toggleView($scope.activeSection, true)
     $scope.$on('showAnnotationsPanel', function(view) {
       $scope.activeSection = 'annotations'
     })
@@ -967,7 +967,6 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
     $scope.changeZoomerForViews = function(map, flatmapScope) {
       $scope.$apply(function() { $scope.showViews = true })
     }
-
 
     $scope.activateNote = function(note, view) {
       /*

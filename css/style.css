@@ -122,6 +122,7 @@ color:#222;
 @media screen and (min-width: 1024px) { .return-icon:after, .attachment-big .return-link:after, .story-return:after { content: 'Back'; }
   .return-icon.nav-button-left, .attachment-big .return-link, .nav-button-left.story-return, .story-return.story-prev-page, .return-icon.story-prev-page { border-right: 1px solid #222; }
   .return-icon.nav-button-right, .attachment-big .nav-button-right.return-link, .attachment-big .return-link.story-next-page, .nav-button-right.story-return, .story-return.story-next-page, .return-icon.story-next-page { border-left: 1px solid #222; } }
+.return-icon:active, .attachment-big .return-link:active, .story-return:active { color: #eee; }
 
 .fullscreen-icon { font-style: normal; cursor: pointer; -webkit-tap-highlight-color: transparent; position: absolute; display: block; top: 80px; right: 10px; width: 30px; height: 30px; background-color: #222; border: 2px solid #fff; border-radius: 1000px; z-index: 1001; }
 .fullscreen-icon:before { position: absolute; display: block; top: 50%; width: 100%; text-align: center; line-height: 100%; font-family: 'griot'; content: ""; left: 0; }
@@ -210,7 +211,7 @@ color:#222;
 .object-nav a.disabled, .object-nav a.disabled:hover { color: #bbb; background-color: #ededed; cursor: default; }
 .object-nav a:last-child { border-right: 1px solid #222; }
 .object-nav a.selected { color: #ededed; background-color: #222; }
-@media screen and (min-width: 1024px) { .object-nav a:hover { color: #ededed; background-color: #222; } }
+@media screen and (min-width: 1024px) { .object-nav a:active { color: #ededed; background-color: #222; } }
 
 /** Content - Container */
 .object-stories { margin: 0; padding: 0; }
@@ -221,6 +222,8 @@ color:#222;
 .annotation { padding: 0 0 15px 0; position: relative; }
 
 .annotation-title { margin: 0 0 0 40px; cursor: pointer; }
+
+.annotation-title:active { text-decoration: underline; }
 
 .annotation-index { position: absolute; display: block; top: 0; left: 0; width: 30px; height: 30px; margin-right: 10px; color: #fff; background-color: #222; border-radius: 1000px; border: 2px solid #fff; text-align: center; line-height: 26px; font-size: 1.125rem; }
 .glance .annotation-index { position: relative; display: inline-block; margin: 0; }
@@ -262,6 +265,7 @@ color:#222;
 
 .object-related a { color: #222; width: 100%; border: 1px solid #222; padding: 10px 15px; display: block; margin: 5px 0px; text-align: left; font-size: 1em; transition: all 250ms linear; text-decoration: none; }
 @media screen and (min-width: 1025px) { .object-related a:hover { color: #ededed; background-color: #222; } }
+.object-related a:active { color: #ededed; background-color: #222; }
 
 /** Zoomer */
 .object-zoomer { -webkit-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -moz-box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.23); -webkit-transition: opacity 125ms ease; -moz-transition: opacity 125ms ease; -o-transition: opacity 125ms ease; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background-color: #ccc; text-align: center; }
@@ -275,7 +279,7 @@ color:#222;
 
 .noteMarker span { -webkit-transition: all 125ms ease; -moz-transition: all 125ms ease; -o-transition: all 125ms ease; display: block; height: 30px; width: 30px; margin: -15px 0 0 -15px; padding: 0; border-radius: 1000px; border: 2px solid #fff; font-weight: bold; text-align: center; font-size: 1.125rem; background-color: rgba(22, 22, 22, 0.55); line-height: 26px; vertical-align: middle; }
 
-.noteMarker:hover span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
+.noteMarker:hover span, .noteMarker:active span { width: 36px; height: 36px; margin: -18px 0 0 -18px; line-height: 34px; }
 
 .object-zoomer .flatmap > div:first-child { z-index: 100; width: 100%; margin: 0; padding: 0; }
 
