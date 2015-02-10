@@ -23,14 +23,13 @@
           <img ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
         </div>
         <div ng-if="!isGallery">
-          <p>These are the MIA’s “collection highlights.”</p>
+          <p>Showing Museum Highlights</p>
         </div>
-        <p>We have lots more ArtStories!</p>
-        <a>See all of them</a>
+        <a>Explore more ArtStories</a>
       </div>
       <div ng-if="!showingCluster">
         <p>Showing all ArtStories</p>
-        <a>Show just {{isGallery ? 'those nearby' : 'our collection highlights'}}</a>
+        <a>View only {{isGallery ? 'objects nearby' : 'Museum Highlights'}}</a>
       </div>
     </li>
   </ul>
