@@ -21,7 +21,7 @@
   bottom:0;
   left:0;
   display:block;
-  padding:20px 10px 0;
+  padding: 0 10px;
   margin:0;
   overflow:auto;
   -webkit-overflow-scrolling:touch;
@@ -35,7 +35,7 @@
   @include transition( opacity 300ms ease );
   display:block;
   vertical-align:top;
-  margin:0 auto 10px;
+  margin-right: 2px;
   height:auto;
   max-height:300px;
   max-width:100%;
@@ -87,7 +87,7 @@
 
   @media #{$medium} {
     height:300px;
-    margin:0 10px 0 0;
+    margin:0 2px 0 0;
   }
 }
 

@@ -74,22 +74,21 @@ app.factory('initIsotope', ['$rootScope', function($rootScope) {
       layoutMode:'masonryHorizontal',
       masonryHorizontal: {
         rowHeight: 300,
-        gutter: 10
+        gutter: 2 // this is only for the vertical space between rows, space each element out with margin-right
       },
       containerStyle: null,
       isInitLayout: false
     });
 
     var centerCover = function(){
-
       // Get height of container
       var availableHeight = $('.cover-wrapper').height();
 
       // Get number of rows - 300px plus 10px gutter.
-      var rowCount = Math.floor( availableHeight / 310 ) || 1;
+      var rowCount = Math.floor( availableHeight / 302 ) || 1;
 
       // Get height that will wrap snugly around rows
-      var newHeight = ( rowCount * 310 ) + 1;
+      var newHeight = ( rowCount * 302 ) + 1;
 
       // Get new top for #cover
       var newTop = ( availableHeight - newHeight) / 2;

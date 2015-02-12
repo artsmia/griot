@@ -143,10 +143,10 @@ color:#222;
 /** Styles for the cover page. */
 .cover-wrapper { position: absolute; top: 0; right: 0; bottom: 3em; left: 0; list-style: none; padding: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
 
-#cover { position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: block; padding: 20px 10px 0; margin: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
+#cover { position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: block; padding: 0 10px; margin: 0; overflow: auto; -webkit-overflow-scrolling: touch; }
 @media screen and (min-width: 1024px) { #cover { padding: 0 0 0 10px; } }
 
-.cover-item { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; display: block; vertical-align: top; margin: 0 auto 10px; height: auto; max-height: 300px; max-width: 100%; }
+.cover-item { -webkit-transition: opacity 300ms ease; -moz-transition: opacity 300ms ease; -o-transition: opacity 300ms ease; display: block; vertical-align: top; margin-right: 2px; height: auto; max-height: 300px; max-width: 100%; }
 @media screen and (min-width: 1024px) { .cover-item { opacity: 0; } }
 .cover-item.story { max-width: 100%; width: 300px; height: 300px; padding: 15px; background-color: #fff; border: 1px solid #999; }
 .cover-item.panel { padding: 15px; background-color: #fff; border: 1px solid #999; max-width: 100%; max-height: 100%; }
@@ -155,7 +155,7 @@ color:#222;
 .cover-item.panel-landscape { width: 610px; height: 300px; }
 .cover-item.panel-small { width: 300px; height: 300px; }
 .cover-item a { text-decoration: none; }
-@media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 10px 0 0; } }
+@media screen and (min-width: 1024px) { .cover-item { height: 300px; margin: 0 2px 0 0; } }
 
 .cover-item-image { display: block; max-height: 100%; margin: 0 auto; border: 1px solid #999; }
 
