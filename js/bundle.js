@@ -1141,7 +1141,7 @@ app.directive( 'drawerify', function( $timeout ){
 		restrict: 'A',
 		transclude: true,
 		replace: true,
-		template: "<div class='drawerify-drawer' ng-class=\"{'drawerify-horizontal':drawerify.orientation == 'horizontal', 'drawerify-vertical':drawerify.orientation == 'vertical', 'drawerify-full':drawerify.fullWidth, 'drawerify-open': drawerify.activeState == 'open', 'drawerify-closed':drawerify.activeState == 'closed' }\">" +
+		template: "<div class='drawerify-drawer' ng-class=\"{'drawerify-horizontal':drawerify.orientation == 'horizontal', 'drawerify-vertical':drawerify.orientation == 'vertical', 'drawerify-full':drawerify.fullWidth, 'drawerify-open': drawerify.activeState == 'open', 'drawerify-closed':drawerify.activeState == 'closed', 'drawerify-info':drawerify.activeState == 'info' }\">" +
 				"<div class='drawerify-content' ng-transclude></div>" +
 				"<a class='drawerify-handle' ng-class=\"{'drawerify-collapsed':drawerify.collapseHandle && drawerify.states[ drawerify.activeState ].handleState == 'collapsed' } \"></a>" +
 			"</div>",

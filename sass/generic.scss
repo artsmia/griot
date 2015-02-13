@@ -513,7 +513,7 @@ body{
   }
 }
 
-.glance{
+.glance {
   @include transition( opacity 300ms ease );
   @include transform( translate3d( 0, 0, 0 ) );
   @include no-select;
@@ -555,6 +555,15 @@ body{
 
   @media #{$small}{
     display:none;
+  }
+
+  &:active {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
+  .drawerify-drawer.drawerify-closed &,
+  .drawerify-drawer.drawerify-info & {
+    display: none;
   }
 }
 
