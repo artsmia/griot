@@ -5,10 +5,14 @@ sass:
 	sass --watch -t compact sass/all.scss:css/style.css
 
 browserify:
-	browserify --full-path=false js/app.js -o js/bundle.js
+	browserify --full-path=false js/app.js | uglifyjs > js/bundle.js
+
+build: browserify
+	ls -S js/vendor/{angular*,isotope*,masonry*}.js | xargs cat | uglifyjs > js/deps.js
+	cat js/vendor/jquery-2.1.0.min.js js/vendor/flat_image_zoom/javascripts/{leaflet-src.js,flat_image_zoom.js,jquery.actual.min.js} js/overscroll.js | uglifyjs > js/zooming.js
 
 watchify:
-	watchify --full-path=false js/app.js -o js/bundle.js
+	watchify --full-path=false js/app.js -v -o js/bundle.js
 
 cdnify:
 	curl -L http://new.artsmia.org/crashpad/json > fallback/crashpad.json
