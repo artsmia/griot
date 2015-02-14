@@ -1,8 +1,6 @@
 <!doctype html>
 <html>
 <head>
-  <script src="js/deps.js"></script>
-  <script src="js/bundle.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,23 +11,12 @@
   <link rel="apple-touch-icon-precomposed" href="img/icon.png"/>
   <link rel="apple-touch-startup-image" href="img/splash.png" />
 
-  <!-- Open Sans -->
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic' rel='stylesheet' type='text/css'>
-  <!-- Fonticons -->
   <link rel="stylesheet" href="fonts/fontello/css/griot-embedded.css" />
-  <!-- Leaflet styles (before ours, so we can override them) -->
   <link rel="stylesheet" href="css/vendor/leaflet.css" />
-  <!-- Bundled styles -->
   <link rel="stylesheet" href="css/style.css">
-  <!-- Goldweights-specific styles -->
   <link rel="stylesheet" href="css/goldweights.css">
-
-
-  <script type="text/javascript">
-    var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
-    if(!window.location.origin.match(/(xip.io|192\.168|10\.1|:3000|localhost|file:)/))
-      analytics.load("k0688xgm1a");
-  </script>
+  <!--[if lte IE 8]><link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" /><![endif]-->
 </head>
 <body ng-app="griot">
   <!--[if lt IE 9]>
@@ -38,9 +25,14 @@
   <![endif]-->
 
   <div class="container" ng-view></div>
+
+  <script src="js/deps.js"></script>
+  <script src="js/bundle.js"></script>
   <script src="js/zooming.js"></script>
-  <!--[if lte IE 8]>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
-  <![endif]-->
+  <script type="text/javascript">
+    var analytics=analytics||[];(function(){var e=["identify","track","trackLink","trackForm","trackClick","trackSubmit","page","pageview","ab","alias","ready","group"],t=function(e){return function(){analytics.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<e.length;n++)analytics[e[n]]=t(e[n])})(),analytics.load=function(e){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src=("https:"===document.location.protocol?"https://":"http://")+"d2dq2ahtl5zl1z.cloudfront.net/analytics.js/v1/"+e+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(t,n)};
+    if(!window.location.origin.match(/(xip.io|192\.168|10\.1|:3000|localhost|file:)/))
+      analytics.load("k0688xgm1a");
+  </script>
 </body>
 </html>
