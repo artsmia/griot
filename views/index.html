@@ -29,6 +29,7 @@
       </div>
       <div ng-if="!showingCluster">
         <p>Showing all ArtStories</p>
+        <img ng-if="isGallery" ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
         <a>View only {{isGallery ? 'objects nearby' : 'Museum Highlights'}}</a>
       </div>
     </li>
