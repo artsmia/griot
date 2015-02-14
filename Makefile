@@ -2,6 +2,7 @@ default: sass browserify
 
 .PHONY: sass
 sass:
+	onchange css/style.css -- sh -c 'cat fonts/fontello/css/griot-em* css/vendor/leaflet.css css/style.css css/goldweights.css > css/bundle.css' &
 	sass --watch -t compact sass/all.scss:css/style.css
 
 browserify:
@@ -10,6 +11,7 @@ browserify:
 build: browserify
 	ls -S js/vendor/{angular*,isotope*,masonry*}.js | xargs cat | uglifyjs > js/deps.js
 	cat js/vendor/jquery-2.1.0.min.js js/vendor/flat_image_zoom/javascripts/{leaflet-src.js,flat_image_zoom.js,jquery.actual.min.js} js/overscroll.js | uglifyjs > js/zooming.js
+	cat fonts/fontello/css/griot-em* css/vendor/leaflet.css css/style.css css/goldweights.css > css/bundle.css
 
 watchify:
 	watchify --full-path=false js/app.js -v -o js/bundle.js
