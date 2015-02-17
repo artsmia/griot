@@ -140,7 +140,7 @@ app.service( 'miaThumbnailAdapter', function() {
 
   this.get = function( id ) {
     var trimmed_id = id.replace( '.tif', '' );
-    return _this.cdn + 'thumbs/tn_' + trimmed_id + '.jpg';
+    return _this.cdn + trimmed_id + '/0/0/0.jpg';
   }
 
 });
@@ -204,18 +204,18 @@ require('./directives/share')
 app.constant('envConfig', {
 
   // Location of tile server; used in flatmap directive
-  tilesaw: '//tilesaw.dx.artsmia.org/', // '//localhost:8887/'
+  tilesaw: 'http://tiles.slam.rtsm.me/',
   tileUrlSubdomain: function(tileUrl) {
     return tileUrl.replace('http://0.', 'http://{s}.')
   },
 
   // Location of content
-  crashpad: 'http://new.artsmia.org/crashpad/griot/',
+  crashpad: 'http://slam.dx.artsmia.org/griot',
 
   // CDN for Goldweights audio (specific to MIA implementation)
   cdn: 'http://cdn.dx.artsmia.org/',
 
-  miaEmailSharingActive: true,
+  miaEmailSharingActive: false,
   emailServer: 'http://dx.artsmia.org:33445/',
 
   // Adapters - set to false to use GriotWP for everything.
@@ -224,7 +224,7 @@ app.constant('envConfig', {
   miaObjectMetaActive: true,
   miaObjectMetaSrc: 'mia_object_meta.json',
   miaThumbnailActive: true,
-  miaThumbnailSrc: 'http://cdn.dx.artsmia.org/'
+  miaThumbnailSrc: 'http://tiles.slam.rtsm.me/'
 
 });
 
@@ -256,7 +256,7 @@ app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaO
               att.meta2 = objectMeta.get( att.object_id, 'gw_meta2' );
             }
             if( objectThumb.isActive ) {
-              att.thumb = objectThumb.get( att.image_id );
+              att.thumb = att.thumbnail = objectThumb.get( att.image_id );
             }
           })
         })
@@ -459,8 +459,8 @@ app.controller('notesCtrl', ['$scope', '$routeParams', 'notes',
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig', '$timeout', 
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config, $timeout) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'notes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'email', 'envConfig', '$timeout', 'miaThumbnailAdapter',
+  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMeta, email, config, $timeout, miaThumbs) {
 
     // Defaults
     $scope.movedZoomer = false;
@@ -522,6 +522,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'no
 
           // Replace attachment metadata if using adapter
           angular.forEach( ann.attachments, function(att) {
+	    att.thumbnail = miaThumbs.get(att.image_id)
             if( mediaMeta.isActive ) {
               // Hacky! We need to only trustAsHtml(att.meta) once. Or find a better way generally.
               att.meta = mediaMeta.get( att.image_id ) || ( typeof att.meta === 'object' ? att.meta : $sce.trustAsHtml(att.meta) );
@@ -803,7 +804,7 @@ app.directive( 'drawerify', function( $timeout ){
 				// Arbitrarily huge number so we start wider than any actual screen
 				var currentBpInt = 10000;
 
-				var windowWidth = window.outerWidth;
+				var windowWidth = window.innerWidth;
 				var breakpoint = 'default';
 
 				for( var userBreakpoint in this.breakpoints ){
@@ -1490,11 +1491,11 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope) {
           if(mapBounds.intersects(jsonLayerBounds) || mapBounds.contains(jsonLayerBounds)) {
           } else {
             // Zoomer is misbehaving when zooming outside the current bounds, plus the zoom all the way out and back in thing is cool
-            setTimeout(function() { map.zoomOut(100) }, 300)
-            delay = 1000
+            // setTimeout(function() { map.zoomOut(100) }, 300)
+            // delay = 1000
           }
           setTimeout(function() { showJsonLayer(3000, true) }, delay)
-          setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, delay+250)
+          // setTimeout(function() { map.fitBounds(scope.jsonLayer.getBounds()) }, delay+250)
         }
       }
 

@@ -6,7 +6,7 @@
       <aside>Tap to change views</aside>
       <div ng-repeat="view in notes" ng-class="{active: activeSection == 'views'}">
         <note ng-repeat="note in view.annotations"></note>
-        <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
+        <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" style="background: url('//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.png') center center;"></a>
       </div>
     </flatmap>
   </div>
@@ -58,7 +58,7 @@
             <div class='annotation-attachments' ng-if="note.attachments.length">
 
               <p>Tap to expand</p>
-              <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background-image:url("{{attachment.thumbnail}}")'></div>
+              <div class='attachment-thumb' ng-repeat="attachment in note.attachments" ng-click="toggleAttachment(attachment, false)" ng-class="{active:attachment == currentAttachment}" style='background: url("{{attachment.thumbnail}}") no-repeat; background-size: contain;'></div>
 
             </div>
   	      </li>
@@ -72,8 +72,8 @@
   	        </li>
   	      </ol>
             <div ng-if="notes.length > 1" class="more-views">
-              <h5 class='more-title' ng-show="relatedStories">More Views</h5>
-              <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" ng-repeat="view in notes" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.jpg)"></a>
+              <h5 class='more-title' ng-show="relatedStories">All Views</h5>
+              <a class="view" ng-click="activateView(view)" ng-class="{open: view.image == flatmapScope.image}" ng-repeat="view in notes" style="background-image: url(//cdn.dx.artsmia.org/thumbs/tn_{{view.image}}.png)"></a>
             </div>
   	    </div>
 

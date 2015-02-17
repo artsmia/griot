@@ -1,3 +1,4 @@
+<div style="display: none;">
 <div class='cover-wrapper scrollable'>
   <ul id='cover' class='clearfix scrollable'>
     <li class='isotope-item cover-item' ng-class="{story: thing.recordType != 'object' && thing.recordType != 'panel', object: thing.recordType == 'object', panel: thing.recordType == 'panel', noPoster: !thing.thumbnail, 'panel-big': thing.recordType == 'panel' && thing.size == '2x2', 'panel-portrait': thing.recordType == 'panel' && thing.size == '1x2', 'panel-landscape': thing.recordType == 'panel' && thing.size == '2x1', 'panel-small': thing.recordType == 'panel' && thing.size == '1x1' }" ng-repeat="thing in all" ng-hide="!thing.thumbnail && thing.recordType != 'panel'">
@@ -22,3 +23,7 @@
 <aside class="cover-instructions">
   Slide to browse, tap to view
 </aside>
+</div>
+
+<a href="#/o/341953"><flatmap image="341953dig_18" ng-click="window.location = 'http://slam.dx.artsmia.org/#/o/341953'"></a>
+<!-- <h1 style="text-align: center; position: relative; z-index: 1000;"><a style="padding: 5em;" href="http://slam.dx.artsmia.org/#/o/341953">Tap here to begin</a></h1> -->
