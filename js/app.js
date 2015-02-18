@@ -1,11 +1,14 @@
 /**
  * Set up application and load modules.
  */
+var fastclick = require('fastclick')
 
 /*jshint asi: true*/
 'use strict';
 
-window.app = angular.module('griot', ['ngRoute', 'ngTouch', 'segmentio']);
+window.app = angular.module('griot', ['ngRoute', 'segmentio']);
+
+app.run(function() { fastclick(document.body) })
 
 require('./routes')
 
