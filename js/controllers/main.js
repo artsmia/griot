@@ -2,8 +2,8 @@
  * Controller for cover page (index template).
  */
 
-app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
-  function($scope, $routeParams, segmentio, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
+app.controller('mainCtrl', ['$scope', '$routeParams', '$rootScope', '$timeout', 'orderByFilter', 'miaThumbnailAdapter', '$sce', 'resolvedNotes', 'initIsotope', '$location',
+  function($scope, $routeParams, $rootScope, $timeout, orderByFilter, thumbnailAdapter, $sce, notes, initIsotope, $location) {
     var dc = $rootScope.defaultCluster
     if(dc && dc !== 'highlights') $location.path('/clusters/'+$rootScope.defaultCluster)
 
@@ -111,10 +111,10 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
       , number = Math.floor(Math.random()*100)
       , name = adjs[Math.floor(Math.random()*(adjs.length-1))]+"-"+nouns[Math.floor(Math.random()*(nouns.length-1))]+"-"+number
       $rootScope.identifier = name
-      segmentio.identify(name)
+      analytics.identify(name)
     }
 
-    segmentio.track('Landed on the homepage')
+    analytics.track('Landed on the homepage')
 
     // When returning to the home page from an object page, scroll to
     // that object.

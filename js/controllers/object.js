@@ -2,8 +2,8 @@
  * Controller for object template.
  */
 
-app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'resolvedNotes', 'segmentio', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
-  function($scope, $routeParams, $location, $sce, notes, segmentio, $rootScope, mediaMeta, objectMetaAdapter, miaThumbs, email, config, $timeout, objectMeta) {
+app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 'resolvedNotes', '$rootScope', 'miaMediaMetaAdapter', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', 'email', 'envConfig', '$timeout', 'resolvedObjectMeta',
+  function($scope, $routeParams, $location, $sce, notes, $rootScope, mediaMeta, objectMetaAdapter, miaThumbs, email, config, $timeout, objectMeta) {
     // Defaults
     $scope.movedZoomer = false;
     $scope.currentAttachment = null;
@@ -13,11 +13,11 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
 
     $scope.id = $routeParams.id
     $rootScope.lastObjectId = $scope.id = $routeParams.id
-    
+
     _wp = notes
     $scope.wp = _wp.objects[$scope.id]
-    segmentio.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
-    
+    analytics.track('Browsed an Object', {id: $scope.id, name: $scope.wp.title})
+
     $scope.wp.meta3 = $sce.trustAsHtml( $scope.wp.meta3 );
 
     // Replace object metadata if using adapter
@@ -108,7 +108,7 @@ app.controller('ObjectCtrl', ['$scope', '$routeParams', '$location', '$sce', 're
     }
 
     $scope.toggleView = function(nextView, dontTrack) {
-      if(!dontTrack) segmentio.track('Changed Sections within an Object', {view: nextView})
+      if(!dontTrack) analytics.track('Changed Sections within an Object', {view: nextView})
       nextView = nextView || 'about'
       if(!$scope.viewEnabled(nextView)) return
       if(nextView == 'annotations') {

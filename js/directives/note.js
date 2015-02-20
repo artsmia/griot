@@ -2,7 +2,7 @@
  * Creates and controls annotation markers on a zoomable image (flatmap).
  */
 
-app.directive('note', function(segmentio, $sce) {
+app.directive('note', function($sce) {
   var divIcon = L.divIcon({className: 'noteMarker'})
   return {
     restrict: 'E',
@@ -72,7 +72,7 @@ app.directive('note', function(segmentio, $sce) {
           scope.$parent.$parent.$parent.glanceText = $sce.trustAsHtml( "Press to view detail <span class='annotation-index'>" + scope.note.index + "</span>" );
           scope.$$phase || scope.$apply()
         }
-        if(openedOrClosed) segmentio.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
+        if(openedOrClosed) analytics.track(openedOrClosed + ' a Detail', {title: scope.note.title, index: scope.note.index, id: flatmapCtrl.scope.$parent.id})
 
         // The active marker goes to the SW (lower-left) corner of bounds
         // inactive markers, center of bounds

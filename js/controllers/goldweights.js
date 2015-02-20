@@ -1,4 +1,4 @@
-app.controller('goldweightsCtrl', ['$scope', '$sce', 'segmentio', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, segmentio, wp, objectMeta, objectThumb ) {
+app.controller('goldweightsCtrl', ['$scope', '$sce', 'notes', 'miaObjectMetaAdapter', 'miaThumbnailAdapter', function($scope, $sce, wp, objectMeta, objectThumb ) {
   wp().then(function(wordpress) {
     window.$scope = $scope
     Zoomer.windowResized()

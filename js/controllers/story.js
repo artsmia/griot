@@ -2,9 +2,9 @@
  * Controller for story template.
  */
 
-app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'notes', 'miaMediaMetaAdapter', '$rootScope', 
-  function($scope, $routeParams, $sce, segmentio, wp, mediaMeta, $rootScope ) {
- 
+app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'notes', 'miaMediaMetaAdapter', '$rootScope',
+  function($scope, $routeParams, $sce, wp, mediaMeta, $rootScope ) {
+
     wp().then(function(wordpress) {
       $scope.id = $routeParams.id
       $scope.usingMediaAdapter = false;
@@ -81,7 +81,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
 
       });
 
-      segmentio.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
+      analytics.track('Opened a Story', {id: $scope.id, name: $scope.story.title})
     })
 
     setTimeout(Zoomer.windowResized, 100)
@@ -94,7 +94,7 @@ app.controller('storyCtrl', ['$scope', '$routeParams', '$sce', 'segmentio', 'not
     $scope.updateActivePage = function(newPage){
       if((newPage > -1) && (newPage < $scope.story.pages.length)){
         $scope.activePage = newPage
-        segmentio.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
+        analytics.track('Paged a Story', {id: $scope.id, name: $scope.story.title, page: newPage})
       }
       setTimeout(Zoomer.windowResized, 200)
     }

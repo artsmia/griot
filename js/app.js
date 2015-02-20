@@ -6,7 +6,7 @@ var fastclick = require('fastclick')
 /*jshint asi: true*/
 'use strict';
 
-window.app = angular.module('griot', ['ngRoute', 'segmentio']);
+window.app = angular.module('griot', ['ngRoute']);
 
 app.run(function() { fastclick(document.body) })
 
