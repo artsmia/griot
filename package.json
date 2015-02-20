@@ -1,0 +1,27 @@
+{
+  "name": "griot",
+  "version": "0.0.0",
+  "description": "Griot is an open-source iPad application that facilitates engagement with a collection of **objects** (artifacts, artwork, graphs, or anything else that can be represented visually) through **annotations** (points of interest on the object itself) and **stories** (related text-based and multimedia content, presented as a series of pages).",
+  "main": "js/app.js",
+  "dependencies": {
+    "fastclick": "^1.0.6"
+  },
+  "devDependencies": {
+    "onchange": "^0.2.0",
+    "uglify-js": "^2.4.16",
+    "browserify": "^8.1.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/artsmia/griot.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/artsmia/griot/issues"
+  },
+  "homepage": "https://github.com/artsmia/griot"
+}
