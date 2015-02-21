@@ -418,9 +418,6 @@ L.Mixin.Events.fire = L.Mixin.Events.fireEvent;
 	    mobile = typeof orientation !== undefined + '',
 	    msTouch = window.navigator && window.navigator.msPointerEnabled &&
 	              window.navigator.msMaxTouchPoints,
-	    retina = ('devicePixelRatio' in window && window.devicePixelRatio > 1) ||
-	             ('matchMedia' in window && window.matchMedia('(min-resolution:144dpi)') &&
-	              window.matchMedia('(min-resolution:144dpi)').matches),
 
 	    doc = document.documentElement,
 	    ie3d = ie && ('transition' in doc.style),
@@ -484,7 +481,7 @@ L.Mixin.Events.fire = L.Mixin.Events.fireEvent;
 		touch: touch,
 		msTouch: msTouch,
 
-		retina: retina
+		retina: (window.devicePixelRatio || (window.screen.deviceXDPI / window.screen.logicalXDPI)) > 1
 	};
 
 }());
