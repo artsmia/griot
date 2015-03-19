@@ -114,5 +114,10 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
         lastObjContainer && lastObjContainer[0].scrollIntoView()
       }
     })
+
+    if(typeof $rootScope.showSplash == 'undefined') $rootScope.showSplash = true
+    $scope.closeSplashScreen = function() {
+      $rootScope.showSplash = false
+    }
   }
 ])

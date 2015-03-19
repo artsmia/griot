@@ -725,6 +725,12 @@ color:#222;
 
 .clusters li { display: inline; list-style: none; -webkit-columns: 3; }
 
+aside.splash.show { z-index: 10; opacity: 1; }
+
+aside.splash img { vertical-align: middle; background-color: rgba(255, 255, 255, 0.7); padding: 1em 9em; }
+
+aside.splash { z-index: -1; opacity: 0; display: block; position: relative; max-width: 100%; line-height: 100vh; -webkit-transition: all 0.5s; }
+
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
 .object-content-container { position: absolute; top: 0; left: 0; width: 23rem; height: 100%; }
