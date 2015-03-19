@@ -1,6 +1,7 @@
 <div class='cover-wrapper scrollable'>
   <ul id='cover' class='clearfix scrollable'>
-    <li class='isotope-item cover-item' ng-class="{story: thing.recordType != 'object' && thing.recordType != 'panel', object: thing.recordType == 'object', panel: thing.recordType == 'panel', noPoster: !thing.thumbnail, 'panel-big': thing.recordType == 'panel' && thing.size == '2x2', 'panel-portrait': thing.recordType == 'panel' && thing.size == '1x2', 'panel-landscape': thing.recordType == 'panel' && thing.size == '2x1', 'panel-small': thing.recordType == 'panel' && thing.size == '1x1' }" ng-repeat="thing in all" ng-hide="!thing.thumbnail && thing.recordType != 'panel'" style="width: {{thing.imageWidth/(thing.imageHeight/300)}}px;">
+    <span><control-panel test="beginning"></span>
+    <li class='isotope-item cover-item' ng-class="{story: thing.recordType != 'object' && thing.recordType != 'panel', object: thing.recordType == 'object', panel: thing.recordType == 'panel', noPoster: !thing.thumbnail, 'panel-big': thing.recordType == 'panel' && thing.size == '2x2', 'panel-portrait': thing.recordType == 'panel' && thing.size == '1x2', 'panel-landscape': thing.recordType == 'panel' && thing.size == '2x1', 'panel-small': thing.recordType == 'panel' && thing.size == '1x1' }" ng-repeat="thing in clusterObjects" ng-hide="!thing.thumbnail && thing.recordType != 'panel'" style="width: {{thing.imageWidth/(thing.imageHeight/300)}}px;">
       <a href="#/o/{{thing.id}}" ng-if="thing.recordType == 'object'">
         <img class='cover-item-image' ng-src="{{thing.thumbnail}}">
         <h2 class='cover-item-title' ng-bind="thing.title"></h2>
@@ -16,24 +17,24 @@
         <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
       </div>
     </li>
-    <li class="cluster galleryLocation isotope-item cover-item" ng-class="{loading: loading}" ng-click="toggleSeeAll()" ng-if="clusterObjects">
-      <div ng-if="showingCluster">
-        <div ng-if="isGallery">
-          <p>Showing objects near <strong>Gallery {{gallery}}</strong></p>
-          <img ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
+    <span><control-panel test="middle"></span>
+    <li ng-if="!showingCluster" class='isotope-item cover-item' ng-class="{story: thing.recordType != 'object' && thing.recordType != 'panel', object: thing.recordType == 'object', panel: thing.recordType == 'panel', noPoster: !thing.thumbnail, 'panel-big': thing.recordType == 'panel' && thing.size == '2x2', 'panel-portrait': thing.recordType == 'panel' && thing.size == '1x2', 'panel-landscape': thing.recordType == 'panel' && thing.size == '2x1', 'panel-small': thing.recordType == 'panel' && thing.size == '1x1' }" ng-repeat="thing in otherObjects" ng-hide="!thing.thumbnail && thing.recordType != 'panel'" style="width: {{thing.imageWidth/(thing.imageHeight/300)}}px;">
+      <a href="#/o/{{thing.id}}" ng-if="thing.recordType == 'object'">
+        <img class='cover-item-image' ng-src="{{thing.thumbnail}}">
+        <h2 class='cover-item-title' ng-bind="thing.title"></h2>
+      </a>
+      <a ng-href="#/stories/{{thing.id}}" ng-if="thing.recordType != 'object' && thing.recordType != 'panel'">
+        <div class='cover-item-poster' style="background-image: url({{thing.thumbnail}})"></div>
+        <div class='cover-item-caption vcenter'>
+          <h2 class='cover-item-title' ng-bind="thing.title"></h2>
         </div>
-        <div ng-if="!isGallery">
-          <p>Showing Museum Highlights</p>
-        </div>
-        <a>Explore more ArtStories</a>
-      </div>
-      <div ng-if="!showingCluster">
-        <p>Showing all ArtStories</p>
-        <img ng-if="isGallery" ng-src="http://artsmia.github.io/map/galleries/{{gallery}}.png">
-        <a>View only {{isGallery ? 'objects nearby' : 'Museum Highlights'}}</a>
+      </a>
+      <div ng-if="thing.recordType == 'panel'" class='cover-panel-wrap vcenter'>
+        <h2 class='cover-item-title' ng-bind="thing.title"></h2>
+        <div class='cover-panel-content' ng-bind-html="thing.trustedContent"></div>
       </div>
     </li>
-  </ul>
+    <span ng-if="!showingCluster"><control-panel test="end"></span>
   </ul>
 </div>
 

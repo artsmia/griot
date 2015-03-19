@@ -28,35 +28,24 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
         $rootScope.clusterObjects = $scope.clusterObjects = orderByFilter($scope.clusterObjects, random)
         startPanels.map(function(p) { $scope.clusterObjects.unshift(p) })
 
-        $rootScope.allObjects = $scope.allObjects = $rootScope.allObjects = loadAllObjects()
+        $rootScope.otherObjects = $scope.otherObjects = $rootScope.otherObjects = loadAllObjects()
       } else {
         $scope.clusterObjects = $rootScope.clusterObjects
-        $scope.allObjects = $rootScope.allObjects
-      }
-      
-      // Once we have a set of randomized things for the index screen, save
-      // them so they're displayed consistently.
-      if($rootScope.showingCluster) {
-        $scope.all = $scope.clusterObjects
-      } else {
-        $scope.all = $scope.allObjects
+        $scope.otherObjects = $rootScope.otherObjects
       }
     } else { // not a valid cluster
       $location.path('/')
     }
 
     $scope.toggleSeeAll = function() {
+      var container = $('.cover-wrapper')[0]
+      if($scope.showingCluster) $timeout(function() { container.scrollLeft = container.scrollWidth-window.innerWidth }, 0)
       $scope.loading = true
-      if(!$scope.showingCluster) { // add all other objects
-        $scope.all = $scope.clusterObjects
-      } else {
-        $scope.all = $scope.allObjects
-      }
+      $rootScope.showingCluster = $scope.showingCluster = !$scope.showingCluster
 
       $timeout(function() {
         $timeout(initIsotope, 0)
         $scope.loading = false
-        $rootScope.showingCluster = $scope.showingCluster = !$scope.showingCluster
       }, 0)
     }
 
@@ -75,6 +64,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
         if(c.indexOf(p) == -1 && p.position == 'end') others.push(p)
       })
       
+      return others
       return angular.copy(c).map(function(o) {
         // angular.copy and $sce.trust don't work together. this prevents an sce.unsafe
         if(o.recordType == 'panel') o.trustedContent = $sce.trustAsHtml(o.content)
