@@ -731,6 +731,12 @@ aside.splash img { vertical-align: middle; background-color: rgba(255, 255, 255,
 
 aside.splash { z-index: -1; opacity: 0; display: block; position: relative; max-width: 100%; line-height: 100vh; -webkit-transition: all 0.5s; }
 
+#ethnio-screener-48826 { top: auto !important; bottom: 0; }
+
+#ethnio-screener-48826 > div:first-child { padding: 0 !important; margin: 9px 0; }
+
+#ethnio-screener-id-48826 { top: auto !important; bottom: 0px; }
+
 /** Object template styles. */
 /** Content - "Above the Fold" (Controls and Meta) */
 .object-content-container { position: absolute; top: 0; left: 0; width: 23rem; height: 100%; }
