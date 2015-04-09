@@ -31,6 +31,14 @@
     if(!window.location.origin.match(/(xip.io|192\.168|10\.1|:3000|localhost|file:)/))
       analytics.load("k0688xgm1a");
   </script>
-  <script type="text/javascript" language="javascript" src="https://ethn.io/48826.js" async="true" charset="utf-8"></script>
+  <script>
+    var gallery = window.location.hash.match(/clusters\/G(\d+)/)[1]
+    if(gallery && [350, 321, 260, 200].indexOf(parseInt(gallery)) > 0) {
+      var s = document.createElement('script');
+      s.setAttribute('type', 'text/javascript');
+      s.setAttribute('src', 'https://ethn.io/48826.js')
+      document.querySelector('body').appendChild(s);
+    }
+  </script>
 </body>
 </html>
