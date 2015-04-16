@@ -35,7 +35,7 @@ app.service( 'miaMediaMetaAdapter', function( $http, $sce, envConfig ) {
       for( var id in result ) {
         var description = result[ id ].description ? result[id].description + "<br />" : '';
         var credit = result[ id ].credit || '';
-        _this.metaHash[ id ] = $sce.trustAsHtml((description + credit).replace('\n', '<br />\n'));
+        _this.metaHash[ id ] = $sce.trustAsHtml((description + credit).replace(/\n/g, '<br />\n'));
       }
 
     });
