@@ -59,11 +59,10 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce, envConfig ) {
   this.metaHash = {};  
 
   this.get = function( id, grouping ) {
-    var id = parseInt(id)
     try{
       if (_this.metaHash[id] !== undefined) {
-        var hash = _this.metaHash[ id ]
-        return grouping ? hash[ grouping ] : hash
+        var hash = _this.metaHash[id] || _this.metaHash[parseInt(id)]
+        return grouping ? hash[grouping] : hash
       } else {
         return this.getFromAPI(id, grouping)
       }
@@ -77,7 +76,8 @@ app.service( 'miaObjectMetaAdapter', function( $http, $sce, envConfig ) {
     var apiURL = envConfig.miaObjectMetaSrc+id
     return $http.get(apiURL, {cache: true}).then(function(result) {
       var data = result.data
-      _this.addObjectToMetaHash(data.id.split('/').reverse()[0], data)
+      if(id.match('/')) id = data.id.split('/').reverse()[0]
+      _this.addObjectToMetaHash(id, data)
       return _this.get(id, grouping)
     })
   }
