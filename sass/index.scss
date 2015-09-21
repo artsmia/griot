@@ -169,20 +169,29 @@ aside.splash.show {
   opacity: 1;
 }
 
-aside.splash img {
-  vertical-align: middle;
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 1em 9em;
+aside.splash h1 {
+  text-transform: lowercase;
+  font-family: MiaGrotesk-Bold, sans-serif;
+  font-size: 3em;
+  margin-bottom: 0.25em;
 }
 
 aside.splash {
+  background-color: rgba(255, 255, 255, 0.7);
+  vertical-align: middle;
+  padding: 1em 3em;
   z-index: -1;
   opacity: 0;
   display: block;
   position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
   max-width: 100%;
-  line-height: 100vh;
   -webkit-transition: all 0.5s;
+  text-align: center;
+  font-family: MiaGrotesk-Light;
+  font-size: 234%;
 }
 
 #ethnio-screener-48826 {
