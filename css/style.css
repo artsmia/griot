@@ -182,9 +182,11 @@ color:#222;
 
 aside.splash.show { z-index: 10; opacity: 1; }
 
-aside.splash h1 { text-transform: lowercase; font-family: MiaGrotesk-Bold, sans-serif; font-size: 3em; margin-bottom: 0.25em; }
+aside.splash h1 { text-transform: lowercase; font-family: MiaGrotesk-Bold, sans-serif; font-size: 3em; margin: 0.25em 0; }
 
-aside.splash { background-color: rgba(255, 255, 255, 0.7); vertical-align: middle; padding: 1em 3em; z-index: -1; opacity: 0; display: block; position: relative; top: 50%; transform: translateY(-50%); -webkit-transform: translateY(-50%); max-width: 100%; -webkit-transition: all 0.5s; text-align: center; font-family: MiaGrotesk-Light; font-size: 234%; }
+aside.splash { z-index: -1; opacity: 0; display: block; -webkit-transition: all 0.5s; text-align: center; font-family: MiaGrotesk-Light; font-size: 234%; color: #333; height: 100%; position: relative; }
+
+aside.splash #placard { background-color: rgba(255, 255, 255, 0.7); vertical-align: middle; padding: 1em 3em; position: relative; top: 50%; transform: translateY(-50%); -webkit-transform: translateY(-50%); max-width: 100%; }
 
 #ethnio-screener-48826 { top: auto !important; bottom: 0; }
 
