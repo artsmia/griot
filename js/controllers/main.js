@@ -9,6 +9,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
 
     var data = $scope.data = notes
     $rootScope.loaded = false
+    var japanObjects = [122167, 122102, 122502, 122505, 3369, 122189, 122166, 122492, 122113, 122115, 6612]
 
     var cluster = $rootScope.defaultCluster || $routeParams.cluster || 'highlights'
     var clusterObjectIds = data.clusters[cluster.replace(/^(g)?(\d+)/i, '$1$2')]
@@ -56,6 +57,7 @@ app.controller('mainCtrl', ['$scope', '$routeParams', 'segmentio', '$rootScope',
       var others = []
 
       angular.forEach(data.objects, function(o) {
+        if(japanObjects.indexOf(parseInt(o.id)) > -1) return console.info('rejecting', o.id);
         (c.indexOf(o) > -1) || others.push(o)
       })
       others = orderByFilter(others, random)
