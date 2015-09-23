@@ -114,7 +114,7 @@ app.directive('flatmap', function(tilesaw, envConfig, $rootScope ) {
       }
     },
     link: function(scope, element, attrs) {
-      scope.container = 'zoom-' + scope.image + '-' + new Date().getUTCMilliseconds()
+      scope.container = 'zoom-' + scope.image.replace('+', '-') + '-' + new Date().getUTCMilliseconds()
       element.attr('id', scope.container)
     }
   }
